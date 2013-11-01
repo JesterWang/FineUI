@@ -26,7 +26,9 @@ Apache License 2.0
 
  
 
+ 
 FineUI严格遵守 ExtJS 关于开源软件的规则，不再内置 ExtJS 库。
+
 * 获取适用于 FineUI 的 ExtJS 库：http://fineui.com/bbs/forum.php?mod=viewthread&tid=3218 
 * 基于 FineUI 的空项目（Net2.0 和 Net4.0 两个版本）：http://fineui.com/bbs/forum.php?mod=viewthread&tid=2123
 
