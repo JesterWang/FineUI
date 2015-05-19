@@ -45,7 +45,9 @@ http://fineui.com/bbs/forum.php?mod=viewthread&tid=3218
 FineUI（开源版）作为一款开源软件已经持续开发了 8 年 并发布了 120 多个版本，并还将继续下去。如果你在商业软件中使用了FineUI（开源版），请捐赠作者以帮助 FineUI 的持续开发。
 
 支付宝钱包扫码：
+
 ![FineUI](http://fineui.com/images/alipay.png)
+
 
 
 ###截图
