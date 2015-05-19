@@ -20,6 +20,12 @@ namespace FineUI.Examples.iframe
         {
             ddlSheng.DataSource = SHENG_JSON;
             ddlSheng.DataBind();
+
+            string selectedParam = Request.QueryString["selected"];
+            if (!String.IsNullOrEmpty(selectedParam))
+            {
+                ddlSheng.SelectedValue = selectedParam;
+            }
         }
 
 

@@ -63,12 +63,25 @@ namespace FineUI
         /// <summary>
         /// 构造函数
         /// </summary>
-        /// <param name="text">列表项文本</param>
-        /// <param name="value">列表项值</param>
+        /// <param name="text">文本</param>
+        /// <param name="value">值</param>
         public ListItem(string text, string value)
         {
             Text = text;
             Value = value;
+        }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="text">文本</param>
+        /// <param name="value">值</param>
+        /// <param name="selected">是否选中</param>
+        public ListItem(string text, string value, bool selected)
+        {
+            Text = text;
+            Value = value;
+            Selected = selected;
         }
 
         #endregion

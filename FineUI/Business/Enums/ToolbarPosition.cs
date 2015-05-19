@@ -42,10 +42,10 @@ namespace FineUI
         /// 底部
         /// </summary>
         Bottom,
-        /// <summary>
-        /// 页脚
-        /// </summary>
-        Footer,
+        ///// <summary>
+        ///// 页脚
+        ///// </summary>
+        //Footer,
         /// <summary>
         /// 左侧
         /// </summary>
@@ -53,11 +53,11 @@ namespace FineUI
         /// <summary>
         /// 右侧
         /// </summary>
-        Right,
-        /// <summary>
-        /// 底部按钮
-        /// </summary>
-        Buttons
+        Right
+        ///// <summary>
+        ///// 底部按钮
+        ///// </summary>
+        //Buttons
     }
 
     /// <summary>
@@ -77,17 +77,41 @@ namespace FineUI
                 case ToolbarPosition.Bottom:
                     result = "bbar";
                     break;
-                case ToolbarPosition.Footer:
-                    result = "fbar";
-                    break;
+                //case ToolbarPosition.Footer:
+                //    result = "fbar";
+                //    break;
                 case ToolbarPosition.Left:
                     result = "lbar";
                     break;
                 case ToolbarPosition.Right:
                     result = "rbar";
                     break;
-                case ToolbarPosition.Buttons:
-                    result = "buttons";
+                //case ToolbarPosition.Buttons:
+                //    result = "buttons";
+                //    break;
+            }
+
+            return result;
+        }
+
+
+        public static string GetExtName(ToolbarPosition type)
+        {
+            string result = String.Empty;
+
+            switch (type)
+            {
+                case ToolbarPosition.Top:
+                    result = "top";
+                    break;
+                case ToolbarPosition.Bottom:
+                    result = "bottom";
+                    break;
+                case ToolbarPosition.Left:
+                    result = "left";
+                    break;
+                case ToolbarPosition.Right:
+                    result = "right";
                     break;
             }
 

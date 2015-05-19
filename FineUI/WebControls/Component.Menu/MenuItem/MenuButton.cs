@@ -76,12 +76,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnablePostBack"];
+                object obj = FState["EnablePostBack"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnablePostBack"] = value;
+                FState["EnablePostBack"] = value;
             }
         }
 
@@ -96,12 +96,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["OnClientClick"];
+                object obj = FState["OnClientClick"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["OnClientClick"] = value;
+                FState["OnClientClick"] = value;
             }
         }
 
@@ -117,12 +117,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ValidateForms"];
+                object obj = FState["ValidateForms"];
                 return obj == null ? null : (string[])obj;
             }
             set
             {
-                XState["ValidateForms"] = value;
+                FState["ValidateForms"] = value;
             }
         }
 
@@ -136,12 +136,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ValidateTarget"];
+                object obj = FState["ValidateTarget"];
                 return obj == null ? Target.Self : (Target)obj;
             }
             set
             {
-                XState["ValidateTarget"] = value;
+                FState["ValidateTarget"] = value;
             }
         }
 
@@ -155,12 +155,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ValidateMessageBox"];
+                object obj = FState["ValidateMessageBox"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ValidateMessageBox"] = value;
+                FState["ValidateMessageBox"] = value;
             }
         }
 
@@ -179,12 +179,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ConfirmTitle"];
+                object obj = FState["ConfirmTitle"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["ConfirmTitle"] = value;
+                FState["ConfirmTitle"] = value;
             }
         }
 
@@ -199,12 +199,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ConfirmText"];
+                object obj = FState["ConfirmText"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["ConfirmText"] = value;
+                FState["ConfirmText"] = value;
             }
         }
 
@@ -219,12 +219,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ConfirmIcon"];
+                object obj = FState["ConfirmIcon"];
                 return obj == null ? MessageBoxIcon.Warning : (MessageBoxIcon)obj;
             }
             set
             {
-                XState["ConfirmIcon"] = value;
+                FState["ConfirmIcon"] = value;
             }
         }
 
@@ -257,12 +257,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ConfirmTarget"];
+                object obj = FState["ConfirmTarget"];
                 return obj == null ? Target.Self : (Target)obj;
             }
             set
             {
-                XState["ConfirmTarget"] = value;
+                FState["ConfirmTarget"] = value;
             }
         }
 
@@ -292,7 +292,7 @@ namespace FineUI
             if (PropertyModified("ConfirmText", "ConfirmTitle", "ConfirmIcon", "ConfirmTarget", "OnClientClick"))
             {
                 sb.AppendFormat("{0}.un('click', {0}.initialConfig.listeners.click);", XID);
-                sb.AppendFormat("{0}.on('click',{1});", XID, GetClickScriptFunction());
+                sb.AppendFormat("{0}.on('click',{1});", XID, GetClientClickFunction());
             }
 
             AddAjaxScript(sb);
@@ -326,8 +326,8 @@ namespace FineUI
 
             //OB.Listeners.AddProperty("click", String.Format("{0}_click", XID), true);
 
-            OB.Listeners.AddProperty("click", GetClickScriptFunction(), true);
-
+            OB.Listeners.AddProperty("click", GetClientClickFunction(), true);
+            
             #endregion
 
             string jsContent = String.Format("var {0}=Ext.create('Ext.menu.Item',{1});", XID, OB.ToString());
@@ -335,12 +335,16 @@ namespace FineUI
 
         }
 
-        private string GetClickScriptFunction()
+        private string GetClientClickFunction()
         {
             string clickScript = Button.ResolveClientScript(ValidateForms, ValidateTarget, ValidateMessageBox, EnablePostBack, GetPostBackEventReference(),
                 ConfirmText, ConfirmTitle, ConfirmIcon, ConfirmTarget, OnClientClick, ClientID);
 
-            return String.Format("function(button,e){{{0}e.stopEvent();}}", clickScript);
+            clickScript += "e.stopEvent();";
+
+            return GetListenerFunction("click", clickScript, "button", "e");
+
+            //return String.Format("function(button,e){{{0}e.stopEvent();}}", clickScript);
         }
 
         #endregion

@@ -48,7 +48,7 @@ namespace FineUI
     [ParseChildren(true)]
     [PersistChildren(false)]
     [ControlBuilder(typeof(NotAllowWhitespaceLiteralsBuilder))]
-    public class Accordion : CollapsablePanel
+    public class Accordion : CollapsablePanel, IPostBackDataHandler, IPostBackEventHandler
     {
         #region Constructor
 
@@ -58,12 +58,25 @@ namespace FineUI
         public Accordion()
         {
             AddServerAjaxProperties();
-            AddClientAjaxProperties();
+            AddClientAjaxProperties("ActivePaneIndex");
         }
 
         #endregion
 
         #region Unsupported Properties
+
+        /// <summary>
+        /// 不支持此属性
+        /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public override ITemplate Content
+        {
+            get
+            {
+                return base.Content;
+            }
+        }
 
         /// <summary>
         /// 不支持此属性
@@ -149,12 +162,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ShowCollapseTool"];
+                object obj = FState["ShowCollapseTool"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ShowCollapseTool"] = value;
+                FState["ShowCollapseTool"] = value;
             }
         }
 
@@ -169,12 +182,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableActiveOnTop"];
+                object obj = FState["EnableActiveOnTop"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableActiveOnTop"] = value;
+                FState["EnableActiveOnTop"] = value;
             }
         }
 
@@ -188,12 +201,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableFill"];
+                object obj = FState["EnableFill"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableFill"] = value;
+                FState["EnableFill"] = value;
             }
         }
 
@@ -238,17 +251,74 @@ namespace FineUI
 
         #endregion
 
-        #region ActiveIndex
+        #region ActivePaneIndex
 
-        private int _activeIndex = -1;
+        /// <summary>
+        /// 切换面板时是否自动回发
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("切换面板时是否自动回发")]
+        public bool AutoPostBack
+        {
+            get
+            {
+                object obj = FState["AutoPostBack"];
+                return obj == null ? false : (bool)obj;
+            }
+            set
+            {
+                FState["AutoPostBack"] = value;
+            }
+        }
 
+        /// <summary>
+        /// [AJAX属性]激活面板的索引
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(0)]
+        [Description("[AJAX属性]激活面板的索引")]
+        public int ActivePaneIndex
+        {
+            get
+            {
+                object obj = FState["ActivePaneIndex"];
+                return obj == null ? 0 : (int)obj;
+            }
+            set
+            {
+                FState["ActivePaneIndex"] = value;
+            }
+        }
+
+        /// <summary>
+        /// 当前激活的面板
+        /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public AccordionPane ActivePane
+        {
+            get
+            {
+                if (ActivePaneIndex >= 0 && ActivePaneIndex < Panes.Count)
+                {
+                    return Panes[ActivePaneIndex];
+                }
+                return null;
+            }
+        }
+
+        /*
+        
+        private int _activePaneIndex = -1;
+        
         /// <summary>
         /// 激活面板的索引
         /// </summary>
         [Category(CategoryName.OPTIONS)]
         [DefaultValue(0)]
         [Description("激活面板的索引")]
-        public int ActiveIndex
+        public int ActivePaneIndex
         {
             get
             {
@@ -266,9 +336,10 @@ namespace FineUI
             set
             {
                 // We cann't set children AccordionPane's Collapsed property now, because they may not been loaded yet.
-                _activeIndex = value;
+                _activePaneIndex = value;
             }
         }
+        */
 
 
         #endregion
@@ -313,6 +384,20 @@ namespace FineUI
 
         #endregion
 
+        #region ActivePaneIndexHiddenFieldID
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        private string ActivePaneIndexHiddenFieldID
+        {
+            get
+            {
+                return String.Format("{0}_ActivePaneIndex", ClientID);
+            }
+        }
+
+        #endregion
+
         #region OnPreRender
 
         /// <summary>
@@ -323,10 +408,13 @@ namespace FineUI
             base.OnAjaxPreRender();
 
             StringBuilder sb = new StringBuilder();
-            //if (PropertyModified("Text"))
-            //{
-            //    sb.AppendFormat("{0}.setValue({1});", XID, JsHelper.Enquote(Text));
-            //}
+            if (PropertyModified("ActivePaneIndex"))
+            {
+                if (ActivePane != null)
+                {
+                    ActivePane.AddAjaxScript(String.Format("{0}.expand();", ActivePane.XID));
+                }
+            }
 
             AddAjaxScript(sb);
         }
@@ -340,15 +428,15 @@ namespace FineUI
 
             #region Reset ActiveIndex
 
-            // ActiveIndex has been changed, reset Panes's Collapsed property.
-            if (_activeIndex != -1)
+            // 重置面板的 Collapsed 属性
+            if (ActivePane != null)
             {
                 foreach (AccordionPane pane in Panes)
                 {
                     pane.Collapsed = true;
                 }
 
-                Panes[_activeIndex].Collapsed = false;
+                ActivePane.Collapsed = false;
             }
 
             #endregion
@@ -372,20 +460,18 @@ namespace FineUI
 
             #region LayoutConfig
 
+            OB.RemoveProperty("layout");
+
             JsObjectBuilder configBuilder = new JsObjectBuilder();
             configBuilder.AddProperty("animate", false);
             configBuilder.AddProperty("activeOnTop", EnableActiveOnTop);
             configBuilder.AddProperty("fill", EnableFill);
             configBuilder.AddProperty("hideCollapseTool", !ShowCollapseTool);
-            //configBuilder.AddProperty(OptionName.TitleCollapse, true);
-            //if (EnableLargeHeader)
-            //{
-            //    // 删除对CtCls的定义
-            //    OB.RemoveProperty(OptionName.CtCls);
-            //    configBuilder.AddProperty(OptionName.ExtraCls, "box-panel-big-header");
-            //}
+            configBuilder.AddProperty("type", "accordion");
 
-            OB.AddProperty("layoutConfig", configBuilder);
+            //configBuilder.AddProperty("multi", true);
+
+            OB.AddProperty("layout", configBuilder);
 
             #endregion
 
@@ -396,21 +482,84 @@ namespace FineUI
 
         #endregion
 
-        #region override IPostBackDataHandler Members
+        #region IPostBackDataHandler Members
 
-        //public override bool LoadPostData(string postDataKey, System.Collections.Specialized.NameValueCollection postCollection)
-        //{
-        //    base.LoadPostData(postDataKey, postCollection);
+        /// <summary>
+        /// 处理回发数据
+        /// </summary>
+        /// <param name="postDataKey">回发数据键</param>
+        /// <param name="postCollection">回发数据集</param>
+        /// <returns>回发数据是否改变</returns>
+        public override bool LoadPostData(string postDataKey, System.Collections.Specialized.NameValueCollection postCollection)
+        {
+            base.LoadPostData(postDataKey, postCollection);
 
-        //    string postValue = postCollection[ActiveIndexHiddenFieldID];
-        //    int postActiveIndex = Convert.ToInt32(postValue);
-        //    if (ActiveIndex != postActiveIndex)
-        //    {
-        //        ActiveIndex = postActiveIndex;
-        //    }
+            string postValue = postCollection[ActivePaneIndexHiddenFieldID];
 
-        //    return false;
-        //}
+            int postActivePaneIndex = Convert.ToInt32(postValue);
+            if (ActivePaneIndex != postActivePaneIndex)
+            {
+                ActivePaneIndex = postActivePaneIndex;
+                FState.BackupPostDataProperty("ActivePaneIndex");
+            }
+
+            return false;
+        }
+
+        
+        #endregion
+
+        #region IPostBackEventHandler
+
+        /// <summary>
+        /// 处理回发事件
+        /// </summary>
+        /// <param name="eventArgument">事件参数</param>
+        public override void RaisePostBackEvent(string eventArgument)
+        {
+            base.RaisePostBackEvent(eventArgument);
+
+            if (eventArgument == "PaneIndexChanged")
+            {
+                OnPaneIndexChanged(EventArgs.Empty);
+            }
+        }
+
+        #endregion
+
+        #region OnPaneIndexChanged
+
+        private static readonly object _handlerKey = new object();
+
+        /// <summary>
+        /// 面板改变事件
+        /// </summary>
+        [Category(CategoryName.ACTION)]
+        [Description("面板改变事件")]
+        public event EventHandler PaneIndexChanged
+        {
+            add
+            {
+                Events.AddHandler(_handlerKey, value);
+            }
+            remove
+            {
+                Events.RemoveHandler(_handlerKey, value);
+            }
+        }
+
+        /// <summary>
+        /// 触发面板改变事件
+        /// </summary>
+        /// <param name="e">事件参数</param>
+        protected virtual void OnPaneIndexChanged(EventArgs e)
+        {
+            EventHandler handler = Events[_handlerKey] as EventHandler;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
 
         #endregion
 

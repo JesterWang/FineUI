@@ -61,12 +61,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["NavigateUrl"];
+                object obj = FState["NavigateUrl"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["NavigateUrl"] = value;
+                FState["NavigateUrl"] = value;
             }
         }
 
@@ -80,12 +80,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Target"];
+                object obj = FState["Target"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Target"] = value;
+                FState["Target"] = value;
             }
         }
 

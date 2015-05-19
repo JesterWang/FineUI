@@ -74,12 +74,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["DisableControlBeforePostBack"];
+                object obj = FState["DisableControlBeforePostBack"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["DisableControlBeforePostBack"] = value;
+                FState["DisableControlBeforePostBack"] = value;
             }
         }
 
@@ -93,12 +93,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnablePostBack"];
+                object obj = FState["EnablePostBack"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnablePostBack"] = value;
+                FState["EnablePostBack"] = value;
             }
         }
 
@@ -113,12 +113,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Pressed"];
+                object obj = FState["Pressed"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["Pressed"] = value;
+                FState["Pressed"] = value;
             }
         }
 
@@ -132,12 +132,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnablePress"];
+                object obj = FState["EnablePress"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnablePress"] = value;
+                FState["EnablePress"] = value;
             }
         }
 
@@ -151,12 +151,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["OnClientClick"];
+                object obj = FState["OnClientClick"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["OnClientClick"] = value;
+                FState["OnClientClick"] = value;
             }
         }
 
@@ -170,12 +170,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Icon"];
+                object obj = FState["Icon"];
                 return obj == null ? Icon.None : (Icon)obj;
             }
             set
             {
-                XState["Icon"] = value;
+                FState["Icon"] = value;
             }
         }
 
@@ -189,12 +189,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Size"];
+                object obj = FState["Size"];
                 return obj == null ? ButtonSize.Small : (ButtonSize)obj;
             }
             set
             {
-                XState["Size"] = value;
+                FState["Size"] = value;
             }
         }
 
@@ -209,12 +209,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["IconUrl"];
+                object obj = FState["IconUrl"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["IconUrl"] = value;
+                FState["IconUrl"] = value;
             }
         }
 
@@ -228,12 +228,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["IconAlign"];
+                object obj = FState["IconAlign"];
                 return obj == null ? IconAlign.Left : (IconAlign)obj;
             }
             set
             {
-                XState["IconAlign"] = value;
+                FState["IconAlign"] = value;
             }
         }
 
@@ -248,12 +248,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Text"];
+                object obj = FState["Text"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Text"] = value;
+                FState["Text"] = value;
             }
         }
 
@@ -267,12 +267,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ToolTip"];
+                object obj = FState["ToolTip"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["ToolTip"] = value;
+                FState["ToolTip"] = value;
             }
         }
 
@@ -287,12 +287,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ToolTipType"];
+                object obj = FState["ToolTipType"];
                 return obj == null ? ToolTipType.Qtip : (ToolTipType)obj;
             }
             set
             {
-                XState["ToolTipType"] = value;
+                FState["ToolTipType"] = value;
             }
         }
 
@@ -308,12 +308,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["TabIndex"];
+                object obj = FState["TabIndex"];
                 return obj == null ? null : (short?)obj;
             }
             set
             {
-                XState["TabIndex"] = value;
+                FState["TabIndex"] = value;
             }
         }
 
@@ -327,19 +327,20 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ButtonType"];
+                object obj = FState["ButtonType"];
                 return obj == null ? ButtonType.Button : (ButtonType)obj;
             }
             set
             {
-                XState["ButtonType"] = value;
+                FState["ButtonType"] = value;
             }
         }
 
 
         #endregion
 
-        #region ValidateForms/ValidateTarget
+        #region ValidateForms/ValidateTarget/ValidateMessageBox
+
 
         /// <summary>
         /// 需要验证的表单名称列表（逗号分隔）
@@ -352,12 +353,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ValidateForms"];
+                object obj = FState["ValidateForms"];
                 return obj == null ? null : (string[])obj;
             }
             set
             {
-                XState["ValidateForms"] = value;
+                FState["ValidateForms"] = value;
             }
         }
 
@@ -371,12 +372,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ValidateTarget"];
+                object obj = FState["ValidateTarget"];
                 return obj == null ? Target.Self : (Target)obj;
             }
             set
             {
-                XState["ValidateTarget"] = value;
+                FState["ValidateTarget"] = value;
             }
         }
 
@@ -391,12 +392,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ValidateMessageBox"];
+                object obj = FState["ValidateMessageBox"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ValidateMessageBox"] = value;
+                FState["ValidateMessageBox"] = value;
             }
         }
 
@@ -414,12 +415,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ConfirmTitle"];
+                object obj = FState["ConfirmTitle"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["ConfirmTitle"] = value;
+                FState["ConfirmTitle"] = value;
             }
         }
 
@@ -433,12 +434,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ConfirmText"];
+                object obj = FState["ConfirmText"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["ConfirmText"] = value;
+                FState["ConfirmText"] = value;
             }
         }
 
@@ -453,12 +454,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ConfirmIcon"];
+                object obj = FState["ConfirmIcon"];
                 return obj == null ? MessageBoxIcon.Warning : (MessageBoxIcon)obj;
             }
             set
             {
-                XState["ConfirmIcon"] = value;
+                FState["ConfirmIcon"] = value;
             }
         }
 
@@ -472,18 +473,39 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ConfirmTarget"];
+                object obj = FState["ConfirmTarget"];
                 return obj == null ? Target.Self : (Target)obj;
             }
             set
             {
-                XState["ConfirmTarget"] = value;
+                FState["ConfirmTarget"] = value;
             }
         }
 
         #endregion
 
         #region Menu
+
+        /// <summary>
+        /// 按钮的上下文菜单
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue("")]
+        [Description("按钮的上下文菜单")]
+        public string MenuID
+        {
+            get
+            {
+                object obj = FState["MenuID"];
+                return obj == null ? "" : (string)obj;
+            }
+            set
+            {
+                FState["MenuID"] = value;
+            }
+        }
+
+
 
         private Menu _menu;
 
@@ -502,7 +524,7 @@ namespace FineUI
                 {
                     _menu = new Menu();
 
-                    _menu.RenderWrapperNode = false;
+                    //_menu.RenderWrapperNode = false;
                     Controls.Add(_menu);
 
                 }
@@ -512,8 +534,6 @@ namespace FineUI
 
 
         #endregion
-
-        #region OnAjaxPreRender OnFirstPreRender
 
         #region PressedHiddenFieldID
 
@@ -542,7 +562,7 @@ namespace FineUI
 
             if (PropertyModified("Text"))
             {
-                sb.AppendFormat("{0}.x_setText();", XID);
+                sb.AppendFormat("{0}.f_setText();", XID);
             }
 
             if (EnablePress)
@@ -551,7 +571,7 @@ namespace FineUI
                 {
                     //if (ClientPropertyModifiedInServer("Pressed"))
 
-                    sb.AppendFormat("{0}.x_toggle();", XID);
+                    sb.AppendFormat("{0}.f_toggle();", XID);
 
                 }
             }
@@ -567,7 +587,7 @@ namespace FineUI
 
             if (PropertyModified("ToolTip"))
             {
-                sb.AppendFormat("{0}.x_setTooltip();", XID);
+                sb.AppendFormat("{0}.f_setTooltip();", XID);
             }
 
             if (PropertyModified("OnClientClick", "ConfirmTitle", "ConfirmText", "ConfirmTarget", "ConfirmIcon"))
@@ -583,6 +603,7 @@ namespace FineUI
 
         #endregion
 
+        #region OnFirstPreRender
 
         /// <summary>
         /// 渲染 HTML 之前调用（页面第一次加载或者普通回发）
@@ -617,15 +638,16 @@ namespace FineUI
                 OB.AddProperty("pressed", Pressed);
 
                 //hiddenFieldsScript += GetSetHiddenFieldValueScript(PressedHiddenFieldID, Pressed.ToString().ToLower());
-                //string toggleScript = String.Format("function(btn,pressed){{X.util.setHiddenFieldValue('{0}',pressed);}}", PressedHiddenFieldID);
+                //string toggleScript = String.Format("function(btn,pressed){{F.util.setHiddenFieldValue('{0}',pressed);}}", PressedHiddenFieldID);
                 //OB.Listeners.AddProperty(OptionName.Toggle, toggleScript, true);
             }
 
-            if (Type != ButtonType.Button)
-            {
-                OB.AddProperty("type", ButtonTypeName.GetName(Type));
+            //if (Type != ButtonType.Button)
+            //{
+            //    OB.AddProperty("type", ButtonTypeName.GetName(Type));
+            //}
 
-            }
+
 
             if (Size != ButtonSize.Small)
             {
@@ -699,33 +721,37 @@ namespace FineUI
 
             if (_menu != null && Menu.Items.Count > 0)
             {
-                OB.AddProperty("menu", String.Format("{0}", Menu.XID), true);
+                OB.AddProperty("menu", Menu.XID, true);
+            }
+            else if (!String.IsNullOrEmpty(MenuID))
+            {
+                Menu contextMenu = ControlUtil.FindControlInUserControlOrPage(this, MenuID) as Menu;
+                if (contextMenu != null)
+                {
+                    OB.AddProperty("menu", contextMenu.XID, true);
+                }
             }
 
 
             #endregion
 
+            #region Type
+
+            string submitButtonScript = String.Empty;
+            if (Type == ButtonType.Submit)
+            {
+                submitButtonScript = String.Format("F.submitbutton='{0}';", ClientID);
+            }
+            else if (Type == ButtonType.Reset)
+            {
+                OB.AddProperty("handler", JsHelper.GetFunction("F.util.reset();"), true);
+            }
+
+            #endregion
+
             string createScript = String.Format("var {0}=Ext.create('Ext.button.Button',{1});", XID, OB.ToString());
-            AddStartupScript(createScript);
+            AddStartupScript(submitButtonScript + createScript);
         }
-
-        ///// <summary>
-        ///// Get resolved icon url (Can be used in client side) from both Icon and IconUrl properties.
-        ///// </summary>
-        ///// <returns></returns>
-        //private string GetResolvedIconUrl()
-        //{
-        //    string iconUrl = IconUrl;
-        //    if (String.IsNullOrEmpty(iconUrl))
-        //    {
-        //        if (Icon != Icon.None)
-        //        {
-        //            iconUrl = IconHelper.GetIconUrl(Icon);
-        //        }
-        //    }
-
-        //    return ResolveUrl(iconUrl);
-        //}
 
         private string GetClickScript()
         {
@@ -735,21 +761,15 @@ namespace FineUI
                 disableControlJavascriptID = String.Empty;
             }
 
-            string clientScript = OnClientClick;
-            if (Type == ButtonType.Reset)
-            {
-                clientScript += "document.forms[0].reset();";
-            }
+            //string clientScript = OnClientClick;
+            //if (Type == ButtonType.Reset)
+            //{
+            //    clientScript += "document.forms[0].reset();";
+            //}
 
             return ResolveClientScript(ValidateForms, ValidateTarget, ValidateMessageBox, EnablePostBack, GetPostBackEventReference(),
-                ConfirmText, ConfirmTitle, ConfirmIcon, ConfirmTarget, clientScript, disableControlJavascriptID);
-
-
-            // e.stopEvent(); is needed, otherwise there will be an error under IE6 (modified by 30372245@qq.com 2008-08-13)
-            //return JsHelper.GetFunction(clickScript, "btn", "e");
-            //return String.Format("function(button,e){{{0}e.stopEvent();}}", clickScript);
+                ConfirmText, ConfirmTitle, ConfirmIcon, ConfirmTarget, OnClientClick, disableControlJavascriptID);
         }
-
 
         #endregion
 
@@ -777,17 +797,19 @@ namespace FineUI
             string validateScript = String.Empty;
             if (validateForms != null && validateForms.Length > 0)
             {
-                JsArrayBuilder array = new JsArrayBuilder();
-                foreach (string formID in validateForms)
-                {
-                    Control control = ControlUtil.FindControl(formID);
-                    if (control != null && control is ControlBase)
-                    {
-                        array.AddProperty((control as ControlBase).ClientID);
-                    }
-                }
+                //JsArrayBuilder array = new JsArrayBuilder();
+                //foreach (string formID in validateForms)
+                //{
+                //    Control control = ControlUtil.FindControl(formID);
+                //    if (control != null && control is ControlBase)
+                //    {
+                //        array.AddProperty((control as ControlBase).ClientID);
+                //    }
+                //}
 
-                validateScript = String.Format("if(!X.util.validForms({0},'{1}',{2})){{return false;}}", array.ToString(), TargetHelper.GetName(validateTarget), validateMessageBox.ToString().ToLower());
+                JsArrayBuilder array = ControlUtil.GetControlClientIDs(validateForms);
+
+                validateScript = String.Format("if(!F.util.validForms({0},'{1}',{2})){{return false;}}", array.ToString(), TargetHelper.GetName(validateTarget), validateMessageBox.ToString().ToLower());
             }
 
             // 2. 用户自定义脚本
@@ -804,7 +826,7 @@ namespace FineUI
             {
                 if (!String.IsNullOrEmpty(disableControlJavascriptID))
                 {
-                    postBackScript += String.Format("X.disable('{0}');", disableControlJavascriptID);
+                    postBackScript += String.Format("F.disable('{0}');", disableControlJavascriptID);
                 }
                 postBackScript += postBackEventReference;
             }
@@ -837,8 +859,7 @@ namespace FineUI
                 if (pressed != Pressed)
                 {
                     Pressed = pressed;
-                    XState.BackupPostDataProperty("Pressed");
-                    return true;
+                    FState.BackupPostDataProperty("Pressed");
                 }
             }
 
@@ -850,8 +871,7 @@ namespace FineUI
         /// </summary>
         public void RaisePostDataChangedEvent()
         {
-            // If someday we need public a OnPressChanged event, we can return ture here.
-            //throw new NotImplementedException();
+            
         }
 
         #endregion

@@ -72,6 +72,24 @@ namespace FineUI
         //    }
         //}
 
+        /// <summary>
+        /// 页脚工具栏的排列位置
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(ToolbarAlign.Left)]
+        [Description("工具栏的排列位置")]
+        public ToolbarAlign ToolbarAlign
+        {
+            get
+            {
+                object obj = FState["ToolbarAlign"];
+                return obj == null ? ToolbarAlign.Left : (ToolbarAlign)obj;
+            }
+            set
+            {
+                FState["ToolbarAlign"] = value;
+            }
+        }
 
 
 
@@ -85,12 +103,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Position"];
+                object obj = FState["Position"];
                 return obj == null ? ToolbarPosition.Top : (ToolbarPosition)obj;
             }
             set
             {
-                XState["Position"] = value;
+                FState["Position"] = value;
             }
         }
 
@@ -194,9 +212,21 @@ namespace FineUI
 
             #endregion
 
+
+            JsObjectBuilder layoutOB = new JsObjectBuilder();
+            layoutOB.AddProperty("pack", ToolbarAlignHelper.GetName(ToolbarAlign));
+
+            OB.AddProperty("layout", layoutOB, true);
+
+            OB.AddProperty("xtype", "toolbar");
+
+            OB.AddProperty("dock", ToolbarPositionHelper.GetExtName(Position));
+
             //string jsContent = String.Format("var {0}=Ext.create('Ext.toolbar.Toolbar',{1});", XID, OB.ToString());
 
-            string jsContent = String.Format("var {0}={1};", XID, OB.GetProperty("items"));
+            //string jsContent = String.Format("var {0}={1};", XID, OB.GetProperty("items"));
+            string jsContent = String.Format("var {0}={1};", XID, OB.ToString());
+
             AddStartupScript(jsContent);
 
         }

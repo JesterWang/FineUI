@@ -155,7 +155,45 @@ namespace FineUI
         {
             get
             {
-                return "box-grid-cell-inner-image";
+                return "f-grid-cell-inner-image";
+            }
+        }
+
+
+        
+
+        #endregion
+
+        #region EnableAjax
+
+        private object _enableAjax = null;
+
+        /// <summary>
+        /// 是否启用AJAX
+        /// </summary>
+        [Category(CategoryName.BASEOPTIONS)]
+        [DefaultValue(true)]
+        [Description("是否启用AJAX")]
+        public override bool EnableAjax
+        {
+            get
+            {
+                if (_enableAjax == null)
+                {
+                    if (DesignMode)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return Grid.EnableAjax;
+                    }
+                }
+                return (bool)_enableAjax;
+            }
+            set
+            {
+                _enableAjax = value;
             }
         }
 
@@ -220,8 +258,8 @@ namespace FineUI
                 //    textAlignClass = "align-" + TextAlignName.GetName(TextAlign);
                 //}
 
-                string onClickScript = "X.toggle(this,'unchecked');";
-                //onClickScript += "X.stop();";
+                string onClickScript = "F.toggle(this,'unchecked');";
+                //onClickScript += "F.stop();";
 
                 //string tooltip = String.Empty;
                 //if (!String.IsNullOrEmpty(HeaderText))
@@ -229,7 +267,7 @@ namespace FineUI
                 //    tooltip = String.Format(" ext:qtip=\"{0}\" ", HeaderText);
                 //}
 
-                result = String.Format("<div class=\"box-grid-checkbox unchecked\" onclick=\"{0}\">{1}</div>", 
+                result = String.Format("<div class=\"f-grid-checkbox unchecked\" onclick=\"{0}\">{1}</div>", 
                     onClickScript, HeaderText);
 
                 return result;
@@ -241,7 +279,7 @@ namespace FineUI
         }
 
 
-        internal override string GetColumnValue(GridRow row)
+        internal override object GetColumnValue(GridRow row)
         {
             string result = String.Empty;
 
@@ -281,11 +319,11 @@ namespace FineUI
                 {
                     if (checkState)
                     {
-                        result = String.Format("<img class=\"box-grid-static-checkbox\" src=\"{0}\"/>", emptyImageUrl);
+                        result = String.Format("<img class=\"f-grid-static-checkbox\" src=\"{0}\"/>", emptyImageUrl);
                     }
                     else
                     {
-                        result = String.Format("<img class=\"box-grid-static-checkbox unchecked\" src=\"{0}\"/>", emptyImageUrl);
+                        result = String.Format("<img class=\"f-grid-static-checkbox unchecked\" src=\"{0}\"/>", emptyImageUrl);
                     }
                 }
                 else
@@ -293,38 +331,38 @@ namespace FineUI
                     string paramStr = String.Format("Command${0}${1}${2}${3}", row.RowIndex, ColumnIndex, CommandName.Replace("'", "\""), CommandArgument.Replace("'", "\""));
                     
                     // 延迟执行，确保当前复选框的状态已经改变
-                    string postBackReference = JsHelper.GetDeferScript(Grid.GetPostBackEventReference(paramStr), 0);
+                    string postBackReference = JsHelper.GetDeferScript(Grid.GetPostBackEventReference(paramStr, EnableAjax), 0);
 
                     // string onClickScript = String.Format("{0}_checkbox{1}(event,this,{2});", Grid.XID, ColumnIndex, row.RowIndex);
                     //string onClickScript = "Ext.get(this).toggleClass('unchecked');";
-                    string onClickScript = "X.toggle(this,'unchecked');";
+                    string onClickScript = "F.toggle(this,'unchecked');";
                     if (!ShowHeaderCheckBox && AutoPostBack)
                     {
                         onClickScript += postBackReference;
                     }
 
-                    //onClickScript += "X.stop();";
+                    //onClickScript += "F.stop();";
 
                     if (checkState)
                     {
                         if (Enabled)
                         {
-                            result = String.Format("<img class=\"box-grid-checkbox\" src=\"{0}\" onclick=\"{1}\"/>", emptyImageUrl, onClickScript);
+                            result = String.Format("<img class=\"f-grid-checkbox\" src=\"{0}\" onclick=\"{1}\"/>", emptyImageUrl, onClickScript);
                         }
                         else
                         {
-                            result = String.Format("<img class=\"box-grid-checkbox disabled\" src=\"{0}\"/>", emptyImageUrl);
+                            result = String.Format("<img class=\"f-grid-checkbox disabled\" src=\"{0}\"/>", emptyImageUrl);
                         }
                     }
                     else
                     {
                         if (Enabled)
                         {
-                            result = String.Format("<img class=\"box-grid-checkbox unchecked\" src=\"{0}\" onclick=\"{1}\"/>", emptyImageUrl, onClickScript);
+                            result = String.Format("<img class=\"f-grid-checkbox unchecked\" src=\"{0}\" onclick=\"{1}\"/>", emptyImageUrl, onClickScript);
                         }
                         else
                         {
-                            result = String.Format("<img class=\"box-grid-checkbox unchecked disabled\" src=\"{0}\"/>", emptyImageUrl);
+                            result = String.Format("<img class=\"f-grid-checkbox unchecked disabled\" src=\"{0}\"/>", emptyImageUrl);
                         }
                     }
                 }
@@ -411,7 +449,8 @@ namespace FineUI
 
 
             string jsContent = String.Format("var {0}={1};", XID, OB.ToString());
-            AddStartupScript(jsContent);
+            AddGridColumnScript(jsContent);
+            
         }
 
         #endregion

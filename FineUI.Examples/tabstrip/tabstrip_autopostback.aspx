@@ -5,7 +5,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .highlight span{
             font-weight: bold;
@@ -15,49 +15,49 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:TabStrip ID="TabStrip1" Width="850px" Height="350px" EnableFrame="true"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:TabStrip ID="TabStrip1" Width="850px" Height="350px" 
             AutoPostBack="true" OnTabIndexChanged="TabStrip1_TabIndexChanged"
             ShowBorder="true" ActiveTabIndex="1" runat="server">
             <Tabs>
-                <x:Tab Title="标签一" BodyPadding="5px"
+                <f:Tab Title="标签一" BodyPadding="5px"
                     Layout="Fit" runat="server">
                     <Items>
-                        <x:SimpleForm ID="SimpleForm1" ShowBorder="false"
+                        <f:SimpleForm ID="SimpleForm1" ShowBorder="false"
                             ShowHeader="false" Title="SimpleForm1" runat="server">
                             <Items>
-                                <x:Label ID="Label1" CssClass="highlight" Label="文本" Text="初始文本" runat="server" />
-                                <x:NumberBox ID="NumberBox1" Label="数字输入框" Required="true" ShowRedStar="true"
+                                <f:Label ID="Label1" CssClass="highlight" Label="文本" Text="初始文本" runat="server" />
+                                <f:NumberBox ID="NumberBox1" Label="数字输入框" Required="true" ShowRedStar="true"
                                     runat="server" />
-                                <x:TextBox ID="TextBox1" Label="文本框" runat="server" Required="True" ShowRedStar="true">
-                                </x:TextBox>
-                                <x:DatePicker ID="DatePicker1" runat="server" SelectedDate="2008-05-09" Label="日期选择器"
+                                <f:TextBox ID="TextBox1" Label="文本框" runat="server" Required="True" ShowRedStar="true">
+                                </f:TextBox>
+                                <f:DatePicker ID="DatePicker1" runat="server" SelectedDate="2008-05-09" Label="日期选择器"
                                     Text="2008-05-09" Required="true" ShowRedStar="true">
-                                </x:DatePicker>
-                                <x:TextArea ID="TextArea2" Label="多行文本框" runat="server" Required="True" ShowRedStar="true" />
+                                </f:DatePicker>
+                                <f:TextArea ID="TextArea2" Label="多行文本框" runat="server" Required="True" ShowRedStar="true" />
                             </Items>
-                        </x:SimpleForm>
+                        </f:SimpleForm>
                     </Items>
-                </x:Tab>
-                <x:Tab Title="标签二" BodyPadding="5px" runat="server">
+                </f:Tab>
+                <f:Tab Title="标签二" BodyPadding="5px" runat="server">
                     <Items>
-                        <x:Label ID="Label2" CssClass="highlight" Text="初始文本" runat="server" />
+                        <f:Label ID="Label2" CssClass="highlight" Text="初始文本" runat="server" />
                     </Items>
-                </x:Tab>
-                <x:Tab Title="标签三" BodyPadding="5px"
+                </f:Tab>
+                <f:Tab Title="标签三" BodyPadding="5px"
                     runat="server">
                     <Items>
-                        <x:Label ID="Label3" CssClass="highlight" Text="初始文本" runat="server" />
+                        <f:Label ID="Label3" CssClass="highlight" Text="初始文本" runat="server" />
                     </Items>
-                </x:Tab>
+                </f:Tab>
             </Tabs>
-        </x:TabStrip>
+        </f:TabStrip>
         <br />
-        <x:Button ID="Button2" CssStyle="margin-right:5px;float:left;" ValidateForms="SimpleForm1"
+        <f:Button ID="Button2" CssClass="marginr" ValidateForms="SimpleForm1"
             Text="验证第一个标签中的表单" runat="server">
-        </x:Button>
-        <x:Button ID="Button3" Text="选中下一个标签" OnClick="Button3_Click" runat="server">
-        </x:Button>
+        </f:Button>
+        <f:Button ID="Button3" Text="选中下一个标签" OnClick="Button3_Click" runat="server">
+        </f:Button>
     </form>
 </body>
 </html>

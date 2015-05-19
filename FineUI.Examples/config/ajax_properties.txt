@@ -6,7 +6,7 @@
 },
 {
     "name": "Component",
-    "ajax": ["CssClass", "CssStyle"],
+    "ajax": ["CssClass", "FormItemClass", "CssStyle"],
     "parent": "ControlBase",
     "public": false
 },
@@ -276,7 +276,7 @@
 },
 {
     "name": "Accordion",
-    "ajax": [],
+    "ajax": ["ActivePaneIndex"],
     "parent": "CollapsablePanel",
     "public": true
 },

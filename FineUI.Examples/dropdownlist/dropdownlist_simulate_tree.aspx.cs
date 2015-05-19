@@ -105,6 +105,10 @@ namespace FineUI.Examples.data
             {
                 labResult.Text = String.Format("选中项：{0}（值：{1}）", ddlBox.SelectedText, ddlBox.SelectedValue);
             }
+            else
+            {
+                labResult.Text = "无选中项";
+            }
         } 
         #endregion
 

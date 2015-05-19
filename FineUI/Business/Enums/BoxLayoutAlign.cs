@@ -41,8 +41,10 @@ namespace FineUI
         /// 所有子控件位于父容器的中间位置（废弃，请使用Center代替）
         /// </summary>
         Middle,
+
+
         /// <summary>
-        /// 所有子控件位于父容器的开始位置（默认值）
+        /// 所有子控件位于父容器的开始位置
         /// </summary>
         Start,
         /// <summary>
@@ -50,7 +52,7 @@ namespace FineUI
         /// </summary>
         Center,
         /// <summary>
-        /// 所有子控件被拉伸至父容器的大小
+        /// 所有子控件被拉伸至父容器的大小（默认值）
         /// </summary>
         Stretch,
         /// <summary>

@@ -59,12 +59,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableEdit"];
+                object obj = FState["EnableEdit"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableEdit"] = value;
+                FState["EnableEdit"] = value;
             }
         }
 
@@ -78,12 +78,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ShowTrigger"];
+                object obj = FState["ShowTrigger"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ShowTrigger"] = value;
+                FState["ShowTrigger"] = value;
             }
         }
 
@@ -98,12 +98,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnablePostBack"];
+                object obj = FState["EnablePostBack"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnablePostBack"] = value;
+                FState["EnablePostBack"] = value;
             }
         }
 
@@ -118,12 +118,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["TriggerIconUrl"];
+                object obj = FState["TriggerIconUrl"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["TriggerIconUrl"] = value;
+                FState["TriggerIconUrl"] = value;
             }
         }
 
@@ -138,12 +138,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["TriggerIcon"];
+                object obj = FState["TriggerIcon"];
                 return obj == null ? TriggerIcon.None : (TriggerIcon)obj;
             }
             set
             {
-                XState["TriggerIcon"] = value;
+                FState["TriggerIcon"] = value;
             }
         }
 
@@ -158,12 +158,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["OnClientTriggerClick"];
+                object obj = FState["OnClientTriggerClick"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["OnClientTriggerClick"] = value;
+                FState["OnClientTriggerClick"] = value;
             }
         }
 
@@ -215,15 +215,15 @@ namespace FineUI
 
             if (TriggerIcon != TriggerIcon.None)
             {
-                OB.AddProperty("triggerClass", TriggerIconHelper.GetName(TriggerIcon));
+                OB.AddProperty("triggerCls", TriggerIconHelper.GetName(TriggerIcon));
             }
             else if (!String.IsNullOrEmpty(TriggerIconUrl))
             {
-                string className = String.Format("fineui_{0}_triggerbox_icon", XID);
-                string selector = String.Format(".x-form-field-wrap .{0}", className);
+                string className = String.Format("f_{0}_triggerbox_icon", XID);
+                string selector = String.Format(".{0}", className);
                 AddStartupCSS(className, StyleUtil.GetBackgroundStyle(selector, ResolveUrl(TriggerIconUrl)));
 
-                OB.AddProperty("triggerClass", className);
+                OB.AddProperty("triggerCls", className);
             }
 
 
@@ -231,37 +231,47 @@ namespace FineUI
 
             #region TriggerClick
 
-            if (Enabled)
+            //if (Enabled)
+            //{
+            string clientClickScript = OnClientTriggerClick;
+            if (!String.IsNullOrEmpty(clientClickScript) && !clientClickScript.EndsWith(";"))
             {
-                string clientClickScript = OnClientTriggerClick;
-                if (!String.IsNullOrEmpty(clientClickScript) && !clientClickScript.EndsWith(";"))
-                {
-                    clientClickScript += ";";
-                }
-
-                string postbackScript = String.Empty;
-                if (EnablePostBack)
-                {
-                    postbackScript = GetPostBackEventReference();
-                }
-
-                OB.AddProperty("onTriggerClick", JsHelper.GetFunction(clientClickScript + postbackScript), true);
+                clientClickScript += ";";
             }
+
+            string postbackScript = String.Empty;
+            if (EnablePostBack)
+            {
+                postbackScript = GetPostBackEventReference();
+            }
+
+            OB.AddProperty("onTriggerClick", JsHelper.GetFunction(clientClickScript + postbackScript), true);
+            //}
 
             #endregion
 
             #region Specialkey
 
-            if (Enabled)
-            {
-                // 首先启用enableKeyEvents
-                //OB.AddProperty("enableKeyEvents", true);
-                OB.Listeners.AddProperty("specialkey", String.Format("function(field,e){{if(e.getKey()==e.ENTER){{{0}.onTriggerClick();e.stopEvent();}}}}", XID), true);
-
-                //OB.Listeners.AddProperty("keydown", JsHelper.GetFunction("var i=0;"), true);
-            }
+            //if (Enabled)
+            //{
+            // 首先启用enableKeyEvents
+            //OB.AddProperty("enableKeyEvents", true);
+            //OB.Listeners.AddProperty("specialkey", String.Format("function(field,e){{if(e.getKey()==e.ENTER){{{0}.onTriggerClick();e.stopEvent();}}}}", XID), true);
+            AddListener("specialkey", String.Format("if(e.getKey()==e.ENTER){{{0}.onTriggerClick();e.stopEvent();}}", XID), "field", "e");
+            //}
 
             #endregion
+
+            #region EnableEdit
+            // extjsv4.x 的enableedit=false，不能点击输入框触发
+            if (!EnableEdit)
+            {
+                //OB.Listeners.AddProperty("render", "function(field){field.mon(field.inputEl,'click',field.onTriggerClick,field);}", true);
+                AddListener("render", "field.mon(field.inputEl,'click',field.onTriggerClick,field);", "field");
+
+            }
+            #endregion
+
 
             #region old code
 

@@ -52,6 +52,16 @@ namespace FineUI
     {
         #region Properties
 
+        /// <summary>
+        /// 不向页面输出控件的外部容器
+        /// </summary>
+        internal override bool RenderWrapperNode
+        {
+            get
+            {
+                return false;
+            }
+        }
 
 
         #endregion

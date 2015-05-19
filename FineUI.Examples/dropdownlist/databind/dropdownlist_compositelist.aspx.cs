@@ -49,15 +49,15 @@ namespace FineUI.Examples.dropdownlist
         private void BindEnumrableToDropDownList()
         {
             List<CustomClass> myList = new List<CustomClass>();
-            myList.Add(new CustomClass("1", "选项 1"));
-            myList.Add(new CustomClass("2", "选项 2"));
-            myList.Add(new CustomClass("3", "选项 3"));
-            myList.Add(new CustomClass("4", "选项 4"));
-            myList.Add(new CustomClass("5", "选项 5"));
-            myList.Add(new CustomClass("6", "选项 6"));
-            myList.Add(new CustomClass("7", "选项 7"));
-            myList.Add(new CustomClass("8", "选项 8"));
-            myList.Add(new CustomClass("9", "选项 9"));
+            myList.Add(new CustomClass("1", "可选项1"));
+            myList.Add(new CustomClass("2", "可选项2"));
+            myList.Add(new CustomClass("3", "可选项3"));
+            myList.Add(new CustomClass("4", "可选项4"));
+            myList.Add(new CustomClass("5", "可选项5"));
+            myList.Add(new CustomClass("6", "可选项6"));
+            myList.Add(new CustomClass("7", "可选择项7"));
+            myList.Add(new CustomClass("8", "可选择项8"));
+            myList.Add(new CustomClass("9", "可选择项9"));
 
             DropDownList1.DataTextField = "Name";
             DropDownList1.DataValueField = "ID";
@@ -80,6 +80,10 @@ namespace FineUI.Examples.dropdownlist
             if (DropDownList1.SelectedItem != null)
             {
                 labResult.Text = String.Format("选中项：{0}（值：{1}）", DropDownList1.SelectedItem.Text, DropDownList1.SelectedValue);
+            }
+            else
+            {
+                labResult.Text = "无选中项";
             }
         } 
 

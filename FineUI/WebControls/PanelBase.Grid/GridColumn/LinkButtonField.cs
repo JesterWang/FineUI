@@ -54,7 +54,7 @@ namespace FineUI
         {
             get
             {
-                return "box-grid-cell-inner-image";
+                return "f-grid-cell-inner-image";
             }
         }
 
@@ -511,9 +511,44 @@ namespace FineUI
 
         #endregion
 
+        #region EnableAjax
+
+        private object _enableAjax = null;
+
+        /// <summary>
+        /// 是否启用AJAX
+        /// </summary>
+        [Category(CategoryName.BASEOPTIONS)]
+        [DefaultValue(true)]
+        [Description("是否启用AJAX")]
+        public override bool EnableAjax
+        {
+            get
+            {
+                if (_enableAjax == null)
+                {
+                    if (DesignMode)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return Grid.EnableAjax;
+                    }
+                }
+                return (bool)_enableAjax;
+            }
+            set
+            {
+                _enableAjax = value;
+            }
+        } 
+
+        #endregion
+
         #region Methods
 
-        internal override string GetColumnValue(GridRow row)
+        internal override object GetColumnValue(GridRow row)
         {
             //string result = String.Empty;
 
@@ -561,16 +596,16 @@ namespace FineUI
             if (Enabled)
             {
                 nb.SetProperty("href", "javascript:;");
-
+                
                 // click
                 string paramStr = String.Format("Command${0}${1}${2}${3}", row.RowIndex, ColumnIndex, CommandName.Replace("'", "\""), CommandArgument.Replace("'", "\""));
-                string postBackReference = Grid.GetPostBackEventReference(paramStr);
+                string postBackReference = Grid.GetPostBackEventReference(paramStr, EnableAjax);
 
                 string clientScript = Button.ResolveClientScript(ValidateForms, ValidateTarget, ValidateMessageBox, EnablePostBack, postBackReference,
                   ConfirmText, ConfirmTitle, ConfirmIcon, ConfirmTarget, OnClientClick, String.Empty);
 
-                //clientScript = JsHelper.GetDeferScript(clientScript, 0) + "X.stopEvent();";
-                //clientScript = clientScript + "X.stop();";
+                //clientScript = JsHelper.GetDeferScript(clientScript, 0) + "F.stopEvent();";
+                //clientScript = clientScript + "F.stop();";
 
                 nb.SetProperty("onclick", clientScript);
 
@@ -651,7 +686,8 @@ namespace FineUI
 
 
             string jsContent = String.Format("var {0}={1};", XID, OB.ToString());
-            AddStartupScript(jsContent);
+            AddGridColumnScript(jsContent);
+            
         }
 
         #endregion

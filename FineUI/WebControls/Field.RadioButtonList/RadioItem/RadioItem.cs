@@ -71,6 +71,19 @@ namespace FineUI
             Value = value;
         }
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="text">文本</param>
+        /// <param name="value">值</param>
+        /// <param name="selected">是否选中</param>
+        public RadioItem(string text, string value, bool selected)
+        {
+            Text = text;
+            Value = value;
+            Selected = selected;
+        }
+
         #endregion
 
         #region Properties

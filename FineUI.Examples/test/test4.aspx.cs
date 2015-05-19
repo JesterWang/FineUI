@@ -83,16 +83,16 @@ namespace FineUI.Examples
         //    }
         //}
 
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Alert.Show("Button1");
-        }
+        //protected void Button1_Click(object sender, EventArgs e)
+        //{
+        //    Alert.Show("Button1");
+        //}
 
 
-        protected void Button2_Click(object sender, EventArgs e)
-        {
-            Alert.Show("Button2");
-        }
+        //protected void Button2_Click(object sender, EventArgs e)
+        //{
+        //    Alert.Show("Button2");
+        //}
 
     }
 }

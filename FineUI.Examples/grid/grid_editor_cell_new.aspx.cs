@@ -13,20 +13,22 @@ namespace FineUI.Examples.grid
 {
     public partial class grid_editor_cell_new : PageBase
     {
+        private bool AppendToEnd = true;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 JObject defaultObj = new JObject();
                 defaultObj.Add("Name", "用户名");
-                defaultObj.Add("Gender", 1);
+                defaultObj.Add("Gender", "1");
                 defaultObj.Add("EntranceYear", "2015");
                 defaultObj.Add("EntranceDate", "2015-09-01");
                 defaultObj.Add("AtSchool", false);
                 defaultObj.Add("Major", "化学系");
 
                 // 第一行新增一条数据
-                btnNew.OnClientClick = Grid1.GetAddNewRecordReference(defaultObj, false);
+                btnNew.OnClientClick = Grid1.GetAddNewRecordReference(defaultObj, AppendToEnd);
 
                 btnReset.OnClientClick = Grid1.GetRejectChangesReference();
 
@@ -44,18 +46,25 @@ namespace FineUI.Examples.grid
             Grid1.DataBind();
         }
 
-
-
         #endregion
 
         #region Events
 
+        private DataRow CreateNewData(DataTable table, Dictionary<string, object> newAddedData)
+        {
+            DataRow rowData = table.NewRow();
+
+            // 设置行ID（模拟数据库的自增长列）
+            rowData["Id"] = GetNextRowID();
+            UpdateDataRow(newAddedData, rowData);
+
+            return rowData;
+        }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            
             // 修改的现有数据
-            Dictionary<int, Dictionary<string, string>> modifiedDict = Grid1.GetModifiedDict();
+            Dictionary<int, Dictionary<string, object>> modifiedDict = Grid1.GetModifiedDict();
             foreach (int rowIndex in modifiedDict.Keys)
             {
                 int rowID = Convert.ToInt32(Grid1.DataKeys[rowIndex][0]);
@@ -65,17 +74,23 @@ namespace FineUI.Examples.grid
             }
 
             // 新增数据
-            List<Dictionary<string, string>> newAddedList = Grid1.GetNewAddedList();
-            for (int i = newAddedList.Count - 1; i >= 0; i--)
+            List<Dictionary<string, object>> newAddedList = Grid1.GetNewAddedList();
+            DataTable table = GetSourceData();
+            if (AppendToEnd)
             {
-                DataTable table = GetSourceData();
-                DataRow rowData = table.NewRow();
-
-                // 设置行ID（模拟数据库的自增长列）
-                rowData["Id"] = GetNextRowID();
-                UpdateDataRow(newAddedList[i], rowData);
-
-                table.Rows.InsertAt(rowData, 0);
+                for (int i = 0; i < newAddedList.Count; i++)
+                {
+                    DataRow rowData = CreateNewData(table, newAddedList[i]);
+                    table.Rows.Add(rowData);
+                }
+            }
+            else
+            {
+                for (int i = newAddedList.Count - 1; i >= 0; i--)
+                {
+                    DataRow rowData = CreateNewData(table, newAddedList[i]);
+                    table.Rows.InsertAt(rowData, 0);
+                }
             }
 
 
@@ -87,7 +102,7 @@ namespace FineUI.Examples.grid
         }
 
 
-        private static void UpdateDataRow(Dictionary<string, string> rowDict, DataRow rowData)
+        private static void UpdateDataRow(Dictionary<string, object> rowDict, DataRow rowData)
         {
             // 姓名
             if (rowDict.ContainsKey("Name"))
@@ -97,7 +112,7 @@ namespace FineUI.Examples.grid
             // 性别
             if (rowDict.ContainsKey("Gender"))
             {
-                rowData["Gender"] = Convert.ToInt32(rowDict["Gender"]);
+                rowData["Gender"] = rowDict["Gender"];
             }
             // 入学年份
             if (rowDict.ContainsKey("EntranceYear"))
@@ -107,12 +122,12 @@ namespace FineUI.Examples.grid
             // 入学日期
             if (rowDict.ContainsKey("EntranceDate"))
             {
-                rowData["EntranceDate"] = DateTime.Parse(rowDict["EntranceDate"]).ToString("yyyy-MM-dd");
+                rowData["EntranceDate"] = rowDict["EntranceDate"];
             }
             // 是否在校
             if (rowDict.ContainsKey("AtSchool"))
             {
-                rowData["AtSchool"] = Convert.ToBoolean(rowDict["AtSchool"]);
+                rowData["AtSchool"] = rowDict["AtSchool"];
             }
             // 所学专业
             if (rowDict.ContainsKey("Major"))

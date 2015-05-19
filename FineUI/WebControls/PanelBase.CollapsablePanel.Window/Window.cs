@@ -56,7 +56,7 @@ namespace FineUI
     /// 窗体控件
     /// </summary>
     [Designer("FineUI.Design.WindowDesigner, FineUI.Design")]
-    [ToolboxData("<{0}:Window IsModal=\"true\" Popup=\"true\" Width=\"500px\" Height=\"350px\" Title=\"Window\" BodyPadding=\"5px\" runat=\"server\"></{0}:Window>")]
+    [ToolboxData("<{0}:Window IsModal=\"true\" Width=\"500px\" Height=\"350px\" Title=\"Window\" BodyPadding=\"5px\" runat=\"server\"></{0}:Window>")]
     [ToolboxBitmap(typeof(Window), "toolbox.Window.bmp")]
     [Description("窗体控件")]
     [ParseChildren(true)]
@@ -215,10 +215,10 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["GUID"];
+                object obj = FState["GUID"];
                 if (obj == null)
                 {
-                    obj = XState["GUID"] = String.Format("{0}_{1}", XID, System.Guid.NewGuid().ToString("N"));
+                    obj = FState["GUID"] = String.Format("{0}_{1}", XID, System.Guid.NewGuid().ToString("N"));
                 }
 
                 return (string)obj;
@@ -254,34 +254,34 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["WindowPosition"];
+                object obj = FState["WindowPosition"];
                 return obj == null ? WindowPosition.Center : (WindowPosition)obj;
             }
             set
             {
-                XState["WindowPosition"] = value;
+                FState["WindowPosition"] = value;
             }
         }
 
 
-        /// <summary>
-        /// 是否弹出窗体
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(true)]
-        [Description("是否弹出窗体")]
-        [Obsolete("请使用Hidden属性来标记是否弹出窗口")]
-        public bool Popup
-        {
-            get
-            {
-                return !Hidden;
-            }
-            set
-            {
-                Hidden = !value;
-            }
-        }
+        ///// <summary>
+        ///// 是否弹出窗体
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(true)]
+        //[Description("是否弹出窗体")]
+        //[Obsolete("请使用Hidden属性来标记是否弹出窗口")]
+        //public bool Popup
+        //{
+        //    get
+        //    {
+        //        return !Hidden;
+        //    }
+        //    set
+        //    {
+        //        Hidden = !value;
+        //    }
+        //}
 
 
         ///// <summary>
@@ -294,12 +294,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["Maximized"];
+        //        object obj = FState["Maximized"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["Maximized"] = value;
+        //        FState["Maximized"] = value;
         //    }
         //}
 
@@ -314,12 +314,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Top"];
+                object obj = FState["Top"];
                 return obj == null ? Unit.Empty : (Unit)obj;
             }
             set
             {
-                XState["Top"] = value;
+                FState["Top"] = value;
             }
         }
 
@@ -334,12 +334,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Left"];
+                object obj = FState["Left"];
                 return obj == null ? Unit.Empty : (Unit)obj;
             }
             set
             {
-                XState["Left"] = value;
+                FState["Left"] = value;
             }
         }
 
@@ -354,12 +354,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableClose"];
+                object obj = FState["EnableClose"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableClose"] = value;
+                FState["EnableClose"] = value;
             }
         }
 
@@ -374,12 +374,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableDrag"];
+                object obj = FState["EnableDrag"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableDrag"] = value;
+                FState["EnableDrag"] = value;
             }
         }
 
@@ -394,12 +394,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableMaximize"];
+                object obj = FState["EnableMaximize"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableMaximize"] = value;
+                FState["EnableMaximize"] = value;
             }
         }
 
@@ -414,12 +414,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableMinimize"];
+                object obj = FState["EnableMinimize"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableMinimize"] = value;
+                FState["EnableMinimize"] = value;
             }
         }
 
@@ -434,12 +434,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MinHeight"];
+                object obj = FState["MinHeight"];
                 return obj == null ? (Unit)100 : (Unit)obj;
             }
             set
             {
-                XState["MinHeight"] = value;
+                FState["MinHeight"] = value;
             }
         }
 
@@ -454,12 +454,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MinWidth"];
+                object obj = FState["MinWidth"];
                 return obj == null ? (Unit)200 : (Unit)obj;
             }
             set
             {
-                XState["MinWidth"] = value;
+                FState["MinWidth"] = value;
             }
         }
 
@@ -473,12 +473,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["IsModal"];
+                object obj = FState["IsModal"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["IsModal"] = value;
+                FState["IsModal"] = value;
             }
         }
 
@@ -492,12 +492,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableResize"];
+                object obj = FState["EnableResize"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableResize"] = value;
+                FState["EnableResize"] = value;
             }
         }
 
@@ -512,34 +512,34 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["OnClientCloseButtonClick"];
+                object obj = FState["OnClientCloseButtonClick"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["OnClientCloseButtonClick"] = value;
+                FState["OnClientCloseButtonClick"] = value;
             }
         }
 
 
-        /// <summary>
-        /// 关闭Window之前弹出确认当前表单改变的对话框
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(false)]
-        [Description("关闭Window之前弹出确认当前表单改变的对话框")]
-        public bool EnableConfirmOnClose
-        {
-            get
-            {
-                object obj = XState["EnableConfirmOnClose"];
-                return obj == null ? false : (bool)obj;
-            }
-            set
-            {
-                XState["EnableConfirmOnClose"] = value;
-            }
-        }
+        ///// <summary>
+        ///// 关闭窗体之前弹出确认窗体内IFrame中表单改变的对话框
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(false)]
+        //[Description("关闭窗体之前弹出确认窗体内IFrame中表单改变的对话框")]
+        //public bool EnableConfirmOnClose
+        //{
+        //    get
+        //    {
+        //        object obj = FState["EnableConfirmOnClose"];
+        //        return obj == null ? false : (bool)obj;
+        //    }
+        //    set
+        //    {
+        //        FState["EnableConfirmOnClose"] = value;
+        //    }
+        //}
 
         /// <summary>
         /// 关闭窗体的动作（点击关闭按钮或者按 ESC 键都会执行此动作）
@@ -551,12 +551,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["CloseAction"];
+                object obj = FState["CloseAction"];
                 return obj == null ? CloseAction.Hide : (CloseAction)obj;
             }
             set
             {
-                XState["CloseAction"] = value;
+                FState["CloseAction"] = value;
             }
         }
 
@@ -590,33 +590,33 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Target"];
+                object obj = FState["Target"];
                 return obj == null ? Target.Self : (Target)obj;
             }
             set
             {
-                XState["Target"] = value;
+                FState["Target"] = value;
             }
         }
 
-        /// <summary>
-        /// 内容区域颜色是否和边框颜色相同，默认为true
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(true)]
-        [Description("内容区域颜色是否和边框颜色相同，默认为true")]
-        public bool Plain
-        {
-            get
-            {
-                object obj = XState["Plain"];
-                return obj == null ? true : (bool)obj;
-            }
-            set
-            {
-                XState["Plain"] = value;
-            }
-        }
+        ///// <summary>
+        ///// 内容区域颜色是否和边框颜色相同，默认为true
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(true)]
+        //[Description("内容区域颜色是否和边框颜色相同，默认为true")]
+        //public bool Plain
+        //{
+        //    get
+        //    {
+        //        object obj = FState["Plain"];
+        //        return obj == null ? true : (bool)obj;
+        //    }
+        //    set
+        //    {
+        //        FState["Plain"] = value;
+        //    }
+        //}
 
         #region old code
 
@@ -708,12 +708,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["Constrain"];
+        //        object obj = FState["Constrain"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["Constrain"] = value;
+        //        FState["Constrain"] = value;
         //    }
         //}
 
@@ -727,12 +727,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["ConstrainHeader"];
+        //        object obj = FState["ConstrainHeader"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["ConstrainHeader"] = value;
+        //        FState["ConstrainHeader"] = value;
         //    }
         //}
 
@@ -833,6 +833,15 @@ namespace FineUI
 
             #endregion
 
+            #region 验证EnableIFrame和Target是否冲突
+            
+            if (!EnableIFrame && Target != Target.Self)
+            {
+                Target = Target.Self;
+            } 
+
+            #endregion
+
             #region Properties
 
             OB.AddProperty("closeAction", "hide");
@@ -840,8 +849,8 @@ namespace FineUI
             //if (EnableClose != EnableClose_Default) OB.AddProperty(OptionName.Closable, EnableClose);
             //OB.AddProperty(OptionName.Constrain, Constrain);
             //OB.AddProperty(OptionName.ConstrainHeader, ConstrainHeader);
-            OB.AddProperty("plain", Plain);
-            OB.AddProperty("modal", IsModal);
+            //OB.AddProperty("plain", Plain);
+            
             OB.AddProperty("draggable", EnableDrag);
 
             OB.AddProperty("minimizable", EnableMinimize);
@@ -851,30 +860,28 @@ namespace FineUI
             OB.AddProperty("resizable", EnableResize);
 
             //OB.AddProperty("maximized", Maximized);
-            
 
-            //// 如果定义了左上角的位置
-            //if (Top != Unit.Empty && Left != Unit.Empty)
-            //{
-            //    OB.AddProperty(OptionName.X, Left.Value);
-            //    OB.AddProperty(OptionName.Y, Top.Value);
-            //}
-            //else
-            //{
 
-            //}
+            // 由于renderTo不是Ext.getBody，所以modal不能正常工作
+            OB.AddProperty("modal", IsModal);
 
-            // 在 X.util.init 中定义
-            OB.AddProperty("manager", "X.window_default_group", true);
+
+            // 在 F.util.init 中定义
+            OB.AddProperty("manager", "F.window_default_group", true);
 
 
             // 此Window显示的位置
             //OB.AddProperty("box_property_show_in_parent", ShowInParent);
-            OB.AddProperty("x_property_target", TargetHelper.GetName(Target));
-            OB.AddProperty("x_property_guid", GUID);
-            OB.AddProperty("x_property_left", Left != Unit.Empty ? Convert.ToInt32(Left.Value).ToString() : "");
-            OB.AddProperty("x_property_top", Top != Unit.Empty ? Convert.ToInt32(Top.Value).ToString() : "");
-            OB.AddProperty("x_property_position", WindowPosition == WindowPosition.GoldenSection ? "true" : "false", true);
+            OB.AddProperty("f_property_target", TargetHelper.GetName(Target));
+            OB.AddProperty("f_property_guid", GUID);
+            OB.AddProperty("f_property_left", Left != Unit.Empty ? Convert.ToInt32(Left.Value).ToString() : "");
+            OB.AddProperty("f_property_top", Top != Unit.Empty ? Convert.ToInt32(Top.Value).ToString() : "");
+            OB.AddProperty("f_property_position", WindowPosition == WindowPosition.GoldenSection ? "true" : "false", true);
+
+            if (!EnableAjax)
+            {
+                OB.AddProperty("f_property_enable_ajax", false);
+            }
 
             //if (Constrain)
             //{
@@ -886,6 +893,8 @@ namespace FineUI
             //    OB.AddProperty("constrainHeader", true);
             //}
 
+
+            
             // 这个为了在客户端生成 PostBack 脚本，比如 __doPostBack('ctl00$ContentPlaceHolder1$Toolbar1$testwindow','')
             OB.AddProperty("name", UniqueID);
 
@@ -900,9 +909,9 @@ namespace FineUI
                 // Modified by sanshi.ustc@gamil.com at 2009-8-1
 
                 // 首先删除已经添加的CSS样式
-                RemoveStartupCSS(String.Format("box-{0}-panelbase-icon", XID));
+                RemoveStartupCSS(String.Format("f-{0}-panelbase-icon", XID));
 
-                string className = String.Format("box-{0}-window-icon", GUID);
+                string className = String.Format("f-{0}-window-icon", GUID);
 
                 var addCSSPrefix = String.Empty;
                 if (Target == Target.Parent)
@@ -913,7 +922,7 @@ namespace FineUI
                 {
                     addCSSPrefix = "top.";
                 }
-                string addCSSScript = String.Format("{0}X.util.addCSS('{1}','{2}');", addCSSPrefix, className, StyleUtil.GetNoRepeatBackgroundStyle("." + className, ResolveUrl(IconUrl)));
+                string addCSSScript = String.Format("{0}F.addCSS('{1}','{2}');", addCSSPrefix, className, StyleUtil.GetNoRepeatBackgroundStyle("." + className, ResolveUrl(IconUrl)));
 
 
                 // 这里不需要extWindow渲染之前才添加CSS样式，只需要在页面加载完毕后就能添加此CSS样式
@@ -923,7 +932,7 @@ namespace FineUI
 
                 OB.AddProperty("iconCls", className);
 
-                //AddStartupScript(this, "X.util.addCSS('xxxxxxxxxxxxxxxx','');");
+                //AddStartupScript(this, "F.util.addCSS('xxxxxxxxxxxxxxxx','');");
                 //AddStartupScript(this, "Ext.DomHelper.append(Ext.fly(document.getElementsByTagName('head')[0]),{tag: 'style',type: 'text/css'});");
                 //AddStartupScript(this, "Ext.DomHelper.append(document.getElementsByTagName('head')[0], '<style type=\"text/css\"></style>');");
             }
@@ -983,7 +992,7 @@ namespace FineUI
             /*
              * 隐藏窗体的JS代码在 extender.js 中定义
              * 
-            string hideFunctionScript = String.Format("function(){{X.wnd.hide(this, '{0}', {1}, '{2}', '{3}');}}",
+            string hideFunctionScript = String.Format("function(){{F.wnd.hide(this, '{0}', {1}, '{2}', '{3}');}}",
                 TargetHelper.GetName(Target),
                 EnableIFrame.ToString().ToLower(),
                 HiddenHiddenFieldID,
@@ -1165,12 +1174,12 @@ namespace FineUI
             #endregion
 
             /*
-            string showFunctionScript = String.Format("function(iframeUrl, windowTitle){{X.wnd.show(this, iframeUrl, windowTitle, '{0}', '{1}', {2}, '{3}');}}",
+            string showFunctionScript = String.Format("function(iframeUrl, windowTitle){{F.wnd.show(this, iframeUrl, windowTitle, '{0}', '{1}', {2}, '{3}');}}",
                 Left != Unit.Empty ? Convert.ToInt32(Left.Value).ToString() : "",
                 Top != Unit.Empty ? Convert.ToInt32(Top.Value).ToString() : "",
                 WindowPosition == WindowPosition.GoldenSection ? "true" : "false",
                 HiddenHiddenFieldID);
-            OB.AddProperty("x_show", showFunctionScript, true);
+            OB.AddProperty("f_show", showFunctionScript, true);
             */
 
             #endregion
@@ -1227,7 +1236,8 @@ namespace FineUI
                 OB.AddProperty("maximizable", true);
 
                 // 这个事件可以处理两种情况，一是点击最大化按钮，二是双击Window标题栏最大化
-                OB.Listeners.AddProperty("maximize", "function(win){X.wnd.fixMaximize(win);}", true);
+                //OB.Listeners.AddProperty("maximize", "function(win){F.wnd.fixMaximize(win);}", true);
+                AddListener("maximize", "F.wnd.fixMaximize(win);", "win");
 
                 //OB.Listeners.AddProperty("resize", "function(win,width,height){console.log(width + ' - ' +height);}", true);
                 //JsObjectBuilder maxObj = new JsObjectBuilder();
@@ -1251,34 +1261,37 @@ namespace FineUI
                 OB.AddProperty("maximizable", false);
             }
 
+            
+
             if (EnableClose)
             {
+                string closeScript = String.Empty;
+
                 OB.AddProperty("closable", true);
 
-                string closeScript = String.Empty;
                 if (!String.IsNullOrEmpty(OnClientCloseButtonClick))
                 {
                     closeScript = OnClientCloseButtonClick;
                 }
                 else
                 {
-                    if (EnableConfirmOnClose)
-                    {
-                        switch (CloseAction)
-                        {
-                            case CloseAction.Hide:
-                                closeScript = GetConfirmHideReference();
-                                break;
-                            case CloseAction.HideRefresh:
-                                closeScript = GetConfirmHideRefreshReference();
-                                break;
-                            case CloseAction.HidePostBack:
-                                closeScript = GetConfirmHidePostBackReference();
-                                break;
-                        }
-                    }
-                    else
-                    {
+                    //if (EnableConfirmOnClose)
+                    //{
+                    //    switch (CloseAction)
+                    //    {
+                    //        case CloseAction.Hide:
+                    //            closeScript = GetConfirmHideReference();
+                    //            break;
+                    //        case CloseAction.HideRefresh:
+                    //            closeScript = GetConfirmHideRefreshReference();
+                    //            break;
+                    //        case CloseAction.HidePostBack:
+                    //            closeScript = GetConfirmHidePostBackReference();
+                    //            break;
+                    //    }
+                    //}
+                    //else
+                    //{
                         switch (CloseAction)
                         {
                             case CloseAction.Hide:
@@ -1291,12 +1304,12 @@ namespace FineUI
                                 closeScript = GetHidePostBackReference();
                                 break;
                         }
-                    }
+                    //}
                 }
 
                 //JsObjectBuilder closeObj = new JsObjectBuilder();
                 //closeObj.AddProperty("type", "close");
-                //closeObj.AddProperty("qtip", "X.wnd.closeButtonTooltip", true);
+                //closeObj.AddProperty("qtip", "F.wnd.closeButtonTooltip", true);
                 //if (!String.IsNullOrEmpty(closeScript))
                 //{
                 //    // ESC 按键和右上角的关闭按钮使用相同的事件处理函数
@@ -1311,39 +1324,29 @@ namespace FineUI
                 //toolsBuilder.AddProperty(closeObj);
 
 
-                // ESC 按键和右上角的关闭按钮使用相同的事件处理函数
-                string closeFunction = JsHelper.GetFunction(closeScript);
-                OB.AddProperty("onEsc", closeFunction, true);
+                //// ESC 按键和右上角的关闭按钮使用相同的事件处理函数
+                //string closeFN = XID + "_close";
+                //closeScript = String.Format("var {0}={1};", closeFN, JsHelper.GetFunction(closeScript + "return false;"));
 
-                string closeButtonScript = String.Format("win.tools.close.addListener('click', function(){{{0}}});", closeScript);
+                //// 用户按ESC键关闭窗口
+                //OB.AddProperty("onEsc", closeFN, true);
+                //// 用户点击右上角关闭按钮关闭窗口
+                //OB.Listeners.AddProperty("beforeclose", closeFN, true);
 
-                //string windowResizeScript = String.Empty;
 
-                //// 窗体控件最大化时改变浏览器大小可以自动调整窗体控件的大小
-                //if (EnableMaximize)
-                //{
-                //    windowResizeScript = "Ext.EventManager.onWindowResize(function(){X.wnd.fixMaximize(win);});";
-                //}
-
-                OB.Listeners.AddProperty("render", JsHelper.GetFunction(closeButtonScript, "win"), true);
-
-                // X('Window1').tools.close.addListener('click', function() {alert('ss');})
-
+                // 【点击右上角关闭按钮】和【用户按ESC键】都会调用 beforeclose 事件处理函数，return false; 表示自行处理关闭事件
+                AddListener("beforeclose", closeScript + "return false;");
             }
             else
             {
                 OB.AddProperty("closable", false);
             }
 
-            // 现在不用toolsBuilder
-            //if (toolsBuilder.Count > 0)
-            //{
-            //    //OB.AddProperty("tools", String.Format("{0}", toolsBuilder), true);
-            //}
-
             #endregion
 
             #region Show Window
+
+            string showWindowScript = String.Empty;
 
             // 我们不依赖于extjs的hidden配置属性，而是手工调用
             OB.RemoveProperty("hidden");
@@ -1351,7 +1354,8 @@ namespace FineUI
             // 如果页面第一次加载或者非原生回发，需要显示窗体
             if (!Hidden)
             {
-                AddStartupAbsoluteScript(GetShowReference());
+                showWindowScript = GetShowReference().Replace(ScriptID + ".", XID + ".");
+                //AddStartupAbsoluteScript(GetShowReference());
             }
 
 
@@ -1378,15 +1382,19 @@ namespace FineUI
 
             #region AddStartupScript
 
+            // 无论把 Window 控件放在哪里（母版页，或者用户控件中都行），因为下面会输出 Window 在页面上的节点，所以一定要输出 renderTo 
+            OB.AddProperty("renderTo", WrapperID);
+
+
             // 创建Window对象
             string jsContent = String.Format("var {0}=Ext.create('Ext.window.Window',{1});", XID, OB.ToString());
 
             // 通过Javascript的方式向页面添加Window的DIV包裹容器
-            string addWrapperScript = String.Format("X.util.appendFormNode('{0}');", String.Format("<div class=\"x-window-wrapper\" id=\"{0}\"></div>", WrapperID));
+            string addWrapperScript = String.Format("F.util.appendFormNode('{0}');", String.Format("<div class=\"x-window-wrapper\" id=\"{0}\"></div>", WrapperID));
             //addWrapperScript += "\r\n";
 
             // 添加隐藏表单字段的脚本和创建Window对象的脚本
-            jsContent = addWrapperScript + hiddenFieldsScript + jsContent;
+            jsContent = addWrapperScript + hiddenFieldsScript + jsContent + showWindowScript;
             AddStartupScript(jsContent);
 
             #endregion
@@ -1394,14 +1402,13 @@ namespace FineUI
         }
 
         /// <summary>
-        /// Override the same method exist in ControlBase, because we have separate logic to hide this control.
+        /// 获取 Hidden 属性改变的 JavaScript 脚本
+        /// Window 控件需要特殊处理，而不是像其他客户端组件一样调用 f_setVisible 函数
         /// </summary>
         protected override string GetHiddenPropertyChangedScript()
         {
             if (PropertyModified("Hidden"))
             {
-                //if (ClientPropertyModifiedInServer("Hidden"))
-
                 return Hidden ? GetHideReference() : GetShowReference();
 
             }
@@ -1442,31 +1449,9 @@ namespace FineUI
         /// </summary>
         public string GetSaveStateReference(params string[] values)
         {
-            #region old code
+            string valuesJS = JsHelper.EnquoteStringArray(values);
 
-            //string valuesJS = String.Empty;
-            //if (values == null || values.Length == 0)
-            //{
-            //    valuesJS = String.Format("'{0}'", value);
-            //}
-            //else
-            //{
-            //    string[] tempValues = new string[values.Length + 1];
-            //    tempValues[0] = value;
-            //    for (int i = 0; i < values.Length; i++)
-            //    {
-            //        tempValues[i + 1] = values[i];
-            //    }
-
-            //    valuesJS = JsHelper.GetJsStringArray(tempValues);
-            //}
-            //return String.Format("{0}.box_string_state={1};", ClientJavascriptID, valuesJS); 
-
-            #endregion
-
-            string valuesJS = JsHelper.GetJsStringArray(values);
-
-            return String.Format("{0}.x_property_save_state_control_client_ids={1};", ScriptID, valuesJS);
+            return String.Format("{0}.f_property_save_state_control_client_ids={1};", ScriptID, valuesJS);
         }
 
         ///// <summary>
@@ -1477,6 +1462,39 @@ namespace FineUI
         //    return String.Format("{0}.box_bool_value='{1}';", ClientJavascriptID, value.ToString().ToLower());
         //}
 
+        #endregion
+
+        #region GetIFramePostBackEventReference
+        /// <summary>
+        /// 获取窗体内IFrame回发页面的客户端脚本（比如：__doPostBack('','eventArgument');)
+        /// </summary>
+        /// <param name="eventArgument">事件参数</param>
+        /// <returns>客户端脚本</returns>
+        public string GetIFramePostBackEventReference(string eventArgument)
+        {
+            return String.Format("F.wnd.getIFrameWindowObject({0}).__doPostBack('',{1});", ScriptID, JsHelper.Enquote(eventArgument));
+        }
+
+        /// <summary>
+        /// 获取窗体内IFrame回发的客户端脚本（触发PageManager的CustomEvent事件）
+        /// </summary>
+        /// <param name="eventArgument">事件参数</param>
+        /// <returns>客户端脚本</returns>
+        public string GetIFrameCustomEventReference(string eventArgument)
+        {
+            return GetIFrameCustomEventReference(eventArgument, false);
+        }
+
+        /// <summary>
+        /// 获取窗体内IFrame回发的客户端脚本（触发PageManager的CustomEvent事件）
+        /// </summary>
+        /// <param name="eventArgument">事件参数</param>
+        /// <param name="validateForms">是否在回发前验证表单（在PageManager上进行表单配置）</param>
+        /// <returns>客户端脚本</returns>
+        public string GetIFrameCustomEventReference(string eventArgument, bool validateForms)
+        {
+            return String.Format("F.wnd.getIFrameWindowObject({0}).F.customEvent({1}, {2});", ScriptID, JsHelper.Enquote(eventArgument), validateForms.ToString().ToLower());
+        }
         #endregion
 
         #region GetShowReference
@@ -1493,7 +1511,7 @@ namespace FineUI
                 iframeUrl = IFrameUrl;
             }
 
-            return GetShowReference(iframeUrl, Title);
+            return GetShowReference(iframeUrl, String.Empty);
         }
 
         /// <summary>
@@ -1503,8 +1521,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetShowReference(string iframeUrl)
         {
-
-            return GetShowReference(iframeUrl, Title);
+            return GetShowReference(iframeUrl, String.Empty);
         }
 
         /// <summary>
@@ -1515,12 +1532,76 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetShowReference(string iframeUrl, string windowTitle)
         {
+            return GetShowReference(iframeUrl, windowTitle, Unit.Empty, Unit.Empty);
+        }
+
+        /// <summary>
+        /// 获取显示窗体的客户端脚本
+        /// </summary>
+        /// <param name="width">窗体宽度</param>
+        /// <param name="height">窗体高度</param>
+        /// <returns>客户端脚本</returns>
+        public string GetShowReference(Unit width, Unit height)
+        {
+            string iframeUrl = String.Empty;
+            if (EnableIFrame)
+            {
+                iframeUrl = IFrameUrl;
+            }
+
+            return GetShowReference(iframeUrl, String.Empty, width, height);
+        }
+
+        /// <summary>
+        /// 获取显示窗体的客户端脚本
+        /// </summary>
+        /// <param name="windowTitle">窗体标题</param>
+        /// <param name="width">窗体宽度</param>
+        /// <param name="height">窗体高度</param>
+        /// <returns>客户端脚本</returns>
+        public string GetShowReference(string windowTitle, Unit width, Unit height)
+        {
+            string iframeUrl = String.Empty;
+            if (EnableIFrame)
+            {
+                iframeUrl = IFrameUrl;
+            }
+
+            return GetShowReference(iframeUrl, windowTitle, width, height);
+        }
+
+        /// <summary>
+        /// 获取显示窗体的客户端脚本
+        /// </summary>
+        /// <param name="iframeUrl">IFrame地址</param>
+        /// <param name="windowTitle">窗体标题</param>
+        /// <param name="width">窗体宽度</param>
+        /// <param name="height">窗体高度</param>
+        /// <returns>客户端脚本</returns>
+        public string GetShowReference(string iframeUrl, string windowTitle, Unit width, Unit height)
+        {
             if (!String.IsNullOrEmpty(iframeUrl))
             {
                 iframeUrl = ResolveIFrameUrl(iframeUrl);
             }
 
-            return String.Format("{0}.x_show({1},{2});", ScriptID, JsHelper.GetJsStringWithScriptTag(iframeUrl), JsHelper.GetJsString(windowTitle));
+            iframeUrl = JsHelper.EnquoteWithScriptTag(iframeUrl);
+            windowTitle = JsHelper.Enquote(windowTitle);
+
+            if (width != Unit.Empty && height != Unit.Empty)
+            {
+                return String.Format("{0}.f_show({1},{2},{3},{4});", ScriptID,
+                    iframeUrl,
+                    windowTitle,
+                    width.Value,
+                    height.Value);
+            }
+            else
+            {
+                return String.Format("{0}.f_show({1},{2});", ScriptID,
+                   iframeUrl,
+                   windowTitle);
+            }
         }
 
         /// <summary>
@@ -1529,7 +1610,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetMaximizeReference()
         {
-            return String.Format("{0}.x_maximize();", ScriptID);
+            return String.Format("{0}.f_maximize();", ScriptID);
         }
 
         /// <summary>
@@ -1538,7 +1619,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetRestoreReference()
         {
-            return String.Format("{0}.x_restore();", ScriptID);
+            return String.Format("{0}.f_restore();", ScriptID);
         }
 
         /// <summary>
@@ -1547,7 +1628,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetMinimizeReference()
         {
-            return String.Format("{0}.x_minimize();", ScriptID);
+            return String.Format("{0}.f_minimize();", ScriptID);
         }
 
 
@@ -1561,7 +1642,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetHideReference()
         {
-            return String.Format("{0}.x_hide();", ScriptID);
+            return String.Format("{0}.f_hide();", ScriptID);
         }
 
         /// <summary>
@@ -1570,7 +1651,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetHideRefreshReference()
         {
-            return String.Format("{0}.x_hide_refresh();", ScriptID);
+            return String.Format("{0}.f_hide_refresh();", ScriptID);
         }
 
         /// <summary>
@@ -1579,7 +1660,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetHidePostBackReference()
         {
-            return String.Format("{0}.x_hide_postback();", ScriptID);
+            return String.Format("{0}.f_hide_postback();", ScriptID);
         }
 
         /// <summary>
@@ -1589,63 +1670,86 @@ namespace FineUI
         public string GetHidePostBackReference(string argument)
         {
             //return String.Format("{0}.box_hide_postback('{1}');", ScriptID, argument.Replace("'", "\""));
-            return String.Format("{0}.x_hide_postback({1});", ScriptID, JsHelper.GetJsString(argument));
+            return String.Format("{0}.f_hide_postback({1});", ScriptID, JsHelper.Enquote(argument));
+        }
+
+        /// <summary>
+        /// 获取关闭当前激活Window然后执行脚本的客户端脚本
+        /// </summary>
+        /// <param name="argument">执行的脚本</param>
+        /// <returns>客户端脚本</returns>
+        public string GetHideExecuteScriptReference(string argument)
+        {
+            return String.Format("{0}.f_hide_executescript({1});", ScriptID, JsHelper.Enquote(argument));
         }
 
         #endregion
 
-        #region GetConfirmHideReference
+        #region oldcode
 
-        /// <summary>
-        /// 获取先确认IFrame的页面中表单改变，然后关闭弹出窗口的客户端脚本
-        /// </summary>
-        /// <returns>客户端脚本</returns>
-        public string GetConfirmHideReference()
-        {
-            return String.Format("X.wnd.extWindowIFrameFormModifiedConfirm({0}, function(){{{1}}});",
-                ScriptID,
-                GetHideReference());
-        }
+        ///// <summary>
+        ///// 获取先确认IFrame的页面中表单改变，然后关闭弹出窗口的客户端脚本
+        ///// </summary>
+        ///// <returns>客户端脚本</returns>
+        //public string GetConfirmHideReference()
+        //{
+        //    return String.Format("F.wnd.iframeModifiedConfirm({0}, function(){{{1}}});",
+        //        ScriptID,
+        //        GetHideReference());
+        //}
 
-        /// <summary>
-        /// 获取先确认IFrame的页面中表单改变，然后关闭弹出窗口，然后刷新父页面的客户端脚本
-        /// </summary>
-        /// <returns>客户端脚本</returns>
-        public string GetConfirmHideRefreshReference()
-        {
-            return String.Format("X.wnd.extWindowIFrameFormModifiedConfirm({0}, function(){{{1}}});",
-                ScriptID,
-                GetHideRefreshReference());
-        }
+        ///// <summary>
+        ///// 获取先确认IFrame的页面中表单改变，然后关闭弹出窗口，然后刷新父页面的客户端脚本
+        ///// </summary>
+        ///// <returns>客户端脚本</returns>
+        //public string GetConfirmHideRefreshReference()
+        //{
+        //    return String.Format("F.wnd.iframeModifiedConfirm({0}, function(){{{1}}});",
+        //        ScriptID,
+        //        GetHideRefreshReference());
+        //}
 
-        /// <summary>
-        /// 获取先确认IFrame的页面中表单改变，然后关闭弹出窗口，然后回发父页面的客户端脚本
-        /// </summary>
-        /// <returns>客户端脚本</returns>
-        public string GetConfirmHidePostBackReference()
-        {
-            return String.Format("X.wnd.extWindowIFrameFormModifiedConfirm({0}, function(){{{1}}});",
-                ScriptID,
-                GetHidePostBackReference());
-        }
+        ///// <summary>
+        ///// 获取先确认IFrame的页面中表单改变，然后关闭弹出窗口，然后回发父页面的客户端脚本
+        ///// </summary>
+        ///// <returns>客户端脚本</returns>
+        //public string GetConfirmHidePostBackReference()
+        //{
+        //    return String.Format("F.wnd.iframeModifiedConfirm({0}, function(){{{1}}});",
+        //        ScriptID,
+        //        GetHidePostBackReference());
+        //}
 
 
-        /// <summary>
-        /// 获取先确认IFrame的页面中表单改变，然后关闭弹出窗口，然后回发父页面的客户端脚本
-        /// </summary>
-        /// <returns>客户端脚本</returns>
-        public string GetConfirmHidePostBackReference(string argument)
-        {
-            return String.Format("X.wnd.extWindowIFrameFormModifiedConfirm({0},function(){{{1}}});",
-                ScriptID,
-                GetHidePostBackReference(argument));
-        }
+        ///// <summary>
+        ///// 获取先确认IFrame的页面中表单改变，然后关闭弹出窗口，然后回发父页面的客户端脚本
+        ///// </summary>
+        ///// <returns>客户端脚本</returns>
+        //public string GetConfirmHidePostBackReference(string argument)
+        //{
+        //    return String.Format("F.wnd.iframeModifiedConfirm({0},function(){{{1}}});",
+        //        ScriptID,
+        //        GetHidePostBackReference(argument));
+        //}
+
+
+        ///// <summary>
+        ///// 获取先确认IFrame的页面中表单改变，然后关闭弹出窗口，然后执行脚本的客户端脚本
+        ///// </summary>
+        ///// <param name="argument">回发参数</param>
+        ///// <returns>客户端脚本</returns>
+        //public string GetConfirmHideExecuteScriptReference(string argument)
+        //{
+        //    return String.Format("F.wnd.iframeModifiedConfirm({0},function(){{{1}}});",
+        //        ScriptID,
+        //        GetHideExecuteScriptReference(argument));
+        //}
 
 
         #region oldcode
         //public string GetConfirmFormModifiedCloseRefreshReference()
         //{
-        //    return String.Format("X.wnd.extWindowIFrameFormModifiedConfirm({0}, {1}, '{2}');",
+        //    return String.Format("F.wnd.extWindowIFrameFormModifiedConfirm({0}, {1}, '{2}');",
         //        String.Format("{0}", ClientJavascriptID),
         //        ShowInParent.ToString().ToLower(),
         //        GUID);
@@ -1664,7 +1768,7 @@ namespace FineUI
         //    {
         //        panel = String.Format("parent.X.{0}", GUID);
         //    }
-        //    return String.Format("X.wnd.getIFrameWindowObject({0}).X.util.isPageStateChanged()", panel);
+        //    return String.Format("F.wnd.getIFrameWindowObject({0}).F.util.isPageStateChanged()", panel);
         //}
 
         //public string GetIFramePageStateChangedConfirmReference(string confirmTitle, string confirmMsg, string okScript, string cancelScript)
@@ -1702,22 +1806,20 @@ namespace FineUI
             if (Hidden != postHidden)
             {
                 Hidden = postHidden;
-                XState.BackupPostDataProperty("Hidden");
-                return true;
+                FState.BackupPostDataProperty("Hidden");
             }
 
             return false;
         }
 
-        /// <summary>
-        /// 触发回发数据改变事件
-        /// </summary>
-        public override void RaisePostDataChangedEvent()
-        {
-            base.RaisePostDataChangedEvent();
+        ///// <summary>
+        ///// 触发回发数据改变事件
+        ///// </summary>
+        //public override void RaisePostDataChangedEvent()
+        //{
+        //    base.RaisePostDataChangedEvent();
 
-            //OnCollapsedChanged(EventArgs.Empty);
-        }
+        //}
 
         #endregion
 
@@ -1727,9 +1829,14 @@ namespace FineUI
         /// 处理回发事件
         /// </summary>
         /// <param name="eventArgument">事件参数</param>
-        public void RaisePostBackEvent(string eventArgument)
+        public override void RaisePostBackEvent(string eventArgument)
         {
-            OnClose(new WindowCloseEventArgs(eventArgument));
+            base.RaisePostBackEvent(eventArgument);
+
+            if (eventArgument.StartsWith("Close$"))
+            {
+                OnClose(new WindowCloseEventArgs(eventArgument.Substring("Close$".Length)));
+            }
         }
 
         #endregion

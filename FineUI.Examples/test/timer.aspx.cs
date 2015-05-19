@@ -13,9 +13,7 @@ namespace FineUI.Examples
         {
             if (!IsPostBack)
             {
-                Label1.Text = "Label1";
-                rblU_Sex.SelectedValue = "2";
-                Alert.Show("ss", MessageBoxIcon.Information);
+                
             }
         }
     }

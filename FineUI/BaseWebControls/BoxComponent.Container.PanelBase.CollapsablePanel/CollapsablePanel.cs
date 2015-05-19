@@ -42,7 +42,7 @@ namespace FineUI
     /// <summary>
     /// 可折叠面板控件基类（抽象类）
     /// </summary>
-    public abstract class CollapsablePanel : PanelBase, IPostBackDataHandler
+    public abstract class CollapsablePanel : PanelBase, IPostBackDataHandler, IPostBackEventHandler
     {
         #region Constructor
 
@@ -58,6 +58,44 @@ namespace FineUI
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// 是否启用折叠事件
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("是否启用折叠事件")]
+        public bool EnableCollapseEvent
+        {
+            get
+            {
+                object obj = FState["EnableCollapseEvent"];
+                return obj == null ? false : (bool)obj;
+            }
+            set
+            {
+                FState["EnableCollapseEvent"] = value;
+            }
+        }
+
+        /// <summary>
+        /// 是否启用展开事件
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("是否启用展开事件")]
+        public bool EnableExpandEvent
+        {
+            get
+            {
+                object obj = FState["EnableExpandEvent"];
+                return obj == null ? false : (bool)obj;
+            }
+            set
+            {
+                FState["EnableExpandEvent"] = value;
+            }
+        }
 
         /// <summary>
         /// 是否展开
@@ -88,12 +126,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Collapsed"];
+                object obj = FState["Collapsed"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["Collapsed"] = value;
+                FState["Collapsed"] = value;
             }
         }
 
@@ -108,12 +146,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableCollapse"];
+                object obj = FState["EnableCollapse"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableCollapse"] = value;
+                FState["EnableCollapse"] = value;
             }
         }
 
@@ -127,12 +165,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Title"];
+                object obj = FState["Title"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Title"] = value;
+                FState["Title"] = value;
             }
         }
 
@@ -146,12 +184,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ShowHeader"];
+                object obj = FState["ShowHeader"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ShowHeader"] = value;
+                FState["ShowHeader"] = value;
             }
         }
 
@@ -201,7 +239,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["IconUrl"];
+                object obj = FState["IconUrl"];
                 if (obj == null)
                 {
                     if (!DesignMode)
@@ -216,7 +254,7 @@ namespace FineUI
             }
             set
             {
-                XState["IconUrl"] = value;
+                FState["IconUrl"] = value;
             }
         }
 
@@ -231,12 +269,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Icon"];
+                object obj = FState["Icon"];
                 return obj == null ? Icon.None : (Icon)obj;
             }
             set
             {
-                XState["Icon"] = value;
+                FState["Icon"] = value;
             }
         }
 
@@ -263,7 +301,7 @@ namespace FineUI
 
         #endregion
 
-        // 这个值在 X.ajax.js 中和 getXStateViaCmp 函数相呼应
+        // 这个值在 X.ajax.js 中和 getFStateViaCmp 函数相呼应
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         internal string CollapsedHiddenFieldID
@@ -276,7 +314,7 @@ namespace FineUI
 
         #endregion
 
-        #region OnPreRender
+        #region OnPreRender|OnFirstPreRender
 
         /// <summary>
         /// 渲染 HTML 之前调用（AJAX回发）
@@ -288,11 +326,11 @@ namespace FineUI
             StringBuilder sb = new StringBuilder();
             if (PropertyModified("Collapsed"))
             {
-                sb.AppendFormat("{0}.x_setCollapse();", XID);
+                sb.AppendFormat("{0}.f_setCollapse();", XID);
             }
             if (ShowHeader && PropertyModified("Title"))
             {
-                sb.AppendFormat("{0}.x_setTitle();", XID);
+                sb.AppendFormat("{0}.f_setTitle();", XID);
             }
 
             AddAjaxScript(sb);
@@ -307,7 +345,7 @@ namespace FineUI
 
             #region options
 
-            OB.AddProperty("animCollapse", true);
+            OB.AddProperty("animCollapse", false);
             OB.AddProperty("collapsible", EnableCollapse);
             OB.AddProperty("collapsed", Collapsed);
 
@@ -332,7 +370,7 @@ namespace FineUI
             {
                 // Window控件的特殊处理在Window控件中
                 // 添加CSS样式
-                string className = String.Format("box-{0}-panelbase-icon", XID);
+                string className = String.Format("f-{0}-panelbase-icon", XID);
                 AddStartupCSS(className, StyleUtil.GetNoRepeatBackgroundStyle("." + className, ResolveUrl(IconUrl)));
 
                 OB.AddProperty("iconCls", className);
@@ -377,6 +415,23 @@ namespace FineUI
 
             #endregion
 
+            #region EnableCollapseEvent
+
+            if (EnableCollapseEvent)
+            {
+                //string collapseScript = JsHelper.GetFunction(GetPostBackEventReference("Collapse"));
+                //OB.Listeners.AddProperty("collapse", collapseScript, true);
+                AddListener("collapse", GetPostBackEventReference("Collapse"));
+            }
+
+            if (EnableExpandEvent)
+            {
+                //string expandScript = JsHelper.GetFunction(GetPostBackEventReference("Expand"));
+                //OB.Listeners.AddProperty("expand", expandScript, true);
+                AddListener("expand", GetPostBackEventReference("Expand"));
+            } 
+
+            #endregion
         }
 
         #endregion
@@ -395,8 +450,7 @@ namespace FineUI
             if (Collapsed != postCollapsed)
             {
                 Collapsed = postCollapsed;
-                XState.BackupPostDataProperty("Collapsed");
-                return true;
+                FState.BackupPostDataProperty("Collapsed");
             }
 
             return false;
@@ -436,6 +490,99 @@ namespace FineUI
         //        handler(this, e);
         //    }
         //}
+
+        #endregion
+
+        #region IPostBackEventHandler
+
+        /// <summary>
+        /// 处理回发事件
+        /// </summary>
+        /// <param name="eventArgument">事件参数</param>
+        public virtual void RaisePostBackEvent(string eventArgument)
+        {
+            if (eventArgument == "Collapse")
+            {
+                OnCollapse(EventArgs.Empty);
+            }
+            else if (eventArgument == "Expand")
+            {
+                OnExpand(EventArgs.Empty);
+            } 
+
+        }
+
+        #endregion
+
+        #region OnCollapse
+
+        private static readonly object _collapseHandlerKey = new object();
+
+        /// <summary>
+        /// 折叠事件
+        /// </summary>
+        [Category(CategoryName.ACTION)]
+        [Description("折叠事件")]
+        public event EventHandler Collapse
+        {
+            add
+            {
+                Events.AddHandler(_collapseHandlerKey, value);
+            }
+            remove
+            {
+                Events.RemoveHandler(_collapseHandlerKey, value);
+            }
+        }
+
+        /// <summary>
+        /// 触发折叠事件
+        /// </summary>
+        /// <param name="e">事件参数</param>
+        protected virtual void OnCollapse(EventArgs e)
+        {
+            EventHandler handler = Events[_collapseHandlerKey] as EventHandler;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        #endregion
+
+        #region OnExpand
+
+        private static readonly object _expandHandlerKey = new object();
+
+        /// <summary>
+        /// 展开事件
+        /// </summary>
+        [Category(CategoryName.ACTION)]
+        [Description("展开事件")]
+        public event EventHandler Expand
+        {
+            add
+            {
+                Events.AddHandler(_expandHandlerKey, value);
+            }
+            remove
+            {
+                Events.RemoveHandler(_expandHandlerKey, value);
+            }
+        }
+
+        /// <summary>
+        /// 触发展开事件
+        /// </summary>
+        /// <param name="e">事件参数</param>
+        protected virtual void OnExpand(EventArgs e)
+        {
+            EventHandler handler = Events[_expandHandlerKey] as EventHandler;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
 
         #endregion
 

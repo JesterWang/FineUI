@@ -17,35 +17,7 @@ namespace FineUI.Examples.grid
             {
                 BindGrid();
             }
-            else
-            {
-                string eventTarget = Request.Form["__EVENTTARGET"];
-                string eventArgument = Request.Form["__EVENTARGUMENT"];
-                if (eventTarget == Grid1.ClientID && eventArgument.StartsWith("AutoSave$"))
-                {
-                    int rowIndex = Convert.ToInt32(eventArgument.Substring("AutoSave$".Length));
-                    System.Web.UI.WebControls.TextBox tbxTableChineseScore = (System.Web.UI.WebControls.TextBox)Grid1.Rows[rowIndex].FindControl("tbxTableChineseScore");
-                    System.Web.UI.WebControls.TextBox tbxTableMathScore = (System.Web.UI.WebControls.TextBox)Grid1.Rows[rowIndex].FindControl("tbxTableMathScore");
-
-                    int rowDataId = Convert.ToInt32(Grid1.DataKeys[rowIndex][0]);
-
-                    int chineseSocre = 0;
-                    int mathScore = 0;
-                    try
-                    {
-                        chineseSocre = Convert.ToInt32(tbxTableChineseScore.Text);
-                        mathScore = Convert.ToInt32(tbxTableMathScore.Text);
-                    }
-                    catch (Exception)
-                    {
-                        // ...
-                    }
-
-                    SetDataRow(rowDataId, chineseSocre, mathScore);
-
-                    UpdateDetailForm(rowDataId);
-                }
-            }
+            
         }
 
         #region BindGrid
@@ -64,31 +36,75 @@ namespace FineUI.Examples.grid
 
         #region Events
 
-        protected void Grid1_RowSelect(object sender, FineUI.GridRowSelectEventArgs e)
+        private void UpdateAllUserInputData()
         {
-            int rowDataId = Convert.ToInt32(Grid1.DataKeys[e.RowIndex][0]);
-            UpdateDetailForm(rowDataId);
-        }
-
-        private void UpdateDetailForm(int rowDataId)
-        {
-            DataRow row = FindDataRowById(rowDataId);
-            if (row != null)
+            // 更新所有行的用户输入数据
+            foreach (GridRow row in Grid1.Rows)
             {
-                string userName = row["Name"].ToString();
-                labName.Text = userName;
-                labGender.Text = GetGender(row["Gender"]);
-                labMajor.Text = row["Major"].ToString();
-                labAtSchool.Text = Convert.ToBoolean(row["AtSchool"]) ? "是" : "否";
-                labEntranceYear.Text = row["EntranceYear"].ToString();
-                labChineseScore.Text = row["ChineseScore"].ToString();
-                labMathScore.Text = row["MathScore"].ToString();
-                labTotalScore.Text = row["TotalScore"].ToString();
-                labDesc.Text = row["Desc"].ToString();
+                int rowIndex = row.RowIndex;
+                System.Web.UI.WebControls.TextBox tbxTableChineseScore = (System.Web.UI.WebControls.TextBox)Grid1.Rows[rowIndex].FindControl("tbxTableChineseScore");
+                System.Web.UI.WebControls.TextBox tbxTableMathScore = (System.Web.UI.WebControls.TextBox)Grid1.Rows[rowIndex].FindControl("tbxTableMathScore");
 
-                SimpleForm1.Title = "详细信息 - " + userName;
+                int rowDataId = Convert.ToInt32(Grid1.DataKeys[rowIndex][0]);
+
+                int chineseSocre = 0;
+                int mathScore = 0;
+                try
+                {
+                    chineseSocre = Convert.ToInt32(tbxTableChineseScore.Text);
+                    mathScore = Convert.ToInt32(tbxTableMathScore.Text);
+                }
+                catch (Exception)
+                {
+                    // ...
+                }
+
+                SetDataRow(rowDataId, chineseSocre, mathScore);
             }
         }
+
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            UpdateAllUserInputData();
+        }
+
+        protected void PageManager1_CustomEvent(object sender, CustomEventArgs e)
+        {
+            if (e.EventArgument == "AutoSave")
+            {
+                UpdateAllUserInputData();
+
+                // 输出提示信息
+                PageContext.RegisterStartupScript(String.Format("showAutoSaveSuccessMessage({0});", JsHelper.Enquote("自动保存于" + DateTime.Now.ToString())));
+            }
+        }
+
+
+        //protected void Grid1_RowSelect(object sender, FineUI.GridRowSelectEventArgs e)
+        //{
+        //    int rowDataId = Convert.ToInt32(Grid1.DataKeys[e.RowIndex][0]);
+        //    UpdateDetailForm(rowDataId);
+        //}
+
+        //private void UpdateDetailForm(int rowDataId)
+        //{
+        //    DataRow row = FindDataRowById(rowDataId);
+        //    if (row != null)
+        //    {
+        //        string userName = row["Name"].ToString();
+        //        labName.Text = userName;
+        //        labGender.Text = GetGender(row["Gender"]);
+        //        labMajor.Text = row["Major"].ToString();
+        //        labAtSchool.Text = Convert.ToBoolean(row["AtSchool"]) ? "是" : "否";
+        //        labEntranceYear.Text = row["EntranceYear"].ToString();
+        //        labChineseScore.Text = row["ChineseScore"].ToString();
+        //        labMathScore.Text = row["MathScore"].ToString();
+        //        labTotalScore.Text = row["TotalScore"].ToString();
+        //        labDesc.Text = row["Desc"].ToString();
+
+        //        SimpleForm1.Title = "详细信息 - " + userName;
+        //    }
+        //}
 
         #endregion
 
@@ -130,6 +146,8 @@ namespace FineUI.Examples.grid
         }
 
         #endregion
+
+        
 
     }
 }

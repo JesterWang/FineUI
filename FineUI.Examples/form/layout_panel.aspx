@@ -4,54 +4,55 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style>
         .btn-in-form
         {
-            margin-bottom: 4px;
+            margin-bottom: 5px;
+            display: table;
         }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-    <x:PageManager ID="PageManager1" runat="server" />
-    <x:Form ID="SimpleForm1" BodyPadding="5px" Width="550px" LabelAlign="Left" LabelWidth="80px"
+    <f:PageManager ID="PageManager1" runat="server" />
+    <f:Form ID="SimpleForm1" BodyPadding="5px" Width="550px" LabelAlign="Left" LabelWidth="80px"
          Title="表单" runat="server">
         <Rows>
-            <x:FormRow ID="FormRow5">
+            <f:FormRow ID="FormRow5">
                 <Items>
-                    <x:TextBox ID="TextBox1" runat="server" Label="文本一">
-                    </x:TextBox>
-                    <x:Button ID="Button4" CssClass="btn-in-form" runat="server" Text="按钮一">
-                    </x:Button>
+                    <f:TextBox ID="TextBox1" runat="server" Label="文本一">
+                    </f:TextBox>
+                    <f:Button ID="Button4" CssClass="btn-in-form" runat="server" Text="按钮一">
+                    </f:Button>
                 </Items>
-            </x:FormRow>
-            <x:FormRow ID="FormRow6" runat="server">
+            </f:FormRow>
+            <f:FormRow ID="FormRow6" runat="server">
                 <Items>
-                    <x:TextBox ID="TextBox2" runat="server" Label="文本二">
-                    </x:TextBox>
-                    <x:Button ID="Button3" CssClass="btn-in-form" runat="server" Text="按钮二">
-                    </x:Button>
+                    <f:TextBox ID="TextBox2" runat="server" Label="文本二">
+                    </f:TextBox>
+                    <f:Button ID="Button3" CssClass="btn-in-form" runat="server" Text="按钮二">
+                    </f:Button>
                 </Items>
-            </x:FormRow>
-            <x:FormRow ID="FormRow7" runat="server">
+            </f:FormRow>
+            <f:FormRow ID="FormRow7" runat="server">
                 <Items>
-                    <x:TextBox ID="TextBox3" runat="server" Label="文本三">
-                    </x:TextBox>
-                    <x:Button ID="Button1" CssClass="btn-in-form" runat="server" Text="按钮三">
-                    </x:Button>
+                    <f:TextBox ID="TextBox3" runat="server" Label="文本三">
+                    </f:TextBox>
+                    <f:Button ID="Button1" CssClass="btn-in-form" runat="server" Text="按钮三">
+                    </f:Button>
                 </Items>
-            </x:FormRow>
-            <x:FormRow ID="FormRow8" runat="server">
+            </f:FormRow>
+            <f:FormRow ID="FormRow8" runat="server">
                 <Items>
-                    <x:TextBox ID="TextBox4" runat="server" Label="文本四">
-                    </x:TextBox>
-                    <x:Button ID="Button2" CssClass="btn-in-form" runat="server" Text="按钮四">
-                    </x:Button>
+                    <f:TextBox ID="TextBox4" runat="server" Label="文本四">
+                    </f:TextBox>
+                    <f:Button ID="Button2" CssClass="btn-in-form" runat="server" Text="按钮四">
+                    </f:Button>
                 </Items>
-            </x:FormRow>
+            </f:FormRow>
         </Rows>
-    </x:Form>
+    </f:Form>
     </form>
 </body>
 </html>

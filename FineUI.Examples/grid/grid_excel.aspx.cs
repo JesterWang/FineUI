@@ -36,8 +36,9 @@ namespace FineUI.Examples.data
         protected void Button1_Click(object sender, EventArgs e)
         {
             Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment; filename=MyExcelFile.xls");
+            Response.AddHeader("content-disposition", "attachment; filename=myexcel.xls");
             Response.ContentType = "application/excel";
+            Response.ContentEncoding = System.Text.Encoding.UTF8;
             Response.Write(GetGridTableHtml(Grid1));
             Response.End();
         }
@@ -45,6 +46,8 @@ namespace FineUI.Examples.data
         private string GetGridTableHtml(Grid grid)
         {
             StringBuilder sb = new StringBuilder();
+
+            sb.Append("<meta http-equiv=\"content-type\" content=\"application/excel; charset=UTF-8\"/>");
 
             sb.Append("<table cellspacing=\"0\" rules=\"all\" border=\"1\" style=\"border-collapse:collapse;\">");
 
@@ -72,7 +75,7 @@ namespace FineUI.Examples.data
                     else
                     {
                         // 处理CheckBox
-                        if (html.Contains("box-grid-static-checkbox"))
+                        if (html.Contains("f-grid-static-checkbox"))
                         {
                             if (html.Contains("uncheck"))
                             {

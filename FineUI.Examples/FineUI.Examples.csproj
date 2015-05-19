@@ -45,17 +45,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CKEditor.NET, Version=3.6.4.0, Culture=neutral, PublicKeyToken=e379cdf2f8354999, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>library\CKEditor.NET.dll</HintPath>
-    </Reference>
-    <Reference Include="FredCK.FCKeditorV2, Version=2.6.3.22326, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>library\FredCK.FCKeditorV2.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>library\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Newtonsoft.Json\Net20\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -64,47 +56,90 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="Wilco.SyntaxHighlighter, Version=0.5.0.0, Culture=neutral, PublicKeyToken=fb87150479c2990b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>library\Wilco.SyntaxHighlighter.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="accordion\accordion_tree_index.htm" />
+    <Content Include="accordion\accordion_autopostback.aspx" />
     <Content Include="aspnet\aspnet_literal.aspx" />
-    <Content Include="aspnet\test.aspx" />
-    <Content Include="aspnet\TestWindow.aspx" />
-    <Content Include="aspnet\ckeditor.aspx" />
-    <Content Include="aspnet\ueditor.aspx" />
-    <Content Include="aspnet\ueditor_two.aspx" />
-    <Content Include="autocomplete\inline.aspx" />
-    <Content Include="autocomplete\custom_display.aspx" />
-    <Content Include="autocomplete\multi_values_remote.aspx" />
-    <Content Include="autocomplete\multi_values.aspx" />
-    <Content Include="autocomplete\remote_with_cache.aspx" />
-    <Content Include="autocomplete\email.aspx" />
+    <Content Include="basic\login_enterkey.aspx" />
+    <Content Include="dropdownlist\dropdownlist_matchfieldwidth.aspx" />
+    <Content Include="dropdownlist\multiselect.aspx" />
+    <Content Include="dropdownlist\multiselect_enableedit.aspx" />
+    <Content Include="dropdownlist\multiselect_autopostback.aspx" />
+    <Content Include="extjs_builder\version.txt" />
+    <Content Include="Global.asax" />
+    <Content Include="grid\grid_checkall_singleselect.aspx" />
+    <Content Include="grid\grid_excel_findcontrol.aspx" />
+    <Content Include="grid\grid_excel_groupfield.aspx" />
+    <Content Include="grid\grid_hide_gridheader.aspx" />
+    <Content Include="grid\grid_lockcolumn.aspx" />
+    <Content Include="grid\grid_lockcolumn_many_columns.aspx" />
+    <Content Include="grid\grid_lockcolumn_rowexpander.aspx" />
+    <Content Include="grid\grid_lockcolumn_groupheader_sort.aspx" />
+    <Content Include="grid\grid_lockcolumn_summary_scrollbar.aspx" />
+    <Content Include="grid\grid_lockcolumn_editor_cell_new.aspx" />
+    <Content Include="grid\grid_lockcolumn_line_wrap.aspx" />
+    <Content Include="grid\grid_paging_database_bbar.aspx" />
+    <Content Include="grid\grid_prerowdatabound_cancelled.aspx" />
+    <Content Include="grid\grid_editor_cell_afteredit_rowexpander.aspx" />
+    <Content Include="grid\grid_editor_cell_new_delete_rowexpander.aspx" />
+    <Content Include="grid\grid_style_columnclass.aspx" />
+    <Content Include="grid\grid_summary_scrollbar_flow.aspx" />
+    <Content Include="grid\grid_style_rowcolor_paging_database.aspx" />
+    <Content Include="grid\grid_style_rowcolor_paging.aspx" />
+    <Content Include="grid\grid_editor_cell_paging.aspx" />
+    <Content Include="grid\grid_rownumber_align.aspx" />
+    <Content Include="grid\grid_groupheader_hidden.aspx" />
+    <Content Include="iframe\selectprovince_executescript.aspx" />
+    <Content Include="iframe\selectprovince_executescript_child.aspx" />
+    <Content Include="layout\region.aspx" />
+    <Content Include="master\formlist.aspx" />
+    <Content Include="master\list.aspx" />
+    <Content Include="master\simple.aspx" />
+    <Content Include="master\simple2.aspx" />
+    <Content Include="other\global_error.aspx" />
+    <Content Include="other\pageloading.aspx" />
+    <Content Include="tabstrip\tabstrip_position.aspx" />
+    <Content Include="test\Demo.aspx" />
+    <Content Include="test\empty.aspx" />
+    <Content Include="test\grid_editor_cell_databind2.aspx" />
+    <Content Include="test\grid_iframe2.aspx" />
+    <Content Include="test\HulinY.js" />
+    <Content Include="test\iframe_window.aspx" />
+    <Content Include="test\login__.aspx" />
+    <Content Include="test\LPList.aspx" />
+    <Content Include="test\tabstrip_addtab2.aspx" />
+    <Content Include="test\triggerbox2.aspx" />
+    <Content Include="test\activex.aspx" />
+    <Content Include="test\empty2.aspx" />
+    <Content Include="third-party\autocomplete\inline_window.aspx" />
+    <Content Include="third-party\ckeditor\ckeditor.aspx" />
+    <Content Include="third-party\tinymce\tinymce.aspx" />
+    <Content Include="third-party\ueditor\ueditor.aspx" />
+    <Content Include="third-party\ueditor\ueditor_two.aspx" />
     <Content Include="button\button_custom.aspx" />
+    <Content Include="button\button_menu_menuid.aspx" />
     <Content Include="common\menu.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="common\source.aspx" />
     <Content Include="common\source_file.aspx" />
-    <Content Include="extjs_builder\js\lang\fineui-lang-en.js" />
-    <Content Include="extjs_builder\js\lang\fineui-lang-pt_BR.js" />
-    <Content Include="extjs_builder\js\lang\fineui-lang-ru.js" />
-    <Content Include="extjs_builder\js\lang\fineui-lang-tr.js" />
-    <Content Include="extjs_builder\js\lang\fineui-lang-zh_CN.js" />
-    <Content Include="extjs_builder\js\lang\fineui-lang-zh_TW.js" />
+    <Content Include="extjs_builder\js\lang\f-lang-en.js" />
+    <Content Include="extjs_builder\js\lang\f-lang-pt_BR.js" />
+    <Content Include="extjs_builder\js\lang\f-lang-ru.js" />
+    <Content Include="extjs_builder\js\lang\f-lang-tr.js" />
+    <Content Include="extjs_builder\js\lang\f-lang-zh_CN.js" />
+    <Content Include="extjs_builder\js\lang\f-lang-zh_TW.js" />
     <Content Include="extjs_builder\js\lib\Base64.js" />
     <Content Include="extjs_builder\js\lib\json2.js" />
     <Content Include="extjs_builder\js\ux\FormViewport.js" />
     <Content Include="extjs_builder\js\ux\SimplePagingToolbar.js" />
-    <Content Include="extjs_builder\js\X\extender.js" />
-    <Content Include="extjs_builder\js\X\X.ajax.js" />
-    <Content Include="extjs_builder\js\X\X.format.js" />
-    <Content Include="extjs_builder\js\X\X.simulateTree.js" />
-    <Content Include="extjs_builder\js\X\X.util.js" />
-    <Content Include="extjs_builder\js\X\X.wnd.js" />
+    <Content Include="extjs_builder\js\F\extender.js" />
+    <Content Include="extjs_builder\js\F\F.ajax.js" />
+    <Content Include="extjs_builder\js\F\F.format.js" />
+    <Content Include="extjs_builder\js\F\F.simulateTree.js" />
+    <Content Include="extjs_builder\js\F\F.util.js" />
+    <Content Include="extjs_builder\js\F\F.wnd.js" />
     <Content Include="extjs_builder\res\access.css" />
     <Content Include="extjs_builder\res\classic.css" />
     <Content Include="extjs_builder\res\FineUI.css" />
@@ -150,11 +185,15 @@
     <Content Include="form\form_hide_field.aspx" />
     <Content Include="form\form_center_button.aspx" />
     <Content Include="form\fileupload_toolbar.aspx" />
+    <Content Include="form\form_disabled.aspx" />
+    <Content Include="form\layout_contactus.aspx" />
+    <Content Include="form\layout_checkout.aspx" />
+    <Content Include="grid\grid_editor_cell_databind.aspx" />
     <Content Include="grid\grid_edit_compare.aspx" />
     <Content Include="grid\grid_edit_dropdownlist_textbox.aspx" />
+    <Content Include="grid\grid_excel_dynamic_columns.aspx" />
     <Content Include="grid\grid_simulate_tree_database_paging.aspx" />
-    <Content Include="grid\grid_width_forcefitalltime.aspx" />
-    <Content Include="grid\grid_width_forcefitfirsttime.aspx" />
+    <Content Include="grid\grid_width_forcefit.aspx" />
     <Content Include="grid\grid_width_expandunusedspace.aspx" />
     <Content Include="grid\grid_width.aspx" />
     <Content Include="grid\grid_checkboxfield_checkall.aspx" />
@@ -162,7 +201,6 @@
     <Content Include="grid\grid_rowdoubleclick.aspx" />
     <Content Include="grid\grid_rowselect.aspx" />
     <Content Include="grid\grid_edit_save_auto.aspx" />
-    <Content Include="grid\grid_edit_save_manual.aspx" />
     <Content Include="grid\grid_text_middle.aspx" />
     <Content Include="grid\grid_simulate_tree_paging.aspx" />
     <Content Include="grid\grid_simulate_tree_database_paging_dropdownlist.aspx" />
@@ -175,22 +213,27 @@
     <Content Include="grid\grid_groupheader_sort_hdmenu.aspx" />
     <Content Include="grid\grid_groupheader_sort.aspx" />
     <Content Include="grid\grid_paging_database_sorting.aspx" />
-    <Content Include="grid\grid_editor_cell2.aspx" />
     <Content Include="grid\grid_checkboxfield_rowcheckall.aspx" />
     <Content Include="grid\grid_editor_cell_new.aspx" />
     <Content Include="grid\grid_editor_cell_delete.aspx" />
-    <Content Include="grid\grid_summary.aspx" />
     <Content Include="grid\grid_checkall_only.aspx" />
-    <Content Include="grid\grid_summary_serverside.aspx" />
-    <Content Include="grid\grid_summary_absolute.aspx" />
     <Content Include="grid\grid_line_wrap.aspx" />
-    <Content Include="grid\grid_summary_serverside_paged.aspx" />
     <Content Include="grid\grid_editor_cell_renderfunction.aspx" />
     <Content Include="grid\grid_rowcommand_paging.aspx" />
     <Content Include="grid\grid_rowcommand_paging_database.aspx" />
     <Content Include="grid\grid_editor_cell_new_delete.aspx" />
     <Content Include="grid\grid_editor_cell_afteredit.aspx" />
     <Content Include="grid\grid_excel_selectcolumns.aspx" />
+    <Content Include="grid\grid_summary.aspx" />
+    <Content Include="grid\grid_edit_enterkey_v.aspx" />
+    <Content Include="grid\grid_edit_enterkey_h.aspx" />
+    <Content Include="grid\grid_summary_currentpage.aspx" />
+    <Content Include="grid\grid_checkboxfield_rowcheckall_clientside.aspx" />
+    <Content Include="grid\grid_checkboxfield_rowcheckall_contextmenu.aspx" />
+    <Content Include="grid\grid_excel_selectcolumns_iframe_window.aspx" />
+    <Content Include="grid\grid_edit_cart.aspx" />
+    <Content Include="grid\grid_rowcommand_download.aspx" />
+    <Content Include="grid\grid_summary_scrollbar.aspx" />
     <Content Include="iframe\selectprovince1.aspx" />
     <Content Include="iframe\selectprovince1_child.aspx" />
     <Content Include="iframe\selectprovince2.aspx" />
@@ -226,6 +269,20 @@
     <Content Include="iframe\topmenu\res\images\p.png" />
     <Content Include="iframe\topmenu\res\images\t.png" />
     <Content Include="iframe\topmenu\res\main.css" />
+    <Content Include="iframe\topmenu4\data\menuMail.xml" />
+    <Content Include="iframe\topmenu4\data\menuSMS.xml" />
+    <Content Include="iframe\topmenu4\data\menuSYS.xml" />
+    <Content Include="iframe\topmenu4\default.aspx" />
+    <Content Include="iframe\topmenu4\leftmenu.aspx" />
+    <Content Include="iframe\topmenu4\res\images\admin_tbg.png" />
+    <Content Include="iframe\topmenu4\res\images\menu.png" />
+    <Content Include="iframe\topmenu4\res\images\p.png" />
+    <Content Include="iframe\topmenu4\res\images\t.png" />
+    <Content Include="iframe\topmenu4\res\main.css" />
+    <Content Include="iframe\window.aspx" />
+    <Content Include="iframe\window_iframe.aspx" />
+    <Content Include="iframe\window2.aspx" />
+    <Content Include="iframe\window2_iframe.aspx" />
     <Content Include="other\keydown.aspx" />
     <Content Include="basic\login_captcha.aspx" />
     <Content Include="button\button.aspx" />
@@ -284,7 +341,7 @@
     <Content Include="grid\grid_iframe_window.aspx" />
     <Content Include="grid\grid_paging.aspx" />
     <Content Include="grid\grid_rowdatabound.aspx" />
-    <Content Include="grid\grid_rowcolor.aspx" />
+    <Content Include="grid\grid_style_rowcolor.aspx" />
     <Content Include="grid\grid_simulate_tree.aspx" />
     <Content Include="grid\grid_sorting.aspx" />
     <Content Include="grid\grid_checkall.aspx" />
@@ -301,9 +358,9 @@
     <Content Include="grid\grid_checkboxfield_autopostback.aspx" />
     <Content Include="grid\grid_twogrid.aspx" />
     <Content Include="grid\grid_prerowdatabound.aspx" />
-    <Content Include="grid\grid_rowexpander_expandall.aspx" />
+    <Content Include="grid\grid_rowexpander_expandall_js.aspx" />
     <Content Include="grid\grid_aspnet_rowdatabound.aspx" />
-    <Content Include="grid\grid_rowexpander_expandall2.aspx" />
+    <Content Include="grid\grid_rowexpander_expandall.aspx" />
     <Content Include="grid\grid_textselection.aspx" />
     <Content Include="grid\grid_groupheader.aspx" />
     <Content Include="grid\grid_dynamic_columns2.aspx" />
@@ -326,17 +383,29 @@
     <Content Include="iframe\parent_postback_top3.aspx" />
     <Content Include="iframe\parent_simplepostback.aspx" />
     <Content Include="iframe\parent_simplepostback2.aspx" />
-    <Content Include="js\default.js" />
+    <Content Include="other\custom_postback2.aspx" />
     <Content Include="layout\table.aspx" />
     <Content Include="layout\hbox.aspx" />
     <Content Include="layout\vbox.aspx" />
     <Content Include="other\alert.aspx" />
-    <Content Include="other\button_in_form.aspx" />
     <Content Include="other\confirm_cancel.aspx" />
     <Content Include="other\cssclass.aspx" />
+    <Content Include="other\confirm_cancel2.aspx" />
+    <Content Include="res\js\jquery.js" />
+    <Content Include="res\js\jquery.min.js" />
     <Content Include="tabstrip\tabstrip_iframe_disabled.aspx" />
     <Content Include="tabstrip\tabstrip_iframe_disabled_tab1.aspx" />
     <Content Include="test\start.aspx" />
+    <Content Include="third-party\autocomplete\custom_display.aspx" />
+    <Content Include="third-party\autocomplete\email.aspx" />
+    <Content Include="third-party\autocomplete\inline.aspx" />
+    <Content Include="third-party\autocomplete\multi_values.aspx" />
+    <Content Include="third-party\autocomplete\multi_values_remote.aspx" />
+    <Content Include="third-party\autocomplete\remote_with_cache.aspx" />
+    <Content Include="third-party\my97\my97.aspx" />
+    <Content Include="third-party\umeditor\umeditor.aspx" />
+    <Content Include="toolbar\form.aspx" />
+    <Content Include="toolbar\multi_toolbars.aspx" />
     <Content Include="toolbar\toolbar_iframe.aspx" />
     <Content Include="other\cssstyle.aspx" />
     <Content Include="other\addtab.aspx" />
@@ -345,7 +414,11 @@
     <Content Include="test\timer.aspx" />
     <Content Include="toolbar\menu.aspx" />
     <Content Include="toolbar\menucheckbox.aspx" />
+    <Content Include="toolbar\menu_hideonclick.aspx" />
+    <Content Include="toolbar\toolbar_images.aspx" />
+    <Content Include="toolbar\toolbar_images_fixedwidth.aspx" />
     <Content Include="tree\checkbox\tree_checked.aspx" />
+    <Content Include="tree\select\tree_multi_select_selectable.aspx" />
     <Content Include="tree\select\tree_nodecommand.aspx" />
     <Content Include="tree\tree_icon.aspx" />
     <Content Include="tree\select\tree_select.aspx" />
@@ -353,6 +426,8 @@
     <Content Include="tree\databind\tree_datasource.aspx" />
     <Content Include="tree\databind\tree_document.aspx" />
     <Content Include="tree\tree.aspx" />
+    <Content Include="tree\tree_expand.aspx" />
+    <Content Include="tree\tree_nodedatabound.aspx" />
     <Content Include="usercontrol\UserInfoControl.ascx" />
     <Content Include="usercontrol\userinfo.aspx" />
     <Content Include="usercontrol\userinfo2.aspx" />
@@ -363,29 +438,25 @@
     <Content Include="window\group_panel.aspx" />
     <Content Include="window\panel.aspx" />
     <Content Include="window\window.aspx" />
+    <Content Include="window\window_multi.aspx" />
     <Content Include="window\window_toolbar.aspx" />
+    <Content Include="window\panel_collapse.aspx" />
+    <Content Include="window\window_form.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="accordion\accordion_autopostback.aspx.cs">
+      <DependentUpon>accordion_autopostback.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="accordion\accordion_autopostback.aspx.designer.cs">
+      <DependentUpon>accordion_autopostback.aspx</DependentUpon>
+    </Compile>
     <Compile Include="aspnet\aspnet.aspx.cs">
       <DependentUpon>aspnet.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="aspnet\aspnet.aspx.designer.cs">
       <DependentUpon>aspnet.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="aspnet\fileupload.aspx.cs">
-      <DependentUpon>fileupload.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="aspnet\fileupload.aspx.designer.cs">
-      <DependentUpon>fileupload.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="aspnet\fckeditor.aspx.cs">
-      <DependentUpon>fckeditor.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="aspnet\fckeditor.aspx.designer.cs">
-      <DependentUpon>fckeditor.aspx</DependentUpon>
     </Compile>
     <Compile Include="aspnet\aspnet_literal.aspx.cs">
       <DependentUpon>aspnet_literal.aspx</DependentUpon>
@@ -394,85 +465,404 @@
     <Compile Include="aspnet\aspnet_literal.aspx.designer.cs">
       <DependentUpon>aspnet_literal.aspx</DependentUpon>
     </Compile>
-    <Compile Include="aspnet\test.aspx.cs">
-      <DependentUpon>test.aspx</DependentUpon>
+    <Compile Include="basic\login_enterkey.aspx.cs">
+      <DependentUpon>login_enterkey.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="aspnet\test.aspx.designer.cs">
-      <DependentUpon>test.aspx</DependentUpon>
+    <Compile Include="basic\login_enterkey.aspx.designer.cs">
+      <DependentUpon>login_enterkey.aspx</DependentUpon>
     </Compile>
-    <Compile Include="aspnet\TestWindow.aspx.cs">
-      <DependentUpon>TestWindow.aspx</DependentUpon>
+    <Compile Include="dropdownlist\dropdownlist_matchfieldwidth.aspx.cs">
+      <DependentUpon>dropdownlist_matchfieldwidth.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="aspnet\TestWindow.aspx.designer.cs">
-      <DependentUpon>TestWindow.aspx</DependentUpon>
+    <Compile Include="dropdownlist\dropdownlist_matchfieldwidth.aspx.designer.cs">
+      <DependentUpon>dropdownlist_matchfieldwidth.aspx</DependentUpon>
     </Compile>
-    <Compile Include="aspnet\ckeditor.aspx.cs">
+    <Compile Include="dropdownlist\multiselect.aspx.cs">
+      <DependentUpon>multiselect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dropdownlist\multiselect.aspx.designer.cs">
+      <DependentUpon>multiselect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dropdownlist\multiselect_enableedit.aspx.cs">
+      <DependentUpon>multiselect_enableedit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dropdownlist\multiselect_enableedit.aspx.designer.cs">
+      <DependentUpon>multiselect_enableedit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dropdownlist\multiselect_autopostback.aspx.cs">
+      <DependentUpon>multiselect_autopostback.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dropdownlist\multiselect_autopostback.aspx.designer.cs">
+      <DependentUpon>multiselect_autopostback.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_checkall_singleselect.aspx.cs">
+      <DependentUpon>grid_checkall_singleselect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_checkall_singleselect.aspx.designer.cs">
+      <DependentUpon>grid_checkall_singleselect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_excel_findcontrol.aspx.cs">
+      <DependentUpon>grid_excel_findcontrol.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_excel_findcontrol.aspx.designer.cs">
+      <DependentUpon>grid_excel_findcontrol.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_excel_groupfield.aspx.cs">
+      <DependentUpon>grid_excel_groupfield.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_excel_groupfield.aspx.designer.cs">
+      <DependentUpon>grid_excel_groupfield.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_hide_gridheader.aspx.cs">
+      <DependentUpon>grid_hide_gridheader.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_hide_gridheader.aspx.designer.cs">
+      <DependentUpon>grid_hide_gridheader.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn.aspx.cs">
+      <DependentUpon>grid_lockcolumn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn.aspx.designer.cs">
+      <DependentUpon>grid_lockcolumn.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn_many_columns.aspx.cs">
+      <DependentUpon>grid_lockcolumn_many_columns.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn_many_columns.aspx.designer.cs">
+      <DependentUpon>grid_lockcolumn_many_columns.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn_rowexpander.aspx.cs">
+      <DependentUpon>grid_lockcolumn_rowexpander.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn_rowexpander.aspx.designer.cs">
+      <DependentUpon>grid_lockcolumn_rowexpander.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn_groupheader_sort.aspx.cs">
+      <DependentUpon>grid_lockcolumn_groupheader_sort.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn_groupheader_sort.aspx.designer.cs">
+      <DependentUpon>grid_lockcolumn_groupheader_sort.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn_summary_scrollbar.aspx.cs">
+      <DependentUpon>grid_lockcolumn_summary_scrollbar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn_summary_scrollbar.aspx.designer.cs">
+      <DependentUpon>grid_lockcolumn_summary_scrollbar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn_editor_cell_new.aspx.cs">
+      <DependentUpon>grid_lockcolumn_editor_cell_new.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn_editor_cell_new.aspx.designer.cs">
+      <DependentUpon>grid_lockcolumn_editor_cell_new.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn_line_wrap.aspx.cs">
+      <DependentUpon>grid_lockcolumn_line_wrap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_lockcolumn_line_wrap.aspx.designer.cs">
+      <DependentUpon>grid_lockcolumn_line_wrap.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_paging_database_bbar.aspx.cs">
+      <DependentUpon>grid_paging_database_bbar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_paging_database_bbar.aspx.designer.cs">
+      <DependentUpon>grid_paging_database_bbar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_prerowdatabound_cancelled.aspx.cs">
+      <DependentUpon>grid_prerowdatabound_cancelled.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_prerowdatabound_cancelled.aspx.designer.cs">
+      <DependentUpon>grid_prerowdatabound_cancelled.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_editor_cell_afteredit_rowexpander.aspx.cs">
+      <DependentUpon>grid_editor_cell_afteredit_rowexpander.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_editor_cell_afteredit_rowexpander.aspx.designer.cs">
+      <DependentUpon>grid_editor_cell_afteredit_rowexpander.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_editor_cell_new_delete_rowexpander.aspx.cs">
+      <DependentUpon>grid_editor_cell_new_delete_rowexpander.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_editor_cell_new_delete_rowexpander.aspx.designer.cs">
+      <DependentUpon>grid_editor_cell_new_delete_rowexpander.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_style_columnclass.aspx.cs">
+      <DependentUpon>grid_style_columnclass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_style_columnclass.aspx.designer.cs">
+      <DependentUpon>grid_style_columnclass.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_summary_scrollbar_flow.aspx.cs">
+      <DependentUpon>grid_summary_scrollbar_flow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_summary_scrollbar_flow.aspx.designer.cs">
+      <DependentUpon>grid_summary_scrollbar_flow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_style_rowcolor_paging_database.aspx.cs">
+      <DependentUpon>grid_style_rowcolor_paging_database.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_style_rowcolor_paging_database.aspx.designer.cs">
+      <DependentUpon>grid_style_rowcolor_paging_database.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_style_rowcolor_paging.aspx.cs">
+      <DependentUpon>grid_style_rowcolor_paging.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_style_rowcolor_paging.aspx.designer.cs">
+      <DependentUpon>grid_style_rowcolor_paging.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_editor_cell_paging.aspx.cs">
+      <DependentUpon>grid_editor_cell_paging.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_editor_cell_paging.aspx.designer.cs">
+      <DependentUpon>grid_editor_cell_paging.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_rownumber_align.aspx.cs">
+      <DependentUpon>grid_rownumber_align.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_rownumber_align.aspx.designer.cs">
+      <DependentUpon>grid_rownumber_align.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_groupheader_hidden.aspx.cs">
+      <DependentUpon>grid_groupheader_hidden.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_groupheader_hidden.aspx.designer.cs">
+      <DependentUpon>grid_groupheader_hidden.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="iframe\selectprovince_executescript.aspx.cs">
+      <DependentUpon>selectprovince_executescript.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="iframe\selectprovince_executescript.aspx.designer.cs">
+      <DependentUpon>selectprovince_executescript.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="iframe\selectprovince_executescript_child.aspx.cs">
+      <DependentUpon>selectprovince_executescript_child.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="iframe\selectprovince_executescript_child.aspx.designer.cs">
+      <DependentUpon>selectprovince_executescript_child.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="layout\region.aspx.cs">
+      <DependentUpon>region.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layout\region.aspx.designer.cs">
+      <DependentUpon>region.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="master\formlist.aspx.cs">
+      <DependentUpon>formlist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="master\formlist.aspx.designer.cs">
+      <DependentUpon>formlist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="master\ISingleGridPage.cs" />
+    <Compile Include="master\list.aspx.cs">
+      <DependentUpon>list.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="master\list.aspx.designer.cs">
+      <DependentUpon>list.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="master\simple.aspx.cs">
+      <DependentUpon>simple.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="master\simple.aspx.designer.cs">
+      <DependentUpon>simple.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="master\Simple.Master.cs">
+      <DependentUpon>Simple.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="master\Simple.Master.designer.cs">
+      <DependentUpon>Simple.Master</DependentUpon>
+    </Compile>
+    <Compile Include="master\simple2.aspx.cs">
+      <DependentUpon>simple2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="master\simple2.aspx.designer.cs">
+      <DependentUpon>simple2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="master\SingleGrid.Master.cs">
+      <DependentUpon>SingleGrid.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="master\SingleGrid.Master.designer.cs">
+      <DependentUpon>SingleGrid.Master</DependentUpon>
+    </Compile>
+    <Compile Include="other\global_error.aspx.cs">
+      <DependentUpon>global_error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="other\global_error.aspx.designer.cs">
+      <DependentUpon>global_error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="other\pageloading.aspx.cs">
+      <DependentUpon>pageloading.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="other\pageloading.aspx.designer.cs">
+      <DependentUpon>pageloading.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="tabstrip\tabstrip_position.aspx.cs">
+      <DependentUpon>tabstrip_position.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="tabstrip\tabstrip_position.aspx.designer.cs">
+      <DependentUpon>tabstrip_position.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\Demo.aspx.cs">
+      <DependentUpon>Demo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\Demo.aspx.designer.cs">
+      <DependentUpon>Demo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\empty.aspx.cs">
+      <DependentUpon>empty.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\empty.aspx.designer.cs">
+      <DependentUpon>empty.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\grid_editor_cell_databind2.aspx.cs">
+      <DependentUpon>grid_editor_cell_databind2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\grid_editor_cell_databind2.aspx.designer.cs">
+      <DependentUpon>grid_editor_cell_databind2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\grid_iframe2.aspx.cs">
+      <DependentUpon>grid_iframe2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\grid_iframe2.aspx.designer.cs">
+      <DependentUpon>grid_iframe2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\iframe_window.aspx.cs">
+      <DependentUpon>iframe_window.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\iframe_window.aspx.designer.cs">
+      <DependentUpon>iframe_window.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\login__.aspx.cs">
+      <DependentUpon>login__.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\login__.aspx.designer.cs">
+      <DependentUpon>login__.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\LPList.aspx.cs">
+      <DependentUpon>LPList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\LPList.aspx.designer.cs">
+      <DependentUpon>LPList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\SingleGrid.Master.cs">
+      <DependentUpon>SingleGrid.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\SingleGrid.Master.designer.cs">
+      <DependentUpon>SingleGrid.Master</DependentUpon>
+    </Compile>
+    <Compile Include="test\SingleGridPageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\tabstrip_addtab2.aspx.cs">
+      <DependentUpon>tabstrip_addtab2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\tabstrip_addtab2.aspx.designer.cs">
+      <DependentUpon>tabstrip_addtab2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\triggerbox2.aspx.cs">
+      <DependentUpon>triggerbox2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\triggerbox2.aspx.designer.cs">
+      <DependentUpon>triggerbox2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\activex.aspx.cs">
+      <DependentUpon>activex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\activex.aspx.designer.cs">
+      <DependentUpon>activex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\empty2.aspx.cs">
+      <DependentUpon>empty2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\empty2.aspx.designer.cs">
+      <DependentUpon>empty2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="third-party\autocomplete\inline_window.aspx.cs">
+      <DependentUpon>inline_window.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="third-party\autocomplete\inline_window.aspx.designer.cs">
+      <DependentUpon>inline_window.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="third-party\ckeditor\ckeditor.aspx.cs">
       <DependentUpon>ckeditor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="aspnet\ckeditor.aspx.designer.cs">
+    <Compile Include="third-party\ckeditor\ckeditor.aspx.designer.cs">
       <DependentUpon>ckeditor.aspx</DependentUpon>
     </Compile>
-    <Compile Include="aspnet\ueditor.aspx.cs">
+    <Compile Include="third-party\tinymce\tinymce.aspx.cs">
+      <DependentUpon>tinymce.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="third-party\tinymce\tinymce.aspx.designer.cs">
+      <DependentUpon>tinymce.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="third-party\ueditor\ueditor.aspx.cs">
       <DependentUpon>ueditor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="aspnet\ueditor.aspx.designer.cs">
+    <Compile Include="third-party\ueditor\ueditor.aspx.designer.cs">
       <DependentUpon>ueditor.aspx</DependentUpon>
     </Compile>
-    <Compile Include="aspnet\ueditor_two.aspx.cs">
+    <Compile Include="third-party\ueditor\ueditor_two.aspx.cs">
       <DependentUpon>ueditor_two.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="aspnet\ueditor_two.aspx.designer.cs">
+    <Compile Include="third-party\ueditor\ueditor_two.aspx.designer.cs">
       <DependentUpon>ueditor_two.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="autocomplete\inline.aspx.cs">
-      <DependentUpon>inline.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="autocomplete\inline.aspx.designer.cs">
-      <DependentUpon>inline.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="autocomplete\custom_display.aspx.cs">
-      <DependentUpon>custom_display.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="autocomplete\custom_display.aspx.designer.cs">
-      <DependentUpon>custom_display.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="autocomplete\multi_values_remote.aspx.cs">
-      <DependentUpon>multi_values_remote.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="autocomplete\multi_values_remote.aspx.designer.cs">
-      <DependentUpon>multi_values_remote.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="autocomplete\search.ashx.cs">
-      <DependentUpon>search.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="autocomplete\multi_values.aspx.cs">
-      <DependentUpon>multi_values.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="autocomplete\multi_values.aspx.designer.cs">
-      <DependentUpon>multi_values.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="autocomplete\remote_with_cache.aspx.cs">
-      <DependentUpon>remote_with_cache.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="autocomplete\remote_with_cache.aspx.designer.cs">
-      <DependentUpon>remote_with_cache.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="autocomplete\email.aspx.cs">
-      <DependentUpon>email.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="autocomplete\email.aspx.designer.cs">
-      <DependentUpon>email.aspx</DependentUpon>
     </Compile>
     <Compile Include="button\button_custom.aspx.cs">
       <DependentUpon>button_custom.aspx</DependentUpon>
@@ -480,6 +870,13 @@
     </Compile>
     <Compile Include="button\button_custom.aspx.designer.cs">
       <DependentUpon>button_custom.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="button\button_menu_menuid.aspx.cs">
+      <DependentUpon>button_menu_menuid.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="button\button_menu_menuid.aspx.designer.cs">
+      <DependentUpon>button_menu_menuid.aspx</DependentUpon>
     </Compile>
     <Compile Include="common\source.aspx.cs">
       <DependentUpon>source.aspx</DependentUpon>
@@ -523,6 +920,34 @@
     <Compile Include="form\fileupload_toolbar.aspx.designer.cs">
       <DependentUpon>fileupload_toolbar.aspx</DependentUpon>
     </Compile>
+    <Compile Include="form\form_disabled.aspx.cs">
+      <DependentUpon>form_disabled.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="form\form_disabled.aspx.designer.cs">
+      <DependentUpon>form_disabled.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="form\layout_contactus.aspx.cs">
+      <DependentUpon>layout_contactus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="form\layout_contactus.aspx.designer.cs">
+      <DependentUpon>layout_contactus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="form\layout_checkout.aspx.cs">
+      <DependentUpon>layout_checkout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="form\layout_checkout.aspx.designer.cs">
+      <DependentUpon>layout_checkout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_editor_cell_databind.aspx.cs">
+      <DependentUpon>grid_editor_cell_databind.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_editor_cell_databind.aspx.designer.cs">
+      <DependentUpon>grid_editor_cell_databind.aspx</DependentUpon>
+    </Compile>
     <Compile Include="grid\grid_edit_compare.aspx.cs">
       <DependentUpon>grid_edit_compare.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -537,6 +962,13 @@
     <Compile Include="grid\grid_edit_dropdownlist_textbox.aspx.designer.cs">
       <DependentUpon>grid_edit_dropdownlist_textbox.aspx</DependentUpon>
     </Compile>
+    <Compile Include="grid\grid_excel_dynamic_columns.aspx.cs">
+      <DependentUpon>grid_excel_dynamic_columns.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_excel_dynamic_columns.aspx.designer.cs">
+      <DependentUpon>grid_excel_dynamic_columns.aspx</DependentUpon>
+    </Compile>
     <Compile Include="grid\grid_simulate_tree_database_paging.aspx.cs">
       <DependentUpon>grid_simulate_tree_database_paging.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -544,19 +976,12 @@
     <Compile Include="grid\grid_simulate_tree_database_paging.aspx.designer.cs">
       <DependentUpon>grid_simulate_tree_database_paging.aspx</DependentUpon>
     </Compile>
-    <Compile Include="grid\grid_width_forcefitalltime.aspx.cs">
-      <DependentUpon>grid_width_forcefitalltime.aspx</DependentUpon>
+    <Compile Include="grid\grid_width_forcefit.aspx.cs">
+      <DependentUpon>grid_width_forcefit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="grid\grid_width_forcefitalltime.aspx.designer.cs">
-      <DependentUpon>grid_width_forcefitalltime.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="grid\grid_width_forcefitfirsttime.aspx.cs">
-      <DependentUpon>grid_width_forcefitfirsttime.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="grid\grid_width_forcefitfirsttime.aspx.designer.cs">
-      <DependentUpon>grid_width_forcefitfirsttime.aspx</DependentUpon>
+    <Compile Include="grid\grid_width_forcefit.aspx.designer.cs">
+      <DependentUpon>grid_width_forcefit.aspx</DependentUpon>
     </Compile>
     <Compile Include="grid\grid_width_expandunusedspace.aspx.cs">
       <DependentUpon>grid_width_expandunusedspace.aspx</DependentUpon>
@@ -606,13 +1031,6 @@
     </Compile>
     <Compile Include="grid\grid_edit_save_auto.aspx.designer.cs">
       <DependentUpon>grid_edit_save_auto.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="grid\grid_edit_save_manual.aspx.cs">
-      <DependentUpon>grid_edit_save_manual.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="grid\grid_edit_save_manual.aspx.designer.cs">
-      <DependentUpon>grid_edit_save_manual.aspx</DependentUpon>
     </Compile>
     <Compile Include="grid\grid_text_middle.aspx.cs">
       <DependentUpon>grid_text_middle.aspx</DependentUpon>
@@ -698,13 +1116,6 @@
     <Compile Include="grid\grid_paging_database_sorting.aspx.designer.cs">
       <DependentUpon>grid_paging_database_sorting.aspx</DependentUpon>
     </Compile>
-    <Compile Include="grid\grid_editor_cell2.aspx.cs">
-      <DependentUpon>grid_editor_cell2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="grid\grid_editor_cell2.aspx.designer.cs">
-      <DependentUpon>grid_editor_cell2.aspx</DependentUpon>
-    </Compile>
     <Compile Include="grid\grid_checkboxfield_rowcheckall.aspx.cs">
       <DependentUpon>grid_checkboxfield_rowcheckall.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -726,13 +1137,6 @@
     <Compile Include="grid\grid_editor_cell_delete.aspx.designer.cs">
       <DependentUpon>grid_editor_cell_delete.aspx</DependentUpon>
     </Compile>
-    <Compile Include="grid\grid_summary.aspx.cs">
-      <DependentUpon>grid_summary.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="grid\grid_summary.aspx.designer.cs">
-      <DependentUpon>grid_summary.aspx</DependentUpon>
-    </Compile>
     <Compile Include="grid\grid_checkall_only.aspx.cs">
       <DependentUpon>grid_checkall_only.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -740,33 +1144,12 @@
     <Compile Include="grid\grid_checkall_only.aspx.designer.cs">
       <DependentUpon>grid_checkall_only.aspx</DependentUpon>
     </Compile>
-    <Compile Include="grid\grid_summary_serverside.aspx.cs">
-      <DependentUpon>grid_summary_serverside.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="grid\grid_summary_serverside.aspx.designer.cs">
-      <DependentUpon>grid_summary_serverside.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="grid\grid_summary_absolute.aspx.cs">
-      <DependentUpon>grid_summary_absolute.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="grid\grid_summary_absolute.aspx.designer.cs">
-      <DependentUpon>grid_summary_absolute.aspx</DependentUpon>
-    </Compile>
     <Compile Include="grid\grid_line_wrap.aspx.cs">
       <DependentUpon>grid_line_wrap.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="grid\grid_line_wrap.aspx.designer.cs">
       <DependentUpon>grid_line_wrap.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="grid\grid_summary_serverside_paged.aspx.cs">
-      <DependentUpon>grid_summary_serverside_paged.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="grid\grid_summary_serverside_paged.aspx.designer.cs">
-      <DependentUpon>grid_summary_serverside_paged.aspx</DependentUpon>
     </Compile>
     <Compile Include="grid\grid_editor_cell_renderfunction.aspx.cs">
       <DependentUpon>grid_editor_cell_renderfunction.aspx</DependentUpon>
@@ -809,6 +1192,76 @@
     </Compile>
     <Compile Include="grid\grid_excel_selectcolumns.aspx.designer.cs">
       <DependentUpon>grid_excel_selectcolumns.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_summary.aspx.cs">
+      <DependentUpon>grid_summary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_summary.aspx.designer.cs">
+      <DependentUpon>grid_summary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_edit_enterkey_v.aspx.cs">
+      <DependentUpon>grid_edit_enterkey_v.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_edit_enterkey_v.aspx.designer.cs">
+      <DependentUpon>grid_edit_enterkey_v.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_edit_enterkey_h.aspx.cs">
+      <DependentUpon>grid_edit_enterkey_h.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_edit_enterkey_h.aspx.designer.cs">
+      <DependentUpon>grid_edit_enterkey_h.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_summary_currentpage.aspx.cs">
+      <DependentUpon>grid_summary_currentpage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_summary_currentpage.aspx.designer.cs">
+      <DependentUpon>grid_summary_currentpage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_checkboxfield_rowcheckall_clientside.aspx.cs">
+      <DependentUpon>grid_checkboxfield_rowcheckall_clientside.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_checkboxfield_rowcheckall_clientside.aspx.designer.cs">
+      <DependentUpon>grid_checkboxfield_rowcheckall_clientside.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_checkboxfield_rowcheckall_contextmenu.aspx.cs">
+      <DependentUpon>grid_checkboxfield_rowcheckall_contextmenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_checkboxfield_rowcheckall_contextmenu.aspx.designer.cs">
+      <DependentUpon>grid_checkboxfield_rowcheckall_contextmenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_excel_selectcolumns_iframe_window.aspx.cs">
+      <DependentUpon>grid_excel_selectcolumns_iframe_window.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_excel_selectcolumns_iframe_window.aspx.designer.cs">
+      <DependentUpon>grid_excel_selectcolumns_iframe_window.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_edit_cart.aspx.cs">
+      <DependentUpon>grid_edit_cart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_edit_cart.aspx.designer.cs">
+      <DependentUpon>grid_edit_cart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_rowcommand_download.aspx.cs">
+      <DependentUpon>grid_rowcommand_download.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_rowcommand_download.aspx.designer.cs">
+      <DependentUpon>grid_rowcommand_download.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_summary_scrollbar.aspx.cs">
+      <DependentUpon>grid_summary_scrollbar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_summary_scrollbar.aspx.designer.cs">
+      <DependentUpon>grid_summary_scrollbar.aspx</DependentUpon>
     </Compile>
     <Compile Include="iframe\selectprovince1.aspx.cs">
       <DependentUpon>selectprovince1.aspx</DependentUpon>
@@ -886,6 +1339,48 @@
     </Compile>
     <Compile Include="iframe\topmenu\default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="iframe\topmenu4\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="iframe\topmenu4\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="iframe\topmenu4\leftmenu.aspx.cs">
+      <DependentUpon>leftmenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="iframe\topmenu4\leftmenu.aspx.designer.cs">
+      <DependentUpon>leftmenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="iframe\window.aspx.cs">
+      <DependentUpon>window.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="iframe\window.aspx.designer.cs">
+      <DependentUpon>window.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="iframe\window_iframe.aspx.cs">
+      <DependentUpon>window_iframe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="iframe\window_iframe.aspx.designer.cs">
+      <DependentUpon>window_iframe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="iframe\window2.aspx.cs">
+      <DependentUpon>window2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="iframe\window2.aspx.designer.cs">
+      <DependentUpon>window2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="iframe\window2_iframe.aspx.cs">
+      <DependentUpon>window2_iframe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="iframe\window2_iframe.aspx.designer.cs">
+      <DependentUpon>window2_iframe.aspx</DependentUpon>
     </Compile>
     <Compile Include="other\keydown.aspx.cs">
       <DependentUpon>keydown.aspx</DependentUpon>
@@ -1240,12 +1735,12 @@
     <Compile Include="grid\grid_rowdatabound.aspx.designer.cs">
       <DependentUpon>grid_rowdatabound.aspx</DependentUpon>
     </Compile>
-    <Compile Include="grid\grid_rowcolor.aspx.cs">
-      <DependentUpon>grid_rowcolor.aspx</DependentUpon>
+    <Compile Include="grid\grid_style_rowcolor.aspx.cs">
+      <DependentUpon>grid_style_rowcolor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="grid\grid_rowcolor.aspx.designer.cs">
-      <DependentUpon>grid_rowcolor.aspx</DependentUpon>
+    <Compile Include="grid\grid_style_rowcolor.aspx.designer.cs">
+      <DependentUpon>grid_style_rowcolor.aspx</DependentUpon>
     </Compile>
     <Compile Include="grid\grid_simulate_tree.aspx.cs">
       <DependentUpon>grid_simulate_tree.aspx</DependentUpon>
@@ -1359,12 +1854,12 @@
     <Compile Include="grid\grid_prerowdatabound.aspx.designer.cs">
       <DependentUpon>grid_prerowdatabound.aspx</DependentUpon>
     </Compile>
-    <Compile Include="grid\grid_rowexpander_expandall.aspx.cs">
-      <DependentUpon>grid_rowexpander_expandall.aspx</DependentUpon>
+    <Compile Include="grid\grid_rowexpander_expandall_js.aspx.cs">
+      <DependentUpon>grid_rowexpander_expandall_js.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="grid\grid_rowexpander_expandall.aspx.designer.cs">
-      <DependentUpon>grid_rowexpander_expandall.aspx</DependentUpon>
+    <Compile Include="grid\grid_rowexpander_expandall_js.aspx.designer.cs">
+      <DependentUpon>grid_rowexpander_expandall_js.aspx</DependentUpon>
     </Compile>
     <Compile Include="grid\grid_aspnet_rowdatabound.aspx.cs">
       <DependentUpon>grid_aspnet_rowdatabound.aspx</DependentUpon>
@@ -1373,12 +1868,12 @@
     <Compile Include="grid\grid_aspnet_rowdatabound.aspx.designer.cs">
       <DependentUpon>grid_aspnet_rowdatabound.aspx</DependentUpon>
     </Compile>
-    <Compile Include="grid\grid_rowexpander_expandall2.aspx.cs">
-      <DependentUpon>grid_rowexpander_expandall2.aspx</DependentUpon>
+    <Compile Include="grid\grid_rowexpander_expandall.aspx.cs">
+      <DependentUpon>grid_rowexpander_expandall.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="grid\grid_rowexpander_expandall2.aspx.designer.cs">
-      <DependentUpon>grid_rowexpander_expandall2.aspx</DependentUpon>
+    <Compile Include="grid\grid_rowexpander_expandall.aspx.designer.cs">
+      <DependentUpon>grid_rowexpander_expandall.aspx</DependentUpon>
     </Compile>
     <Compile Include="grid\grid_textselection.aspx.cs">
       <DependentUpon>grid_textselection.aspx</DependentUpon>
@@ -1562,13 +2057,6 @@
     <Compile Include="other\alert.aspx.designer.cs">
       <DependentUpon>alert.aspx</DependentUpon>
     </Compile>
-    <Compile Include="other\button_in_form.aspx.cs">
-      <DependentUpon>button_in_form.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="other\button_in_form.aspx.designer.cs">
-      <DependentUpon>button_in_form.aspx</DependentUpon>
-    </Compile>
     <Compile Include="other\confirm_cancel.aspx.cs">
       <DependentUpon>confirm_cancel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1582,6 +2070,20 @@
     </Compile>
     <Compile Include="other\cssclass.aspx.designer.cs">
       <DependentUpon>cssclass.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="other\confirm_cancel2.aspx.cs">
+      <DependentUpon>confirm_cancel2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="other\confirm_cancel2.aspx.designer.cs">
+      <DependentUpon>confirm_cancel2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="other\custom_postback2.aspx.cs">
+      <DependentUpon>custom_postback2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="other\custom_postback2.aspx.designer.cs">
+      <DependentUpon>custom_postback2.aspx</DependentUpon>
     </Compile>
     <Compile Include="tabstrip\tabstrip_iframe_disabled.aspx.cs">
       <DependentUpon>tabstrip_iframe_disabled.aspx</DependentUpon>
@@ -1603,6 +2105,79 @@
     </Compile>
     <Compile Include="test\start.aspx.designer.cs">
       <DependentUpon>start.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="third-party\autocomplete\custom_display.aspx.cs">
+      <DependentUpon>custom_display.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="third-party\autocomplete\custom_display.aspx.designer.cs">
+      <DependentUpon>custom_display.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="third-party\autocomplete\email.aspx.cs">
+      <DependentUpon>email.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="third-party\autocomplete\email.aspx.designer.cs">
+      <DependentUpon>email.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="third-party\autocomplete\inline.aspx.cs">
+      <DependentUpon>inline.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="third-party\autocomplete\inline.aspx.designer.cs">
+      <DependentUpon>inline.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="third-party\autocomplete\multi_values.aspx.cs">
+      <DependentUpon>multi_values.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="third-party\autocomplete\multi_values.aspx.designer.cs">
+      <DependentUpon>multi_values.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="third-party\autocomplete\multi_values_remote.aspx.cs">
+      <DependentUpon>multi_values_remote.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="third-party\autocomplete\multi_values_remote.aspx.designer.cs">
+      <DependentUpon>multi_values_remote.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="third-party\autocomplete\remote_with_cache.aspx.cs">
+      <DependentUpon>remote_with_cache.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="third-party\autocomplete\remote_with_cache.aspx.designer.cs">
+      <DependentUpon>remote_with_cache.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="third-party\autocomplete\search.ashx.cs">
+      <DependentUpon>search.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="third-party\my97\my97.aspx.cs">
+      <DependentUpon>my97.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="third-party\my97\my97.aspx.designer.cs">
+      <DependentUpon>my97.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="third-party\umeditor\umeditor.aspx.cs">
+      <DependentUpon>umeditor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="third-party\umeditor\umeditor.aspx.designer.cs">
+      <DependentUpon>umeditor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="toolbar\form.aspx.cs">
+      <DependentUpon>form.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="toolbar\form.aspx.designer.cs">
+      <DependentUpon>form.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="toolbar\multi_toolbars.aspx.cs">
+      <DependentUpon>multi_toolbars.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="toolbar\multi_toolbars.aspx.designer.cs">
+      <DependentUpon>multi_toolbars.aspx</DependentUpon>
     </Compile>
     <Compile Include="toolbar\toolbar_iframe.aspx.cs">
       <DependentUpon>toolbar_iframe.aspx</DependentUpon>
@@ -1663,12 +2238,40 @@
     <Compile Include="toolbar\menucheckbox.aspx.designer.cs">
       <DependentUpon>menucheckbox.aspx</DependentUpon>
     </Compile>
+    <Compile Include="toolbar\menu_hideonclick.aspx.cs">
+      <DependentUpon>menu_hideonclick.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="toolbar\menu_hideonclick.aspx.designer.cs">
+      <DependentUpon>menu_hideonclick.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="toolbar\toolbar_images.aspx.cs">
+      <DependentUpon>toolbar_images.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="toolbar\toolbar_images.aspx.designer.cs">
+      <DependentUpon>toolbar_images.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="toolbar\toolbar_images_fixedwidth.aspx.cs">
+      <DependentUpon>toolbar_images_fixedwidth.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="toolbar\toolbar_images_fixedwidth.aspx.designer.cs">
+      <DependentUpon>toolbar_images_fixedwidth.aspx</DependentUpon>
+    </Compile>
     <Compile Include="tree\checkbox\tree_checked.aspx.cs">
       <DependentUpon>tree_checked.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="tree\checkbox\tree_checked.aspx.designer.cs">
       <DependentUpon>tree_checked.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="tree\select\tree_multi_select_selectable.aspx.cs">
+      <DependentUpon>tree_multi_select_selectable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="tree\select\tree_multi_select_selectable.aspx.designer.cs">
+      <DependentUpon>tree_multi_select_selectable.aspx</DependentUpon>
     </Compile>
     <Compile Include="tree\select\tree_nodecommand.aspx.cs">
       <DependentUpon>tree_nodecommand.aspx</DependentUpon>
@@ -1919,13 +2522,6 @@
     <Compile Include="layout\anchor.aspx.designer.cs">
       <DependentUpon>anchor.aspx</DependentUpon>
     </Compile>
-    <Compile Include="layout\border.aspx.cs">
-      <DependentUpon>border.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layout\border.aspx.designer.cs">
-      <DependentUpon>border.aspx</DependentUpon>
-    </Compile>
     <Compile Include="layout\card.aspx.cs">
       <DependentUpon>card.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1946,20 +2542,6 @@
     </Compile>
     <Compile Include="layout\fit.aspx.designer.cs">
       <DependentUpon>fit.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="layout\form.aspx.cs">
-      <DependentUpon>form.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layout\form.aspx.designer.cs">
-      <DependentUpon>form.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="layout\row.aspx.cs">
-      <DependentUpon>row.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layout\row.aspx.designer.cs">
-      <DependentUpon>row.aspx</DependentUpon>
     </Compile>
     <Compile Include="tabstrip\tabstrip_iframe.aspx.cs">
       <DependentUpon>tabstrip_iframe.aspx</DependentUpon>
@@ -2078,28 +2660,20 @@
     <Compile Include="tree\select\tree_multi_select.aspx.designer.cs">
       <DependentUpon>tree_multi_select.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ueditor\net\fileUp.ashx.cs">
-      <DependentUpon>fileUp.ashx</DependentUpon>
+    <Compile Include="tree\tree_expand.aspx.cs">
+      <DependentUpon>tree_expand.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ueditor\net\getContent.ashx.cs">
-      <DependentUpon>getContent.ashx</DependentUpon>
+    <Compile Include="tree\tree_expand.aspx.designer.cs">
+      <DependentUpon>tree_expand.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ueditor\net\getMovie.ashx.cs">
-      <DependentUpon>getMovie.ashx</DependentUpon>
+    <Compile Include="tree\tree_nodedatabound.aspx.cs">
+      <DependentUpon>tree_nodedatabound.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ueditor\net\getRemoteImage.ashx.cs">
-      <DependentUpon>getRemoteImage.ashx</DependentUpon>
+    <Compile Include="tree\tree_nodedatabound.aspx.designer.cs">
+      <DependentUpon>tree_nodedatabound.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ueditor\net\imageManager.ashx.cs">
-      <DependentUpon>imageManager.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="ueditor\net\imageUp.ashx.cs">
-      <DependentUpon>imageUp.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="ueditor\net\scrawlUp.ashx.cs">
-      <DependentUpon>scrawlUp.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="ueditor\net\Uploader.cs" />
     <Compile Include="usercontrol\UserInfoControl.ascx.cs">
       <DependentUpon>UserInfoControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2149,12 +2723,33 @@
     <Compile Include="window\window.aspx.designer.cs">
       <DependentUpon>window.aspx</DependentUpon>
     </Compile>
+    <Compile Include="window\window_multi.aspx.cs">
+      <DependentUpon>window_multi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="window\window_multi.aspx.designer.cs">
+      <DependentUpon>window_multi.aspx</DependentUpon>
+    </Compile>
     <Compile Include="window\window_toolbar.aspx.cs">
       <DependentUpon>window_toolbar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="window\window_toolbar.aspx.designer.cs">
       <DependentUpon>window_toolbar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="window\panel_collapse.aspx.cs">
+      <DependentUpon>panel_collapse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="window\panel_collapse.aspx.designer.cs">
+      <DependentUpon>panel_collapse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="window\window_form.aspx.cs">
+      <DependentUpon>window_form.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="window\window_form.aspx.designer.cs">
+      <DependentUpon>window_form.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -2169,7 +2764,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="aspnet\aspnet.aspx" />
-    <Content Include="aspnet\fileupload.aspx" />
     <Content Include="tree\databind\website.xml" />
     <Content Include="tree\databind\Web.sitemap">
       <SubType>Designer</SubType>
@@ -2184,12 +2778,9 @@
     <Content Include="layout\absolute.aspx" />
     <Content Include="accordion\accordion.aspx" />
     <Content Include="layout\anchor.aspx" />
-    <Content Include="layout\border.aspx" />
     <Content Include="layout\card.aspx" />
     <Content Include="layout\column.aspx" />
     <Content Include="layout\fit.aspx" />
-    <Content Include="layout\form.aspx" />
-    <Content Include="layout\row.aspx" />
     <Content Include="tabstrip\tabstrip_iframe.aspx" />
     <Content Include="tabstrip\tabstrip.aspx" />
     <Content Include="other\toolbar.aspx" />
@@ -2197,10 +2788,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="config\ajax_properties.txt" />
-    <Content Include="aspnet\fckeditor.aspx" />
-    <Content Include="fckeditor\editor\filemanager\connectors\aspx\config.ascx" />
-    <Content Include="fckeditor\editor\filemanager\connectors\aspx\connector.aspx" />
-    <Content Include="fckeditor\editor\filemanager\connectors\aspx\upload.aspx" />
     <Content Include="config\icons.aspx" />
     <Content Include="toolbar\menu_dynamic2.aspx" />
     <Content Include="toolbar\menu.xml" />
@@ -2217,8 +2804,7 @@
     <Content Include="basic\hello.aspx" />
     <Content Include="basic\login.aspx" />
     <Content Include="config\icons.htm" />
-    <Content Include="css\default.css" />
-    <Content Include="css\main.css" />
+    <Content Include="res\css\main.css" />
     <Content Include="tree\checkbox\tree_checkall.aspx" />
     <Content Include="dropdownlist\shengshixian.aspx" />
     <Content Include="dropdownlist\dropdownlist.aspx" />
@@ -2239,19 +2825,14 @@
     <Content Include="grid\image.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="autocomplete\search.ashx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ueditor\net\fileUp.ashx" />
-    <Content Include="ueditor\net\getContent.ashx" />
-    <Content Include="ueditor\net\getMovie.ashx" />
-    <Content Include="ueditor\net\getRemoteImage.ashx" />
-    <Content Include="ueditor\net\imageManager.ashx" />
-    <Content Include="ueditor\net\imageUp.ashx" />
-    <Content Include="ueditor\net\scrawlUp.ashx" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="extjs_builder\build.bat" />
+    <Content Include="third-party\autocomplete\search.ashx" />
+    <Content Include="test\SingleGrid.Master" />
+    <Content Include="master\Simple.Master" />
+    <Content Include="master\SingleGrid.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="res\themes\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -2273,7 +2854,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>11126</DevelopmentServerPort>
+          <DevelopmentServerPort>50184</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

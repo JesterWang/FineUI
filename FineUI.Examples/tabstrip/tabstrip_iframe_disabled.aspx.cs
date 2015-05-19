@@ -18,7 +18,7 @@ namespace FineUI.Examples.tabstrip
             }
             else
             {
-                if (Request.Form["__EVENTARGUMENT"] == EVENTARGUMENT_CHECK_TABS_STATUS)
+                if (GetRequestEventArgument() == EVENTARGUMENT_CHECK_TABS_STATUS)
                 {
                     if (Session[SESSION_KEY_ENABLE_TABS] == null)
                     {

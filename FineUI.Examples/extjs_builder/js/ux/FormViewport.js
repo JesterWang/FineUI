@@ -1,6 +1,7 @@
 
 Ext.define('Ext.ux.FormViewport', {
     extend: 'Ext.container.Container',
+    alias: 'widget.formviewport',
 
     isViewport: true,
 

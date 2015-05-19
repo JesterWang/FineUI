@@ -32,6 +32,7 @@ namespace FineUI.Examples.grid
         {
             DataTable table = new DataTable();
             table.Columns.Add(new DataColumn("Guid", typeof(Guid)));
+            table.Columns.Add(new DataColumn("Year", typeof(int)));
             table.Columns.Add(new DataColumn("HZData1", typeof(int)));
             table.Columns.Add(new DataColumn("HZData2", typeof(int)));
             table.Columns.Add(new DataColumn("HLData1", typeof(int)));
@@ -46,15 +47,18 @@ namespace FineUI.Examples.grid
             Random rd = new Random();
             for (int i = 0; i < 10; i++)
             {
+                int year = 2000 + i;
+
                 row = table.NewRow();
                 row[0] = Guid.NewGuid();
-                row[1] = rd.Next(1000, 9999);
+                row[1] = year;
                 row[2] = rd.Next(1000, 9999);
                 row[3] = rd.Next(1000, 9999);
                 row[4] = rd.Next(1000, 9999);
                 row[5] = rd.Next(1000, 9999);
                 row[6] = rd.Next(1000, 9999);
-                row[7] = DateTime.Parse(String.Format("{0}-09-01", rd.Next(2000, 2014)));
+                row[7] = rd.Next(1000, 9999);
+                row[8] = DateTime.Parse(String.Format("{0}-09-01", year));
 
                 table.Rows.Add(row);
             }

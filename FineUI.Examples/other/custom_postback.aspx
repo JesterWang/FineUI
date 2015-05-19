@@ -5,32 +5,45 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:SimpleForm ID="SimpleForm1" runat="server" Width="600px" BodyPadding="5px" EnableFrame="true" EnableCollapse="true"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:SimpleForm ID="SimpleForm1" runat="server" Width="500px" BodyPadding="5px" EnableCollapse="true"
             Title="简单表单">
             <Items>
-                <x:TextBox ID="TextBox1" runat="server" ShowLabel="false" EmptyText="输入一些文字并按 ENTER 键">
-                </x:TextBox>
-                <x:TextBox ID="TextBox2" runat="server" ShowLabel="false">
-                </x:TextBox>
+                <f:TextBox ID="TextBox1" runat="server" ShowLabel="false" EmptyText="输入一些文字并按 ENTER 键">
+                    <Listeners>
+                        <f:Listener Event="specialkey" Handler="onTextBoxSpecialkey" />
+                    </Listeners>
+                </f:TextBox>
+                <f:TextBox ID="TextBox2" runat="server" ShowLabel="false">
+                </f:TextBox>
             </Items>
-        </x:SimpleForm>
+        </f:SimpleForm>
     </form>
+    <script src="../res/js/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript">
 
-        function onReady() {
-            var textbox1ID = '<%= TextBox1.ClientID %>';
-            var textbox1 = X(textbox1ID);
-            textbox1.on("specialkey", function (box, e) {
-                if (e.getKey() == e.ENTER) {
-                    __doPostBack(textbox1ID, 'specialkey');
-                }
-            });
+        function onTextBoxSpecialkey(box, e) {
+            if (e.getKey() == e.ENTER) {
+                __doPostBack('', 'TextBox1_ENTER');
+            }
         }
+
+
+        //var textbox1ID = '<%= TextBox1.ClientID %>';
+
+        //F.ready(function () {
+
+        //    F(textbox1ID).on("specialkey", function (box, e) {
+        //        if (e.getKey() == e.ENTER) {
+        //            __doPostBack('', 'TextBox1_ENTER');
+        //        }
+        //    });
+
+        //});
 
     </script>
 </body>

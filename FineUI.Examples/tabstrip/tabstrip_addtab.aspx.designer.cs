@@ -40,75 +40,75 @@ namespace FineUI.Examples.tabstrip {
         protected global::FineUI.TabStrip TabStrip1;
         
         /// <summary>
-        /// btnAddBaidu1 控件。
+        /// btnAddTab1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Button btnAddBaidu1;
+        protected global::FineUI.Button btnAddTab1;
         
         /// <summary>
-        /// btnAddCnblogs1 控件。
+        /// btnAddTab2 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Button btnAddCnblogs1;
+        protected global::FineUI.Button btnAddTab2;
         
         /// <summary>
-        /// btnRemoveBaidu1 控件。
+        /// btnRemoveTab1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Button btnRemoveBaidu1;
+        protected global::FineUI.Button btnRemoveTab1;
         
         /// <summary>
-        /// btnRemoveCnblogs1 控件。
+        /// btnRemoveTab2 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Button btnRemoveCnblogs1;
+        protected global::FineUI.Button btnRemoveTab2;
         
         /// <summary>
-        /// btnAddBaidu2 控件。
+        /// btnAddTab3 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Button btnAddBaidu2;
+        protected global::FineUI.Button btnAddTab3;
         
         /// <summary>
-        /// btnAddCnblogs2 控件。
+        /// btnAddTab4 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Button btnAddCnblogs2;
+        protected global::FineUI.Button btnAddTab4;
         
         /// <summary>
-        /// btnRemoveBaidu2 控件。
+        /// btnRemoveTab3 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Button btnRemoveBaidu2;
+        protected global::FineUI.Button btnRemoveTab3;
         
         /// <summary>
-        /// btnRemoveCnblogs2 控件。
+        /// btnRemoveTab4 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Button btnRemoveCnblogs2;
+        protected global::FineUI.Button btnRemoveTab4;
     }
 }

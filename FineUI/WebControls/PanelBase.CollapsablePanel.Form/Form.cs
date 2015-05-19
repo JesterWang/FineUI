@@ -71,13 +71,26 @@ namespace FineUI
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override ControlBaseCollection Items
+        public override ITemplate Content
         {
             get
             {
-                return base.Items;
+                return base.Content;
             }
         }
+
+        ///// <summary>
+        ///// 不支持此属性
+        ///// </summary>
+        //[Browsable(false)]
+        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        //public override ControlBaseCollection Items
+        //{
+        //    get
+        //    {
+        //        return base.Items;
+        //    }
+        //}
 
         
 
@@ -85,7 +98,24 @@ namespace FineUI
 
         #region Properties
 
-        
+        ///// <summary>
+        ///// 表单字段上按回车键触发的提交按钮
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue("")]
+        //[Description("表单字段上按回车键触发的提交按钮")]
+        //public string SubmitButton
+        //{
+        //    get
+        //    {
+        //        object obj = FState["SubmitButton"];
+        //        return obj == null ? String.Empty : (string)obj;
+        //    }
+        //    set
+        //    {
+        //        FState["SubmitButton"] = value;
+        //    }
+        //}
 
         #endregion
 
@@ -172,12 +202,21 @@ namespace FineUI
 
             #endregion
 
-            // This bug has been fixed in extjs v3.4.0.
-            // Do layout when body size changed - I don't know why extjs do it automatically.
-            // Why panel.layout.layout? Because Form outside layout doesn't has this function, why? I don't know now.
-            //OB.Listeners.AddProperty("bodyresize", "function(panel){if(panel.layout.layout){panel.doLayout();}}", true);
+            //OptionBuilder defaultsOB = new OptionBuilder();
+            //defaultsOB.Listeners.AddProperty("change", JsHelper.GetFunction("F.util.setPageStateChanged();"), true);
+            //OB.AddProperty("defaults", defaultsOB);
 
-            OB.Listeners.AddProperty("change", JsHelper.GetFunction("X.util.setPageStateChanged();"), true);
+            //OB.Listeners.AddProperty("change", JsHelper.GetFunction("F.util.setPageStateChanged();"), true);
+            //OB.Listeners.AddProperty("dirtychange", JsHelper.GetFunction("F.util.setPageStateChanged(dirty);", "form", "dirty"), true);
+            AddListener("dirtychange", "F.util.setPageStateChanged(dirty);", "form", "dirty");
+            //if (!String.IsNullOrEmpty(SubmitButton))
+            //{
+            //    Control control = ControlUtil.FindControl(SubmitButton);
+            //    if (control != null && control is ControlBase)
+            //    {
+            //        OB.Listeners.AddProperty("render", JsHelper.GetFunction("F.util.formEnterKey(form,'" + control.ClientID + "');", "form"), true);
+            //    }
+            //}
 
 
             string formPanelScript = String.Format("var {0}=Ext.create('Ext.form.Panel',{1});", XID, OB.ToString());
@@ -357,23 +396,6 @@ namespace FineUI
 
 
 
-            #region bodyStyleStr
-
-            
-            //string bodyStyleStr = String.Empty;
-            //if (EnableBackgroundColor)
-            //{
-            //    bodyStyleStr = GlobalConfig.GetDefaultBackgroundColor();
-            //}
-
-            //if (!String.IsNullOrEmpty(bodyStyleStr))
-            //{
-            //    bodyStyleStr = String.Format("background-color:{0};", bodyStyleStr);
-            //}
-
-            #endregion
-
-
             string defaultColumnWidthStr = (1.0 / columnCount).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
             string[] columnWidths = ResolveColumnWidths(columnCount, Rows[startLineIndex].ColumnWidths, defaultColumnWidthStr);
 
@@ -413,9 +435,13 @@ namespace FineUI
 
                 columnOB.AddProperty("layout", "anchor");
                 columnOB.AddProperty("border", false);
-                //columnOB.AddProperty("bodyStyle", bodyStyleStr);
-                //columnOB.AddProperty("labelWidth", LabelWidth.Value);
                 columnOB.AddProperty("id", rowId + "_column" + columnIndex.ToString());
+
+                // 如果不是最后一列，则默认距离右侧 5px 
+                if (columnIndex != columnCount - 1)
+                {
+                    columnOB.AddProperty("margin", "0 5 0 0");
+                }
 
                 // 有可能为空
                 if (fieldsAB.Count > 0)
@@ -437,7 +463,8 @@ namespace FineUI
             JsObjectBuilder rowBuilder = new JsObjectBuilder();
             rowBuilder.AddProperty("layout", "column");
             rowBuilder.AddProperty("border", false);
-            //rowBuilder.AddProperty("bodyStyle", bodyStyleStr);
+
+            
 
             // 有可能为空
             if (rowColumnScriptsBuilder.Count > 0)

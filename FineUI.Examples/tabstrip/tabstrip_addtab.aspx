@@ -5,45 +5,45 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:TabStrip ID="TabStrip1" Width="950px" Height="350px" ShowBorder="true" ActiveTabIndex="0" EnableFrame="true"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:TabStrip ID="TabStrip1" Width="950px" Height="350px" ShowBorder="true" ActiveTabIndex="0" 
             runat="server">
             <Tabs>
-                <x:Tab Title="FineUI 论坛" EnableIFrame="true" IFrameUrl="http://fineui.com/bbs/" runat="server">
-                </x:Tab>
+                <f:Tab Title="FineUI 论坛" EnableIFrame="true" IFrameUrl="http://fineui.com/bbs/" runat="server">
+                </f:Tab>
             </Tabs>
-        </x:TabStrip>
+        </f:TabStrip>
         <br />
-        <x:Button ID="btnAddBaidu1" CssClass="inline" Text="添加标签 - Baidu1（客户端代码）"
+        <f:Button ID="btnAddTab1" CssClass="marginr" Text="专业版（客户端代码）"
             EnablePostBack="false" runat="server">
-        </x:Button>
-        <x:Button ID="btnAddCnblogs1" CssClass="inline" Text="添加标签 - Cnblogs1（客户端代码）"
+        </f:Button>
+        <f:Button ID="btnAddTab2" CssClass="marginr" Text="开源版（客户端代码）"
             EnablePostBack="false" runat="server">
-        </x:Button>
-        <x:Button ID="btnRemoveBaidu1" CssClass="inline" Text="删除标签 - Baidu1（客户端代码）"
+        </f:Button>
+        <f:Button ID="btnRemoveTab1" CssClass="marginr" Text="删除专业版（客户端代码）"
             EnablePostBack="false" runat="server">
-        </x:Button>
-        <x:Button ID="btnRemoveCnblogs1" CssClass="inline" Text="删除标签 - Cnblogs1（客户端代码）"
+        </f:Button>
+        <f:Button ID="btnRemoveTab2" CssClass="marginr" Text="删除开源版（客户端代码）"
             EnablePostBack="false" runat="server">
-        </x:Button>
+        </f:Button>
         <br />
         <br />
-        <x:Button ID="btnAddBaidu2" CssClass="inline" Text="添加标签 - Baidu2（服务端代码）"
-            runat="server" OnClick="btnAddBaidu2_Click">
-        </x:Button>
-        <x:Button ID="btnAddCnblogs2" CssClass="inline" Text="添加标签 - Cnblogs2（服务端代码）"
-            runat="server" OnClick="btnAddCnblogs2_Click">
-        </x:Button>
-        <x:Button ID="btnRemoveBaidu2" CssClass="inline" Text="删除标签 - Baidu2（服务端代码）"
-            runat="server" OnClick="btnRemoveBaidu2_Click">
-        </x:Button>
-        <x:Button ID="btnRemoveCnblogs2" CssClass="inline" Text="删除标签 - Cnblogs2（服务端代码）"
-            runat="server" OnClick="btnRemoveCnblogs2_Click">
-        </x:Button>
+        <f:Button ID="btnAddTab3" CssClass="marginr" Text="专业版示例（服务端代码）"
+            runat="server" OnClick="btnAddTab3_Click">
+        </f:Button>
+        <f:Button ID="btnAddTab4" CssClass="marginr" Text="开源版版示例（服务端代码）"
+            runat="server" OnClick="btnAddTab4_Click">
+        </f:Button>
+        <f:Button ID="btnRemoveTab3" CssClass="marginr" Text="删除专业版示例（服务端代码）"
+            runat="server" OnClick="btnRemoveTab3_Click">
+        </f:Button>
+        <f:Button ID="btnRemoveTab4" CssClass="marginr" Text="删除开源版版示例（服务端代码）"
+            runat="server" OnClick="btnRemoveTab4_Click">
+        </f:Button>
         <br />
         <br />
         <br />

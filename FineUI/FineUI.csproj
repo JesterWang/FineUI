@@ -63,9 +63,9 @@
     <AssemblyOriginatorKeyFile>StrongName.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\json.net\Net20\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Newtonsoft.Json\Net20\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -83,10 +83,21 @@
     <Compile Include="BaseWebControls\BoxComponent.Container\Container.cs" />
     <Compile Include="BaseWebControls\BoxComponent.Field.TextField.RealTextField\RealTextField.cs" />
     <Compile Include="BaseWebControls\BoxComponent.Field.TextField\TextField.cs" />
+    <Compile Include="BaseWebControls\ControlBase\Listener\Listener.cs" />
+    <Compile Include="BaseWebControls\ControlBase\Listener\ListenerCollection.cs" />
+    <Compile Include="Business\Enums\ButtonType.cs" />
     <Compile Include="Business\Enums\Grid\FieldType.cs" />
     <Compile Include="Business\Enums\Grid\Renderer.cs" />
     <Compile Include="Business\Enums\MessageTarget.cs" />
+    <Compile Include="Business\Enums\SummaryPosition.cs" />
+    <Compile Include="Business\Enums\ToolbarAlign.cs" />
+    <Compile Include="Business\Util\FState.cs" />
+    <Compile Include="Business\Util\DateUtil.cs" />
+    <Compile Include="WebControls\ControlBase.CPHConnector\CPHConnector.cs" />
+    <Compile Include="WebControls\ControlBase.PageManager\CustomEventArgs.cs" />
     <Compile Include="WebControls\Field.CheckBox\EventArgs\CheckedEventArgs.cs" />
+    <Compile Include="WebControls\PanelBase.CollapsablePanel.Tree\EventArgs\TreeNodeEventArgs.cs" />
+    <Compile Include="WebControls\PanelBase.CollapsablePanel.Tree\EventArgs\TreePreNodeEventArgs.cs" />
     <Compile Include="WebControls\PanelBase.Grid\Editor\GridColumnEditorCollection.cs" />
     <Compile Include="BaseWebControls\BoxComponent.Field\Field.cs" />
     <Compile Include="BaseWebControls\ControlBase.Component.BoxComponent\BoxComponent.cs" />
@@ -113,7 +124,6 @@
     <Compile Include="Business\Enums\TriggerIcon.cs" />
     <Compile Include="Business\Enums\WindowPosition.cs" />
     <Compile Include="Business\Enums\ToolbarPosition.cs" />
-    <Compile Include="Business\Enums\ButtonType.cs" />
     <Compile Include="Business\Enums\Target.cs" />
     <Compile Include="Business\Enums\RegexPattern.cs" />
     <Compile Include="Business\Enums\CloseAction.cs" />
@@ -123,7 +133,6 @@
     <Compile Include="Business\Enums\ButtonSize.cs" />
     <Compile Include="Business\Enums\BoxLayoutAlign.cs" />
     <Compile Include="Business\Enums\BoxLayoutPosition.cs" />
-    <Compile Include="Business\Enums\FooterBarAlign.cs" />
     <Compile Include="Business\Enums\AjaxLoadingType.cs" />
     <Compile Include="Business\Enums\TextAlign.cs" />
     <Compile Include="Business\Enums\LabelAlign.cs" />
@@ -138,7 +147,6 @@
     <Compile Include="Business\ResourceManager\TreeNodeIDManager.cs" />
     <Compile Include="Business\SimulateTree\SimulateTreeHeper.cs" />
     <Compile Include="Business\SimulateTree\SimulateTreeNode.cs" />
-    <Compile Include="Business\Util\XState.cs" />
     <Compile Include="Business\Util\ControlUtil.cs" />
     <Compile Include="Business\Util\StringUtil.cs" />
     <Compile Include="Business\Util\ObjectUtil.cs" />
@@ -219,7 +227,6 @@
     <Compile Include="WebControls\PanelBase.CollapsablePanel.Accordion\Accordion.cs" />
     <Compile Include="WebControls\PanelBase.CollapsablePanel.Accordion\AccordionPane\AccordionPane.cs" />
     <Compile Include="WebControls\PanelBase.CollapsablePanel.Accordion\AccordionPane\AccordionPaneCollection.cs" />
-    <Compile Include="WebControls\PanelBase.CollapsablePanel.Tree\EventArgs\TreeExpandEventArgs.cs" />
     <Compile Include="WebControls\PanelBase.CollapsablePanel.Tree\EventArgs\TreeCommandEventArgs.cs" />
     <Compile Include="WebControls\PanelBase.CollapsablePanel.Tree\EventArgs\TreeCheckEventArgs.cs" />
     <Compile Include="WebControls\PanelBase.CollapsablePanel.Tree\TreeNode\TreeNode.cs" />
@@ -247,7 +254,6 @@
     <Compile Include="WebControls\PanelBase.CollapsablePanel.Tree\Tree.cs" />
     <Compile Include="Business\ResourceManager\AbsoluteScriptBlock.cs" />
     <Compile Include="WebControls\PanelBase.CollapsablePanel.ContentPanel\ContentPanel.cs" />
-    <Compile Include="WebControls\ControlBase.PageLoading\PageLoading.cs" />
     <Compile Include="WebControls\PanelBase.CollapsablePanel.Form\Form.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -273,7 +279,7 @@
     <Compile Include="WebControls\PanelBase.Grid\GridColumn\HyperLinkField.cs" />
     <Compile Include="WebControls\PanelBase.Grid\GridColumn\GridColumn\GridColumn.cs" />
     <Compile Include="WebControls\PanelBase.Grid\GridColumn\GridColumn\GridColumnCollection.cs" />
-    <Compile Include="WebControls\PanelBase.Grid\GridRow\GridRowControl.cs" />
+    <Compile Include="WebControls\PanelBase.Grid\GridRow\GridTemplateContainer.cs" />
     <Compile Include="WebControls\PanelBase.Grid\GridRow\GridRow.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -292,9 +298,7 @@
     <Compile Include="WebControls\Field.TextField.RealTextField.DatePicker\DatePicker.cs" />
     <Compile Include="WebControls\PanelBase.TabStrip\Tab\TabCollection.cs" />
     <Compile Include="Business\ResourceManager\ScriptBlock.cs" />
-    <Compile Include="Business\Enums\ButtonAlign.cs" />
     <Compile Include="Business\Enums\Layout.cs" />
-    <Compile Include="Business\Util\ExtDateTimeConvertor.cs" />
     <Compile Include="WebControls\Field.TextField.RealTextField.NumberBox\NumberBox.cs" />
     <Compile Include="Business\Enums\TextMode.cs" />
     <Compile Include="Business\Enums\ToolTipType.cs" />
@@ -315,13 +319,6 @@
     <Compile Include="WebControls\Field.TextField.RealTextField.TimePicker\TimePicker.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\json.net\Net20\Newtonsoft.Json.dll" />
-    <Content Include="lib\json.net\Net20\Newtonsoft.Json.xml" />
-    <Content Include="lib\json.net\Net35\Newtonsoft.Json.dll" />
-    <Content Include="lib\json.net\Net35\Newtonsoft.Json.xml" />
-    <Content Include="lib\json.net\Net40\Newtonsoft.Json.dll" />
-    <Content Include="lib\json.net\Net40\Newtonsoft.Json.xml" />
-    <Content Include="lib\licenses\json.net.txt" />
     <Content Include="release_history_en.txt" />
     <EmbeddedResource Include="toolbox\Accordion.bmp" />
     <EmbeddedResource Include="toolbox\Button.bmp" />
@@ -379,9 +376,6 @@
     <None Include="StrongName.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ajax_properties.txt" />
-    <Content Include="lib\licenses\extjs.txt" />
-    <Content Include="lib\licenses\JSBeautify.txt" />
     <Content Include="release_history.txt" />
   </ItemGroup>
   <ItemGroup>

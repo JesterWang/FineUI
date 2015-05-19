@@ -53,25 +53,25 @@ namespace FineUI
 
         #region GetColumnValue
 
-        internal override string GetColumnValue(GridRow row)
+        internal override object GetColumnValue(GridRow row)
         {
-            string text = String.Empty;
+            bool isChecked = false;
 
             if (!String.IsNullOrEmpty(DataField))
             {
                 object value = row.GetPropertyValue(DataField);
 
-                if (value == null)
+                if (value == null || value == DBNull.Value || (value is String && String.IsNullOrEmpty(value.ToString())))
                 {
-                    text = "false";
+                    // 不做处理
                 }
                 else
                 {
-                    text = value.ToString().ToLower();
+                    isChecked = Convert.ToBoolean(value);
                 }
             }
 
-            return text;
+            return isChecked;
         }
 
         #endregion
@@ -88,10 +88,20 @@ namespace FineUI
             if (Grid.AllowCellEditing)
             {
                 OB.AddProperty("xtype", "checkcolumn");
+
+                if (Grid.EnableAfterEditEvent)
+                {
+                    string validateScript = "var args='AfterEdit$'+rowIndex+'$" + ColumnID + "';";
+                    validateScript += Grid.GetPostBackEventReference("#AfterEdit#").Replace("'#AfterEdit#'", "args");
+
+                    //string checkchangeScript = String.Format("function(checkcolumn,rowIndex,checked){{{0}}}", validateScript);
+                    //OB.Listeners.AddProperty("checkchange", checkchangeScript, true);
+                    AddListener("checkchange", validateScript, "checkcolumn", "rowIndex", "checked");
+                }
             }
 
             string jsContent = String.Format("var {0}={1};", XID, OB.ToString());
-            AddStartupScript(jsContent);
+            AddGridColumnScript(jsContent);
 
         }
 

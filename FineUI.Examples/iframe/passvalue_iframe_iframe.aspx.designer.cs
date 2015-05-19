@@ -8,10 +8,9 @@
 //------------------------------------------------------------------------------
 
 namespace FineUI.Examples.iframe {
-
-
-    public partial class passvalue_iframe_iframe
-    {
+    
+    
+    public partial class passvalue_iframe_iframe {
         
         /// <summary>
         /// form1 控件。
@@ -32,15 +31,6 @@ namespace FineUI.Examples.iframe {
         protected global::FineUI.PageManager PageManager1;
         
         /// <summary>
-        /// Panel1 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUI.Panel Panel1;
-        
-        /// <summary>
         /// SimpleForm1 控件。
         /// </summary>
         /// <remarks>
@@ -56,6 +46,6 @@ namespace FineUI.Examples.iframe {
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.DropDownList ddlSheng;
+        protected global::FineUI.RadioButtonList ddlSheng;
     }
 }

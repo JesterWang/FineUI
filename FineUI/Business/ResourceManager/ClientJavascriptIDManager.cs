@@ -73,7 +73,7 @@ namespace FineUI
 
         public string GetNextJavascriptID()
         {
-            return String.Format("x{0}", _num++);
+            return String.Format("f{0}", _num++);
         }
 
         #endregion

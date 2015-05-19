@@ -61,16 +61,16 @@ namespace FineUI
         /// 换行符转换为HTML标签<br/>
         /// </summary>
         NL2BR,
-        /// <summary>
-        /// 格式化为数字（RendererArgument来指定数字的显示格式）
-        /// RendererArgument：
-        /// 1. 0 - (123456) 只显示数字，没有精度
-        /// 2. 0.00 - (123456.78) 只显示数字，两位精度
-        /// 3. 0.0000 - (123456.7890) 只显示数字，四位精度
-        /// 4. 0,000 - (123,456) 显示数字和逗号，没有精度
-        /// 5. 0,000.00 - (123,456.78) 显示数字和逗号，两位精度
-        /// </summary>
-        Number,
+        ///// <summary>
+        ///// 格式化为数字（RendererArgument来指定数字的显示格式）
+        ///// RendererArgument：
+        ///// 1. 0 - (123456) 只显示数字，没有精度
+        ///// 2. 0.00 - (123456.78) 只显示数字，两位精度
+        ///// 3. 0.0000 - (123456.7890) 只显示数字，四位精度
+        ///// 4. 0,000 - (123,456) 显示数字和逗号，没有精度
+        ///// 5. 0,000.00 - (123,456.78) 显示数字和逗号，两位精度
+        ///// </summary>
+        //Number,
         /// <summary>
         /// 删除所有的脚本标签
         /// </summary>
@@ -82,11 +82,11 @@ namespace FineUI
         /// <summary>
         /// 清除字符串两端的空白字符
         /// </summary>
-        Trim,
-        /// <summary>
-        /// 美元
-        /// </summary>
-        UsMoney
+        Trim
+        ///// <summary>
+        ///// 美元
+        ///// </summary>
+        //UsMoney
     }
 
     /// <summary>
@@ -127,9 +127,9 @@ namespace FineUI
                 case Renderer.NL2BR:
                     result = "nl2br";
                     break;
-                case Renderer.Number:
-                    result = "number";
-                    break;
+                //case Renderer.Number:
+                //    result = "number";
+                //    break;
                 case Renderer.StripScripts:
                     result = "stripScripts";
                     break;
@@ -142,9 +142,9 @@ namespace FineUI
                 case Renderer.Uppercase:
                     result = "uppercase";
                     break;
-                case Renderer.UsMoney:
-                    result = "usMoney";
-                    break;
+                //case Renderer.UsMoney:
+                //    result = "usMoney";
+                //    break;
             }
 
             return result;

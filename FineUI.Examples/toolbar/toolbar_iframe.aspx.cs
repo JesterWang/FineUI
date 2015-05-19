@@ -16,5 +16,10 @@ namespace FineUI.Examples.toolbar
                 
             }
         }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            PageContext.RegisterStartupScript(String.Format("updateIFrameUrl('{0}');", ResolveUrl("~/basic/login.aspx")));
+        }
     }
 }

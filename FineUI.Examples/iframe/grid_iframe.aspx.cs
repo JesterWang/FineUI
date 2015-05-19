@@ -22,20 +22,7 @@ namespace FineUI.Examples.iframe
                 btnConfirmButton.OnClientClick = Grid2.GetNoSelectionAlertReference("请至少选择一项！");
                 btnConfirmButton.ConfirmText = String.Format("你确定要删除选中的&nbsp;<b><script>{0}</script></b>&nbsp;项吗？", Grid2.GetSelectedCountReference());
 
-                //string confirmScript = FineUI.Confirm.GetShowReference("页面数据发生变化，是否先保存？", "确认关闭", FineUI.MessageBoxIcon.Question, "alert('需要先保存数据。');", "alert('不保存数据。');");
-                //btnSimulateClose.OnClientClick = String.Format("if({0}){{{1}}}else{{alert('页面数据，没有变化');}}", FineUI.PageContext.GetPageStateChangedReference(), confirmScript);
-
-                //string confirmText = "是否确认关闭当前页？<br/>您在当前页所做的修改没有保存。继续编辑当前页，请选择“取消”。<br/>选择“确定”关闭当前页，选择“取消”继续编辑当前页。";
-                //string closeScript = Window1.GetCloseReference();
-
-                ////string confirmScript2 = FineUI.Confirm.GetShowReference(confirmText, "确认关闭", FineUI.MessageBoxIcon.Warning, closeScript, "return false;");
-                ////Window1.OnClientCloseButtonClick = String.Format("if({0}){{{1}}}else{{{2}}}", Window1.GetIFramePageStateChangedReference(), confirmScript2, closeScript);
-
-                //Window1.OnClientCloseButtonClick = Window1.GetIFramePageStateChangedConfirmReference("确认关闭", confirmText, closeScript, "return false;");
-
-                // EnableConfirmOnClose="true"
-                //Window1.OnClientCloseButtonClick = Window1.GetConfirmHideReference();
-
+                
             }
 
             Panel7.Title = "表格 - 页面加载时间：" + DateTime.Now.ToLongTimeString();

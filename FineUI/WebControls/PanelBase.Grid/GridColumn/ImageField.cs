@@ -136,7 +136,7 @@ namespace FineUI
         {
             get
             {
-                return "box-grid-cell-inner-image";
+                return "f-grid-cell-inner-image";
             }
         }
 
@@ -144,7 +144,7 @@ namespace FineUI
 
         #region Methods
 
-        internal override string GetColumnValue(GridRow row)
+        internal override object GetColumnValue(GridRow row)
         {
             string result = String.Empty;
 
@@ -183,7 +183,7 @@ namespace FineUI
 
 
 
-                result = String.Format("<img src=\"{0}\" class=\"box-grid-imagefield\"{1}/>",
+                result = String.Format("<img src=\"{0}\" class=\"f-grid-imagefield\"{1}/>",
                     Grid.ResolveUrl(imageUrl),
                     cssStyle);
             }
@@ -216,7 +216,8 @@ namespace FineUI
 
 
             string jsContent = String.Format("var {0}={1};", XID, OB.ToString());
-            AddStartupScript(jsContent);
+            AddGridColumnScript(jsContent);
+            
         }
 
         #endregion

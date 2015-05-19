@@ -75,6 +75,19 @@ namespace FineUI
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public override bool ShowHeader
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// 不支持此属性
+        /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override bool ShowBorder
         {
             get
@@ -111,12 +124,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableClose"];
+                object obj = FState["EnableClose"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableClose"] = value;
+                FState["EnableClose"] = value;
             }
         }
 
@@ -130,12 +143,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["AutoHeight"];
+        //        object obj = FState["AutoHeight"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["AutoHeight"] = value;
+        //        FState["AutoHeight"] = value;
         //    }
         //}
 
@@ -149,12 +162,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["AutoWidth"];
+        //        object obj = FState["AutoWidth"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["AutoWidth"] = value;
+        //        FState["AutoWidth"] = value;
         //    }
         //}
 
@@ -169,12 +182,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["EnablePostBack"];
+        //        object obj = FState["EnablePostBack"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["EnablePostBack"] = value;
+        //        FState["EnablePostBack"] = value;
         //    }
         //}
 
@@ -185,12 +198,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["IFrameDelayLoad"];
+        //        object obj = FState["IFrameDelayLoad"];
         //        return obj == null ? true : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["IFrameDelayLoad"] = value;
+        //        FState["IFrameDelayLoad"] = value;
         //    }
         //}
 
@@ -257,16 +270,22 @@ namespace FineUI
 
             if (EnableIFrame)
             {
-                // 对于非激活Tab，其中的Iframe需要延迟加载
-                if (this != tabStrip.Tabs[tabStrip.ActiveTabIndex])
+                if (tabStrip.ActiveTabIndex >= 0 && 
+                    tabStrip.ActiveTabIndex < tabStrip.Tabs.Count && 
+                    this == tabStrip.Tabs[tabStrip.ActiveTabIndex])
                 {
+                    // 当前是激活选项卡
+                }
+                else
+                {
+                    // 对于非激活Tab，其中的Iframe需要延迟加载
                     OB.RemoveProperty("html");
-                    OB.RemoveProperty("x_iframe_loaded");
-                    OB.AddProperty("x_iframe_loaded", false);
+                    OB.RemoveProperty("f_iframe_loaded");
+                    OB.AddProperty("f_iframe_loaded", false);
                 }
             }
 
-            OB.AddProperty("x_type", "tab");
+            OB.AddProperty("f_type", "tab");
 
             //OB.AddProperty("__box_hidden_field_id", HiddenHiddenFieldID);
 
@@ -295,14 +314,13 @@ namespace FineUI
         }
 
         /// <summary>
-        /// Override the same method exist in ControlBase, because we have separate logic to hide this control.
+        /// 获取 Hidden 属性改变的 JavaScript 脚本
+        /// Tab 控件需要特殊处理，而不是像其他客户端组件一样调用 f_setVisible 函数
         /// </summary>
         protected override string GetHiddenPropertyChangedScript()
         {
             if (PropertyModified("Hidden"))
             {
-                //if (ClientPropertyModifiedInServer("Hidden"))
-
                 return Hidden ? GetHideReference() : GetShowReference();
 
             }
@@ -327,8 +345,7 @@ namespace FineUI
             if (Hidden != postHidden)
             {
                 Hidden = postHidden;
-                XState.BackupPostDataProperty("Hidden");
-                return true;
+                FState.BackupPostDataProperty("Hidden");
             }
 
             return false;

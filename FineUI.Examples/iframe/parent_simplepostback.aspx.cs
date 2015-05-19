@@ -14,7 +14,7 @@ namespace FineUI.Examples.iframe
         {
             if (IsPostBack)
             {
-                if (Request.Form["__EVENTARGUMENT"] == "param_from_simplepostback2")
+                if (GetRequestEventArgument() == "param_from_simplepostback2")
                 {
                     Alert.Show("来自IFrame中的事件！");
                 }

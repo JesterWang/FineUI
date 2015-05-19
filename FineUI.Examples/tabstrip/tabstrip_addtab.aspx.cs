@@ -14,32 +14,31 @@ namespace FineUI.Examples.tabstrip
         {
             if (!IsPostBack)
             {
-                btnAddBaidu1.OnClientClick = TabStrip1.GetAddTabReference("dynamic_tab_baidu1", "http://www.baidu.com/", "Baidu1", IconHelper.GetIconUrl(Icon.Application), true);
-                btnAddCnblogs1.OnClientClick = TabStrip1.GetAddTabReference("dynamic_tab_Cnblogs1", "http://www.cnblogs.com/", "Cnblogs1", IconHelper.GetIconUrl(Icon.ApplicationAdd), true);
-                btnRemoveBaidu1.OnClientClick = TabStrip1.GetRemoveTabReference("dynamic_tab_baidu1");
-                btnRemoveCnblogs1.OnClientClick = TabStrip1.GetRemoveTabReference("dynamic_tab_Cnblogs1");
-
+                btnAddTab1.OnClientClick = TabStrip1.GetAddTabReference("dynamic_tab1", "http://fineui.com/version_pro/", "专业版", IconHelper.GetIconUrl(Icon.Application), true);
+                btnAddTab2.OnClientClick = TabStrip1.GetAddTabReference("dynamic_tab2", "http://fineui.com/version/", "开源版", IconHelper.GetIconUrl(Icon.ApplicationAdd), true);
+                btnRemoveTab1.OnClientClick = TabStrip1.GetRemoveTabReference("dynamic_tab1");
+                btnRemoveTab2.OnClientClick = TabStrip1.GetRemoveTabReference("dynamic_tab2");
             }
         }
 
-        protected void btnAddBaidu2_Click(object sender, EventArgs e)
+        protected void btnAddTab3_Click(object sender, EventArgs e)
         {
-            PageContext.RegisterStartupScript(TabStrip1.GetAddTabReference("dynamic_tab_baidu2", "http://www.baidu.com/", "Baidu2", IconHelper.GetIconUrl(Icon.Application), true));
+            PageContext.RegisterStartupScript(TabStrip1.GetAddTabReference("dynamic_tab3", "http://fineui.com/version_pro/", "专业版（服务器）", IconHelper.GetIconUrl(Icon.Application), true));
         }
 
-        protected void btnAddCnblogs2_Click(object sender, EventArgs e)
+        protected void btnAddTab4_Click(object sender, EventArgs e)
         {
-            PageContext.RegisterStartupScript(TabStrip1.GetAddTabReference("dynamic_tab_Cnblogs2", "http://www.cnblogs.com/", "Cnblogs2", IconHelper.GetIconUrl(Icon.ApplicationAdd), true));
+            PageContext.RegisterStartupScript(TabStrip1.GetAddTabReference("dynamic_tab4", "http://fineui.com/version/", "开源版（服务器）", IconHelper.GetIconUrl(Icon.ApplicationAdd), true));
         }
 
-        protected void btnRemoveBaidu2_Click(object sender, EventArgs e)
+        protected void btnRemoveTab3_Click(object sender, EventArgs e)
         {
-            PageContext.RegisterStartupScript(TabStrip1.GetRemoveTabReference("dynamic_tab_baidu2"));
+            PageContext.RegisterStartupScript(TabStrip1.GetRemoveTabReference("dynamic_tab3"));
         }
 
-        protected void btnRemoveCnblogs2_Click(object sender, EventArgs e)
+        protected void btnRemoveTab4_Click(object sender, EventArgs e)
         {
-            PageContext.RegisterStartupScript(TabStrip1.GetRemoveTabReference("dynamic_tab_Cnblogs2"));
+            PageContext.RegisterStartupScript(TabStrip1.GetRemoveTabReference("dynamic_tab4"));
         }
 
     }

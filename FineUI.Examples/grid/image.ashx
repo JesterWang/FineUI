@@ -13,7 +13,7 @@ public class image : IHttpHandler
 
         try
         {
-            string physicalFilePath = context.Server.MapPath(String.Format("~/images/16/{0}.png", context.Request.QueryString["id"]));
+            string physicalFilePath = context.Server.MapPath(String.Format("~/res/images/16/{0}.png", context.Request.QueryString["id"]));
 
             if (File.Exists(physicalFilePath))
             {

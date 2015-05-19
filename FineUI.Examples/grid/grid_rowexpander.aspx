@@ -5,33 +5,33 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格" EnableFrame="true" EnableCollapse="true" Width="800px"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格"  EnableCollapse="true" Width="800px"
             runat="server" DataKeyNames="Id,Name" EnableCheckBoxSelect="false">
             <Columns>
-                <x:RowNumberField />
-                <x:BoundField Width="100px" DataField="Name" DataFormatString="{0}" HeaderText="姓名" />
-                <x:TemplateField Width="80px" HeaderText="性别">
+                <f:RowNumberField />
+                <f:BoundField Width="100px" DataField="Name" DataFormatString="{0}" HeaderText="姓名" />
+                <f:TemplateField Width="80px" HeaderText="性别">
                     <ItemTemplate>
                         <%-- Container.DataItem 的类型是 System.Data.DataRowView 或者用户自定义类型 --%>
                         <asp:Label ID="Label2" runat="server" Text='<%# GetGender(Eval("Gender")) %>'></asp:Label>
                     </ItemTemplate>
-                </x:TemplateField>
-                <x:BoundField Width="80px" DataField="EntranceYear" HeaderText="入学年份" />
-                <x:CheckBoxField Width="80px" RenderAsStaticField="true" DataField="AtSchool" HeaderText="是否在校" />
-                <x:HyperLinkField HeaderText="所学专业" DataToolTipField="Major" DataTextField="Major"
+                </f:TemplateField>
+                <f:BoundField Width="80px" DataField="EntranceYear" HeaderText="入学年份" />
+                <f:CheckBoxField Width="80px" RenderAsStaticField="true" DataField="AtSchool" HeaderText="是否在校" />
+                <f:HyperLinkField HeaderText="所学专业" DataToolTipField="Major" DataTextField="Major"
                     DataTextFormatString="{0}" DataNavigateUrlFields="Major" DataNavigateUrlFormatString="http://gsa.ustc.edu.cn/search?q={0}"
-                    DataNavigateUrlFieldsEncode="true" Target="_blank" ExpandUnusedSpace="True" />
-                <x:ImageField Width="80px" TextAlign="Right" DataImageUrlField="Group" DataImageUrlFormatString="~/images/16/{0}.png"
-                    HeaderText="分组"></x:ImageField>
-                <x:BoundField Width="100px" DataField="LogTime" DataFormatString="{0:yyyy-MM-dd}"
+                    UrlEncode="true" Target="_blank" ExpandUnusedSpace="True" />
+                <f:ImageField Width="80px" TextAlign="Right" DataImageUrlField="Group" DataImageUrlFormatString="~/res/images/16/{0}.png"
+                    HeaderText="分组"></f:ImageField>
+                <f:BoundField Width="100px" DataField="LogTime" DataFormatString="{0:yyyy-MM-dd}"
                     HeaderText="注册日期" />
-                <x:TemplateField ColumnID="expander" RenderAsRowExpander="true">
+                <f:TemplateField ColumnID="expander" RenderAsRowExpander="true">
                     <ItemTemplate>
                         <div class="expander">
                             <p>
@@ -42,13 +42,13 @@
                             </p>
                         </div>
                     </ItemTemplate>
-                </x:TemplateField>
+                </f:TemplateField>
             </Columns>
-        </x:Grid>
+        </f:Grid>
         <br />
         <br />
-        <x:Button ID="Button3" runat="server" Text="显示/隐藏行扩展列" OnClick="Button3_Click">
-        </x:Button>
+        <f:Button ID="Button3" runat="server" Text="显示/隐藏行扩展列" OnClick="Button3_Click">
+        </f:Button>
         <br />
         注：隐藏后仍然可以通过选中行按ENTER键展开折叠行扩展列的内容区域。
     </form>

@@ -145,6 +145,13 @@ namespace FineUI
 
             #endregion
 
+            #region 监视ViewState的改变
+
+            // 更新ViewState，如果本AJAX请求的ViewState和当前页面上的ViewState不一致，则丢弃本次更新
+            UpdateViewState(sb, doc);
+
+
+            #endregion
             #region 页面上每个控件应该输出的脚本
 
             // 设置提交表单的按钮等元素可用enable（有可能在后面的被覆盖）
@@ -171,7 +178,7 @@ namespace FineUI
                 foreach (string clientId in shortNameDic.Keys)
                 {
                     string xid = shortNameDic[clientId];
-                    string scriptId = String.Format("X('{0}')", clientId);
+                    string scriptId = String.Format("F('{0}')", clientId);
                     shortNameBuilder.AppendFormat("{0}={1}", xid, scriptId);
                     if (index == count - 1)
                     {
@@ -182,7 +189,7 @@ namespace FineUI
                         shortNameBuilder.Append(',');
                     }
 
-                    // 不能将所有的X('RegionPanel1_Button1')替换为x0，因为有时X('RegionPanel1_Button1')会出现在HTML片段中
+                    // 不能将所有的F('RegionPanel1_Button1')替换为x0，因为有时F('RegionPanel1_Button1')会出现在HTML片段中
                     //ajaxScriptBuilder.Replace(scriptId, xid);
 
 
@@ -192,7 +199,7 @@ namespace FineUI
                     {
                         PageManager.Instance.AjaxGridClientIDs.Remove(clientId);
 
-                        gridTplsBuilder.AppendFormat("{0}.x_tpls={1};", xid, GetGridTpls(doc, clientId));
+                        gridTplsBuilder.AppendFormat("{0}.f_tpls={1};", xid, GetGridTpls(doc, clientId));
 
                     }
 
@@ -205,7 +212,7 @@ namespace FineUI
             {
                 foreach (string clientId in PageManager.Instance.AjaxGridClientIDs)
                 {
-                    gridTplsBuilder.AppendFormat("X('{0}').x_updateTpls({1});", clientId, GetGridTpls(doc, clientId));
+                    gridTplsBuilder.AppendFormat("F('{0}').f_updateTpls({1});", clientId, GetGridTpls(doc, clientId));
                 }
             }
 
@@ -213,8 +220,8 @@ namespace FineUI
             sb.Append(shortNameBuilder.ToString() + gridTplsBuilder.ToString() + ajaxScriptBuilder.ToString());
 
 
-            // 执行 onReady 脚本
-            sb.Append(GetExecuteOnReadyScript());
+            //// 执行 onReady 脚本
+            //sb.Append(GetExecuteOnReadyScript());
 
             #endregion
 
@@ -223,11 +230,11 @@ namespace FineUI
             // 更新执行的控件（一般是标准的ASP.NET控件）
             UpdateASPNETControls(sb, doc);
 
-            // 更新ViewState
-            UpdateViewState(sb, doc, false);
+            //// 更新ViewState
+            //UpdateViewState(sb, doc, false);
 
-            // 更新压缩后的ViewState
-            UpdateViewState(sb, doc, true);
+            //// 更新压缩后的ViewState
+            //UpdateViewState(sb, doc, true);
 
             // 更新EventValidation（如果存在则更新）
             UpdateEventValidation(sb, doc);
@@ -257,24 +264,24 @@ namespace FineUI
             #endregion
         }
 
-        #region GetExecuteOnReadyScript & GetEnableTargetControlScript
+        #region GetEnableTargetControlScript
 
-        // 执行用户自定义的 onReady 脚本
-        private static string GetExecuteOnReadyScript()
-        {
-            StringBuilder sb = new StringBuilder();
-            if (PageManager.Instance.ExecuteOnReadyWhenPostBack)
-            {
-                // 每次ajax调用后都要调用onReady脚本
-                //sb.Append("if(typeof(onReady)=='function'){onReady();}");
-                sb.Append("X.ready();");
-            }
+        //// 执行用户自定义的 onReady 脚本
+        //private static string GetExecuteOnReadyScript()
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    if (PageManager.Instance.ExecuteOnReadyWhenPostBack)
+        //    {
+        //        // 每次ajax调用后都要调用onReady脚本
+        //        //sb.Append("if(typeof(onReady)=='function'){onReady();}");
+        //        sb.Append("F.ready();");
+        //    }
 
-            //sb.Append("if(typeof(onAjaxReady)=='function'){onAjaxReady();}");
-            //sb.Append("X.ajaxReady();");
+        //    //sb.Append("if(typeof(onAjaxReady)=='function'){onAjaxReady();}");
+        //    //sb.Append("F.ajaxReady();");
 
-            return sb.ToString();
-        }
+        //    return sb.ToString();
+        //}
 
 
         /// <summary>
@@ -286,7 +293,7 @@ namespace FineUI
             string targetControlClientID = HttpContext.Current.Request.Form[ResourceManager.DISABLED_CONTROL_BEFORE_POSTBACK];
             if (!String.IsNullOrEmpty(targetControlClientID))
             {
-                return String.Format("X.enable('{0}');", targetControlClientID);
+                return String.Format("F.enable('{0}');", targetControlClientID);
             }
             return String.Empty;
         }
@@ -327,7 +334,7 @@ namespace FineUI
 
             if (!String.IsNullOrEmpty(newEventValidation) && (oldEventValidation != newEventValidation))
             {
-                sb.Append(String.Format("X.util.updateEventValidation('{0}');", newEventValidation));
+                sb.Append(String.Format("F.eventValidation('{0}');", newEventValidation));
             }
 
         }
@@ -337,14 +344,13 @@ namespace FineUI
         /// </summary>
         /// <param name="sb"></param>
         /// <param name="doc"></param>
-        /// <param name="gzipped"></param>
-        private void UpdateViewState(StringBuilder sb, HtmlDocument doc, bool gzipped)
+        private void UpdateViewState(StringBuilder sb, HtmlDocument doc)
         {
             string viewStateHiddenFieldID = StringUtil.VIEWSTATE_ID;
-            if (gzipped)
-            {
-                viewStateHiddenFieldID = StringUtil.GZIPPED_VIEWSTATE_ID;
-            }
+            //if (gzipped)
+            //{
+            //    viewStateHiddenFieldID = StringUtil.GZIPPED_VIEWSTATE_ID;
+            //}
 
             string oldViewState = HttpContext.Current.Request.Form[viewStateHiddenFieldID];
             string newViewState = GetHtmlNodeValue(viewStateHiddenFieldID, doc);
@@ -362,9 +368,11 @@ namespace FineUI
                     }
                 }
 
+
+                /*
                 if (changeIndex == 0)
                 {
-                    sb.Append(String.Format("X.util.updateViewState('{0}',{1});", newViewState, gzipped.ToString().ToLower()));
+                    sb.Append(String.Format("F.util.updateViewState('{0}',{1});", newViewState, gzipped.ToString().ToLower()));
                 }
                 else
                 {
@@ -374,8 +382,30 @@ namespace FineUI
                         changedStr = newViewState.Substring(changeIndex);
                     }
 
-                    sb.Append(String.Format("X.util.updateViewState('{0}',{1},{2});", changedStr, changeIndex, gzipped.ToString().ToLower()));
+                    sb.Append(String.Format("F.util.updateViewState('{0}',{1},{2});", changedStr, changeIndex, gzipped.ToString().ToLower()));
                 }
+                */
+
+
+                // 如果只有很少的一些字符没改变（小于等于150个字符），还是返回完整的ViewState
+                if (changeIndex <= 150)
+                {
+                    sb.Append(String.Format("if(!F.viewState(__VIEWSTATE,'{0}'))return;", newViewState));
+                }
+                else
+                {
+                    string changedStr = String.Empty;
+                    if (newViewState.Length >= changeIndex)
+                    {
+                        changedStr = newViewState.Substring(changeIndex);
+                    }
+
+                    sb.Append(String.Format("if(!F.viewState(__VIEWSTATE,'{0}',{1}))return;", changedStr, changeIndex));
+                }
+            }
+            else
+            {
+                sb.Append("if(!F.viewState(__VIEWSTATE))return;");
             }
         }
 
@@ -404,17 +434,17 @@ namespace FineUI
                 {
                     controlClientID = control.ClientID;
                 }
-                string updateHtml = JsHelper.Enquote(GetHtmlNodeOuterHTML(controlClientID, doc));
-                if (updateHtml != null)
+                string updateHtml = GetHtmlNodeOuterHTML(controlClientID, doc);
+                if (!String.IsNullOrEmpty(updateHtml))
                 {
-                    sb.Append(String.Format("X.util.replace('{0}', {1});", controlClientID, updateHtml));
+                    sb.Append(String.Format("F.util.replace('{0}',{1});", controlClientID, JsHelper.Enquote(updateHtml)));
 
                     /*
                     // 如果是Asp.net按钮或者ImageButton，需要重新注册点击时AJAX回发页面，而不是调用Button(type=submit)的默认行为
                     if (control != null && (control is System.Web.UI.WebControls.Button
                         || control is System.Web.UI.WebControls.ImageButton))
                     {
-                        sb.Append(String.Format("X.util.makeAspnetSubmitButtonAjax('{0}');", control.ClientID));
+                        sb.Append(String.Format("F.util.makeAspnetSubmitButtonAjax('{0}');", control.ClientID));
                     }
                      * */
                 }

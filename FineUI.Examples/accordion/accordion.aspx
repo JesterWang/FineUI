@@ -4,40 +4,45 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Accordion ID="Accordion1" Title="手风琴控件" runat="server" Width="300px" Height="450px"
-            EnableFill="true" ShowBorder="True" ActiveIndex="1" EnableFrame="true" EnableCollapse="true">
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Accordion ID="Accordion1" Title="手风琴控件" runat="server" Width="300px" Height="450px"
+            ShowCollapseTool="true"
+            ShowBorder="True" ActivePaneIndex="1" EnableCollapse="true">
             <Panes>
-                <x:AccordionPane ID="AccordionPane1" runat="server" Title="面板一" IconUrl="../images/16/1.png"
+                <f:AccordionPane ID="AccordionPane1" runat="server" Title="面板一" IconUrl="~/res/images/16/1.png"
                     BodyPadding="2px 5px" ShowBorder="false">
                     <Items>
-                        <x:Label ID="Label1" Text="面板一中的文本" runat="server">
-                        </x:Label>
+                        <f:Label ID="Label1" Text="面板一中的文本" runat="server">
+                        </f:Label>
                     </Items>
-                </x:AccordionPane>
-                <x:AccordionPane ID="AccordionPane2" runat="server" Title="面板二" IconUrl="../images/16/4.png"
+                </f:AccordionPane>
+                <f:AccordionPane ID="AccordionPane2" runat="server" Title="面板二" IconUrl="~/res/images/16/4.png"
                     BodyPadding="2px 5px" ShowBorder="false">
                     <Items>
-                        <x:Label ID="Label2" Text="面板二中的文本" runat="server">
-                        </x:Label>
+                        <f:Label ID="Label2" Text="面板二中的文本" runat="server">
+                        </f:Label>
                     </Items>
-                </x:AccordionPane>
-                <x:AccordionPane ID="AccordionPane3" runat="server" Title="面板三" IconUrl="../images/16/7.png"
+                </f:AccordionPane>
+                <f:AccordionPane ID="AccordionPane3" runat="server" Title="面板三" IconUrl="~/res/images/16/7.png"
                     BodyPadding="2px 5px" ShowBorder="false">
                     <Items>
-                        <x:Label ID="Label3" Text="面板三中的文本" runat="server">
-                        </x:Label>
+                        <f:Label ID="Label3" Text="面板三中的文本" runat="server">
+                        </f:Label>
                     </Items>
-                </x:AccordionPane>
+                </f:AccordionPane>
             </Panes>
-        </x:Accordion>
+        </f:Accordion>
         <br />
-        <x:Button ID="Button1" Text="获取当前展开的面板" runat="server" OnClick="Button1_Click">
-        </x:Button>
+        <f:Button ID="Button1" Text="获取当前展开的面板" runat="server" OnClick="Button1_Click">
+        </f:Button>
+        <br />
+        <br />
+        <f:Button ID="Button2" Text="展开下一个面板" runat="server" OnClick="Button2_Click">
+        </f:Button>
     </form>
 </body>
 </html>

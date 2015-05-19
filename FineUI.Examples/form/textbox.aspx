@@ -5,28 +5,28 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:SimpleForm ID="SimpleForm1" BodyPadding="5px" runat="server" Width="550px" EnableFrame="true" EnableCollapse="true"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:SimpleForm ID="SimpleForm1" BodyPadding="5px" runat="server" Width="550px" EnableCollapse="true"
             Title="登录表单" ShowHeader="True">
             <Items>
-                <x:TextBox runat="server" Label="用户名" ID="tbxUseraName" Required="true">
-                </x:TextBox>
-                <x:TextBox runat="server" ID="tbxPassword" Label="密码" TextMode="Password" Required="true">
-                </x:TextBox>
-                <x:Button ID="btnSubmit" CssClass="inline" runat="server" OnClick="btnSubmit_Click" ValidateForms="SimpleForm1"
+                <f:TextBox runat="server" Label="用户名" ID="tbxUseraName" Required="true">
+                </f:TextBox>
+                <f:TextBox runat="server" ID="tbxPassword" Label="密码" TextMode="Password" Required="true">
+                </f:TextBox>
+                <f:Button ID="btnSubmit" CssClass="marginr" runat="server" OnClick="btnSubmit_Click" ValidateForms="SimpleForm1"
                     Text="登录">
-                </x:Button>
-                <x:Button ID="Button1" runat="server" EnablePostBack="false" Type="Reset" Text="重置">
-                </x:Button>
-                <x:Label ID="labResult" ShowLabel="false" runat="server">
-                </x:Label>
+                </f:Button>
+                <f:Button ID="btnReset" runat="server" EnablePostBack="false" Text="重置">
+                </f:Button>
             </Items>
-        </x:SimpleForm>
+        </f:SimpleForm>
         <br />
+        <f:Label ID="labResult" ShowLabel="false" runat="server">
+        </f:Label>
     </form>
 </body>
 </html>

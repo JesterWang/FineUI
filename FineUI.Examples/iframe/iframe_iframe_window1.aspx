@@ -5,44 +5,44 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style>
-        body, body.x-body {
+        body.f-body {
             padding: 0;
         }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager AutoSizePanelID="formPanel" ID="PageManager1" runat="server"></x:PageManager>
-        <x:Panel ID="formPanel" ShowBorder="false" ShowHeader="false"
+        <f:PageManager AutoSizePanelID="formPanel" ID="PageManager1" runat="server"></f:PageManager>
+        <f:Panel ID="formPanel" ShowBorder="false" ShowHeader="false"
             runat="server">
             <Toolbars>
-                <x:Toolbar runat="server">
+                <f:Toolbar runat="server">
                     <Items>
-                        <x:Button ID="btnPostBackClose" runat="server" OnClick="btnPostBackClose_Click"
+                        <f:Button ID="btnPostBackClose" runat="server" OnClick="btnPostBackClose_Click"
                             Text="关闭-回发父页面">
-                        </x:Button>
-                        <x:Button ID="Button1" EnablePostBack="false" Text="本页面弹出窗体" runat="server">
-                        </x:Button>
-                        <x:Button ID="Button2" EnablePostBack="false" Text="父页面弹出窗体" runat="server">
-                        </x:Button>
+                        </f:Button>
+                        <f:Button ID="Button1" EnablePostBack="false" Text="本页面弹出窗体" runat="server">
+                        </f:Button>
+                        <f:Button ID="Button2" EnablePostBack="false" Text="父页面弹出窗体" runat="server">
+                        </f:Button>
                     </Items>
-                </x:Toolbar>
+                </f:Toolbar>
             </Toolbars>
             <Items>
-                <x:Label ID="labResult" CssStyle="font-weight:bold;" runat="server">
-                </x:Label>
+                <f:Label ID="labResult" CssStyle="font-weight:bold;" runat="server">
+                </f:Label>
             </Items>
-        </x:Panel>
-        <x:Window ID="Window1" Hidden="true" EnableIFrame="true" runat="server"
-            EnableMaximize="true" EnableResize="true" Height="300px" Width="600px" EnableConfirmOnClose="true"
+        </f:Panel>
+        <f:Window ID="Window1" Hidden="true" EnableIFrame="true" runat="server"
+            EnableMaximize="true" EnableResize="true" Height="300px" Width="600px"
             Title="窗体三">
-        </x:Window>
-        <x:Window ID="Window2" Hidden="true" EnableIFrame="true" runat="server"
+        </f:Window>
+        <f:Window ID="Window2" Hidden="true" EnableIFrame="true" runat="server"
             EnableMaximize="true" EnableResize="true" Target="Parent" Height="300px" Width="600px"
-            EnableConfirmOnClose="true" CloseAction="HidePostBack" Title="窗体四">
-        </x:Window>
+            CloseAction="HidePostBack" Title="窗体四">
+        </f:Window>
 
     </form>
 </body>

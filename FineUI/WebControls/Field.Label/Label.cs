@@ -114,12 +114,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EncodeText"];
+                object obj = FState["EncodeText"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EncodeText"] = value;
+                FState["EncodeText"] = value;
             }
         }
 
@@ -133,12 +133,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Text"];
+                object obj = FState["Text"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Text"] = value;
+                FState["Text"] = value;
             }
         }
 

@@ -4,49 +4,49 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-    <x:PageManager ID="PageManager1" runat="server" />
-    <x:Panel ID="Panel2" runat="server" Height="250px" Width="850px" ShowBorder="True"
+    <f:PageManager ID="PageManager1" runat="server" />
+    <f:Panel ID="Panel2" runat="server" Height="250px" Width="850px" ShowBorder="True"
         Layout="Card" ShowHeader="True"  Title="Height=250px Width=750px Layout=Card">
         <Items>
-            <x:Panel ID="Panel1"  runat="server" ShowBorder="True"
+            <f:Panel ID="Panel1"  runat="server" ShowBorder="True"
                 ShowHeader="false">
                 <Items>
-                    <x:Label ID="Label3" Text="Width=150px" runat="server">
-                    </x:Label>
+                    <f:Label ID="Label3" Text="Width=150px" runat="server">
+                    </f:Label>
                 </Items>
-            </x:Panel>
-            <x:Panel ID="Panel4"  runat="server" ShowBorder="True"
+            </f:Panel>
+            <f:Panel ID="Panel4"  runat="server" ShowBorder="True"
                 ShowHeader="false">
                 <Items>
-                    <x:Label ID="Label4" Text="ColumnWidth=30%" runat="server">
-                    </x:Label>
+                    <f:Label ID="Label4" Text="ColumnWidth=30%" runat="server">
+                    </f:Label>
                 </Items>
-            </x:Panel>
-            <x:Form ID="Form2"  runat="server" ShowBorder="True"
+            </f:Panel>
+            <f:Form ID="Form2"  runat="server" ShowBorder="True"
                 ShowHeader="false">
                 <Rows>
-                    <x:FormRow>
+                    <f:FormRow>
                         <Items>
-                            <x:Label ID="Label1" Text="ColumnWidth=70%" ShowLabel="false" runat="server">
-                            </x:Label>
+                            <f:Label ID="Label1" Text="ColumnWidth=70%" ShowLabel="false" runat="server">
+                            </f:Label>
                         </Items>
-                    </x:FormRow>
-                    <x:FormRow>
+                    </f:FormRow>
+                    <f:FormRow>
                         <Items>
-                            <x:TextBox ID="TextBox1" Label="TextBox1" runat="server">
-                            </x:TextBox>
-                            <x:Label ID="Label2" runat="server">
-                            </x:Label>
+                            <f:TextBox ID="TextBox1" Label="TextBox1" runat="server">
+                            </f:TextBox>
+                            <f:Label ID="Label2" runat="server">
+                            </f:Label>
                         </Items>
-                    </x:FormRow>
+                    </f:FormRow>
                 </Rows>
-            </x:Form>
+            </f:Form>
         </Items>
-    </x:Panel>
+    </f:Panel>
     </form>
 </body>
 </html>

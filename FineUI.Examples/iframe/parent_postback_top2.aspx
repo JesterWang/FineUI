@@ -5,21 +5,26 @@
 <html>
 <head id="head1" runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
+        <f:PageManager ID="PageManager1" runat="server" />
         页面二：parent_postback_top2.aspx
         <br />
-        <x:Label ID="labResult" runat="server">
-        </x:Label>
+        <f:Label ID="labResult" runat="server">
+        </f:Label>
+        <br />
+        <f:Button runat="server" ID="Button1" OnClick="Button1_Click" Text="在顶层页面弹出窗体（改变窗体属性）"></f:Button>
         <br />
         <br />
-        <x:Window ID="Window1" runat="server" Height="350px" EnableIFrame="true" IFrameUrl="parent_postback_top3.aspx"
-            IsModal="true" Popup="true" Width="650px" EnableMaximize="true" EnableResize="true"
-            Target="Top" OnClose="Window1_Close" Title="页面二中的弹出对话框">
-        </x:Window>
+        <f:Button runat="server" ID="Button2" OnClick="Button2_Click" Text="在顶层页面弹出窗体（直接注册脚本）"></f:Button>
+        <br />
+        <br />
+        <f:Window ID="Window1" runat="server" Height="350px" EnableIFrame="true" IFrameUrl="parent_postback_top3.aspx"
+            IsModal="true" Hidden="false" Width="650px" EnableMaximize="true" EnableResize="true"
+            Target="Parent" OnClose="Window1_Close" Title="页面二中的弹出对话框">
+        </f:Window>
     </form>
 </body>
 </html>

@@ -64,7 +64,7 @@ namespace FineUI.Examples.grid
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            labResult.Text = HowManyRowsAreSelected(Grid1);
+            labResult.Text = HowManyRowsAreSelected(Grid1, true);
         }
 
 

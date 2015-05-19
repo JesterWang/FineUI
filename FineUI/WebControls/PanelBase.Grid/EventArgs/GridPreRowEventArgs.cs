@@ -36,6 +36,17 @@ namespace FineUI
     /// </summary>
     public class GridPreRowEventArgs : EventArgs
     {
+        private bool _cancelled = false;
+
+        /// <summary>
+        /// 是否取消添加本节点
+        /// </summary>
+        public bool Cancelled
+        {
+            get { return _cancelled; }
+            set { _cancelled = value; }
+        }
+
 
         private object _dataItem;
 

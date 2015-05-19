@@ -28,6 +28,10 @@ namespace FineUI.Examples.dropdownlist
             {
                 labResult.Text = String.Format("选中项：{0}（值：{1}）", DropDownList1.SelectedItem.Text, DropDownList1.SelectedValue);
             }
+            else
+            {
+                labResult.Text = "无选中项";
+            }
         }
 
        

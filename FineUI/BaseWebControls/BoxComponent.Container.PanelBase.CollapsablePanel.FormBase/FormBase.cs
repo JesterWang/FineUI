@@ -99,10 +99,24 @@ namespace FineUI
             }
         }
 
+        ///// <summary>
+        ///// [只读]布局类型
+        ///// </summary>
+        //[ReadOnly(true)]
+        //[Category(CategoryName.LAYOUT)]
+        //[DefaultValue(Layout.Anchor)]
+        //[Description("布局类型")]
+        //public override Layout Layout
+        //{
+        //    get
+        //    {
+        //        return Layout.Anchor;
+        //    }
+        //}
+
         /// <summary>
-        /// [只读]布局类型
+        /// 布局类型
         /// </summary>
-        [ReadOnly(true)]
         [Category(CategoryName.LAYOUT)]
         [DefaultValue(Layout.Anchor)]
         [Description("布局类型")]
@@ -110,7 +124,12 @@ namespace FineUI
         {
             get
             {
-                return Layout.Anchor;
+                object obj = FState["Layout"];
+                return obj == null ? Layout.Anchor : (Layout)obj;
+            }
+            set
+            {
+                FState["Layout"] = value;
             }
         }
 
@@ -128,7 +147,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["LabelWidth"];
+                object obj = FState["LabelWidth"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -144,7 +163,7 @@ namespace FineUI
             }
             set
             {
-                XState["LabelWidth"] = value;
+                FState["LabelWidth"] = value;
             }
         }
 
@@ -158,7 +177,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["LabelSeparator"];
+                object obj = FState["LabelSeparator"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -174,7 +193,7 @@ namespace FineUI
             }
             set
             {
-                XState["LabelSeparator"] = value;
+                FState["LabelSeparator"] = value;
             }
         }
 
@@ -188,7 +207,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["OffsetRight"];
+                object obj = FState["OffsetRight"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -204,7 +223,7 @@ namespace FineUI
             }
             set
             {
-                XState["OffsetRight"] = value;
+                FState["OffsetRight"] = value;
             }
         }
 
@@ -219,7 +238,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["LabelAlign"];
+                object obj = FState["LabelAlign"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -235,7 +254,7 @@ namespace FineUI
             }
             set
             {
-                XState["LabelAlign"] = value;
+                FState["LabelAlign"] = value;
             }
         }
 
@@ -249,7 +268,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MessageTarget"];
+                object obj = FState["MessageTarget"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -265,7 +284,7 @@ namespace FineUI
             }
             set
             {
-                XState["MessageTarget"] = value;
+                FState["MessageTarget"] = value;
             }
         }
 

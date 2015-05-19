@@ -69,12 +69,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["AutoHeight"];
+        //        object obj = FState["AutoHeight"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["AutoHeight"] = value;
+        //        FState["AutoHeight"] = value;
         //    }
         //}
 
@@ -89,12 +89,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["AutoWidth"];
+        //        object obj = FState["AutoWidth"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["AutoWidth"] = value;
+        //        FState["AutoWidth"] = value;
         //    }
         //}
 
@@ -109,12 +109,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoScroll"];
+                object obj = FState["AutoScroll"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["AutoScroll"] = value;
+                FState["AutoScroll"] = value;
             }
         }
 
@@ -122,24 +122,6 @@ namespace FineUI
 
         #region Properties
 
-        /// <summary>
-        /// 页脚工具栏的排列位置
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(FooterBarAlign.Right)]
-        [Description("页脚工具栏的排列位置")]
-        public FooterBarAlign FooterBarAlign
-        {
-            get
-            {
-                object obj = XState["FooterBarAlign"];
-                return obj == null ? FooterBarAlign.Right : (FooterBarAlign)obj;
-            }
-            set
-            {
-                XState["FooterBarAlign"] = value;
-            }
-        }
 
         /// <summary>
         /// 启用自定义的圆角边框
@@ -151,12 +133,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableFrame"];
+                object obj = FState["EnableFrame"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableFrame"] = value;
+                FState["EnableFrame"] = value;
             }
         }
 
@@ -170,12 +152,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["EnableLargeHeader"];
+        //        object obj = FState["EnableLargeHeader"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["EnableLargeHeader"] = value;
+        //        FState["EnableLargeHeader"] = value;
         //    }
         //}
 
@@ -190,35 +172,35 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["EnableLightBackgroundColor"];
+        //        object obj = FState["EnableLightBackgroundColor"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["EnableLightBackgroundColor"] = value;
+        //        FState["EnableLightBackgroundColor"] = value;
         //    }
         //}
 
 
-        /// <summary>
-        /// 废弃EnableBackgroundColor属性，以便和ExtJS保持一致。
-        /// </summary>
-        [Category(CategoryName.BASEOPTIONS)]
-        [DefaultValue(false)]
-        [Description("废弃EnableBackgroundColor属性，以便和ExtJS保持一致。")]
-        [Obsolete("此属性已废除，可以使用BodyStyle来达到想要的效果")]
-        public virtual bool EnableBackgroundColor
-        {
-            get
-            {
-                object obj = XState["EnableBackgroundColor"];
-                return obj == null ? false : (bool)obj;
-            }
-            set
-            {
-                XState["EnableBackgroundColor"] = value;
-            }
-        }
+        ///// <summary>
+        ///// 废弃EnableBackgroundColor属性，以便和ExtJS保持一致。
+        ///// </summary>
+        //[Category(CategoryName.BASEOPTIONS)]
+        //[DefaultValue(false)]
+        //[Description("废弃EnableBackgroundColor属性，以便和ExtJS保持一致。")]
+        //[Obsolete("此属性已废除，可以使用BodyStyle来达到想要的效果")]
+        //public virtual bool EnableBackgroundColor
+        //{
+        //    get
+        //    {
+        //        object obj = FState["EnableBackgroundColor"];
+        //        return obj == null ? false : (bool)obj;
+        //    }
+        //    set
+        //    {
+        //        FState["EnableBackgroundColor"] = value;
+        //    }
+        //}
 
         //private bool RoundBorder_Default = false;
 
@@ -249,12 +231,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["BodyStyle"];
+                object obj = FState["BodyStyle"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["BodyStyle"] = value;
+                FState["BodyStyle"] = value;
             }
         }
 
@@ -262,19 +244,19 @@ namespace FineUI
         /// <summary>
         /// 内容区域的内边距，字符串类型，可以设置上下左右的内边距，比如'0px 5px'或'5px 10px 2px 2px'
         /// </summary>
-        [Category(CategoryName.BASEOPTIONS)]
+        [Category(CategoryName.LAYOUT)]
         [DefaultValue(typeof(String), "")]
         [Description("内容区域的内边距，字符串类型，可以设置上下左右的内边距，比如'0px 5px'或'5px 10px 2px 2px'")]
         public virtual string BodyPadding
         {
             get
             {
-                object obj = XState["BodyPadding"];
+                object obj = FState["BodyPadding"];
                 return obj == null ? String.Empty : (string)obj;
             }
             set
             {
-                XState["BodyPadding"] = value;
+                FState["BodyPadding"] = value;
             }
         }
 
@@ -289,12 +271,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ShowBorder"];
+                object obj = FState["ShowBorder"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ShowBorder"] = value;
+                FState["ShowBorder"] = value;
             }
         }
 
@@ -367,6 +349,29 @@ namespace FineUI
 
         #region internal RenderChildrenAsContent
 
+        private ITemplate content = null;
+
+        /// <summary>
+        /// 子控件
+        /// </summary>
+        [Browsable(false)]
+        [DefaultValue(null)]
+        [NotifyParentProperty(true)]
+        [PersistenceMode(PersistenceMode.InnerProperty)]
+        [Description("子控件")]
+        public virtual ITemplate Content
+        {
+            get
+            {
+                return content;
+            }
+            set
+            {
+                content = value;
+            }
+        }
+
+
         [Category(CategoryName.OPTIONS)]
         [DefaultValue(false)]
         [Description("渲染子控件为容器内容")]
@@ -374,12 +379,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["RenderChildrenAsContent"];
+                object obj = FState["RenderChildrenAsContent"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["RenderChildrenAsContent"] = value;
+                FState["RenderChildrenAsContent"] = value;
             }
         }
         #endregion
@@ -397,7 +402,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["IFrameUrl"];
+                object obj = FState["IFrameUrl"];
                 if (obj == null)
                 {
                     return String.Empty;
@@ -410,7 +415,7 @@ namespace FineUI
             }
             set
             {
-                XState["IFrameUrl"] = value;
+                FState["IFrameUrl"] = value;
             }
         }
 
@@ -425,7 +430,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["IFrameName"];
+                object obj = FState["IFrameName"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -441,7 +446,7 @@ namespace FineUI
             }
             set
             {
-                XState["IFrameName"] = value;
+                FState["IFrameName"] = value;
             }
         }
 
@@ -456,12 +461,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableIFrame"];
+                object obj = FState["EnableIFrame"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableIFrame"] = value;
+                FState["EnableIFrame"] = value;
             }
         }
 
@@ -475,7 +480,7 @@ namespace FineUI
         {
             get
             {
-                return String.Format("{0}_content", ClientID);
+                return String.Format("{0}_Content", ClientID);
             }
         }
 
@@ -592,24 +597,25 @@ namespace FineUI
         }
         #endregion
 
-        #region AddParsedSubObject
+        #region CreateChildControls
 
-        //protected override void AddParsedSubObject(object obj)
-        //{
-        //    if (RenderChildrenAsContent)
-        //    {
-        //        base.AddParsedSubObject(obj);
-        //    }
-        //    else
-        //    {
-        //        ControlBase c = obj as ControlBase;
-        //        if (c != null)
-        //        {
-        //            c.RenderWrapperNode = false;
-        //            base.AddParsedSubObject(c);
-        //        }
-        //    }
-        //}
+        /// <summary>
+        /// 创建子控件
+        /// </summary>
+        protected override void CreateChildControls()
+        {
+            base.CreateChildControls();
+
+            if (Content != null)
+            {
+                WebControl ctrl = new WebControl(HtmlTextWriterTag.Div);
+                ctrl.ID = "Content";
+                Content.InstantiateIn(ctrl);
+
+                Controls.Add(ctrl);
+            }
+        }
+
 
         #endregion
 
@@ -627,7 +633,7 @@ namespace FineUI
             {
                 if (PropertyModified("IFrameUrl"))
                 {
-                    sb.AppendFormat("X.wnd.updateIFrameNode({0},{1});", XID, JsHelper.Enquote(IFrameUrl));
+                    sb.AppendFormat("F.wnd.updateIFrameNode({0},{1});", XID, JsHelper.Enquote(IFrameUrl));
                 }
             }
 
@@ -646,14 +652,19 @@ namespace FineUI
                 OB.AddProperty("frame", true);
             }
 
-            if (FooterBarAlign != FooterBarAlign.Right)
-            {
-                OB.AddProperty("buttonAlign", FooterBarAlignHelper.GetName(FooterBarAlign));
-            }
 
             #region Items
 
-            if (!RenderChildrenAsContent)
+            // 如果是 ContentPanel, 启用 IFrame 或者包含 Content, 则不生成 items
+            if (RenderChildrenAsContent || EnableIFrame || (Content != null))
+            {
+                if (RenderChildrenAsContent || (Content != null))
+                {
+                    OB.AddProperty("contentEl", String.Format("{0}", ContentID));
+
+                }
+            }
+            else
             {
                 if (Items.Count > 0)
                 {
@@ -674,13 +685,64 @@ namespace FineUI
 
             #region Toolbars
 
+            //JsArrayBuilder dockItems = new JsArrayBuilder();
+            //foreach (Toolbar bar in Toolbars)
+            //{
+            //    dockItems.AddProperty(bar.XID, true);
+            //}
+
+            //if (this is Grid)
+            //{
+            //    Grid grid = this as Grid;
+            //    if (grid.AllowPaging)
+            //    {
+            //        dockItems.AddProperty(grid.Render_PagingID, true);
+            //    }
+            //}
+
+            Dictionary<string, JsArrayBuilder> bars = new Dictionary<string, JsArrayBuilder>();
             foreach (Toolbar bar in Toolbars)
             {
-                string toolbarID = String.Format("{0}", bar.XID);
+                string barPosition = ToolbarPositionHelper.GetExtName(bar.Position);
 
-                string barKey = ToolbarPositionHelper.GetName(bar.Position);
-                OB.AddProperty(barKey, toolbarID, true);
+                if (!bars.ContainsKey(barPosition))
+                {
+                    bars[barPosition] = new JsArrayBuilder();
+                }
+                bars[barPosition].AddProperty(bar.XID, true);
             }
+
+            // 将底部工具栏的顺序反转
+            if (bars.ContainsKey("bottom"))
+            {
+                bars["bottom"].Reverse();
+            }
+            // 表格的分页工具栏
+            if (this is Grid)
+            {
+                Grid grid = this as Grid;
+                if (grid.AllowPaging)
+                {
+                    if (!bars.ContainsKey("bottom"))
+                    {
+                        bars["bottom"] = new JsArrayBuilder();
+                    }
+
+                    bars["bottom"].AddProperty(grid.Render_PagingID, true);
+                }
+            }
+
+
+            JsArrayBuilder dockItems = new JsArrayBuilder();
+            foreach (string barPosition in bars.Keys)
+            {
+                foreach (string barItem in bars[barPosition].Properties)
+                {
+                    dockItems.AddProperty(barItem, true);
+                }
+            }
+            OB.AddProperty("dockedItems", dockItems);
+
 
             #endregion
 
@@ -691,7 +753,7 @@ namespace FineUI
             {
                 if (!String.IsNullOrEmpty(BodyPadding))
                 {
-                    bodyStyleStr += String.Format("padding:{0};", BodyPadding);
+                    bodyStyleStr += String.Format("padding:{0};", StyleUtil.GetMarginPaddingStyle(BodyPadding));
                 }
             }
 
@@ -706,7 +768,7 @@ namespace FineUI
             //        }
             //    }
             //}
-           
+
             OB.AddProperty("bodyStyle", bodyStyleStr);
 
             OB.AddProperty("border", ShowBorder);
@@ -726,7 +788,7 @@ namespace FineUI
             //{
             //    OB.AddProperty("autoHeight", true);
             //}
-            
+
 
             //// 如果父控件是容器控件（不是ContentPanel），并且Layout != LayoutType.Container，
             //// 则设置AutoWidth/AutoHeight都为false
@@ -823,22 +885,22 @@ namespace FineUI
                 // 注意：
                 // 如下依附于现有对象的属性名称的定义规则：x_property1
                 // 存储于当前对象实例中
-                OB.AddProperty("x_iframe", true);
-                OB.AddProperty("x_iframe_url", IFrameUrl);
-                OB.AddProperty("x_iframe_name", IFrameName);
+                OB.AddProperty("f_iframe", true);
+                OB.AddProperty("f_iframe_url", IFrameUrl);
+                OB.AddProperty("f_iframe_name", IFrameName);
 
                 // 如果定义了IFrameUrl，则直接写到页面中，否则先缓存到此对象中
                 if (!String.IsNullOrEmpty(IFrameUrl))
                 {
                     //_writeIframeToHtmlDocument = true;
-                    OB.AddProperty("x_iframe_loaded", true);
+                    OB.AddProperty("f_iframe_loaded", true);
                     // 直接添加iframe属性
                     OB.AddProperty("html", String.Format("<iframe src=\"{0}\" name=\"{1}\" frameborder=\"0\" style=\"height:100%;width:100%;overflow:auto;\"></iframe>", IFrameUrl, IFrameName));
                 }
                 else
                 {
                     //_writeIframeToHtmlDocument = false;
-                    OB.AddProperty("x_iframe_loaded", false);
+                    OB.AddProperty("f_iframe_loaded", false);
                 }
 
                 #region old code
@@ -883,7 +945,7 @@ namespace FineUI
 
             //if (EnableLargeHeader)
             //{
-            //    OB.AddProperty("cls", "box-panel-big-header");
+            //    OB.AddProperty("cls", "f-panel-big-header");
             //}
 
 
@@ -911,16 +973,16 @@ namespace FineUI
                 // 如果是页面第一次加载 + 此Panel在Tab中 + 此Tab不是当前激活Tab + 此Tab的TabStrip启用了延迟加载
                 // 那么在页面加载完毕后，把此Panel给隐藏掉，等此Panel渲染到页面中时再显示出来
 
-                Tab tab = ControlUtil.FindParentControl(this, typeof(Tab)) as Tab;
-                if (tab != null)
-                {
-                    TabStrip tabStrip = tab.Parent as TabStrip;
-                    if (tabStrip.EnableDeferredRender && tabStrip.Tabs[tabStrip.ActiveTabIndex] != tab)
-                    {
-                        // 页面第一次加载时，在显示（控件的render事件）之前要先隐藏
-                        AddStartupAbsoluteScript(String.Format("Ext.get('{0}').setStyle('display','none');", ContentID));
-                    }
-                }
+                //Tab tab = ControlUtil.FindParentControl(this, typeof(Tab)) as Tab;
+                //if (tab != null)
+                //{
+                //    TabStrip tabStrip = tab.Parent as TabStrip;
+                //    if (tabStrip.EnableDeferredRender && tabStrip.Tabs[tabStrip.ActiveTabIndex] != tab)
+                //    {
+                //        // 页面第一次加载时，在显示（控件的render事件）之前要先隐藏
+                //        AddStartupAbsoluteScript(String.Format("Ext.get('{0}').setStyle('display','none');", ContentID));
+                //    }
+                //}
 
             }
 
@@ -1057,7 +1119,7 @@ namespace FineUI
         public string GetRefreshIFrameReference()
         {
             return String.Format("{0}.body.query('iframe')[0].contentWindow.location.reload();", ScriptID);
-        } 
+        }
 
         #endregion
 
@@ -1077,8 +1139,21 @@ namespace FineUI
         /// <returns></returns>
         public virtual string GetResetReference()
         {
-            return String.Format("{0}.x_reset();", ScriptID);
+            return String.Format("{0}.f_reset();", ScriptID);
         }
+
+        #endregion
+
+        #region GetClearDirtyReference
+
+        /// <summary>
+        /// 清空面板内表单字段的改变状态
+        /// </summary>
+        /// <returns>客户端脚本</returns>
+        public string GetClearDirtyReference()
+        {
+            return String.Format("{0}.f_clearDirty();", ScriptID);
+        } 
 
         #endregion
     }

@@ -61,12 +61,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ShowLabel"];
+                object obj = FState["ShowLabel"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ShowLabel"] = value;
+                FState["ShowLabel"] = value;
             }
         }
 
@@ -80,12 +80,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ShowEmptyLabel"];
+                object obj = FState["ShowEmptyLabel"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["ShowEmptyLabel"] = value;
+                FState["ShowEmptyLabel"] = value;
             }
         }
 
@@ -100,45 +100,16 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Label"];
+                object obj = FState["Label"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Label"] = value;
+                FState["Label"] = value;
             }
         }
 
-        /// <summary>
-        /// 表单中字段与标签的分隔符
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(typeof(String), ConfigPropertyValue.FORM_LABELSEPARATOR_DEFAULT)]
-        [Description("表单中字段与标签的分隔符")]
-        public virtual string LabelSeparator
-        {
-            get
-            {
-                object obj = XState["LabelSeparator"];
-                if (obj == null)
-                {
-                    if (DesignMode)
-                    {
-                        return ConfigPropertyValue.FORM_LABELSEPARATOR_DEFAULT;
-                    }
-                    else
-                    {
-                        //return ConfigPropertyValue.FORM_LABELSEPARATOR_DEFAULT;
-                        return PageManager.Instance.FormLabelSeparator;
-                    }
-                }
-                return (String)obj;
-            }
-            set
-            {
-                XState["LabelSeparator"] = value;
-            }
-        }
+
 
         /// <summary>
         /// 在标签后面显示红色的星号（用来标识必填项）
@@ -150,12 +121,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ShowRedStar"];
+                object obj = FState["ShowRedStar"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["ShowRedStar"] = value;
+                FState["ShowRedStar"] = value;
             }
         }
 
@@ -210,12 +181,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Readonly"];
+                object obj = FState["Readonly"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["Readonly"] = value;
+                FState["Readonly"] = value;
             }
         }
 
@@ -229,12 +200,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["Enabled"];
+        //        object obj = FState["Enabled"];
         //        return obj == null ? true : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["Enabled"] = value;
+        //        FState["Enabled"] = value;
         //    }
         //}
 
@@ -248,12 +219,51 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["TabIndex"];
+                object obj = FState["TabIndex"];
                 return obj == null ? null : (short?)obj;
             }
             set
             {
-                XState["TabIndex"] = value;
+                FState["TabIndex"] = value;
+            }
+        }
+
+
+        /// <summary>
+        /// 表单中字段与标签的分隔符
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(typeof(String), ConfigPropertyValue.FORM_LABELSEPARATOR_DEFAULT)]
+        [Description("表单中字段与标签的分隔符")]
+        public virtual string LabelSeparator
+        {
+            get
+            {
+                object obj = FState["LabelSeparator"];
+                if (obj == null)
+                {
+                    if (DesignMode)
+                    {
+                        return ConfigPropertyValue.FORM_LABELSEPARATOR_DEFAULT;
+                    }
+                    else
+                    {
+                        FormBase formBase = ControlUtil.FindParentControl(this, typeof(FormBase), true) as FormBase;
+                        if (formBase != null)
+                        {
+                            return formBase.LabelSeparator;
+                        }
+                        else
+                        {
+                            return PageManager.Instance.FormLabelSeparator;
+                        }
+                    }
+                }
+                return (String)obj;
+            }
+            set
+            {
+                FState["LabelSeparator"] = value;
             }
         }
 
@@ -267,7 +277,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["OffsetRight"];
+                object obj = FState["OffsetRight"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -276,14 +286,60 @@ namespace FineUI
                     }
                     else
                     {
-                        return (Unit)PageManager.Instance.FormOffsetRight;
+                        FormBase formBase = ControlUtil.FindParentControl(this, typeof(FormBase), true) as FormBase;
+                        if (formBase != null)
+                        {
+                            return formBase.OffsetRight;
+                        }
+                        else
+                        {
+                            return PageManager.Instance.FormOffsetRight;
+                        }
                     }
                 }
                 return (Unit)obj;
             }
             set
             {
-                XState["OffsetRight"] = value;
+                FState["OffsetRight"] = value;
+            }
+        }
+
+        /// <summary>
+        /// 标签的宽度
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(typeof(Unit), ConfigPropertyValue.FORM_LABELWIDTH_DEFAULT_STRING)]
+        [Description("标签的宽度")]
+        public Unit LabelWidth
+        {
+            get
+            {
+                object obj = FState["LabelWidth"];
+                if (obj == null)
+                {
+                    if (DesignMode)
+                    {
+                        return ConfigPropertyValue.FORM_LABELWIDTH_DEFAULT;
+                    }
+                    else
+                    {
+                        FormBase formBase = ControlUtil.FindParentControl(this, typeof(FormBase), true) as FormBase;
+                        if (formBase != null)
+                        {
+                            return formBase.LabelWidth;
+                        }
+                        else
+                        {
+                            return PageManager.Instance.FormLabelWidth;
+                        }
+                    }
+                }
+                return (Unit)obj;
+            }
+            set
+            {
+                FState["LabelWidth"] = value;
             }
         }
 
@@ -311,8 +367,8 @@ namespace FineUI
                 {
                     newLabel += GetRedStarHtml();
                 }
-                newLabel += LabelSeparator;
-                sb.AppendFormat("{0}.x_setLabel({1});", XID, JsHelper.Enquote(newLabel));
+                //newLabel += LabelSeparator;
+                sb.AppendFormat("{0}.f_setLabel({1});", XID, JsHelper.Enquote(newLabel));
             }
 
             AddAjaxScript(sb);
@@ -334,41 +390,67 @@ namespace FineUI
             }
 
             // 只有在表单中，有些属性才有效
-            if (ShowLabel)
-            {
-                if (!String.IsNullOrEmpty(Label))
-                {
-                    if (ShowRedStar)
-                    {
-                        OB.AddProperty("fieldLabel", Label + GetRedStarHtml());
-                    }
-                    else
-                    {
-                        OB.AddProperty("fieldLabel", Label);
-                    }
-
-                    if (LabelSeparator != ConfigPropertyValue.FORM_LABELSEPARATOR_DEFAULT)
-                    {
-                        OB.AddProperty("labelSeparator", LabelSeparator);
-                    }
-                }
-            }
-            else
+            //if (ShowLabel)
+            //{
+            //    if (!String.IsNullOrEmpty(Label))
+            //    {
+            //        if (ShowRedStar)
+            //        {
+            //            OB.AddProperty("fieldLabel", Label + GetRedStarHtml());
+            //        }
+            //        else
+            //        {
+            //            OB.AddProperty("fieldLabel", Label);
+            //        }
+            //    }
+            //}
+            if (!ShowLabel)
             {
                 OB.AddProperty("hideLabel", true);
             }
 
-            if (Width == Unit.Empty)
+
+            // 即使ShowLabel=false，也要输出 Label 属性。可能会在标签验证失败对话框中用到[请为 用户名 提供有效值！]。
+            if (!String.IsNullOrEmpty(Label))
             {
-                if (OffsetRight.Value != 0)
+                if (ShowRedStar)
                 {
-                    OB.AddProperty("anchor", "-" + OffsetRight.Value + "px");
+                    OB.AddProperty("fieldLabel", Label + GetRedStarHtml());
                 }
                 else
                 {
-                    OB.AddProperty("anchor", "100%");
+                    OB.AddProperty("fieldLabel", Label);
                 }
             }
+
+
+            if (LabelSeparator != ConfigPropertyValue.FORM_LABELSEPARATOR_DEFAULT)
+            {
+                OB.AddProperty("labelSeparator", LabelSeparator);
+            }
+
+            if (LabelWidth != ConfigPropertyValue.FORM_LABELWIDTH_DEFAULT)
+            {
+                OB.AddProperty("labelWidth", LabelWidth.Value);
+            }
+
+            //if (Width == Unit.Empty)
+            ControlBase parentControl = GetParentControl();
+            if (parentControl != null)
+            {
+                // 如果父控件布局是Anchor
+                if (parentControl is FormRow || 
+                    (parentControl is Container && (parentControl as Container).Layout == Layout.Anchor))
+                {
+                    // 如果定义了宽度，则不设置anchorValue
+                    if (Width == Unit.Empty)
+                    {
+                        // 这个地方可能会覆盖 BoxComponent 中已经设置的 anchor 属性，不过没关系
+                        OB.AddProperty("anchor", GetAnchorValue());
+                    }
+                }
+            }
+
 
             // Every Field need a name property, which is used in form submit.
             OB.AddProperty("name", UniqueID);
@@ -395,9 +477,28 @@ namespace FineUI
             // We have enableBubble for Ext.form.Field
 
             //// Fires just before the field blurs if the field value has changed.
-            //string changeScript = "X.util.setPageStateChanged();";
+            //string changeScript = "F.util.setPageStateChanged();";
             //OB.Listeners.AddProperty("change", JsHelper.GetFunction(changeScript), true);
 
+        }
+
+        private string GetAnchorValue()
+        {
+            string anchorValue = AnchorValue;
+
+            if (String.IsNullOrEmpty(anchorValue))
+            {
+                if (OffsetRight.Value != 0)
+                {
+                    anchorValue = "-" + OffsetRight.Value + "px";
+                }
+                else
+                {
+                    anchorValue = "0";
+                }
+            }
+
+            return anchorValue;
         }
 
         private string GetRedStarHtml()
@@ -443,29 +544,68 @@ namespace FineUI
 
         #endregion
 
-        #region GetDesignTimeHtml
+        #region GetMarkInvalidReference GetClearInvalidReference
 
-
-        internal string GetDesignTimeHtml(string content)
+        /// <summary>
+        /// 设置字段验证失败的提示信息
+        /// </summary>
+        /// <param name="message">提示信息</param>
+        public void MarkInvalid(string message)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("<div style=\"margin:2px;\">");
-            if (!ShowLabel)
-            {
-                sb.AppendFormat("{0}&nbsp;", content);
-            }
-            else
-            {
-                string redstar = String.Empty;
-                if (ShowRedStar)
-                {
-                    redstar = "<span style=\"color:red;\">*</span>";
-                }
-                sb.AppendFormat("<table width=\"100%\"><tr><td style=\"width:150px;\">{0}</td><td>{1}&nbsp;</td></tr></table>", Label + redstar, content);
-            }
-            sb.Append("</div>");
-            return sb.ToString();
+            PageContext.RegisterStartupScript(GetMarkInvalidReference(message));
         }
+
+        /// <summary>
+        /// 清除验证失败的提示信息
+        /// </summary>
+        public void ClearInvalid()
+        {
+            PageContext.RegisterStartupScript(GetClearInvalidReference());
+        }
+
+        /// <summary>
+        /// 获取字段验证失败提示信息的客户端脚本
+        /// </summary>
+        /// <param name="message">提示信息</param>
+        /// <returns>客户端脚本</returns>
+        public string GetMarkInvalidReference(string message)
+        {
+            return String.Format("{0}.markInvalid({1});", ScriptID, JsHelper.Enquote(message));
+        }
+
+        /// <summary>
+        /// 获取清除验证失败提示信息的客户端脚本
+        /// </summary>
+        /// <returns>客户端脚本</returns>
+        public string GetClearInvalidReference()
+        {
+            return String.Format("{0}.clearInvalid();", ScriptID);
+        }
+
+        #endregion
+
+        #region oldcode
+
+        //internal string GetDesignTimeHtml(string content)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    sb.Append("<div style=\"margin:2px;\">");
+        //    if (!ShowLabel)
+        //    {
+        //        sb.AppendFormat("{0}&nbsp;", content);
+        //    }
+        //    else
+        //    {
+        //        string redstar = String.Empty;
+        //        if (ShowRedStar)
+        //        {
+        //            redstar = "<span style=\"color:red;\">*</span>";
+        //        }
+        //        sb.AppendFormat("<table width=\"100%\"><tr><td style=\"width:150px;\">{0}</td><td>{1}&nbsp;</td></tr></table>", Label + redstar, content);
+        //    }
+        //    sb.Append("</div>");
+        //    return sb.ToString();
+        //}
 
         #endregion
     }

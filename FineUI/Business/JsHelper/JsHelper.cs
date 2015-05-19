@@ -38,105 +38,6 @@ namespace FineUI
     /// </summary>
     public class JsHelper
     {
-        //// Self-execute function template in JavaScript.
-        //public static string T_SELF_EXECUTE_FUNCTION = "(function(){{{0}}})();";
-
-        #region GetStringWithJsBlock GetJsStringArray
-
-        /// <summary>
-        /// 将包含JavaScript代码块的字符串转换为可以使用的客户端脚本
-        /// </summary>
-        /// <param name="text">包含JavaScript代码块的字符串</param>
-        /// <returns>转换后的客户端脚本</returns>
-        public static string GetJsStringWithScriptTag(string text)
-        {
-            //string result = text.Replace("\\", "\\\\").Replace("'", "\\'");
-            //if (result.Contains("&lt;script&gt;"))
-            //{
-            //    result = result.Replace("&lt;script&gt;", "'+");
-            //    result = result.Replace("&lt;/script&gt;", "+'");
-            //}
-            //if (result.Contains("<script>"))
-            //{
-            //    result = result.Replace("<script>", "'+");
-            //    result = result.Replace("</script>", "+'");
-            //}
-
-            //return String.Format("'{0}'", result);
-
-            if (text.Contains("&lt;script&gt;"))
-            {
-                text = text.Replace("&lt;script&gt;", "<script>");
-                text = text.Replace("&lt;/script&gt;", "</script>");
-            }
-
-            string[] splits = text.Split(new string[] { "<script>" }, StringSplitOptions.None);
-
-            StringBuilder sb = new StringBuilder();
-            foreach (string split in splits)
-            {
-                string[] subSplits = split.Split(new string[] { "</script>" }, StringSplitOptions.None);
-                if (subSplits.Length == 2)
-                {
-                    sb.AppendFormat("+{0}+", subSplits[0]);
-                    sb.Append(GetJsString(subSplits[1]));
-                }
-                else
-                {
-                    sb.Append(GetJsString(subSplits[0]));
-                }
-            }
-
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// 获取单引号括起来的JavaScript字符串，一般用在GetReference函数中
-        /// 你好 -> '你好'
-        /// 你'好  -> '你\'好'
-        /// 你\好  -> '你\\好'
-        /// </summary>
-        /// <param name="text">源字符串</param>
-        /// <returns>单引号括起来的字符串</returns>
-        public static string GetJsString(string text)
-        {
-            string result = text.Replace("\\", "\\\\").Replace("'", "\\'");
-
-            return String.Format("'{0}'", result);
-        }
-
-        /// <summary>
-        /// 获取字符串数组的脚本字符串形式
-        /// </summary>
-        /// <param name="values">字符串数组</param>
-        /// <returns>字符串数组的脚本字符串</returns>
-        public static string GetJsStringArray(string[] values)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (string value in values)
-            {
-                sb.AppendFormat("{0},", JsHelper.GetJsString(value));
-            }
-            return String.Format("[{0}]", sb.ToString().TrimEnd(','));
-        }
-
-
-        /// <summary>
-        /// 获取整形数组的脚本字符串形式
-        /// </summary>
-        /// <param name="values">整数数组</param>
-        /// <returns>整形数组的脚本字符串</returns>
-        public static string GetJsIntArray(int[] values)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (int value in values)
-            {
-                sb.AppendFormat("{0},", value);
-            }
-            return String.Format("[{0}]", sb.ToString().TrimEnd(','));
-        }
-
-        #endregion
 
         #region GetFunction GetDeferScript
 
@@ -206,12 +107,13 @@ namespace FineUI
         ///// <returns>A String correctly formatted for insertion in a JSON message.</returns>
         
         /// <summary>
-        /// 返回的是双引号括起来的字符串，用来作为JSON属性比较合适
+        /// 返回的是单引号括起来的字符串，用来作为JSON属性比较合适
         /// </summary>
         /// <param name="s">源字符串</param>
-        /// <returns>双引号括起来的字符串</returns>
+        /// <returns>单引号括起来的字符串</returns>
         public static string Enquote(string s)
         {
+            /*
             string jsonString = new JValue(s).ToString(Formatting.None);
 
             // The browser HTML parser will see the </script> within the string and it will interpret it as the end of the script element.
@@ -220,56 +122,135 @@ namespace FineUI
             jsonString = jsonString.Replace("</script>", @"<\/script>");
 
             return jsonString;
-            /*
+            */
+
             if (s == null || s.Length == 0)
             {
-                return "\"\"";
+                return "''";
             }
-            char c;
-            int i;
-            int len = s.Length;
-            StringBuilder sb = new StringBuilder(len + 4);
-            string t;
 
-            sb.Append('"');
-            for (i = 0; i < len; i += 1)
+            char c;
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append('\'');
+            for (int i = 0, len = s.Length; i < len; i++)
             {
                 c = s[i];
-                if ((c == '\\') || (c == '"') || (c == '>'))
+                if ((c == '\\') || (c == '\'') || (c == '>'))
                 {
                     sb.Append('\\');
                     sb.Append(c);
                 }
                 else if (c == '\b')
+                {
                     sb.Append("\\b");
+                }
                 else if (c == '\t')
+                {
                     sb.Append("\\t");
+                }
                 else if (c == '\n')
+                {
                     sb.Append("\\n");
+                }
                 else if (c == '\f')
+                {
                     sb.Append("\\f");
+                }
                 else if (c == '\r')
+                {
                     sb.Append("\\r");
+                }
                 else
                 {
+                    sb.Append(c);
+                    /*
                     if (c < ' ')
                     {
                         //t = "000" + Integer.toHexString(c);
                         string tmp = new string(c, 1);
-                        t = "000" + int.Parse(tmp, System.Globalization.NumberStyles.HexNumber);
+                        string t = "000" + int.Parse(tmp, System.Globalization.NumberStyles.HexNumber);
                         sb.Append("\\u" + t.Substring(t.Length - 4));
                     }
                     else
                     {
                         sb.Append(c);
                     }
+                    */
                 }
             }
-            sb.Append('"');
-            return sb.ToString();
-             * */
+            sb.Append('\'');
+
+            // The browser HTML parser will see the </script> within the string and it will interpret it as the end of the script element.
+            // http://www.xiaoxiaozi.com/2010/02/24/1708/
+            // http://stackoverflow.com/questions/1659749/script-tag-in-javascript-string
+
+            return sb.ToString().Replace("</script>", @"<\/script>");
         }
 
+        /// <summary>
+        /// 将包含JavaScript代码块的字符串转换为可以使用的客户端脚本
+        /// </summary>
+        /// <param name="text">包含JavaScript代码块的字符串</param>
+        /// <returns>转换后的客户端脚本</returns>
+        public static string EnquoteWithScriptTag(string text)
+        {
+            if (text.Contains("&lt;script&gt;"))
+            {
+                text = text.Replace("&lt;script&gt;", "<script>");
+                text = text.Replace("&lt;/script&gt;", "</script>");
+            }
+
+            string[] splits = text.Split(new string[] { "<script>" }, StringSplitOptions.None);
+
+            StringBuilder sb = new StringBuilder();
+            foreach (string split in splits)
+            {
+                string[] subSplits = split.Split(new string[] { "</script>" }, StringSplitOptions.None);
+                if (subSplits.Length == 2)
+                {
+                    sb.AppendFormat("+{0}+", subSplits[0]);
+                    sb.Append(Enquote(subSplits[1]));
+                }
+                else
+                {
+                    sb.Append(Enquote(subSplits[0]));
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// 获取字符串数组的脚本字符串形式
+        /// </summary>
+        /// <param name="values">字符串数组</param>
+        /// <returns>字符串数组的脚本字符串</returns>
+        public static string EnquoteStringArray(string[] values)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (string value in values)
+            {
+                sb.AppendFormat("{0},", JsHelper.Enquote(value));
+            }
+            return String.Format("[{0}]", sb.ToString().TrimEnd(','));
+        }
+
+
+        /// <summary>
+        /// 获取整形数组的脚本字符串形式
+        /// </summary>
+        /// <param name="values">整数数组</param>
+        /// <returns>整形数组的脚本字符串</returns>
+        public static string EnquoteIntArray(int[] values)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (int value in values)
+            {
+                sb.AppendFormat("{0},", value);
+            }
+            return String.Format("[{0}]", sb.ToString().TrimEnd(','));
+        }
 
         #endregion
 

@@ -21,7 +21,7 @@ namespace FineUI
         {
             string type = String.Empty;
             string typeValue = String.Empty;
-            string extjsBasePath = GlobalConfig.GetExtjsBasePath();
+            string extjsBasePath = GlobalConfig.GetJSBasePath();
             //resName = "FineUI.";
 
 

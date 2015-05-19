@@ -60,6 +60,25 @@ namespace FineUI
 
         #endregion
 
+        #region Unsupported Properties
+
+        /// <summary>
+        /// 不支持此属性
+        /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public override string NextFocusControl
+        {
+            get
+            {
+                return base.NextFocusControl;
+            }
+        }
+
+
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -72,12 +91,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoGrowHeight"];
+                object obj = FState["AutoGrowHeight"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["AutoGrowHeight"] = value;
+                FState["AutoGrowHeight"] = value;
             }
         }
 
@@ -92,12 +111,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoGrowHeightMax"];
+                object obj = FState["AutoGrowHeightMax"];
                 return obj == null ? (Unit)1000 : (Unit)obj;
             }
             set
             {
-                XState["AutoGrowHeightMax"] = value;
+                FState["AutoGrowHeightMax"] = value;
             }
         }
 
@@ -111,12 +130,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoGrowHeightMin"];
+                object obj = FState["AutoGrowHeightMin"];
                 return obj == null ? (Unit)60 : (Unit)obj;
             }
             set
             {
-                XState["AutoGrowHeightMin"] = value;
+                FState["AutoGrowHeightMin"] = value;
             }
         }
 
@@ -131,12 +150,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["HideScrollbars"];
+                object obj = FState["HideScrollbars"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["HideScrollbars"] = value;
+                FState["HideScrollbars"] = value;
             }
         }
 
@@ -189,12 +208,12 @@ namespace FineUI
             }
 
 
-            // 如果Text属性存在于XState中，则不要重复设置value属性，而是在render事件中使用XState的值
-            if (XState.ModifiedProperties.Contains("Text"))
+            // 如果Text属性存在于FState中，则不要重复设置value属性，而是在render事件中使用FState的值
+            if (FState.ModifiedProperties.Contains("Text"))
             {
                 //OB.RemoveProperty("value");
-                //OB.Listeners.AddProperty("render", JsHelper.GetFunction("cmp.x_setValue();", "cmp"), true);
-                OB.AddProperty("value", String.Format("{0}.Text", GetXStateScriptID()), true);
+                //OB.Listeners.AddProperty("render", JsHelper.GetFunction("cmp.f_setValue();", "cmp"), true);
+                OB.AddProperty("value", String.Format("{0}.Text", GetFStateScriptID()), true);
             }
 
 

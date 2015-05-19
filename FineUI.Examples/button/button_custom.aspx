@@ -4,29 +4,32 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .bgbtn {
-            background: url(../images/login.png) no-repeat;
+            background-image: url(../res/images/login.png) !important;
             width: 320px;
             height: 50px;
+            border-width: 0;
+            background-color: transparent;
         }
 
-        .bgbtn .x-btn-tl, .bgbtn .x-btn-tr, .bgbtn .x-btn-tc,
-        .bgbtn .x-btn-ml, .bgbtn .x-btn-mr, .bgbtn .x-btn-mc,
-        .bgbtn .x-btn-bl, .bgbtn .x-btn-br, .bgbtn .x-btn-bc {
+        .bgbtn .x-frame-ml, .bgbtn .x-frame-mc, .bgbtn .x-frame-mr,
+        .bgbtn .x-frame-tl, .bgbtn .x-frame-tc, .bgbtn .x-frame-tr,
+        .bgbtn .x-frame-bl, .bgbtn .x-frame-bc, .bgbtn .x-frame-br {
             background-image: none;
+            background-color: transparent;
         }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Button ID="Button1" Text="普通按钮" runat="server" Size="Large" OnClick="Button1_Click" />
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Button ID="Button1" Text="普通按钮" runat="server" Size="Large" OnClick="Button1_Click" />
         <br />
         <br />
 
-        <x:Button ID="Button2" Text="" CssClass="bgbtn" runat="server" OnClick="Button2_Click" />
+        <f:Button ID="Button2" Text="" CssClass="bgbtn" runat="server" OnClick="Button2_Click" />
 
     </form>
 </body>

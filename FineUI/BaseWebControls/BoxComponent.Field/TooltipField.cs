@@ -70,12 +70,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ToolTip"];
+                object obj = FState["ToolTip"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["ToolTip"] = value;
+                FState["ToolTip"] = value;
             }
         }
 
@@ -89,12 +89,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ToolTipTitle"];
+                object obj = FState["ToolTipTitle"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["ToolTipTitle"] = value;
+                FState["ToolTipTitle"] = value;
             }
         }
 
@@ -108,12 +108,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ToolTipAutoHide"];
+                object obj = FState["ToolTipAutoHide"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ToolTipAutoHide"] = value;
+                FState["ToolTipAutoHide"] = value;
             }
         }
 

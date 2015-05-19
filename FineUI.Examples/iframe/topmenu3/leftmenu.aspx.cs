@@ -10,14 +10,20 @@ namespace FineUI.Examples.iframe.topmenu3
 {
     public partial class leftmenu : System.Web.UI.Page
     {
+        // 动态创建控件代码放在Page_Init里面
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            string menuType = Request.QueryString["menu"];
+
+            BindLeftAccordion(menuType);
+        }
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                string menuType = Request.QueryString["menu"];
-
-                BindLeftAccordion(menuType);
+               
             }
         }
 
@@ -61,10 +67,9 @@ namespace FineUI.Examples.iframe.topmenu3
                     leftAccordion.Items.Add(accordionPane);
 
                     Tree innerTree = new Tree();
-                    innerTree.EnableArrows = true;
                     innerTree.ShowBorder = false;
                     innerTree.ShowHeader = false;
-                    innerTree.EnableIcons = false;
+                    innerTree.EnableIcons = true;
                     innerTree.AutoScroll = true;
                     accordionPane.Items.Add(innerTree);
 

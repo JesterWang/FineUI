@@ -44,6 +44,9 @@ namespace FineUI.Examples.data
 
             ddlShi.Items.Insert(0, new ListItem("选择地区市", "-1"));
             ddlShi.SelectedValue = "-1";
+
+            // 是否禁用
+            ddlShi.Enabled = !(ddlShi.Items.Count == 1);
         }
 
         private void BindXian()
@@ -59,6 +62,9 @@ namespace FineUI.Examples.data
 
             ddlXian.Items.Insert(0, new ListItem("选择县级市", "-1"));
             ddlXian.SelectedValue = "-1";
+
+            // 是否禁用
+            ddlXian.Enabled = !(ddlXian.Items.Count == 1);
         }
 
         protected void ddlSheng_SelectedIndexChanged(object sender, EventArgs e)

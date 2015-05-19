@@ -39,13 +39,13 @@
 
 
 
-.x-grid .box-grid-cell-inner-image img {
+.f-grid-cell-inner-image img {
     width: 16px;
     height: 16px;
 }
 
 
-.x-grid .box-grid-static-checkbox {
+.f-grid-static-checkbox {
     background-position: left center;
     background-repeat: no-repeat;
     background-color: transparent;
@@ -54,28 +54,13 @@
     height: 16px;
 }
 
-    .x-grid .box-grid-static-checkbox.unchecked {
+    .f-grid-static-checkbox.unchecked {
         background-image: url(../images/bullet_cross.png);
     }
 
-/*
-.x-grid .box-grid-static-checkbox.align-left
-{
-    background-position:left center;
-}
-.x-grid .box-grid-static-checkbox.align-center
-{
-    background-position:center center;
-}
-.x-grid .box-grid-static-checkbox.align-right
-{
-    background-position:right center;
-}
-*/
 
 
-
-.x-grid .box-grid-checkbox {
+.f-grid-checkbox {
     background-position: left center;
     background-repeat: no-repeat;
     background-color: transparent;
@@ -84,31 +69,14 @@
     height: 16px;
 }
 
-    .x-grid .box-grid-checkbox.disabled {
+    .f-grid-checkbox.disabled {
         background-image: url(../images/checked_disabled.gif);
     }
 
-    .x-grid .box-grid-checkbox.unchecked {
+    .f-grid-checkbox.unchecked {
         background-image: url(../images/unchecked.gif);
     }
 
-        .x-grid .box-grid-checkbox.unchecked.disabled {
+        .f-grid-checkbox.unchecked.disabled {
             background-image: url(../images/unchecked_disabled.gif);
         }
-
-/*
-.x-grid .box-grid-checkbox.align-left
-{
-    background-position:left center;
-}
-.x-grid .box-grid-checkbox.align-center
-{
-    background-position:center center;
-}
-.x-grid .box-grid-checkbox.align-right
-{
-    background-position:right center;
-}
-*/
-
-

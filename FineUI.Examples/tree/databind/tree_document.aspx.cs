@@ -39,5 +39,16 @@ namespace FineUI.Examples.tree.databind
 
         }
 
+        protected void btnClear_Click(object sender, EventArgs e)
+        {
+            Tree1.DataSource = null;
+            Tree1.DataBind();
+        }
+
+        protected void btnReBind_Click(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+
     }
 }

@@ -10,7 +10,10 @@ namespace FineUI.Examples.form
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                btnReset.OnClientClick = SimpleForm1.GetResetReference();
+            }
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)

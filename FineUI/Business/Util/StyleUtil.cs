@@ -80,6 +80,28 @@ namespace FineUI
             return String.Format("{0}{{background: url({1}) no-repeat;}}", selector, imageUrl);
         }
 
+        /// <summary>
+        /// 获取适合CSS的Margin或者Padding定义
+        /// </summary>
+        /// <param name="source">源字符串</param>
+        /// <returns>CSS样式</returns>
+        public static string GetMarginPaddingStyle(string source) {
+
+            List<string> result = new List<string>();
+            foreach (string item in source.Split(' '))
+            {
+                if (item.Contains("px") || item.Contains("pt") || item.Contains("em"))
+                {
+                    result.Add(item);
+                }
+                else
+                {
+                    result.Add(Convert.ToInt32(item) + "px");
+                }
+            }
+
+            return String.Join(" ", result.ToArray());
+	    }
     }
 
 }

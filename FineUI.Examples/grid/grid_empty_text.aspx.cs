@@ -17,7 +17,7 @@ namespace FineUI.Examples.grid
             {
                 ViewState["EMPTY_DATA_SOURCE"] = true;
 
-                Grid1.EmptyText = String.Format("<img src=\"{0}\" alt=\"No Data Found!\"/>", ResolveUrl("~/images/no_data_found.jpg"));
+                Grid1.EmptyText = String.Format("<img src=\"{0}\" alt=\"No Data Found!\"/>", ResolveUrl("~/res/images/no_data_found.jpg"));
 
             }
         }

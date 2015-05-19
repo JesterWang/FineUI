@@ -73,6 +73,8 @@ namespace FineUI.Examples.form
         protected void btnUpdateList1_Click(object sender, EventArgs e)
         {
             BindRadioButtonList1();
+
+            //btnUpdateList1.Enabled = false;
         }
 
         private void BindRadioButtonList1()
@@ -105,6 +107,8 @@ namespace FineUI.Examples.form
         protected void btnUpdateList2_Click(object sender, EventArgs e)
         {
             BindRadioButtonList2();
+
+            //btnUpdateList2.Enabled = false;
         }
 
         private void BindRadioButtonList2()
@@ -138,6 +142,8 @@ namespace FineUI.Examples.form
         protected void btnUpdateList3_Click(object sender, EventArgs e)
         {
             BindRadioButtonList3();
+
+            //btnUpdateList3.Enabled = false;
         }
 
         private void BindRadioButtonList3()

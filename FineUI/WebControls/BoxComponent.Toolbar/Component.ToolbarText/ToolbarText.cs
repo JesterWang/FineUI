@@ -70,12 +70,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Text"];
+                object obj = FState["Text"];
                 return obj == null ? String.Empty : (string)obj;
             }
             set
             {
-                XState["Text"] = value;
+                FState["Text"] = value;
             }
         }
 

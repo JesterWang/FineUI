@@ -71,6 +71,15 @@ namespace FineUI
 
         #region Layout
 
+        internal override bool WrapperNodeInlineBlock
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+
         /// <summary>
         /// 布局类型
         /// </summary>
@@ -81,18 +90,16 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Layout"];
+                object obj = FState["Layout"];
                 return obj == null ? Layout.Container : (Layout)obj;
             }
             set
             {
-                XState["Layout"] = value;
+                FState["Layout"] = value;
             }
-        } 
+        }
 
         #endregion
-
-        
 
         #region OnPreRender
 
@@ -133,15 +140,9 @@ namespace FineUI
                 }
                 else if (Layout == Layout.HBox || Layout == Layout.VBox)
                 {
-                    if (BoxConfigAlign != BoxLayoutAlign.Top)
-                    {
-                        layoutConfigOB.AddProperty("align", BoxLayoutAlignHelper.GetName(BoxConfigAlign, Layout));
-                    }
+                    layoutConfigOB.AddProperty("align", BoxLayoutAlignHelper.GetName(BoxConfigAlign, Layout));
 
-                    if (BoxConfigPosition != BoxLayoutPosition.Left)
-                    {
-                        layoutConfigOB.AddProperty("pack", BoxLayoutPositionHelper.GetName(BoxConfigPosition));
-                    }
+                    layoutConfigOB.AddProperty("pack", BoxLayoutPositionHelper.GetName(BoxConfigPosition));
 
                     if (BoxConfigPadding != "0")
                     {
@@ -167,7 +168,6 @@ namespace FineUI
 
             }
 
-            
         }
 
         #endregion

@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>如何在IIS6中启用GZIP压缩</title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style>
         body
         {
@@ -19,25 +19,25 @@
         }
     </style>
 </head>
-<body>
+<body class="f-body">
     <div class="title">
         如何在IIS6中启用GZIP压缩
     </div>
     <div style="margin: 10px 0;">
-        启用GZIP压缩可以大大减少网络传输的数据量，比如使用FineUI的网站，首次下载的JavaScript由未启用的650K左右减少为启用GZIP后的250k左右。
+        启用GZIP压缩可以大大减少网络传输的数据量，比如使用FineUI v3.x的网站，首次下载的JavaScript由未启用的650K左右减少为启用GZIP后的250k左右。
     </div>
     <ol>
         <li>展开IIS管理器，在网站菜单上点击右键，点击属性菜单，选择服务选项卡，按下图选中启用压缩的复选框。
             <br />
-            <img src="../images/enable_gzip_iis6_1.png" />
+            <img src="../res/images/enable_gzip_iis6_1.png" />
             <br />
-            <img src="../images/enable_gzip_iis6_2.png" />
+            <img src="../res/images/enable_gzip_iis6_2.png" />
             <br />
         </li>
         <li>从<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=56fc92ee-a71a-4c73-b628-ade629c89499&DisplayLang=en">这里</a>下载IIS
             6.0资源工具包，安装后运行Metabase Explorer。
             <br />
-            <img src="../images/enable_gzip_iis6_3.png" />
+            <img src="../res/images/enable_gzip_iis6_3.png" />
             <br />
         </li>
         <li>展开 LM>W3SVC>Filters>Compression，你需要如下编辑 gzip 和 deflate 两个菜单。
@@ -48,12 +48,12 @@
             <br />
             HcFileExtensions:htm,html,js,css
             <br />
-            <img src="../images/enable_gzip_iis6_4.png" />
+            <img src="../res/images/enable_gzip_iis6_4.png" />
             <br />
         </li>
         <li>重启IIS。
             <br />
-            <img src="../images/enable_gzip_iis6_5.png" />
+            <img src="../res/images/enable_gzip_iis6_5.png" />
         </li>
     </ol>
     <div>

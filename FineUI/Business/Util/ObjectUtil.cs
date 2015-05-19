@@ -94,7 +94,7 @@ namespace FineUI
 
                 for (int i = 0; i < properties.Length; i++)
                 {
-                    PropertyInfo property = tmpObj.GetType().GetProperty(properties[i]);
+                    PropertyInfo property = tmpObj.GetType().GetProperty(properties[i], BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                     if (property != null)
                     {
                         tmpObj = property.GetValue(tmpObj, null);
@@ -105,7 +105,7 @@ namespace FineUI
             }
             else
             {
-                PropertyInfo property = rowObj.GetType().GetProperty(propertyName);
+                PropertyInfo property = rowObj.GetType().GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                 if (property != null)
                 {
                     result = property.GetValue(rowObj, null);

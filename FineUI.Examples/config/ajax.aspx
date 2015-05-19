@@ -4,7 +4,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         body
         {
@@ -32,7 +32,7 @@
         }
     </style>
 </head>
-<body>
+<body class="f-body">
     <form id="form1" runat="server">
     <br />
     FineUI 有原生的 AJAX 支持，也就是说不需要做任何配置，控件属性在服务器端的改变都能以 AJAX 的方式影响到前端界面的显示。

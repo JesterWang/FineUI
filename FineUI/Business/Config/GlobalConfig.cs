@@ -242,11 +242,11 @@ namespace FineUI
         }
 
         /// <summary>
-        /// Extjs库的根路径
+        /// JS库的根路径
         /// </summary>
-        public static string GetExtjsBasePath()
+        public static string GetJSBasePath()
         {
-            return section.ExtjsBasePath;
+            return section.JSBasePath;
         }
 
         /// <summary>
@@ -267,11 +267,19 @@ namespace FineUI
 
 
         /// <summary>
-        /// 是否启用XState压缩
+        /// 是否启用FState压缩
         /// </summary>
-        public static bool GetEnableXStateCompress()
+        public static bool GetEnableFStateCompress()
         {
-            return Convert.ToBoolean(section.EnableXStateCompress);
+            return Convert.ToBoolean(section.EnableFStateCompress);
+        }
+
+        /// <summary>
+        /// 是否向页面输出IE=edge标识
+        /// </summary>
+        public static bool GetIEEdge()
+        {
+            return section.IEEdge;
         }
 
 
@@ -282,34 +290,43 @@ namespace FineUI
         //{
         //    return Convert.ToBoolean(GetDesignTimeSection(site).EnableAjax);
         //}
-        #endregion
-
-        #region GetDefaultBackgroundColor
 
         /// <summary>
-        /// 获取默认的背景颜色
+        /// 是否启用表单改变确认对话框
         /// </summary>
-        /// <returns>用于CSS的背景颜色值</returns>
-        [Obsolete("此方法已废除")]
-        public static string GetDefaultBackgroundColor()
+        public static bool GetEnableFormChangeConfirm()
         {
-            string backgroundColor = String.Empty;
-
-            if (String.IsNullOrEmpty(PageManager.Instance.CustomTheme))
-            {
-                string theme = PageManager.Instance.Theme.ToString();
-                if (theme.ToLower() == ThemeHelper.GetName(Theme.Blue))
-                {
-                    backgroundColor = "#DFE8F6";
-                }
-                else if (theme.ToLower() == ThemeHelper.GetName(Theme.Gray))
-                {
-                    backgroundColor = "#efefef";
-                }
-            }
-
-            return backgroundColor;
+            return section.EnableFormChangeConfirm;
         }
+
+        #endregion
+
+        #region oldcode
+
+        ///// <summary>
+        ///// 获取默认的背景颜色
+        ///// </summary>
+        ///// <returns>用于CSS的背景颜色值</returns>
+        //[Obsolete("此方法已废除")]
+        //public static string GetDefaultBackgroundColor()
+        //{
+        //    string backgroundColor = String.Empty;
+
+        //    if (String.IsNullOrEmpty(PageManager.Instance.CustomTheme))
+        //    {
+        //        string theme = PageManager.Instance.Theme.ToString();
+        //        if (theme.ToLower() == ThemeHelper.GetName(Theme.Blue))
+        //        {
+        //            backgroundColor = "#DFE8F6";
+        //        }
+        //        else if (theme.ToLower() == ThemeHelper.GetName(Theme.Gray))
+        //        {
+        //            backgroundColor = "#efefef";
+        //        }
+        //    }
+
+        //    return backgroundColor;
+        //}
 
         //public static string GetLightBackgroundColor(string theme)
         //{

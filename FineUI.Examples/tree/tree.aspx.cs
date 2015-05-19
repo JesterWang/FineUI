@@ -14,7 +14,10 @@ namespace FineUI.Examples.tree
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                Tree1.SelectedNodeID = "zhumadian";
+            }
         }
 
     }

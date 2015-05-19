@@ -116,7 +116,7 @@ namespace FineUI
 
         #endregion
 
-        #region SortField
+        #region Properties
 
         ///// <summary>
         ///// 当前列的排序表达式
@@ -170,9 +170,48 @@ namespace FineUI
             }
         }
 
-        #endregion
 
-        #region Properties
+        private bool _enableLock = false;
+
+        /// <summary>
+        /// 允许锁定
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("允许锁定")]
+        public bool EnableLock
+        {
+            get
+            {
+                return _enableLock;
+            }
+            set
+            {
+                _enableLock = value;
+            }
+        }
+
+
+        private bool _locked = false;
+
+        /// <summary>
+        /// 是否处于锁定状态
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("是否处于锁定状态")]
+        public bool Locked
+        {
+            get
+            {
+                return _locked;
+            }
+            set
+            {
+                _locked = value;
+            }
+        }
+
 
         private bool _hidden = false;
 
@@ -309,12 +348,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["BoxFlex"];
+                object obj = FState["BoxFlex"];
                 return obj == null ? 0 : (int)obj;
             }
             set
             {
-                XState["BoxFlex"] = value;
+                FState["BoxFlex"] = value;
             }
         }
 
@@ -340,6 +379,7 @@ namespace FineUI
         }
 
 
+        /*
         private TextAlign _textalign = TextAlign.Left;
 
         /// <summary>
@@ -359,6 +399,28 @@ namespace FineUI
                 _textalign = value;
             }
         }
+        */
+
+        private TextAlign? _textalign = null;
+
+        /// <summary>
+        /// 文本的排列位置
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(null)]
+        [Description("文本的排列位置")]
+        public TextAlign? TextAlign
+        {
+            get
+            {
+                return _textalign;
+            }
+            set
+            {
+                _textalign = value;
+            }
+        }
+
 
         private bool _enableHeaderMenu = true;
         /// <summary>
@@ -430,7 +492,7 @@ namespace FineUI
         /// </summary>
         /// <param name="row">表格行实例</param>
         /// <returns>渲染后的HTML</returns>
-        internal virtual string GetColumnValue(GridRow row)
+        internal virtual object GetColumnValue(GridRow row)
         {
             return String.Empty;
         }
@@ -528,10 +590,30 @@ namespace FineUI
                 }
 
 
+                // 允许列锁定
+                if (Grid.AllowColumnLocking)
+                {
+                    if (EnableLock)
+                    {
+                        OB.AddProperty("lockable", true);
+                    }
+                    else
+                    {
+                        OB.AddProperty("lockable", false);
+                    }
+
+                    if (Locked)
+                    {
+                        OB.AddProperty("lockable", true);
+                        OB.AddProperty("locked", true);
+                    }
+                }
+
+
                 if (PersistState)
                 {
-                    OB.AddProperty("x_persistState", true);
-                    OB.AddProperty("x_persistStateType", "checkbox");
+                    OB.AddProperty("f_persistState", true);
+                    OB.AddProperty("f_persistStateType", "checkbox");
                 }
 
 
@@ -540,9 +622,20 @@ namespace FineUI
                 OB.AddProperty("dataIndex", ColumnID);
                 OB.AddProperty("id", ColumnID);
 
+                // 服务器端使用的ColumnIndex
+                OB.AddProperty("f_columnIndex", ColumnIndex);
+
+
+                /*
                 if (TextAlign != TextAlign.Left)
                 {
                     OB.AddProperty("align", TextAlignName.GetName(TextAlign));
+                }
+                */
+                if (TextAlign != null)
+                {
+                    // 行序号列默认靠右显示；其他靠左显示；所以只要定义了 TextAlign，就输出
+                    OB.AddProperty("align", TextAlignName.GetName(TextAlign.Value));
                 }
 
                 if (Width != Unit.Empty)
@@ -583,14 +676,43 @@ namespace FineUI
                 {
                     OB.AddProperty("hideable", false);
                 }
+
+
+                if (Grid.EnableSummary)
+                {
+                    if (this is RowNumberField)
+                    {
+                        // 序号列 没有合计
+                    }
+                    else
+                    {
+                        OB.AddProperty("summaryType", String.Format("F.util.summaryType('{0}')", Grid.ClientID), true);
+                    }
+                }
+
+
+
+
+
+
+
             }
-
-
         }
 
         #endregion
 
+        #region AddGridColumnScript
+        
+        /// <summary>
+        /// 添加表格列的渲染脚本
+        /// </summary>
+        /// <param name="jsContent"></param>
+        protected void AddGridColumnScript(string jsContent)
+        {
+            AddStartupScript(jsContent);
+        } 
 
+        #endregion
 
     }
 }

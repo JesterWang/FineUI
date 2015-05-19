@@ -14,6 +14,12 @@ namespace FineUI.Examples.other
 
         }
 
-      
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            PageContext.RegisterStartupScript("closeActiveTab();");
+
+            //PageContext.RegisterStartupScript("alert('ok');");
+        }
+
     }
 }

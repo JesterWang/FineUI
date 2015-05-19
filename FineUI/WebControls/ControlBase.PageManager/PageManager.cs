@@ -30,6 +30,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Web.UI.WebControls;
 using System.Web;
+using System.Web.UI.Design;
+using System.Drawing.Design;
 
 namespace FineUI
 {
@@ -42,8 +44,17 @@ namespace FineUI
     [Description("页面配置管理器（每个页面必须包含一个 PageManager 控件）")]
     [ParseChildren(true)]
     [PersistChildren(false)]
-    public class PageManager : ControlBase
+    public class PageManager : ControlBase, IPostBackEventHandler
     {
+        #region static
+
+        internal static readonly string PAGELOADING_TEMLATE = "<div id='loading-mask'></div><div id='loading'><div class='loading-indicator'><img align='absmiddle' src='#LOADING_IMAGE_SRC#'/></div></div>";
+
+        internal static readonly string PAGELOADING_IMAGE_PATH = "/res/images/loading_32.gif";
+
+
+        #endregion
+
         #region Unsupported Properties
 
         ///// <summary>
@@ -115,6 +126,26 @@ namespace FineUI
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// 自定义页面加载图片
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue("")]
+        [Description("自定义页面加载图片")]
+        [Editor(typeof(ImageUrlEditor), typeof(UITypeEditor))]
+        public string PageLoadingImageUrl
+        {
+            get
+            {
+                object obj = FState["PageLoadingImageUrl"];
+                return obj == null ? "" : (string)obj;
+            }
+            set
+            {
+                FState["PageLoadingImageUrl"] = value;
+            }
+        }
 
         #region old code
 
@@ -201,33 +232,33 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoSizePanelID"];
+                object obj = FState["AutoSizePanelID"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["AutoSizePanelID"] = value;
+                FState["AutoSizePanelID"] = value;
             }
         }
 
-        /// <summary>
-        /// 是否隐藏滚动条
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(false)]
-        [Description("是否隐藏滚动条")]
-        [Obsolete("请使用 HideScrollbars 属性")]
-        public bool HideScrollbar
-        {
-            get
-            {
-                return HideScrollbars;
-            }
-            set
-            {
-                HideScrollbars = value;
-            }
-        }
+        ///// <summary>
+        ///// 是否隐藏滚动条
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(false)]
+        //[Description("是否隐藏滚动条")]
+        //[Obsolete("请使用 HideScrollbars 属性")]
+        //public bool HideScrollbar
+        //{
+        //    get
+        //    {
+        //        return HideScrollbars;
+        //    }
+        //    set
+        //    {
+        //        HideScrollbars = value;
+        //    }
+        //}
 
 
         /// <summary>
@@ -240,12 +271,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["HideScrollbars"];
+                object obj = FState["HideScrollbars"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["HideScrollbars"] = value;
+                FState["HideScrollbars"] = value;
             }
         }
 
@@ -259,12 +290,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["EnableAspnetSubmitButtonAjax"];
+        //        object obj = FState["EnableAspnetSubmitButtonAjax"];
         //        return obj == null ? true : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["EnableAspnetSubmitButtonAjax"] = value;
+        //        FState["EnableAspnetSubmitButtonAjax"] = value;
         //    }
         //}
 
@@ -279,12 +310,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ExecuteOnReadyWhenPostBack"];
+                object obj = FState["ExecuteOnReadyWhenPostBack"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["ExecuteOnReadyWhenPostBack"] = value;
+                FState["ExecuteOnReadyWhenPostBack"] = value;
             }
         }
 
@@ -299,12 +330,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnablePageLoading"];
+                object obj = FState["EnablePageLoading"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnablePageLoading"] = value;
+                FState["EnablePageLoading"] = value;
             }
         }
 
@@ -320,12 +351,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AjaxAspnetControls"];
+                object obj = FState["AjaxAspnetControls"];
                 return obj == null ? null : (string[])obj;
             }
             set
             {
-                XState["AjaxAspnetControls"] = value;
+                FState["AjaxAspnetControls"] = value;
             }
         }
 
@@ -347,7 +378,7 @@ namespace FineUI
             }
         }
 
-        
+
         internal void AddAjaxGridClientID(string clientID)
         {
             if (!_ajaxGridClientIDs.Contains(clientID))
@@ -387,21 +418,52 @@ namespace FineUI
         #region 配置参数
 
         /// <summary>
+        /// 是否启用表单改变确认对话框
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(ConfigPropertyValue.ENABLE_FORMCHANGECONFIRM_DEFAULT)]
+        [Description("是否启用表单改变确认对话框")]
+        public bool EnableFormChangeConfirm
+        {
+            get
+            {
+                object obj = FState["EnableFormChangeConfirm"];
+                if (obj == null)
+                {
+                    if (DesignMode)
+                    {
+                        return ConfigPropertyValue.ENABLE_FORMCHANGECONFIRM_DEFAULT;
+                    }
+                    else
+                    {
+                        return GlobalConfig.GetEnableFormChangeConfirm();
+                    }
+                }
+                return (bool)obj;
+            }
+            set
+            {
+                FState["EnableFormChangeConfirm"] = value;
+            }
+        }
+
+
+        /// <summary>
         /// 样式
         /// </summary>
         [Category(CategoryName.OPTIONS)]
-        [DefaultValue(Theme.Blue)]
+        [DefaultValue(Theme.Neptune)]
         [Description("样式")]
         public Theme Theme
         {
             get
             {
-                object obj = XState["Theme"];
+                object obj = FState["Theme"];
                 if (obj == null)
                 {
                     if (DesignMode)
                     {
-                        return Theme.Blue;
+                        return Theme.Neptune;
                     }
                     else
                     {
@@ -412,7 +474,7 @@ namespace FineUI
             }
             set
             {
-                XState["Theme"] = value;
+                FState["Theme"] = value;
             }
         }
 
@@ -426,7 +488,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["CustomThemeBasePath"];
+                object obj = FState["CustomThemeBasePath"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -442,7 +504,7 @@ namespace FineUI
             }
             set
             {
-                XState["CustomThemeBasePath"] = value;
+                FState["CustomThemeBasePath"] = value;
             }
         }
 
@@ -457,7 +519,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["CustomTheme"];
+                object obj = FState["CustomTheme"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -473,7 +535,7 @@ namespace FineUI
             }
             set
             {
-                XState["CustomTheme"] = value;
+                FState["CustomTheme"] = value;
             }
         }
 
@@ -488,7 +550,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Language"];
+                object obj = FState["Language"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -504,7 +566,7 @@ namespace FineUI
             }
             set
             {
-                XState["Language"] = value;
+                FState["Language"] = value;
             }
         }
 
@@ -519,7 +581,7 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["EnableBigFont"];
+        //        object obj = FState["EnableBigFont"];
         //        if (obj == null)
         //        {
         //            if (DesignMode)
@@ -535,7 +597,7 @@ namespace FineUI
         //    }
         //    set
         //    {
-        //        XState["EnableBigFont"] = value;
+        //        FState["EnableBigFont"] = value;
         //    }
         //}
 
@@ -550,7 +612,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableAjax"];
+                object obj = FState["EnableAjax"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -566,7 +628,7 @@ namespace FineUI
             }
             set
             {
-                XState["EnableAjax"] = value;
+                FState["EnableAjax"] = value;
             }
         }
 
@@ -582,7 +644,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableAjaxLoading"];
+                object obj = FState["EnableAjaxLoading"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -598,7 +660,7 @@ namespace FineUI
             }
             set
             {
-                XState["EnableAjaxLoading"] = value;
+                FState["EnableAjaxLoading"] = value;
             }
         }
 
@@ -613,7 +675,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AjaxLoadingType"];
+                object obj = FState["AjaxLoadingType"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -629,7 +691,7 @@ namespace FineUI
             }
             set
             {
-                XState["AjaxLoadingType"] = value;
+                FState["AjaxLoadingType"] = value;
             }
         }
 
@@ -644,7 +706,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AjaxTimeout"];
+                object obj = FState["AjaxTimeout"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -660,22 +722,53 @@ namespace FineUI
             }
             set
             {
-                XState["AjaxTimeout"] = value;
+                FState["AjaxTimeout"] = value;
             }
         }
 
 
         /// <summary>
-        /// 是否启用XState压缩（默认为true）
+        /// 是否启用FState压缩（默认为false）
         /// </summary>
         [Category(CategoryName.OPTIONS)]
-        [DefaultValue(true)]
-        [Description("是否启用XState压缩（默认为true）")]
-        public new bool EnableXStateCompress
+        [DefaultValue(false)]
+        [Description("是否启用FState压缩（默认为false）")]
+        public new bool EnableFStateCompress
         {
             get
             {
-                object obj = XState["EnableXStateCompress"];
+                object obj = FState["EnableFStateCompress"];
+                if (obj == null)
+                {
+                    if (DesignMode)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return GlobalConfig.GetEnableFStateCompress();
+                    }
+                }
+                return (bool)obj;
+            }
+            set
+            {
+                FState["EnableFStateCompress"] = value;
+            }
+        }
+
+
+        /// <summary>
+        /// 是否向页面输出IE=edge标识
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(true)]
+        [Description("是否向页面输出IE=edge标识")]
+        public bool IEEdge
+        {
+            get
+            {
+                object obj = FState["IEEdge"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -684,14 +777,78 @@ namespace FineUI
                     }
                     else
                     {
-                        return GlobalConfig.GetEnableXStateCompress();
+                        return GlobalConfig.GetIEEdge();
                     }
                 }
                 return (bool)obj;
             }
             set
             {
-                XState["EnableXStateCompress"] = value;
+                FState["IEEdge"] = value;
+            }
+        }
+
+        #endregion
+
+        #region ValidateForms/ValidateTarget/ValidateMessageBox
+
+
+        /// <summary>
+        /// 需要验证的表单名称列表（逗号分隔），需配合CustomEvent使用
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(null)]
+        [Description("需要验证的表单名称列表（逗号分隔），需配合CustomEvent使用")]
+        [TypeConverter(typeof(StringArrayConverter))]
+        public string[] ValidateForms
+        {
+            get
+            {
+                object obj = FState["ValidateForms"];
+                return obj == null ? null : (string[])obj;
+            }
+            set
+            {
+                FState["ValidateForms"] = value;
+            }
+        }
+
+        /// <summary>
+        /// 验证失败时提示对话框弹出位置，需配合CustomEvent使用
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(Target.Self)]
+        [Description("验证失败时提示对话框弹出位置，需配合CustomEvent使用")]
+        public Target ValidateTarget
+        {
+            get
+            {
+                object obj = FState["ValidateTarget"];
+                return obj == null ? Target.Self : (Target)obj;
+            }
+            set
+            {
+                FState["ValidateTarget"] = value;
+            }
+        }
+
+
+        /// <summary>
+        /// 验证失败时是否出现提示对话框，需配合CustomEvent使用
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(true)]
+        [Description("验证失败时是否出现提示对话框，需配合CustomEvent使用")]
+        public bool ValidateMessageBox
+        {
+            get
+            {
+                object obj = FState["ValidateMessageBox"];
+                return obj == null ? true : (bool)obj;
+            }
+            set
+            {
+                FState["ValidateMessageBox"] = value;
             }
         }
 
@@ -709,7 +866,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["FormMessageTarget"];
+                object obj = FState["FormMessageTarget"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -725,7 +882,7 @@ namespace FineUI
             }
             set
             {
-                XState["FormMessageTarget"] = value;
+                FState["FormMessageTarget"] = value;
             }
         }
 
@@ -740,7 +897,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["FormLabelAlign"];
+                object obj = FState["FormLabelAlign"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -756,7 +913,7 @@ namespace FineUI
             }
             set
             {
-                XState["FormLabelAlign"] = value;
+                FState["FormLabelAlign"] = value;
             }
         }
 
@@ -770,7 +927,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["FormOffsetRight"];
+                object obj = FState["FormOffsetRight"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -786,7 +943,7 @@ namespace FineUI
             }
             set
             {
-                XState["FormOffsetRight"] = value;
+                FState["FormOffsetRight"] = value;
             }
         }
 
@@ -801,7 +958,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["FormLabelWidth"];
+                object obj = FState["FormLabelWidth"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -817,7 +974,7 @@ namespace FineUI
             }
             set
             {
-                XState["FormLabelWidth"] = value;
+                FState["FormLabelWidth"] = value;
             }
         }
 
@@ -831,7 +988,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["FormLabelSeparator"];
+                object obj = FState["FormLabelSeparator"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -847,25 +1004,25 @@ namespace FineUI
             }
             set
             {
-                XState["FormLabelSeparator"] = value;
+                FState["FormLabelSeparator"] = value;
             }
         }
 
         #endregion
 
-        #region PageLoadingControlExist
+        #region oldcode
 
-        /// <summary>
-        /// PageLoading控件是否存在页面
-        /// </summary>
-        internal bool PageLoadingControlExist
-        {
-            get
-            {
-                Control loading = ControlUtil.FindControl(Page, typeof(PageLoading));
-                return loading != null;
-            }
-        }
+        ///// <summary>
+        ///// PageLoading控件是否存在页面
+        ///// </summary>
+        //internal bool PageLoadingControlExist
+        //{
+        //    get
+        //    {
+        //        Control loading = ControlUtil.FindControl(Page, typeof(PageLoading));
+        //        return loading != null;
+        //    }
+        //}
 
         #endregion
 
@@ -877,16 +1034,28 @@ namespace FineUI
         /// <param name="writer">输出流</param>
         protected override void RenderBeginTag(HtmlTextWriter writer)
         {
-            if (!PageLoadingControlExist)
+            if (EnablePageLoading)
             {
-                if (EnablePageLoading)
-                {
-                    string content = PageLoading.LOADING_TEMLATE;
-                    content = content.Replace("#LOADING_IMAGE_SRC#", ResolveUrl(GlobalConfig.GetExtjsBasePath() + PageLoading.LOADING_IMAGE_PATH)); // ResourceHelper.GetWebResourceUrlResAxd(Page, PageLoading.LOADING_IMAGE_NAME));
+                //string content = PAGELOADING_TEMLATE;
+                //content = content.Replace("#LOADING_IMAGE_SRC#", ResolveUrl(GlobalConfig.GetJSBasePath() + PAGELOADING_IMAGE_PATH)); // ResourceHelper.GetWebResourceUrlResAxd(Page, PageLoading.LOADING_IMAGE_NAME));
 
-                    writer.Write(content);
+                string content = PAGELOADING_TEMLATE;
+
+                string imageUrl = String.Empty;
+                if (!String.IsNullOrEmpty(PageLoadingImageUrl))
+                {
+                    imageUrl = ResolveUrl(PageLoadingImageUrl);
                 }
+                else
+                {
+                    imageUrl = ResolveUrl(GlobalConfig.GetJSBasePath() + PAGELOADING_IMAGE_PATH); //ResourceHelper.GetWebResourceUrl(Page, LOADING_IMAGE_NAME);
+                }
+
+                content = content.Replace("#LOADING_IMAGE_SRC#", imageUrl);
+
+                writer.Write(content);
             }
+
 
 
             base.RenderBeginTag(writer);
@@ -954,26 +1123,24 @@ namespace FineUI
                 //    //Page.ClientScript.RegisterClientScriptBlock(Page.GetType(), "noscroll",  String.Format("window.document.body.style.overflow='hidden';"), true);
                 //    AddStartupAbsoluteScript("window.document.body.style.overflow='hidden';");
                 //}
-                AddStartupAbsoluteScript("X.util.hideScrollbar();");
+                AddStartupAbsoluteScript("F.util.hideScrollbar();");
             }
 
             #endregion
 
-            #region PageLoading
-            
-            
+            #region oldcode
 
-            if (!PageLoadingControlExist)
-            {
-                string jsContent = String.Empty;
+            //if (!PageLoadingControlExist)
+            //{
+            //    string jsContent = String.Empty;
 
-                if (EnablePageLoading)
-                {
-                    jsContent += "X.util.removePageLoading(false);";
-                }
+            //    if (EnablePageLoading)
+            //    {
+            //        jsContent += "F.util.removePageLoading(false);";
+            //    }
 
-                AddStartupAbsoluteScript(jsContent);
-            }
+            //    AddStartupAbsoluteScript(jsContent);
+            //}
 
 
             #endregion
@@ -982,9 +1149,9 @@ namespace FineUI
 
             //if (!EnableAjax)
             //{
-            //    AddStartupAbsoluteScript("X.global_disable_ajax=true;");
+            //    AddStartupAbsoluteScript("F.global_disable_ajax=true;");
             //}
- 
+
             //#endregion
 
             #region AutoSizePanelID
@@ -1019,7 +1186,8 @@ namespace FineUI
 
                     string jsContent = String.Format("var {0}=Ext.create('Ext.ux.FormViewport',{1});", XID, OB.ToString());
 
-                    AddStartupAbsoluteScript(jsContent);
+                    // 确保FormViewport脚本在所以用户自定义脚本（PageContext.RegisterStartupScript）之前执行
+                    AddStartupAbsoluteScript(jsContent, Constants.ABSOLUTE_STARTUP_SCRIPT_DEFAULT_LEVEL - 20);
                 }
             }
 
@@ -1032,11 +1200,28 @@ namespace FineUI
 
             #region oldcode
 
-            // Move to X.util.init
+            // Move to F.util.init
             // Asp.Net Buttons(type="submit")
-            // AddStartupAbsoluteScript("X.util.makeAspnetSubmitButtonAjax();");
+            // AddStartupAbsoluteScript("F.util.makeAspnetSubmitButtonAjax();");
 
             #endregion
+
+            JsObjectBuilder job = new JsObjectBuilder();
+
+            job.AddProperty("name", UniqueID);
+
+            if (ValidateForms != null && ValidateForms.Length > 0)
+            {
+                JsObjectBuilder validate = new JsObjectBuilder();
+                validate.AddProperty("forms", ControlUtil.GetControlClientIDs(ValidateForms));
+                validate.AddProperty("target", TargetHelper.GetName(ValidateTarget));
+                validate.AddProperty("messagebox", ValidateMessageBox.ToString().ToLower());
+                job.AddProperty("validate", validate);
+
+            }
+
+            string createScript = String.Format("F.pagemanager={1};", XID, job);
+            AddStartupScript(createScript);
         }
 
         #region old code
@@ -1126,32 +1311,104 @@ namespace FineUI
 
         #endregion
 
-        #region BeforeAjaxPostBackScript
+        #region oldcode
 
-        private List<string> beforeAjaxPostBackScriptKeys = new List<string>();
+        //private List<string> beforeAjaxPostBackScriptKeys = new List<string>();
 
-        private string beforeAjaxPostBackScript = String.Empty;
+        //private string beforeAjaxPostBackScript = String.Empty;
 
-        internal string BeforeAjaxPostBackScript
+        //internal string BeforeAjaxPostBackScript
+        //{
+        //    get { return beforeAjaxPostBackScript; }
+        //    set { beforeAjaxPostBackScript = value; }
+        //}
+
+        ///// <summary>
+        ///// Used by FCKeditor, Add script before ajax postback.
+        ///// </summary>
+        ///// <param name="key"></param>
+        ///// <param name="script"></param>
+        //public void RegisterOnAjaxPostBack(string key, string script)
+        //{
+        //    if (!beforeAjaxPostBackScriptKeys.Contains(key))
+        //    {
+        //        beforeAjaxPostBackScriptKeys.Add(key);
+        //        BeforeAjaxPostBackScript += script;
+        //    }
+        //}
+
+        #endregion
+
+        #region GetIFramePostBackEventReference
+
+        /// <summary>
+        /// 获取回发的客户端脚本（触发PageManager的CustomEvent事件）
+        /// </summary>
+        /// <param name="eventArgument">事件参数</param>
+        /// <returns>客户端脚本</returns>
+        public string GetCustomEventReference(string eventArgument)
         {
-            get { return beforeAjaxPostBackScript; }
-            set { beforeAjaxPostBackScript = value; }
+            return GetCustomEventReference(eventArgument, false);
         }
 
         /// <summary>
-        /// Used by FCKeditor, Add script before ajax postback.
+        /// 获取回发的客户端脚本（触发PageManager的CustomEvent事件）
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="script"></param>
-        public void RegisterOnAjaxPostBack(string key, string script)
+        /// <param name="eventArgument">事件参数</param>
+        /// <param name="validateForms">是否在回发前验证表单（在PageManager上进行表单配置）</param>
+        /// <returns>客户端脚本</returns>
+        public string GetCustomEventReference(string eventArgument, bool validateForms)
         {
-            if (!beforeAjaxPostBackScriptKeys.Contains(key))
+            return String.Format("F.customEvent({0}, {1});", JsHelper.Enquote(eventArgument), validateForms.ToString().ToLower());
+        }
+
+        #endregion
+
+        #region IPostBackEventHandler
+
+        /// <summary>
+        /// 处理回发事件
+        /// </summary>
+        /// <param name="eventArgument">事件参数</param>
+        public void RaisePostBackEvent(string eventArgument)
+        {
+            OnCustomEvent(new CustomEventArgs(eventArgument));
+        }
+
+
+        private static readonly object _handlerKey = new object();
+
+        /// <summary>
+        /// 自定义事件
+        /// </summary>
+        [Category(CategoryName.ACTION)]
+        [Description("自定义事件")]
+        public event EventHandler<CustomEventArgs> CustomEvent
+        {
+            add
             {
-                beforeAjaxPostBackScriptKeys.Add(key);
-                BeforeAjaxPostBackScript += script;
+                Events.AddHandler(_handlerKey, value);
+            }
+            remove
+            {
+                Events.RemoveHandler(_handlerKey, value);
+            }
+        }
+
+        /// <summary>
+        /// 触发自定义事件
+        /// </summary>
+        /// <param name="e">事件参数</param>
+        protected virtual void OnCustomEvent(CustomEventArgs e)
+        {
+            EventHandler<CustomEventArgs> handler = Events[_handlerKey] as EventHandler<CustomEventArgs>;
+            if (handler != null)
+            {
+                handler(this, e);
             }
         }
 
         #endregion
+
     }
 }

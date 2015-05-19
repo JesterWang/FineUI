@@ -5,11 +5,11 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-    <x:PageManager ID="PageManager1" AjaxAspnetControls="Label1,Literal1,Literal2_Container" runat="server" />
+    <f:PageManager ID="PageManager1" AjaxAspnetControls="Label1,Literal1,Literal2_Container" runat="server" />
     <asp:Label ID="Label1" Text="Label1" runat="server"></asp:Label>
     <br />
     <asp:Literal ID="Literal1" Text="Literal1" runat="server"></asp:Literal>
@@ -18,8 +18,8 @@
         <asp:Literal ID="Literal2" Text="Literal2" runat="server"></asp:Literal>
     </div>
     <br />
-    <x:Button ID="Button1" runat="server" Text="更新上面几个文本值" OnClick="Button1_Click">
-    </x:Button>
+    <f:Button ID="Button1" runat="server" Text="更新上面几个文本值" OnClick="Button1_Click">
+    </f:Button>
     <br />
     注意：只有Label1和Literal2的值更新了。
     </form>

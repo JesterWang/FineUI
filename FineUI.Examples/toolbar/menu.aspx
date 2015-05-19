@@ -4,47 +4,46 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style>
-        .x-toolbar-left table {
-            margin: 0 auto;
-        }
+        
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Panel ShowBorder="true" BodyPadding="5px" Height="300px" Width="650px" Title="面板" EnableFrame="true" EnableCollapse="true"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Panel ShowBorder="true" BodyPadding="5px" Height="300px" Width="650px" Title="面板"  EnableCollapse="true"
             runat="server">
             <Toolbars>
-                <x:Toolbar runat="server">
+                <f:Toolbar runat="server">
                     <Items>
-                        <x:ToolbarText runat="server" Text="内联菜单">
-                        </x:ToolbarText>
-                        <x:ToolbarSeparator runat="server">
-                        </x:ToolbarSeparator>
-                        <x:Button EnablePostBack="false" Text="中国科学技术大学" runat="server">
-                            <Menu runat="server">
-                                <x:MenuHyperLink ID="MenuHyperLink1" runat="server" Target="_blank" NavigateUrl="http://scms.ustc.edu.cn/"
+                        <f:ToolbarText runat="server" Text="内联菜单">
+                        </f:ToolbarText>
+                        <f:ToolbarSeparator runat="server">
+                        </f:ToolbarSeparator>
+                        <f:Button EnablePostBack="false" Text="中国科学技术大学" runat="server">
+                            <Menu ID="Menu1" runat="server">
+                                <f:MenuHyperLink ID="MenuHyperLink1" runat="server" Target="_blank" NavigateUrl="http://scms.ustc.edu.cn/"
                                     Text="化学与材料科学学院">
-                                </x:MenuHyperLink>
-                                <x:MenuHyperLink ID="MenuHyperLink2" runat="server" Target="_blank" NavigateUrl="http://business.ustc.edu.cn/zh_CN/"
+                                </f:MenuHyperLink>
+                                <f:MenuHyperLink ID="MenuHyperLink2" runat="server" Target="_blank" NavigateUrl="http://business.ustc.edu.cn/zh_CN/"
                                     Text="管理学院">
-                                    <Menu runat="server">
-                                        <x:MenuHyperLink ID="MenuHyperLink3" runat="server" Target="_blank" NavigateUrl="http://is.ustc.edu.cn/"
+                                    <Menu ID="Menu2" runat="server">
+                                        <f:MenuHyperLink ID="MenuHyperLink3" runat="server" Target="_blank" NavigateUrl="http://is.ustc.edu.cn/"
                                             Text="工商管理系">
-                                        </x:MenuHyperLink>
-                                        <x:MenuHyperLink ID="MenuHyperLink4" runat="server" Target="_blank" NavigateUrl="http://stat.ustc.edu.cn/"
+                                        </f:MenuHyperLink>
+                                        <f:MenuHyperLink ID="MenuHyperLink4" runat="server" Target="_blank" NavigateUrl="http://stat.ustc.edu.cn/"
                                             Text="统计与金融系">
-                                        </x:MenuHyperLink>
+                                        </f:MenuHyperLink>
                                     </Menu>
-                                </x:MenuHyperLink>
+                                </f:MenuHyperLink>
                             </Menu>
-                        </x:Button>
+                        </f:Button>
                     </Items>
-                </x:Toolbar>
+                </f:Toolbar>
             </Toolbars>
-        </x:Panel>
+        </f:Panel>
+
     </form>
 </body>
 </html>

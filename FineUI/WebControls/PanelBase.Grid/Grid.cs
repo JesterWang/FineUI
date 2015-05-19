@@ -75,18 +75,34 @@ namespace FineUI
         {
             // 严格的说，PageIndex、SortField、SortDirection这三个属性不可能在客户端被改变，而是向服务器发出改变的请求，然后服务器处理。
             // 因为这些属性的改变不会影响客户端的UI，必须服务器端发出UI改变的指令才行，所以它们算是服务器端属性。
-            AddServerAjaxProperties("PageIndex", "PageSize", "RecordCount", "SortField", "SortDirection");
-            AddClientAjaxProperties("X_Rows", "HiddenColumns", "SelectedRowIndexArray", "SelectedCell", "ExpandAllRowExpanders");
+            AddServerAjaxProperties("PageIndex", "PageSize", "RecordCount", "SortField", "SortDirection", "SummaryData", "SummaryHidden");
+            AddClientAjaxProperties("F_Rows", "HiddenColumns", "SelectedRowIndexArray", "SelectedCell", "ExpandAllRowExpanders");
 
-            AddGzippedAjaxProperties("X_Rows");
+            AddGzippedAjaxProperties("F_Rows");
         }
 
-        // 是否需要在AJAX回发时注册展开或者折叠行扩展列的脚本
+        // AJAX回发时注册展开或者折叠行扩展列的脚本
         private bool _registerScriptRowExpanders = false;
+
+        // AJAX回发回发时调用了 DataBind 函数
+        private bool _databindInFineUIAjaxPostBack = false;
 
         #endregion
 
         #region Unsupported Properties
+
+        /// <summary>
+        /// 不支持此属性
+        /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public override ITemplate Content
+        {
+            get
+            {
+                return base.Content;
+            }
+        }
 
         /// <summary>
         /// 不支持此属性
@@ -171,12 +187,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AllowCellEditing"];
+                object obj = FState["AllowCellEditing"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["AllowCellEditing"] = value;
+                FState["AllowCellEditing"] = value;
             }
         }
 
@@ -191,12 +207,31 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ClicksToEdit"];
+                object obj = FState["ClicksToEdit"];
                 return obj == null ? 2 : (int)obj;
             }
             set
             {
-                XState["ClicksToEdit"] = value;
+                FState["ClicksToEdit"] = value;
+            }
+        }
+
+        /// <summary>
+        /// 允许列锁定
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("允许列锁定")]
+        public bool AllowColumnLocking
+        {
+            get
+            {
+                object obj = FState["AllowColumnLocking"];
+                return obj == null ? false : (bool)obj;
+            }
+            set
+            {
+                FState["AllowColumnLocking"] = value;
             }
         }
 
@@ -215,12 +250,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AllowPaging"];
+                object obj = FState["AllowPaging"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["AllowPaging"] = value;
+                FState["AllowPaging"] = value;
             }
         }
 
@@ -234,12 +269,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["IsDatabasePaging"];
+                object obj = FState["IsDatabasePaging"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["IsDatabasePaging"] = value;
+                FState["IsDatabasePaging"] = value;
             }
         }
 
@@ -254,12 +289,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ClearSelectedRowsAfterPaging"];
+                object obj = FState["ClearSelectedRowsAfterPaging"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ClearSelectedRowsAfterPaging"] = value;
+                FState["ClearSelectedRowsAfterPaging"] = value;
             }
         }
 
@@ -274,12 +309,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["PageSize"];
+                object obj = FState["PageSize"];
                 return obj == null ? 20 : (int)obj;
             }
             set
             {
-                XState["PageSize"] = value;
+                FState["PageSize"] = value;
             }
         }
 
@@ -294,12 +329,58 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["PageIndex"];
-                return obj == null ? 0 : (int)obj;
+                //object obj = FState["PageIndex"];
+                //int pageIndex = (obj == null) ? 0 : (int)obj;
+
+                //int resolvedPageIndex = pageIndex;
+                //if (resolvedPageIndex < 0)
+                //{
+                //    resolvedPageIndex = 0;
+                //}
+                //else if (resolvedPageIndex > PageCount - 1)
+                //{
+                //    resolvedPageIndex = PageCount - 1;
+                //}
+
+                //if (resolvedPageIndex != pageIndex)
+                //{
+                //    // 如果PageIndex越界，则重新设置PageIndex
+                //    PageIndex = resolvedPageIndex;
+                //}
+
+                //return resolvedPageIndex;
+
+                object obj = FState["PageIndex"];
+                int pageIndex = (obj == null) ? 0 : (int)obj;
+
+                int resolvedPageIndex = pageIndex;
+
+                // 只有定义了RecordCount之后，才检查是否越界（PageIndex - PageCount）
+                if (RecordCount > 0)
+                {
+                    if (resolvedPageIndex > PageCount - 1)
+                    {
+                        resolvedPageIndex = PageCount - 1;
+                    }
+                }
+
+                // 每次都需要做不能为负数的检查
+                if (resolvedPageIndex < 0)
+                {
+                    resolvedPageIndex = 0;
+                }
+
+                // 如果PageIndex越界，则重新设置PageIndex
+                if (resolvedPageIndex != pageIndex)
+                {
+                    PageIndex = resolvedPageIndex;
+                }
+
+                return resolvedPageIndex;
             }
             set
             {
-                XState["PageIndex"] = value;
+                FState["PageIndex"] = value;
             }
         }
 
@@ -332,12 +413,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["RecordCount"];
+                object obj = FState["RecordCount"];
                 return obj == null ? 0 : (int)obj;
             }
             set
             {
-                XState["RecordCount"] = value;
+                FState["RecordCount"] = value;
             }
         }
 
@@ -355,12 +436,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AllowSorting"];
+                object obj = FState["AllowSorting"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["AllowSorting"] = value;
+                FState["AllowSorting"] = value;
             }
         }
 
@@ -377,12 +458,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["SortDirection"];
+                object obj = FState["SortDirection"];
                 return obj == null ? "ASC" : (string)obj;
             }
             set
             {
-                XState["SortDirection"] = value;
+                FState["SortDirection"] = value;
             }
         }
 
@@ -399,10 +480,10 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["SortField"];
+                object obj = FState["SortField"];
                 return obj == null ? "" : (string)obj;
 
-                //object obj = XState["SortField"];
+                //object obj = FState["SortField"];
                 //if (obj == null)
                 //{
                 //    if (SortColumnIndex >= 0 && SortColumnIndex < AllColumns.Count)
@@ -418,7 +499,7 @@ namespace FineUI
             }
             set
             {
-                XState["SortField"] = value;
+                FState["SortField"] = value;
             }
         }
 
@@ -440,7 +521,7 @@ namespace FineUI
         //        }
         //        else
         //        {
-        //            object obj = XState["SortColumnIndex"];
+        //            object obj = FState["SortColumnIndex"];
         //            if (obj == null)
         //            {
         //                if (!String.IsNullOrEmpty(SortColumn))
@@ -460,7 +541,7 @@ namespace FineUI
         //    }
         //    set
         //    {
-        //        XState["SortColumnIndex"] = value;
+        //        FState["SortColumnIndex"] = value;
         //    }
         //}
 
@@ -475,12 +556,91 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["SortColumn"];
+        //        object obj = FState["SortColumn"];
         //        return obj == null ? "" : (string)obj;
         //    }
         //    set
         //    {
-        //        XState["SortColumn"] = value;
+        //        FState["SortColumn"] = value;
+        //    }
+        //}
+
+        #endregion
+
+        #region EnableSummary
+
+        /// <summary>
+        /// 启用合计行
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("启用合计行")]
+        public bool EnableSummary
+        {
+            get
+            {
+                object obj = FState["EnableSummary"];
+                return obj == null ? false : (bool)obj;
+            }
+            set
+            {
+                FState["EnableSummary"] = value;
+            }
+        }
+
+        /// <summary>
+        /// [AJAX属性]合计行数据
+        /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public JObject SummaryData
+        {
+            get
+            {
+                object obj = FState["SummaryData"];
+                return obj == null ? null : (JObject)obj;
+            }
+            set
+            {
+                FState["SummaryData"] = value;
+            }
+        }
+
+        /// <summary>
+        /// 合计行的位置
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(SummaryPosition.Flow)]
+        [Description("合计行的位置")]
+        public SummaryPosition SummaryPosition
+        {
+            get
+            {
+                object obj = FState["SummaryPosition"];
+                return obj == null ? SummaryPosition.Flow : (SummaryPosition)obj;
+            }
+            set
+            {
+                FState["SummaryPosition"] = value;
+            }
+        }
+
+        ///// <summary>
+        ///// 是否隐藏合计行
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(false)]
+        //[Description("是否隐藏合计行")]
+        //public bool SummaryHidden
+        //{
+        //    get
+        //    {
+        //        object obj = FState["SummaryHidden"];
+        //        return obj == null ? false : (bool)obj;
+        //    }
+        //    set
+        //    {
+        //        FState["SummaryHidden"] = value;
         //    }
         //}
 
@@ -498,12 +658,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EmptyText"];
+                object obj = FState["EmptyText"];
                 return obj == null ? String.Empty : (string)obj;
             }
             set
             {
-                XState["EmptyText"] = value;
+                FState["EmptyText"] = value;
             }
         }
 
@@ -518,12 +678,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["RowVerticalAlign"];
+                object obj = FState["RowVerticalAlign"];
                 return obj == null ? VerticalAlign.Middle : (VerticalAlign)obj;
             }
             set
             {
-                XState["RowVerticalAlign"] = value;
+                FState["RowVerticalAlign"] = value;
             }
         }
 
@@ -538,12 +698,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["RowNumberWidth"];
+        //        object obj = FState["RowNumberWidth"];
         //        return obj == null ? Unit.Empty : (Unit)obj;
         //    }
         //    set
         //    {
-        //        XState["RowNumberWidth"] = value;
+        //        FState["RowNumberWidth"] = value;
         //    }
         //}
 
@@ -558,12 +718,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableDelayRender"];
+                object obj = FState["EnableDelayRender"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableDelayRender"] = value;
+                FState["EnableDelayRender"] = value;
             }
         }
 
@@ -578,12 +738,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ExpandAllRowExpanders"];
+                object obj = FState["ExpandAllRowExpanders"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["ExpandAllRowExpanders"] = value;
+                FState["ExpandAllRowExpanders"] = value;
             }
         }
 
@@ -598,12 +758,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableTextSelection"];
+                object obj = FState["EnableTextSelection"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableTextSelection"] = value;
+                FState["EnableTextSelection"] = value;
             }
         }
 
@@ -678,12 +838,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["EnableRowNumber"];
+        //        object obj = FState["EnableRowNumber"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["EnableRowNumber"] = value;
+        //        FState["EnableRowNumber"] = value;
         //    }
         //}
 
@@ -698,12 +858,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["EnableRowNumberPaging"];
+        //        object obj = FState["EnableRowNumberPaging"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["EnableRowNumberPaging"] = value;
+        //        FState["EnableRowNumberPaging"] = value;
         //    }
         //}
 
@@ -717,12 +877,31 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ShowGridHeader"];
+                object obj = FState["ShowGridHeader"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ShowGridHeader"] = value;
+                FState["ShowGridHeader"] = value;
+            }
+        }
+
+        /// <summary>
+        /// 显示分页工具条右侧的分页信息
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(true)]
+        [Description("显示分页工具条右侧的分页信息")]
+        public bool ShowPagingMessage
+        {
+            get
+            {
+                object obj = FState["ShowPagingMessage"];
+                return obj == null ? true : (bool)obj;
+            }
+            set
+            {
+                FState["ShowPagingMessage"] = value;
             }
         }
 
@@ -736,12 +915,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableHeaderMenu"];
+                object obj = FState["EnableHeaderMenu"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableHeaderMenu"] = value;
+                FState["EnableHeaderMenu"] = value;
             }
         }
 
@@ -755,12 +934,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["EnableColumnHide"];
+        //        object obj = FState["EnableColumnHide"];
         //        return obj == null ? true : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["EnableColumnHide"] = value;
+        //        FState["EnableColumnHide"] = value;
         //    }
         //}
 
@@ -774,12 +953,32 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableColumnLines"];
+                object obj = FState["EnableColumnLines"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableColumnLines"] = value;
+                FState["EnableColumnLines"] = value;
+            }
+        }
+
+
+        /// <summary>
+        /// 启用表格行分隔线（默认为true）
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("启用表格行分隔线（默认为true）")]
+        public bool EnableRowLines
+        {
+            get
+            {
+                object obj = FState["EnableRowLines"];
+                return obj == null ? true : (bool)obj;
+            }
+            set
+            {
+                FState["EnableRowLines"] = value;
             }
         }
 
@@ -794,12 +993,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableAlternateRowStyle"];
+                object obj = FState["EnableAlternateRowStyle"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableAlternateRowStyle"] = value;
+                FState["EnableAlternateRowStyle"] = value;
             }
         }
 
@@ -813,12 +1012,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableMouseOverColor"];
+                object obj = FState["EnableMouseOverColor"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableMouseOverColor"] = value;
+                FState["EnableMouseOverColor"] = value;
             }
         }
 
@@ -826,82 +1025,82 @@ namespace FineUI
 
         #region EnableRowClickEvent/EnableRowClickEvent
 
-        /// <summary>
-        /// 点击行是否自动回发
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(false)]
-        [Description("点击行是否自动回发")]
-        [Obsolete("此属性已废除，请使用EnableRowClickEvent属性")]
-        public bool AutoPostBack
-        {
-            get
-            {
-                return EnableRowClickEvent;
-            }
-            set
-            {
-                EnableRowClickEvent = value;
-            }
-        }
+        ///// <summary>
+        ///// 点击行是否自动回发
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(false)]
+        //[Description("点击行是否自动回发")]
+        //[Obsolete("此属性已废除，请使用EnableRowClickEvent属性")]
+        //public bool AutoPostBack
+        //{
+        //    get
+        //    {
+        //        return EnableRowClickEvent;
+        //    }
+        //    set
+        //    {
+        //        EnableRowClickEvent = value;
+        //    }
+        //}
 
-        /// <summary>
-        /// 选中行是否自动回发
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(false)]
-        [Description("选中行是否自动回发")]
-        [Obsolete("此属性已废除，请使用EnableRowSelectEvent属性")]
-        public bool EnableRowSelect
-        {
-            get
-            {
-                return EnableRowSelectEvent;
-            }
-            set
-            {
-                EnableRowSelectEvent = value;
-            }
-        }
+        ///// <summary>
+        ///// 选中行是否自动回发
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(false)]
+        //[Description("选中行是否自动回发")]
+        //[Obsolete("此属性已废除，请使用EnableRowSelectEvent属性")]
+        //public bool EnableRowSelect
+        //{
+        //    get
+        //    {
+        //        return EnableRowSelectEvent;
+        //    }
+        //    set
+        //    {
+        //        EnableRowSelectEvent = value;
+        //    }
+        //}
 
-        /// <summary>
-        /// 双击行是否自动回发
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(false)]
-        [Description("双击行是否自动回发")]
-        [Obsolete("此属性已废除，请使用EnableRowDoubleClickEvent属性")]
-        public bool EnableRowDoubleClick
-        {
-            get
-            {
-                return EnableRowDoubleClickEvent;
-            }
-            set
-            {
-                EnableRowDoubleClickEvent = value;
-            }
-        }
+        ///// <summary>
+        ///// 双击行是否自动回发
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(false)]
+        //[Description("双击行是否自动回发")]
+        //[Obsolete("此属性已废除，请使用EnableRowDoubleClickEvent属性")]
+        //public bool EnableRowDoubleClick
+        //{
+        //    get
+        //    {
+        //        return EnableRowDoubleClickEvent;
+        //    }
+        //    set
+        //    {
+        //        EnableRowDoubleClickEvent = value;
+        //    }
+        //}
 
 
-        /// <summary>
-        /// 点击行是否自动回发
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(false)]
-        [Description("点击行是否自动回发")]
-        [Obsolete("此属性已废除，请使用EnableRowClickEvent属性")]
-        public bool EnableRowClick
-        {
-            get
-            {
-                return EnableRowClickEvent;
-            }
-            set
-            {
-                EnableRowClickEvent = value;
-            }
-        }
+        ///// <summary>
+        ///// 点击行是否自动回发
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(false)]
+        //[Description("点击行是否自动回发")]
+        //[Obsolete("此属性已废除，请使用EnableRowClickEvent属性")]
+        //public bool EnableRowClick
+        //{
+        //    get
+        //    {
+        //        return EnableRowClickEvent;
+        //    }
+        //    set
+        //    {
+        //        EnableRowClickEvent = value;
+        //    }
+        //}
 
 
 
@@ -915,12 +1114,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableRowSelectEvent"];
+                object obj = FState["EnableRowSelectEvent"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableRowSelectEvent"] = value;
+                FState["EnableRowSelectEvent"] = value;
             }
         }
 
@@ -935,12 +1134,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableRowClickEvent"];
+                object obj = FState["EnableRowClickEvent"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableRowClickEvent"] = value;
+                FState["EnableRowClickEvent"] = value;
             }
         }
 
@@ -955,12 +1154,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableRowDoubleClickEvent"];
+                object obj = FState["EnableRowDoubleClickEvent"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableRowDoubleClickEvent"] = value;
+                FState["EnableRowDoubleClickEvent"] = value;
             }
         }
 
@@ -974,12 +1173,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableAfterEditEvent"];
+                object obj = FState["EnableAfterEditEvent"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableAfterEditEvent"] = value;
+                FState["EnableAfterEditEvent"] = value;
             }
         }
 
@@ -997,12 +1196,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["MinColumnWidth"];
+        //        object obj = FState["MinColumnWidth"];
         //        return obj == null ? Unit.Empty : (Unit)obj;
         //    }
         //    set
         //    {
-        //        XState["MinColumnWidth"] = value;
+        //        FState["MinColumnWidth"] = value;
         //    }
         //}
 
@@ -1016,12 +1215,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoExpandColumn"];
+                object obj = FState["AutoExpandColumn"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["AutoExpandColumn"] = value;
+                FState["AutoExpandColumn"] = value;
             }
         }
 
@@ -1035,12 +1234,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["AutoExpandColumnMax"];
+        //        object obj = FState["AutoExpandColumnMax"];
         //        return obj == null ? Unit.Empty : (Unit)obj;
         //    }
         //    set
         //    {
-        //        XState["AutoExpandColumnMax"] = value;
+        //        FState["AutoExpandColumnMax"] = value;
         //    }
         //}
 
@@ -1054,12 +1253,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["AutoExpandColumnMin"];
+        //        object obj = FState["AutoExpandColumnMin"];
         //        return obj == null ? Unit.Empty : (Unit)obj;
         //    }
         //    set
         //    {
-        //        XState["AutoExpandColumnMin"] = value;
+        //        FState["AutoExpandColumnMin"] = value;
         //    }
         //}
 
@@ -1073,12 +1272,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["ForceFitFirstTime"];
+        //        object obj = FState["ForceFitFirstTime"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["ForceFitFirstTime"] = value;
+        //        FState["ForceFitFirstTime"] = value;
         //    }
         //}
 
@@ -1088,16 +1287,16 @@ namespace FineUI
         [Category(CategoryName.OPTIONS)]
         [DefaultValue(false)]
         [Description("成比例改变表格各列的宽度，以防止出现水平滚动条（第一次加载和之后改变表格宽度时都有效）")]
-        public bool ForceFitAllTime
+        public bool ForceFit
         {
             get
             {
-                object obj = XState["ForceFitAllTime"];
+                object obj = FState["ForceFit"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["ForceFitAllTime"] = value;
+                FState["ForceFit"] = value;
             }
         }
 
@@ -1111,12 +1310,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["VerticalScrollWidth"];
+        //        object obj = FState["VerticalScrollWidth"];
         //        return obj == null ? Unit.Empty : (Unit)obj;
         //    }
         //    set
         //    {
-        //        XState["VerticalScrollWidth"] = value;
+        //        FState["VerticalScrollWidth"] = value;
         //    }
         //}
 
@@ -1156,12 +1355,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableCheckBoxSelect"];
+                object obj = FState["EnableCheckBoxSelect"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableCheckBoxSelect"] = value;
+                FState["EnableCheckBoxSelect"] = value;
             }
         }
 
@@ -1175,12 +1374,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["CheckBoxSelectOnly"];
+                object obj = FState["CheckBoxSelectOnly"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["CheckBoxSelectOnly"] = value;
+                FState["CheckBoxSelectOnly"] = value;
             }
         }
 
@@ -1195,12 +1394,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableMultiSelect"];
+                object obj = FState["EnableMultiSelect"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableMultiSelect"] = value;
+                FState["EnableMultiSelect"] = value;
             }
         }
 
@@ -1237,18 +1436,18 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["SelectedCell"];
+                object obj = FState["SelectedCell"];
                 return obj == null ? null : (int[])obj;
             }
             set
             {
                 if (value == null || value.Length != 2)
                 {
-                    XState["SelectedCell"] = null;
+                    FState["SelectedCell"] = null;
                 }
                 else
                 {
-                    XState["SelectedCell"] = value;
+                    FState["SelectedCell"] = value;
                 }
             }
         }
@@ -1263,12 +1462,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["SelectedRowIndexArray"];
+                object obj = FState["SelectedRowIndexArray"];
                 return obj == null ? new int[] { } : (int[])obj;
             }
             set
             {
-                XState["SelectedRowIndexArray"] = GetSortedArray(value).ToArray();
+                FState["SelectedRowIndexArray"] = GetSortedArray(value).ToArray();
             }
         }
 
@@ -1422,12 +1621,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["DataKeyNames"];
+                object obj = FState["DataKeyNames"];
                 return obj == null ? null : (string[])obj;
             }
             set
             {
-                XState["DataKeyNames"] = value;
+                FState["DataKeyNames"] = value;
             }
         }
 
@@ -1627,14 +1826,14 @@ namespace FineUI
         }
         #endregion
 
-        #region X Properties
+        #region F_Rows
 
         /// <summary>
         /// 保存的行数据（内部使用）
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public JObject X_Rows
+        public JObject F_Rows
         {
             get
             {
@@ -1658,7 +1857,7 @@ namespace FineUI
             set
             {
                 // 注意，此时不能清空 SelectedRowIndexArray 
-                // 现在只是从XState中恢复数据，如果清空 SelectedRowIndexArray ，可能会导致 SelectedRowIndexArray 状态不对
+                // 现在只是从FState中恢复数据，如果清空 SelectedRowIndexArray ，可能会导致 SelectedRowIndexArray 状态不对
                 ClearRows();
 
                 JArray valuesArray = value.Value<JArray>("Values"); // value.getJArray("Values");
@@ -1669,7 +1868,7 @@ namespace FineUI
                     GridRow row = new GridRow(this, null, i);
 
                     // row.Values
-                    row.Values = JSONUtil.StringArrayFromJArray(valuesArray[i].Value<JArray>()); // .getJArray(i));
+                    row.Values = JSONUtil.ObjectArrayFromJArray(valuesArray[i].Value<JArray>()); // .getJArray(i));
 
                     // row.DataKeys
                     row.DataKeys = JSONUtil.ObjectArrayFromJArray(dataKeysArray[i].Value<JArray>()); //.getJArray(i));
@@ -1680,11 +1879,8 @@ namespace FineUI
                     Rows.Add(row);
                     //Controls.Add(row);
 
-                    row.InitTemplateContainers();
-
-
+                    //row.InitTemplateContainers();
                 }
-
             }
         }
 
@@ -1692,11 +1888,11 @@ namespace FineUI
 
         #region oldcode
 
-        //protected override void LoadXState(JObject state, string property)
+        //protected override void LoadFState(JObject state, string property)
         //{
-        //    base.LoadXState(state, property);
+        //    base.LoadFState(state, property);
 
-        //    if (property == "X_Rows")
+        //    if (property == "F_Rows")
         //    {
         //        XRowsFromJSON(state.getJObject(property));
         //    }
@@ -1715,7 +1911,7 @@ namespace FineUI
         //        columnIndex++;
         //    }
 
-        //    SaveXProperty("X_Rows", XRowsToJSON().ToString());
+        //    SaveXProperty("F_Rows", XRowsToJSON().ToString());
         //    //SaveXProperty("SelectedRowIndexArray", new JArray(SelectedRowIndexArray).ToString());
         //}
 
@@ -1724,30 +1920,30 @@ namespace FineUI
         //    base.OnBothPreRender();
 
         //    // Rows has been changed in server-side code after onInit.
-        //    if (XPropertyModified("X_Rows", XRowsToJSON().ToString()))
+        //    if (XPropertyModified("F_Rows", XRowsToJSON().ToString()))
         //    {
-        //        XState.AddModifiedProperty("X_Rows");
+        //        FState.AddModifiedProperty("F_Rows");
         //    }
 
-        //    // Make sure SelectedRowIndexArray property exist in X_STATE during page's first load.
+        //    // Make sure SelectedRowIndexArray property exist in F_STATE during page's first load.
         //    if (!Page.IsPostBack)
         //    {
-        //        XState.AddModifiedProperty("SelectedRowIndexArray");
+        //        FState.AddModifiedProperty("SelectedRowIndexArray");
         //    }
 
         //    //if (XPropertyModified("SelectedRowIndexArray", new JArray(SelectedRowIndexArray).ToString()))
         //    //{
-        //    //    XState.AddModifiedProperties("SelectedRowIndexArray");
+        //    //    FState.AddModifiedProperties("SelectedRowIndexArray");
         //    //}
         //    //else
         //    //{
-        //    //    XState.RemoveModifiedProperties("SelectedRowIndexArray");
+        //    //    FState.RemoveModifiedProperties("SelectedRowIndexArray");
         //    //}
         //}
 
-        //protected override void SaveXState(JObject state, string property)
+        //protected override void SaveFState(JObject state, string property)
         //{
-        //    if (property == "X_Rows")
+        //    if (property == "F_Rows")
         //    {
         //        state.put(property, XRowsToJSON());
         //    }
@@ -1842,15 +2038,15 @@ namespace FineUI
             }
         }
 
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        private string NewAddedRowsHiddenFieldID
-        {
-            get
-            {
-                return String.Format("{0}_NewAddedRows", ClientID);
-            }
-        }
+        //[Browsable(false)]
+        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        //private string NewAddedRowsHiddenFieldID
+        //{
+        //    get
+        //    {
+        //        return String.Format("{0}_NewAddedRows", ClientID);
+        //    }
+        //}
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -1871,12 +2067,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["NeedPersistStateColumnIndexArray"];
+        //        object obj = FState["NeedPersistStateColumnIndexArray"];
         //        return obj == null ? null : (int[])obj;
         //    }
         //    set
         //    {
-        //        XState["NeedPersistStateColumnIndexArray"] = value;
+        //        FState["NeedPersistStateColumnIndexArray"] = value;
         //    }
         //}
 
@@ -1937,6 +2133,14 @@ namespace FineUI
             }
         }
 
+        private string Render_GridFieldsID
+        {
+            get
+            {
+                return String.Format("{0}_fields", XID);
+            }
+        }
+
         private string Render_GridColumnsID
         {
             get
@@ -1961,7 +2165,7 @@ namespace FineUI
             }
         }
 
-        private string Render_PagingID
+        internal string Render_PagingID
         {
             get
             {
@@ -1991,11 +2195,11 @@ namespace FineUI
             if (AllowPaging)
             {
                 // 不论这三个属性是在客户端还是在服务器端被改变，都需要执行grid.getBottomToolbar().load函数
-                // 如果不是数据库分页，则X_Rows不会变化，但是必须执行x_loadData
+                // 如果不是数据库分页，则F_Rows不会变化，但是必须执行x_loadData
                 if (PropertyModified("PageIndex", "PageSize", "RecordCount"))
                 {
-                    sb.AppendFormat("{0}.x_getPaging().x_update({1});", XID, GetPagingBuilder());
-                    sb.AppendFormat("{0}.x_loadData();", XID);
+                    sb.AppendFormat("{0}.f_getPaging().f_update({1});", XID, GetPagingBuilder());
+                    sb.AppendFormat("{0}.f_loadData();", XID);
 
                     //needUpdateSortIcon = true;
 
@@ -2003,19 +2207,19 @@ namespace FineUI
                 }
             }
 
-            if (PropertyModified("X_Rows"))
+            if (PropertyModified("F_Rows"))
             {
-                //if (ClientPropertyModifiedInServer("X_Rows"))
+                //if (ClientPropertyModifiedInServer("F_Rows"))
                 if (!dataReloaded)
                 {
-                    sb.AppendFormat("{0}.x_loadData();", XID);
+                    sb.AppendFormat("{0}.f_loadData();", XID);
 
                     //needUpdateSortIcon = true;
 
                     dataReloaded = true;
                 }
 
-                // 如果X_Rows改变了，则每行的模版列内容应该也要变化
+                // 如果F_Rows改变了，则每行的模版列内容应该也要变化
                 PageManager.Instance.AddAjaxGridClientID(ClientID);
             }
 
@@ -2024,37 +2228,29 @@ namespace FineUI
             {
                 PageManager.Instance.AddAjaxGridReloadedClientID(ClientID);
             }
+            else
+            {
+                // 如果不重新加载客户端数据，但是调用了 DataBind 函数，则提交更改
+                if (AllowCellEditing && _databindInFineUIAjaxPostBack)
+                {
+                    CommitChanges();
+                }
+            }
 
-            //if (PropertyModified("X_States"))
-            //{
-            //    sb.AppendFormat("{0}.x_setRowStates();", XID);
-            //}
-
-            //if (PropertyModified("SortField", "SortDirection"))
-            //{
-            //    needUpdateSortIcon = true;
-            //}
-
-
-            // 客户端已经改变了排序状态，无需再次设置
-            //if (needUpdateSortIcon)
-            //{
-            //    sb.AppendFormat("{0}.x_setSortIcon('{1}','{2}');", XID, GetSortColummID(), SortDirection);
-            //}
 
             bool selectRowsScriptRegistered = false;
             if (AllowCellEditing)
             {
                 if (PropertyModified("SelectedCell"))
                 {
-                    sb.AppendFormat("{0}.x_selectCell();", XID);
+                    sb.AppendFormat("{0}.f_selectCell();", XID);
                 }
             }
             else
             {
                 if (PropertyModified("SelectedRowIndexArray"))
                 {
-                    sb.AppendFormat("{0}.x_selectRows();", XID);
+                    sb.AppendFormat("{0}.f_selectRows();", XID);
                     selectRowsScriptRegistered = true;
                 }
             }
@@ -2062,7 +2258,7 @@ namespace FineUI
 
             if (PropertyModified("HiddenColumns"))
             {
-                sb.AppendFormat("{0}.x_updateColumnsHiddenStatus();", XID);
+                sb.AppendFormat("{0}.f_updateColumnsHiddenStatus();", XID);
             }
 
 
@@ -2071,11 +2267,11 @@ namespace FineUI
             {
                 if (ExpandAllRowExpanders)
                 {
-                    sb.AppendFormat("{0}.x_expandAllRows();", XID);
+                    sb.AppendFormat("{0}.f_expandAllRows();", XID);
                 }
                 else
                 {
-                    sb.AppendFormat("{0}.x_collapseAllRows();", XID);
+                    sb.AppendFormat("{0}.f_collapseAllRows();", XID);
                 }
                 rowExpandersScriptRegistered = true;
             }
@@ -2088,26 +2284,21 @@ namespace FineUI
                     // 数据重新加载了，如果没有注册行扩展列的脚本，需要注册展开所有行扩展列的脚本
                     if (ExpandAllRowExpanders)
                     {
-                        sb.AppendFormat("{0}.x_expandAllRows();", XID);
+                        sb.AppendFormat("{0}.f_expandAllRows();", XID);
                     }
                     else
                     {
-                        sb.AppendFormat("{0}.x_collapseAllRows();", XID);
+                        sb.AppendFormat("{0}.f_collapseAllRows();", XID);
                     }
                 }
 
-                //// 数据重新加载了，检查是否启用文本选择
-                //if (EnableTextSelection)
-                //{
-                //    sb.AppendFormat("{0}.x_enableTextSelection();", XID);
-                //}
 
                 if (!AllowCellEditing)
                 {
                     // 数据重新加载了，如果没有注册选中行的脚本，需要注册重新选中行的脚本
                     if (!selectRowsScriptRegistered)
                     {
-                        sb.AppendFormat("{0}.x_selectRows();", XID);
+                        sb.AppendFormat("{0}.f_selectRows();", XID);
                     }
                 }
 
@@ -2121,33 +2312,18 @@ namespace FineUI
         /// </summary>
         protected override void OnFirstPreRender()
         {
-            // 确保 X_Rows 在页面第一次加载时都存在于x_state中
-            XState.AddModifiedProperty("X_Rows");
-
-            //// 因为可以在 ASPX 中指定列的 Hidden 属性
-            //// 如果在 ASPX 中指定了列的 Hidden 属性，但是 HiddenColumnIndexArray 不在改变的属性列表中，
-            //// 为了在客户端初始化隐藏的列，需要手工将 HiddenColumnIndexArray 添加到改变的属性列表中，以便使其存在于 x_state 属性中。
-            //if (HiddenColumnIndexArray.Length > 0)
-            //{
-            //    XState.AddModifiedProperty("HiddenColumnIndexArray");
-            //}
-
+            // 确保 F_Rows 在页面第一次加载时都存在于f_state中
+            FState.AddModifiedProperty("F_Rows");
 
             // 不需要手工添加 SelectedRowIndexArray 属性，是因为只能通过代码设置此属性
+            // 只要通过代码设置了 SelectedRowIndexArray 属性，则一定会存在于 F_States
+
 
             base.OnFirstPreRender();
 
+
             //ResourceManager.Instance.AddJavaScriptComponent("grid");
-
-            //// 分页工具栏使用了 Ext.form.NumberField 组件，所以必须引入 form 的JavaScript
-            //if (AllowPaging)
-            //{
-            //    ResourceManager.Instance.AddJavaScriptComponent("form");
-            //}
-
-            //OB.Listeners.AddProperty("rowmousedown", "function(){alert('ok');}", true);
-
-            string cls = CssClass;
+            JsArrayBuilder pluginBuilder = new JsArrayBuilder();
 
             #region selectModel/gridStore/gridColumn
 
@@ -2163,12 +2339,13 @@ namespace FineUI
             OB.AddProperty("selModel", Render_SelectModelID, true);
 
 
-            string gridColumnsScript = GetGridColumnScript();
+            string gridColumnsScript = GetGridColumnScript(pluginBuilder);
             OB.AddProperty("columns", Render_GridColumnsID, true);
 
             string gridStoreScript = GetGridStore();
             OB.AddProperty("store", Render_GridStoreID, true);
 
+            OB.AddProperty("f_fields", Render_GridFieldsID, true);
             //Console.WriteLine(RowExpander.DataFields);
 
             #endregion
@@ -2224,6 +2401,9 @@ namespace FineUI
                 viewBuilder.AddProperty("enableTextSelection", true);
             }
 
+            viewBuilder.AddProperty("getRowClass", JsHelper.GetFunction("return 'f-grid-row';"), true);
+            //viewBuilder.AddProperty("selectedItemCls", "x-grid-row-selected f-grid-row-selected");
+
             if (viewBuilder.Count > 0)
             {
                 OB.AddProperty("viewConfig", viewBuilder);
@@ -2239,7 +2419,14 @@ namespace FineUI
                 OB.AddProperty("columnLines", true);
             }
 
-            if (ForceFitAllTime)
+            if (!EnableRowLines)
+            {
+                OB.AddProperty("rowLines", false);
+            }
+
+            
+
+            if (ForceFit)
             {
                 OB.AddProperty("forceFit", true);
             }
@@ -2284,9 +2471,10 @@ namespace FineUI
                 string validateScript = "var args='RowClick$'+index;";
                 validateScript += GetPostBackEventReference("#RowClick#").Replace("'#RowClick#'", "args");
 
-                string rowClickScript = JsHelper.GetFunction(validateScript, "grid", "record", "item", "index"); // String.Format("function(grid,rowIndex,e){{{0}}}", validateScript);
+                //string rowClickScript = JsHelper.GetFunction(validateScript, "grid", "record", "item", "index"); // String.Format("function(grid,rowIndex,e){{{0}}}", validateScript);
 
-                OB.Listeners.AddProperty("itemclick", rowClickScript, true);
+                //OB.Listeners.AddProperty("itemclick", rowClickScript, true);
+                AddListener("itemclick", validateScript, "grid", "record", "item", "index");
             }
 
             if (EnableRowDoubleClickEvent)
@@ -2294,9 +2482,10 @@ namespace FineUI
                 string validateScript = "var args='RowDoubleClick$'+index;";
                 validateScript += GetPostBackEventReference("#RowDoubleClick#").Replace("'#RowDoubleClick#'", "args");
 
-                string rowClickScript = JsHelper.GetFunction(validateScript, "grid", "record", "item", "index"); //String.Format("function(grid,rowIndex,e){{{0}}}", validateScript);
+                //string rowClickScript = JsHelper.GetFunction(validateScript, "grid", "record", "item", "index"); //String.Format("function(grid,rowIndex,e){{{0}}}", validateScript);
 
-                OB.Listeners.AddProperty("itemdblclick", rowClickScript, true);
+                //OB.Listeners.AddProperty("itemdblclick", rowClickScript, true);
+                AddListener("itemdblclick", validateScript, "grid", "record", "item", "index");
             }
 
             #endregion
@@ -2304,19 +2493,27 @@ namespace FineUI
             #region AllowPaging
 
             string pagingScript = String.Empty;
+
             if (AllowPaging)
             {
                 OptionBuilder pagingBuilder = GetPagingBuilder();
 
-                pagingBuilder.AddProperty("displayInfo", true);
+                if (!ShowPagingMessage)
+                {
+                    pagingBuilder.AddProperty("displayInfo", false);
+                }
+                else
+                {
+                    pagingBuilder.AddProperty("displayInfo", true);
+                }
 
                 pagingBuilder.AddProperty("store", Render_GridStoreID, true);
                 //// Hide refresh button, we don't implement this logic now.
-                //pagingBuilder.Listeners.AddProperty("beforerender", JsHelper.GetFunction("this.x_hideRefresh();"), true);
+                //pagingBuilder.Listeners.AddProperty("beforerender", JsHelper.GetFunction("this.f_hideRefresh();"), true);
 
                 string postbackScript = String.Empty;
                 postbackScript = GetPostBackEventReference("#PLACEHOLDER#");
-                string loadPageScript = JsHelper.GetFunction(postbackScript.Replace("'#PLACEHOLDER#'", "'Page$'+(pageNum-1)"), "bar", "pageNum");
+                string loadPageScript = JsHelper.GetFunction(postbackScript.Replace("'#PLACEHOLDER#'", "'Page$'+(pageNum-1)") + "return false;", "bar", "pageNum");
 
                 pagingBuilder.Listeners.AddProperty("beforechange", loadPageScript, true);
 
@@ -2335,10 +2532,12 @@ namespace FineUI
                     pagingBuilder.AddProperty("items", ab.ToString(), true);
                 }
 
+                pagingBuilder.AddProperty("xtype", "simplepagingtoolbar");
+                pagingBuilder.AddProperty("dock", "bottom");
 
-                pagingScript = String.Format("var {0}=Ext.create('Ext.ux.SimplePagingToolbar',{1});", Render_PagingID, pagingBuilder);
+                pagingScript = String.Format("var {0}={1};", Render_PagingID, pagingBuilder);
 
-                OB.AddProperty("bbar", Render_PagingID, true);
+                //OB.AddProperty("bbar", Render_PagingID, true);
             }
 
             #endregion
@@ -2370,21 +2569,52 @@ namespace FineUI
 
             #endregion
 
-            #region Listeners - viewready
+            #region EnableSummary
+
+            JsArrayBuilder features = new JsArrayBuilder();
+
+            if (EnableSummary)
+            {
+                JsObjectBuilder summaryFeature = new JsObjectBuilder();
+                summaryFeature.AddProperty("ftype", "summary");
+                summaryFeature.AddProperty("id", "summary");
+
+                if (SummaryPosition != SummaryPosition.Flow)
+                {
+                    summaryFeature.AddProperty("dock", SummaryPositionHelper.GetName(SummaryPosition));
+                }
+
+                //if (SummaryHidden)
+                //{
+                //    summaryFeature.AddProperty("showSummaryRow", false);
+                //}
+
+                features.AddProperty(summaryFeature);
+            }
+
+
+            if (features.Count > 0)
+            {
+                OB.AddProperty("features", features);
+            }
+
+            #endregion
+
+            #region Listeners - afterrender
 
             StringBuilder viewreadySB = new StringBuilder();
 
-            // Note: this.x_state['X_Rows']['Values'] will always rendered to the client side.
-            //viewreadySB.Append("cmp.x_updateTpls();");
+            // Note: this.f_state['F_Rows']['Values'] will always rendered to the client side.
+            //viewreadySB.Append("cmp.f_updateTpls();");
 
             if (AllowSorting)
             {
-                viewreadySB.AppendFormat("cmp.x_initSortHeaders();");
+                viewreadySB.AppendFormat("cmp.f_initSortHeaders();");
             }
 
             if (!AllowCellEditing)
             {
-                viewreadySB.Append("cmp.x_selectRows();");
+                viewreadySB.Append("cmp.f_selectRows();");
             }
 
 
@@ -2392,22 +2622,33 @@ namespace FineUI
             //{
             //    cls += " x-grid-selectable";
 
-            //    viewreadySB.Append("cmp.x_enableTextSelection();");
+            //    viewreadySB.Append("cmp.f_enableTextSelection();");
             //}
 
             // 展开所有的行扩展列
             if (ExpandAllRowExpanders)
             {
-                viewreadySB.Append("cmp.x_expandAllRows();");
+                viewreadySB.Append("cmp.f_expandAllRows();");
             }
 
+            if (AllowColumnLocking)
+            {
+                // 必须延时调用 doLayout，否则显示不正常
+                viewreadySB.Append("cmp.doLayout();");
 
-            OB.Listeners.AddProperty("viewready", JsHelper.GetFunction(viewreadySB.ToString(), "cmp"), true);
+            }
 
+            string viewreadyScript = "window.setTimeout(function(){" + viewreadySB.ToString() + "},200);";
+
+            // viewready在enableLocking时不会触发，只好改成afterrender
+            //OB.Listeners.AddProperty("afterrender", JsHelper.GetFunction(viewreadyScript, "cmp"), true);
+            AddListener("afterrender", viewreadyScript, "cmp");
 
             #endregion
 
             #region cls
+
+            string cls = CssClass;
 
             if (RowVerticalAlign != VerticalAlign.Middle)
             {
@@ -2427,64 +2668,84 @@ namespace FineUI
             StringBuilder renderSB = new StringBuilder();
 
             // 加载表格数据
-            renderSB.Append("cmp.x_loadData();");
+            renderSB.Append("cmp.f_loadData();");
 
             //// 隐藏列
             //if (HiddenColumnIndexArray != null && HiddenColumnIndexArray.Length > 0)
             //{
-            //    renderSB.Append("cmp.x_updateColumnsHiddenStatus();");
+            //    renderSB.Append("cmp.f_updateColumnsHiddenStatus();");
             //}
 
-            OB.Listeners.AddProperty("render", JsHelper.GetFunction(renderSB.ToString(), "cmp"), true);
-
+            //OB.Listeners.AddProperty("render", JsHelper.GetFunction(renderSB.ToString(), "cmp"), true);
+            AddListener("render", renderSB.ToString(), "cmp");
 
             #endregion
 
-
             #region AllowCellEditing
+
+            string cellEditScript = String.Empty;
 
             if (AllowCellEditing)
             {
-                if (ClicksToEdit != 2)
-                {
-                    OB.AddProperty("clicksToEdit", ClicksToEdit);
-                }
+                string pluginId = String.Format("{0}_cellEditing", XID);
 
-                //OB.Listeners.AddProperty("beforeedit", JsHelper.GetFunction("console.log(e);", "e"), true);
+                JsObjectBuilder cellEditBuilder = new JsObjectBuilder();
+                cellEditBuilder.AddProperty("pluginId", pluginId);
+                cellEditBuilder.AddProperty("clicksToEdit", ClicksToEdit);
 
-                //OB.Listeners.AddProperty("afteredit", JsHelper.GetFunction("console.log(e);", "e"), true);
+                cellEditScript = String.Format("var {0}=Ext.create('Ext.grid.plugin.CellEditing',{1});", pluginId, cellEditBuilder);
 
-                //OB.AddProperty("x_newAddedRows", "[]", true);
+                pluginBuilder.AddProperty(pluginId, true);
 
                 if (EnableAfterEditEvent)
                 {
-                    string validateScript = "var args='AfterEdit$'+e.row+'$'+e.field;";
+                    string validateScript = "var args='AfterEdit$'+e.rowIdx+'$'+e.field;";
                     validateScript += GetPostBackEventReference("#AfterEdit#").Replace("'#AfterEdit#'", "args");
 
-                    string rowClickScript = String.Format("function(e){{{0}}}", validateScript);
-
-                    OB.Listeners.AddProperty("afteredit", rowClickScript, true);
+                    //string rowClickScript = String.Format("function(editor,e){{{0}}}", validateScript);
+                    //OB.Listeners.AddProperty("edit", rowClickScript, true);
+                    AddListener("edit", validateScript, "editor", "e");
                 }
+
+                OB.AddProperty("f_cellEditing", pluginId, true);
+            }
+
+
+            if (AllowColumnLocking)
+            {
+                OB.AddProperty("enableLocking", true);
+            }
+            else
+            {
+                OB.AddProperty("enableLocking", false);
+            }
+
+            #endregion
+
+            #region pluginBuilder
+
+            if (pluginBuilder.Count > 0)
+            {
+                OB.AddProperty("plugins", pluginBuilder.ToString(), true);
             }
 
             #endregion
 
             StringBuilder sb = new StringBuilder();
-            sb.Append(gridSelectModelScript + gridStoreScript + pagingScript + gridColumnsScript);
-            //sb.AppendFormat("var {0}=new Ext.grid.{2}({1});", XID, OB, AllowCellEditing ? "EditorGridPanel" : "GridPanel");
+            sb.Append(gridSelectModelScript + gridStoreScript + pagingScript + gridColumnsScript + cellEditScript);
             sb.AppendFormat("var {0}=Ext.create('Ext.grid.Panel',{1});", XID, OB);
 
             AddStartupScript(sb.ToString());
 
             #region old code
 
-            ////List<string> totalModifiedProperties = XState.GetTotalModifiedProperties();
+            ////List<string> totalModifiedProperties = FState.GetTotalModifiedProperties();
             ////if (SelectedRowIndexArray.Length > 0)
             ////{
             ////    string selectScript = String.Empty;
             ////    if (totalModifiedProperties.Contains("SelectedRowIndexArray"))
             ////    {
-            ////        selectScript = String.Format("{0}.x_selectRows();", XID);
+            ////        selectScript = String.Format("{0}.f_selectRows();", XID);
             ////    }
             ////    else
             ////    {
@@ -2493,11 +2754,12 @@ namespace FineUI
             ////    sb.Append(JsHelper.GetDeferScript(selectScript, 200));
             ////}
 
-            //// Make sure SelectedRowIndexArray property exist in X_STATE during page's first load.
-            //sb.Append(JsHelper.GetDeferScript(String.Format("{0}.x_selectRows();", XID), 200));
+            //// Make sure SelectedRowIndexArray property exist in F_STATE during page's first load.
+            //sb.Append(JsHelper.GetDeferScript(String.Format("{0}.f_selectRows();", XID), 200));
 
             #endregion
         }
+
 
         private string GetSortColummID()
         {
@@ -2516,21 +2778,21 @@ namespace FineUI
         private OptionBuilder GetPagingBuilder()
         {
             OptionBuilder pagingBuilder = new OptionBuilder();
-            pagingBuilder.AddProperty("x_pageSize", PageSize);
-            pagingBuilder.AddProperty("x_pageIndex", PageIndex);
-            pagingBuilder.AddProperty("x_recordCount", RecordCount);
-            pagingBuilder.AddProperty("x_pageCount", PageCount);
+            pagingBuilder.AddProperty("f_pageSize", PageSize);
+            pagingBuilder.AddProperty("f_pageIndex", PageIndex);
+            pagingBuilder.AddProperty("f_recordCount", RecordCount);
+            pagingBuilder.AddProperty("f_pageCount", PageCount);
 
             int startRowIndex, endRowIndex;
             ResolveStartEndRowIndex(out startRowIndex, out endRowIndex);
             if (IsDatabasePaging)
             {
-                pagingBuilder.AddProperty("x_databasePaging", true);
+                pagingBuilder.AddProperty("f_databasePaging", true);
             }
             else
             {
-                pagingBuilder.AddProperty("x_startRowIndex", startRowIndex);
-                pagingBuilder.AddProperty("x_endRowIndex", endRowIndex);
+                pagingBuilder.AddProperty("f_startRowIndex", startRowIndex);
+                pagingBuilder.AddProperty("f_endRowIndex", endRowIndex);
             }
 
             return pagingBuilder;
@@ -2560,7 +2822,7 @@ namespace FineUI
         //}
 
 
-        private string GetGridColumnScript()
+        private string GetGridColumnScript(JsArrayBuilder pluginBuilder)
         {
             string selectModelID = Render_SelectModelID;
 
@@ -2577,11 +2839,11 @@ namespace FineUI
             //    }
             //    if (AllowPaging)
             //    {
-            //        rowNumberBuilder.AddProperty("x_paging", Render_PagingID, true);
+            //        rowNumberBuilder.AddProperty("f_paging", Render_PagingID, true);
             //    }
             //    if (EnableRowNumberPaging)
             //    {
-            //        rowNumberBuilder.AddProperty("x_paging_enabled", EnableRowNumberPaging);
+            //        rowNumberBuilder.AddProperty("f_paging_enabled", EnableRowNumberPaging);
             //    }
 
             //    columnsBuilder.AddProperty(String.Format("Ext.create('Ext.grid.column.RowNumberer',{0})", rowNumberBuilder.ToString()), true);
@@ -2598,7 +2860,6 @@ namespace FineUI
 
             //string groupColumnScript = GetGroupColumnScript();
 
-
             string expanderXID = String.Empty;
             foreach (GridColumn column in Columns)
             {
@@ -2613,7 +2874,7 @@ namespace FineUI
             }
 
             // 为Grid添加plugin属性
-            JsArrayBuilder pluginBuilder = new JsArrayBuilder();
+            //JsArrayBuilder pluginBuilder = new JsArrayBuilder();
 
             if (!String.IsNullOrEmpty(expanderXID))
             {
@@ -2625,10 +2886,7 @@ namespace FineUI
             //    pluginBuilder.AddProperty(Render_GridGroupColumnID, true);
             //}
 
-            if (pluginBuilder.Count > 0)
-            {
-                OB.AddProperty("plugins", pluginBuilder.ToString(), true);
-            }
+
 
             //JsObjectBuilder defaultsBuilder = new JsObjectBuilder();
             //// 这是Extjs默认的客户端排序
@@ -2638,7 +2896,6 @@ namespace FineUI
 
             //string columnModelScript = String.Format("var {0}=new Ext.grid.ColumnModel({{columns:{1},defaults:{2}}});", gridColumnID, columnsBuilder, defaultsBuilder);
             string columnsScript = String.Format("var {0}={1};", Render_GridColumnsID, columnsBuilder);
-
 
             return columnsScript;
         }
@@ -2731,11 +2988,21 @@ namespace FineUI
 
             if (AllowCellEditing)
             {
-                return String.Format("var {0}=new Ext.grid.CellSelectionModel({1});", Render_SelectModelID, selectOB);
+                return String.Format("var {0}=Ext.create('Ext.selection.CellModel',{1});", Render_SelectModelID, selectOB);
             }
             else
             {
-                selectOB.AddProperty("singleSelect", !EnableMultiSelect);
+                //selectOB.AddProperty("singleSelect", !EnableMultiSelect);
+
+                if (EnableMultiSelect)
+                {
+                    selectOB.AddProperty("mode", "MULTI");
+                }
+                else
+                {
+                    selectOB.AddProperty("mode", "SINGLE");
+                }
+
 
                 if (EnableCheckBoxSelect && CheckBoxSelectOnly)
                 {
@@ -2752,8 +3019,7 @@ namespace FineUI
                     string rowSelectScript = JsHelper.GetFunction(validateScript, "model", "record", "index"); //String.Format("function(model,rowIndex){{{0}}}", validateScript);
 
                     selectOB.Listeners.AddProperty("select", rowSelectScript, true);
-                    //selectOB.AddProperty("listeners", "{select:" + rowSelectScript + "}", true);
-
+                   
                 }
 
                 if (EnableCheckBoxSelect)
@@ -2792,6 +3058,11 @@ namespace FineUI
                             if (renderFiled.FieldType != FieldType.Auto)
                             {
                                 fieldBuilder.AddProperty("type", FieldTypeName.GetName(renderFiled.FieldType));
+                                // 日期类型的，必须要设置这个 dateFormat 属性
+                                if (renderFiled.FieldType == FieldType.Date)
+                                {
+                                    fieldBuilder.AddProperty("dateFormat", DateUtil.ConvertToClientDateFormat(renderFiled.RendererArgument));
+                                }
                             }
                         }
                         else if (field is RenderCheckField)
@@ -2802,8 +3073,9 @@ namespace FineUI
                 }
                 fieldsBuidler.AddProperty(fieldBuilder);
             }
+            string fieldsScript = String.Format("var {0}={1};", Render_GridFieldsID, fieldsBuidler);
 
-            storeBuilder.AddProperty("fields", fieldsBuidler, true);
+            storeBuilder.AddProperty("fields", Render_GridFieldsID, true);
 
             storeBuilder.AddProperty("remoteSort", true);
 
@@ -2826,7 +3098,7 @@ namespace FineUI
 
             storeBuilder.Listeners.AddProperty("beforeload", JsHelper.GetFunction(postbackScript, "store", "operation"), true);
 
-            return String.Format("var {0}=Ext.create('Ext.data.ArrayStore',{1});", Render_GridStoreID, storeBuilder.ToString());
+            return fieldsScript + String.Format("var {0}=Ext.create('Ext.data.ArrayStore',{1});", Render_GridStoreID, storeBuilder.ToString());
 
             #region old code
 
@@ -3025,7 +3297,7 @@ namespace FineUI
         {
             base.RenderBeginTag(writer);
 
-            writer.Write(String.Format("<div id=\"{0}_tpls\" class=\"x-grid-tpls x-hide-display\">", ClientID));
+            writer.Write(String.Format("<div id=\"{0}_tpls\" class=\"f-grid-tpls f-hidden x-grid-tpls\">", ClientID));
         }
 
         /// <summary>
@@ -3056,6 +3328,8 @@ namespace FineUI
 
         #region DataBind
 
+        internal Dictionary<string, GridColumn> cellEditingDataKeyNameField = new Dictionary<string, GridColumn>();
+
         /// <summary>
         /// 绑定到数据源
         /// </summary>
@@ -3066,6 +3340,38 @@ namespace FineUI
             // 如果重新绑定数据，则每行的模版列内容有可能发生变化，就需要更新
             // 因为目前，没有判断模板列是否改变的机制，所以只要可能导致模板列的动作都要更新模板列
             PageManager.Instance.AddAjaxGridClientID(ClientID);
+
+            // 如果重新绑定数据，则取消之前的编辑状态提示
+            if (IsFineUIAjaxPostBack && AllowCellEditing)
+            {
+                _databindInFineUIAjaxPostBack = true;
+            }
+
+
+            // 如果允许单元格编辑，记录 DataKeyNames 对应的列序号，可能需要用列定义的FieldType
+            if (AllowCellEditing)
+            {
+                cellEditingDataKeyNameField.Clear();
+
+                if (DataKeyNames != null)
+                {
+                    List<string> dataKeyNames = new List<string>(DataKeyNames);
+                    foreach (GridColumn field in AllColumns)
+                    {
+                        if (field is RenderBaseField)
+                        {
+                            string dataField = (field as RenderBaseField).DataField;
+                            if (dataKeyNames.Contains(dataField))
+                            {
+                                if (!cellEditingDataKeyNameField.ContainsKey(dataField))
+                                {
+                                    cellEditingDataKeyNameField.Add(dataField, field);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             // 数据绑定之前要先清空 _dataKeys
             _dataKeys = null;
@@ -3139,6 +3445,7 @@ namespace FineUI
             BeforeDataBind();
 
             int rowIndex = 0;
+
             foreach (object rowObj in list)
             {
                 DataBindRow(rowIndex, rowObj);
@@ -3151,17 +3458,23 @@ namespace FineUI
 
         private void DataBindRow(int rowIndex, object rowObj)
         {
-            GridRow row = new GridRow(this, rowObj, rowIndex);
-            Rows.Add(row);
-            //Controls.Add(row);
-            row.InitTemplateContainers();
+            GridPreRowEventArgs preArgs = new GridPreRowEventArgs(rowObj, rowIndex);
+            OnPreRowDataBound(preArgs);
 
-            OnPreRowDataBound(new GridPreRowEventArgs(rowObj, rowIndex));
+            // 事件处理函数要求取消添加本节点
+            if (!preArgs.Cancelled)
+            {
 
-            //row.DataBindRow();
-            row.DataBindRow();
+                GridRow row = new GridRow(this, rowObj, rowIndex);
+                Rows.Add(row);
+                //Controls.Add(row);
+                row.InitTemplateContainers();
 
-            OnRowDataBound(new GridRowEventArgs(rowObj, rowIndex, row.Values));
+                //row.DataBindRow();
+                row.DataBindRow();
+
+                OnRowDataBound(new GridRowEventArgs(rowObj, rowIndex, row.Values));
+            }
         }
 
         private void BeforeDataBind()
@@ -3203,7 +3516,13 @@ namespace FineUI
                 for (int rowIndex = 0, rowCount = Rows.Count; rowIndex < rowCount; rowIndex++)
                 {
                     GridRow row = Rows[rowIndex];
-                    int level = Convert.ToInt32(row.GetPropertyValue(simulateTreeColumn.DataSimulateTreeLevelField));
+                    int level = 0;
+                    object treeLevelObj = row.GetPropertyValue(simulateTreeColumn.DataSimulateTreeLevelField);
+                    if (treeLevelObj != null && treeLevelObj != DBNull.Value)
+                    {
+                        level = Convert.ToInt32(treeLevelObj);
+                    }
+
                     object content = row.Values[simulateTreeColumn.ColumnIndex];
 
                     SimulateTreeNode node = new SimulateTreeNode();
@@ -3245,7 +3564,7 @@ namespace FineUI
             // 会重新创建这些控件，所以要先删除之前存在的GridRowControl
             for (int i = Controls.Count - 1; i >= 0; i--)
             {
-                if (Controls[i] is GridRowControl)
+                if (Controls[i] is GridTemplateContainer)
                 {
                     Controls.RemoveAt(i);
                 }
@@ -3294,25 +3613,25 @@ namespace FineUI
         }
 
 
-        private List<Dictionary<string, string>> _newAddedList;
+        private List<Dictionary<string, object>> _newAddedList;
 
         /// <summary>
         /// 获取新增的行数据
         /// </summary>
         /// <returns></returns>
-        public List<Dictionary<string, string>> GetNewAddedList()
+        public List<Dictionary<string, object>> GetNewAddedList()
         {
             return _newAddedList;
         }
 
 
-        private Dictionary<int, Dictionary<string, string>> _modifiedDict;
+        private Dictionary<int, Dictionary<string, object>> _modifiedDict;
 
         /// <summary>
         /// 获取用户修改的行数据
         /// </summary>
         /// <returns></returns>
-        public Dictionary<int, Dictionary<string, string>> GetModifiedDict()
+        public Dictionary<int, Dictionary<string, object>> GetModifiedDict()
         {
             return _modifiedDict;
         }
@@ -3342,26 +3661,9 @@ namespace FineUI
             if (!StringUtil.CompareStringArray(HiddenColumns, hiddenColumns))
             {
                 HiddenColumns = hiddenColumns;
-                XState.BackupPostDataProperty("HiddenColumns");
+                FState.BackupPostDataProperty("HiddenColumns");
             }
 
-
-            /*
-            JArray rowStates = JArray.Parse(postCollection[RowStatesHiddenFieldID]);
-            int startRowIndex, endRowIndex;
-            ResolveStartEndRowIndex(out startRowIndex, out endRowIndex);
-            for (int i = startRowIndex; i <= endRowIndex; i++)
-            {
-                int index = i - startRowIndex;
-                List<object> shortStates = new List<object>();
-                foreach (JArray ja in rowStates)
-                {
-                    shortStates.Add(ja[index]);
-                }
-                Rows[i].FromShortStates(shortStates.ToArray());
-            }
-            XState.BackupPostDataProperty("X_Rows");
-            */
 
             // 列状态（目前只有CheckBoxField用到）
             String statesStr = postCollection[StatesHiddenFieldID];
@@ -3378,41 +3680,39 @@ namespace FineUI
 
                         Rows[i].FromShortStates(states[index].ToObject<List<object>>().ToArray());
                     }
-                    XState.BackupPostDataProperty("X_Rows");
+                    FState.BackupPostDataProperty("F_Rows");
                 }
-            }
-
-
-            // 删除的行索引列表
-            string paramDeletedRows = postCollection[DeletedRowsHiddenFieldID];
-            _deletedList = new List<int>();
-            if (!String.IsNullOrEmpty(paramDeletedRows))
-            {
-                _deletedList = StringUtil.GetIntListFromString(paramDeletedRows, true);
             }
 
 
             // 启用单元格编辑
             if (AllowCellEditing)
             {
-                // 新增的行索引列表
-                string paramNewAddedRows = postCollection[NewAddedRowsHiddenFieldID];
-                List<int> newAddedRows = new List<int>();
-                if (!String.IsNullOrEmpty(paramNewAddedRows))
+                // 删除的行索引列表
+                string paramDeletedRows = postCollection[DeletedRowsHiddenFieldID];
+                _deletedList = new List<int>();
+                if (!String.IsNullOrEmpty(paramDeletedRows))
                 {
-                    newAddedRows = StringUtil.GetIntListFromString(paramNewAddedRows, true);
+                    _deletedList = StringUtil.GetIntListFromString(paramDeletedRows, true);
                 }
 
-                //// 应该从客户端的RowIndex中减去这个数字，这个数字是客户端新增的行数
-                //int addedRowNumbers = 0;
-                //if (newAddedRows.Contains(0))
+                //// 新增的行索引列表
+                //string paramNewAddedRows = postCollection[NewAddedRowsHiddenFieldID];
+                //List<int> newAddedRows = new List<int>();
+                //if (!String.IsNullOrEmpty(paramNewAddedRows))
                 //{
-                //    addedRowNumbers = newAddedRows.Count;
+                //    newAddedRows = StringUtil.GetIntListFromString(paramNewAddedRows, true);
                 //}
 
+                List<string> dataKeyNames = null;
+                if (DataKeyNames != null)
+                {
+                    dataKeyNames = new List<string>(DataKeyNames);
+                }
+
                 // 根据用户的输入修改每个单元格的Values
-                _modifiedDict = new Dictionary<int, Dictionary<string, string>>();
-                _newAddedList = new List<Dictionary<string, string>>();
+                _modifiedDict = new Dictionary<int, Dictionary<string, object>>();
+                _newAddedList = new List<Dictionary<string, object>>();
                 _modifiedData = new JArray();
                 String editorDataStr = postCollection[ModifiedDataHiddenFieldID];
                 if (!String.IsNullOrEmpty(editorDataStr))
@@ -3426,34 +3726,40 @@ namespace FineUI
                         // 修改的数据在原始集合中的行索引，如果是新增行则为-1
                         int originalRowIndex = modifiedItem[1].ToObject<int>();
 
-                        //bool thisRowIsNewAdded = false;
-                        //if (newAddedRows.Count > 0 && newAddedRows.Contains(rowIndex))
-                        //{
-                        //    thisRowIsNewAdded = true;
-                        //}
-                        //else
-                        //{
-                        //    thisRowIsNewAdded = false;
-                        //    rowIndex -= addedRowNumbers;
-                        //}
 
                         // 获取本行（Record）中所有修改的记录（Field），并保存到字典中（rowModifiedDic）
-                        Dictionary<string, string> rowModifiedDic = new Dictionary<string, string>();
+                        Dictionary<string, object> rowModifiedDic = new Dictionary<string, object>();
                         JObject rowModifiedData = modifiedItem[2].ToObject<JObject>();
                         foreach (JProperty propertyObj in rowModifiedData.Properties())
                         {
                             string columnID = propertyObj.Name;
-                            object cellValue = rowModifiedData.Value<object>(columnID);
-                            int columnIndex = FindColumn(columnID).ColumnIndex;
+                            object cellValue = rowModifiedData.Value<JValue>(columnID).Value;
+                            GridColumn column = FindColumn(columnID);
+                            int columnIndex = column.ColumnIndex;
 
-                            string newCellValue = cellValue.ToString();
+                            //string newCellValue = cellValue.ToString();
 
-                            rowModifiedDic.Add(columnID, newCellValue);
+                            rowModifiedDic.Add(columnID, cellValue);
 
                             // 如果本行不是新增的，还需要更新行的Values属性
                             if (originalRowIndex >= 0)
                             {
-                                Rows[originalRowIndex].Values[columnIndex] = newCellValue;
+                                // 更新行的Values
+                                Rows[originalRowIndex].Values[columnIndex] = cellValue;
+
+                                // 更新行的DataKeys
+                                if (dataKeyNames != null)
+                                {
+                                    RenderBaseField renderField = column as RenderBaseField;
+                                    if (renderField != null)
+                                    {
+                                        int dataKeyIndex = dataKeyNames.IndexOf(renderField.DataField);
+                                        if (dataKeyIndex >= 0)
+                                        {
+                                            Rows[originalRowIndex].DataKeys[dataKeyIndex] = cellValue;
+                                        }
+                                    }
+                                }
                             }
                         }
 
@@ -3470,7 +3776,7 @@ namespace FineUI
 
                     }
 
-                    XState.BackupPostDataProperty("X_Rows");
+                    FState.BackupPostDataProperty("F_Rows");
                 }
 
 
@@ -3479,7 +3785,7 @@ namespace FineUI
                 if (!StringUtil.CompareIntArray(SelectedCell, selectedCell))
                 {
                     SelectedCell = selectedCell;
-                    XState.BackupPostDataProperty("SelectedCell");
+                    FState.BackupPostDataProperty("SelectedCell");
                 }
 
             }
@@ -3491,18 +3797,11 @@ namespace FineUI
                 if (!StringUtil.CompareIntArray(SelectedRowIndexArray, selectedRowIndexArray))
                 {
                     SelectedRowIndexArray = selectedRowIndexArray;
-                    XState.BackupPostDataProperty("SelectedRowIndexArray");
+                    FState.BackupPostDataProperty("SelectedRowIndexArray");
                 }
 
             }
-            //// 需要恢复哪一列的数据
-            //if (NeedPersistStateColumnIndexArray != null && NeedPersistStateColumnIndexArray.Length > 0)
-            //{
-            //    foreach (int columnIndex in NeedPersistStateColumnIndexArray)
-            //    {
-            //        Columns[columnIndex].LoadColumnState(postCollection[GetNeedPersistStateColumnIndexID(columnIndex)]);
-            //    }
-            //}
+
 
 
             return false;
@@ -3533,7 +3832,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetCommitChangesReference()
         {
-            return String.Format("{0}.x_commitChanges();", ScriptID);
+            return String.Format("{0}.f_commitChanges();", ScriptID);
         }
 
 
@@ -3610,7 +3909,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetAddNewRecordReference(JObject defaultObject, bool appendToEnd)
         {
-            return String.Format("{0}.x_addNewRecord({1},{2});", ScriptID, defaultObject.ToString(Formatting.None), appendToEnd.ToString().ToLower());
+            return String.Format("{0}.f_addNewRecord({1},{2});", ScriptID, defaultObject.ToString(Formatting.None), appendToEnd.ToString().ToLower());
         }
 
 
@@ -3628,7 +3927,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetDeleteSelectedReference()
         {
-            return String.Format("{0}.x_deleteSelected();", ScriptID);
+            return String.Format("{0}.f_deleteSelected();", ScriptID);
         }
 
         #endregion
@@ -3646,15 +3945,15 @@ namespace FineUI
             return String.Format("{0}.getSelectionModel().hasSelection()", ScriptID);
         }
 
-        /// <summary>
-        /// 获取表格选中项数的客户端脚本
-        /// </summary>
-        /// <returns>客户端脚本</returns>
-        [Obsolete("此方法已废除，请使用GetSelectedCountReference方法")]
-        public string GetSelectCountReference()
-        {
-            return GetSelectedCountReference();
-        }
+        ///// <summary>
+        ///// 获取表格选中项数的客户端脚本
+        ///// </summary>
+        ///// <returns>客户端脚本</returns>
+        //[Obsolete("此方法已废除，请使用GetSelectedCountReference方法")]
+        //public string GetSelectCountReference()
+        //{
+        //    return GetSelectedCountReference();
+        //}
 
         /// <summary>
         /// 获取表格选中项数的客户端脚本
@@ -3662,7 +3961,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetSelectedCountReference()
         {
-            return String.Format("{0}.x_getSelectedCount()", ScriptID);
+            return String.Format("{0}.f_getSelectedCount()", ScriptID);
         }
 
         /// <summary>
@@ -3671,7 +3970,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetSelectedCellReference()
         {
-            return String.Format("{0}.x_getSelectedCell()", ScriptID);
+            return String.Format("{0}.f_getSelectedCell()", ScriptID);
         }
 
 
@@ -3825,7 +4124,7 @@ namespace FineUI
             SelectedRowIndexArray = rowIndexs.ToArray();
             */
 
-            PageContext.RegisterStartupScript(String.Format("{0}.x_selectAllRows();", ScriptID));
+            PageContext.RegisterStartupScript(String.Format("{0}.f_selectAllRows();", ScriptID));
         }
 
         /// <summary>
@@ -3836,7 +4135,7 @@ namespace FineUI
             _registerScriptRowExpanders = true;
 
             ExpandAllRowExpanders = true;
-            //PageContext.RegisterStartupScript(String.Format("{0}.x_expandAllRows();", ScriptID));
+            //PageContext.RegisterStartupScript(String.Format("{0}.f_expandAllRows();", ScriptID));
         }
 
         /// <summary>
@@ -3847,7 +4146,7 @@ namespace FineUI
             _registerScriptRowExpanders = true;
 
             ExpandAllRowExpanders = false;
-            //PageContext.RegisterStartupScript(String.Format("{0}.x_collapseAllRows();", ScriptID));
+            //PageContext.RegisterStartupScript(String.Format("{0}.f_collapseAllRows();", ScriptID));
         }
 
         #endregion
@@ -3858,8 +4157,10 @@ namespace FineUI
         /// 处理回发事件
         /// </summary>
         /// <param name="eventArgument">事件参数</param>
-        public void RaisePostBackEvent(string eventArgument)
+        public override void RaisePostBackEvent(string eventArgument)
         {
+            base.RaisePostBackEvent(eventArgument);
+
             if (eventArgument.StartsWith("Sort$"))
             {
                 #region Sort
@@ -4357,6 +4658,55 @@ namespace FineUI
 
         #endregion
 
+        #region LoadControlState/SaveControlState
+
+        // LoadControlState 处于 Page_Init 之后，控件的 LoadPostData 之前
+        // 1. Page_Init 之后，才能保证动态添加的 Columns 存在
+        // 2. LoadPostData 之前，才能保证模板列中的输入控件得到用户输入的值
+        /// <summary>
+        /// 装载控件状态
+        /// </summary>
+        /// <param name="savedState"></param>
+        protected override void LoadControlState(object savedState)
+        {
+            base.LoadControlState(((Pair)savedState).First);
+
+            // 页面回发时，重新初始化每行中的模板列控件
+            if (Page.IsPostBack)
+            {
+                foreach (GridRow row in Rows)
+                {
+                    row.InitTemplateContainers();
+                }
+            }
+        }
+
+        // 必须添加值之后，才会在回发时走到 LoadViewState
+        // 使用ControlState而不是ViewState还有一个好处是，ControlState不可被用户关闭
+        /// <summary>
+        /// 保存控件状态
+        /// </summary>
+        /// <returns></returns>
+        protected override object SaveControlState()
+        {
+            return new Pair(base.SaveControlState(), "");
+
+        }
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            Page.RegisterRequiresControlState(this);
+        }
+
+
+
+        #endregion
+
         #region old code
 
         //protected override void OnPreLoad(object sender, EventArgs e)
@@ -4464,5 +4814,7 @@ namespace FineUI
         //}
 
         #endregion
+
+
     }
 }

@@ -4,7 +4,7 @@
 /*
  * Project：    FineUI
  * 
- * FileName:    WindowPositionType.cs
+ * FileName:    WindowPosition.cs
  * CreatedOn:   2008-06-17
  * CreatedBy:   30372245@qq.com
  * 

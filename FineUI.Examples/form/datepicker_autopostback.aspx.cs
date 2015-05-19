@@ -49,20 +49,20 @@ namespace FineUI.Examples.form
 
 
 
-        protected void Button3_Click(object sender, EventArgs e)
-        {
-            labResult3.Text = String.Format("开始日期：{0}  结束日期：{1}",
-                DatePicker5.Text,
-                DatePicker6.SelectedDate.HasValue ? DatePicker6.SelectedDate.Value.ToString("yyyy-MM-dd") : "Empty");
-        }
+        //protected void Button3_Click(object sender, EventArgs e)
+        //{
+        //    labResult3.Text = String.Format("开始日期：{0}  结束日期：{1}",
+        //        DatePicker5.Text,
+        //        DatePicker6.SelectedDate.HasValue ? DatePicker6.SelectedDate.Value.ToString("yyyy-MM-dd") : "Empty");
+        //}
 
-        protected void DatePicker5_Blur(object sender, EventArgs e)
-        {
-            if (DatePicker5.SelectedDate.HasValue)
-            {
-                DatePicker6.SelectedDate = DatePicker5.SelectedDate.Value.AddDays(3);
-            }
-        }
+        //protected void DatePicker5_Blur(object sender, EventArgs e)
+        //{
+        //    if (DatePicker5.SelectedDate.HasValue)
+        //    {
+        //        DatePicker6.SelectedDate = DatePicker5.SelectedDate.Value.AddDays(3);
+        //    }
+        //}
 
         
     }

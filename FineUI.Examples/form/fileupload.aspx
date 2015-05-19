@@ -4,7 +4,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style>
         .result img {
             border: 1px solid #CCCCCC;
@@ -15,22 +15,22 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:SimpleForm ID="SimpleForm1" BodyPadding="5px" runat="server" Width="550px" EnableFrame="true" EnableCollapse="true"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:SimpleForm ID="SimpleForm1" BodyPadding="5px" runat="server" Width="550px"  EnableCollapse="true"
             ShowBorder="True" Title="表单" ShowHeader="True">
             <Items>
-                <x:TextBox runat="server" Label="用户名" ID="tbxUseraName" Required="true" ShowRedStar="true">
-                </x:TextBox>
-                <x:FileUpload runat="server" ID="filePhoto" EmptyText="请选择一张照片" Label="个人头像" Required="true"
+                <f:TextBox runat="server" Label="用户名" ID="tbxUseraName" Required="true" ShowRedStar="true">
+                </f:TextBox>
+                <f:FileUpload runat="server" ID="filePhoto" EmptyText="请选择一张照片" Label="个人头像" Required="true"
                     ShowRedStar="true">
-                </x:FileUpload>
-                <x:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" ValidateForms="SimpleForm1"
+                </f:FileUpload>
+                <f:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" ValidateForms="SimpleForm1"
                     Text="提交">
-                </x:Button>
+                </f:Button>
             </Items>
-        </x:SimpleForm>
-        <x:Label ID="labResult" EncodeText="false" runat="server">
-        </x:Label>
+        </f:SimpleForm>
+        <f:Label ID="labResult" EncodeText="false" runat="server">
+        </f:Label>
     </form>
 </body>
 </html>

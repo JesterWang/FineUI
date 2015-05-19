@@ -73,7 +73,7 @@ namespace FineUI
 
         public string GetNextTreeNodeID()
         {
-            return String.Format("xnode{0}", _num++);
+            return String.Format("fnode{0}", _num++);
         }
 
         #endregion

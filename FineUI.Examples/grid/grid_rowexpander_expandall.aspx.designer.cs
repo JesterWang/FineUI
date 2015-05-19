@@ -40,15 +40,6 @@ namespace FineUI.Examples.grid {
         protected global::FineUI.Grid Grid1;
         
         /// <summary>
-        /// Label1 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
         /// Label2 控件。
         /// </summary>
         /// <remarks>
@@ -65,5 +56,23 @@ namespace FineUI.Examples.grid {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUI.Button Button1;
+        
+        /// <summary>
+        /// btnExpandRowExpanders 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Button btnExpandRowExpanders;
+        
+        /// <summary>
+        /// btnCollapseRowExpanders 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Button btnCollapseRowExpanders;
     }
 }

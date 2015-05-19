@@ -59,12 +59,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableEdit"];
+                object obj = FState["EnableEdit"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableEdit"] = value;
+                FState["EnableEdit"] = value;
             }
         }
 
@@ -81,7 +81,7 @@ namespace FineUI
             {
                 if (DesignMode)
                 {
-                    object obj = XState["SelectedDate"];
+                    object obj = FState["SelectedDate"];
                     return obj == null ? null : (DateTime?)obj;
                 }
                 else
@@ -111,7 +111,7 @@ namespace FineUI
             {
                 if (DesignMode)
                 {
-                    XState["SelectedDate"] = value;
+                    FState["SelectedDate"] = value;
                 }
                 else
                 {
@@ -139,12 +139,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AltFormats"];
+                object obj = FState["AltFormats"];
                 return obj == null ? null : (string[])obj;
             }
             set
             {
-                XState["AltFormats"] = value;
+                FState["AltFormats"] = value;
             }
         }
 
@@ -159,12 +159,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["TimeFormatString"];
+                object obj = FState["TimeFormatString"];
                 return obj == null ? "HH:mm" : (string)obj;
             }
             set
             {
-                XState["TimeFormatString"] = value;
+                FState["TimeFormatString"] = value;
             }
         }
 
@@ -179,12 +179,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MaxTime"];
+                object obj = FState["MaxTime"];
                 return obj == null ? null : (DateTime?)obj;
             }
             set
             {
-                XState["MaxTime"] = value;
+                FState["MaxTime"] = value;
             }
         }
 
@@ -198,12 +198,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MaxTimeText"];
+                object obj = FState["MaxTimeText"];
                 return obj == null ? null : (string)obj;
             }
             set
             {
-                XState["MaxTimeText"] = value;
+                FState["MaxTimeText"] = value;
             }
         }
 
@@ -218,12 +218,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MinTime"];
+                object obj = FState["MinTime"];
                 return obj == null ? null : (DateTime?)obj;
             }
             set
             {
-                XState["MinTime"] = value;
+                FState["MinTime"] = value;
             }
         }
 
@@ -237,12 +237,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MinTimeText"];
+                object obj = FState["MinTimeText"];
                 return obj == null ? null : (string)obj;
             }
             set
             {
-                XState["MinTimeText"] = value;
+                FState["MinTimeText"] = value;
             }
         }
 
@@ -259,12 +259,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Increment"];
+                object obj = FState["Increment"];
                 return obj == null ? INCREMENT_DEFAULT : (short)obj;
             }
             set
             {
-                XState["Increment"] = value;
+                FState["Increment"] = value;
             }
         }
 
@@ -278,33 +278,33 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableTimeSelectEvent"];
+                object obj = FState["EnableTimeSelectEvent"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableTimeSelectEvent"] = value;
+                FState["EnableTimeSelectEvent"] = value;
             }
         }
 
-        /// <summary>
-        /// 选择时间是否自动回发
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(false)]
-        [Description("选择时间是否自动回发")]
-        [Obsolete("此属性已废除，请使用EnableTimeSelectEvent属性")]
-        public bool EnableTimeSelect
-        {
-            get
-            {
-                return EnableTimeSelectEvent;
-            }
-            set
-            {
-                EnableTimeSelectEvent = value;
-            }
-        }
+        ///// <summary>
+        ///// 选择时间是否自动回发
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(false)]
+        //[Description("选择时间是否自动回发")]
+        //[Obsolete("此属性已废除，请使用EnableTimeSelectEvent属性")]
+        //public bool EnableTimeSelect
+        //{
+        //    get
+        //    {
+        //        return EnableTimeSelectEvent;
+        //    }
+        //    set
+        //    {
+        //        EnableTimeSelectEvent = value;
+        //    }
+        //}
 
         #endregion
 
@@ -337,7 +337,7 @@ namespace FineUI
             //ResourceManager.Instance.AddJavaScriptComponent("menu");
 
             // extjs 的日期格式化字符串
-            string extjsDateFormatString = ExtDateTimeConvertor.ConvertToExtDateFormat(TimeFormatString);
+            string extjsDateFormatString = DateUtil.ConvertToClientDateFormat(TimeFormatString);
             OB.AddProperty("format", extjsDateFormatString);
 
             if (AltFormats != null)
@@ -345,7 +345,7 @@ namespace FineUI
                 StringBuilder formats = new StringBuilder();
                 foreach (string format in AltFormats)
                 {
-                    formats.Append(ExtDateTimeConvertor.ConvertToExtDateFormat(format));
+                    formats.Append(DateUtil.ConvertToClientDateFormat(format));
                     formats.Append("|");
                 }
                 OB.AddProperty("altFormats", formats.ToString().TrimEnd('|'));
@@ -388,7 +388,8 @@ namespace FineUI
 
             if (EnableTimeSelectEvent)
             {
-                OB.Listeners.AddProperty("select", JsHelper.GetFunction(GetPostBackEventReference("Select")), true);
+                //OB.Listeners.AddProperty("select", JsHelper.GetFunction(GetPostBackEventReference("Select")), true);
+                AddListener("select", GetPostBackEventReference("Select"));
             }
 
 

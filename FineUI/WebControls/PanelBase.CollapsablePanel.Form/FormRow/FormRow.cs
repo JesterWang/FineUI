@@ -66,12 +66,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ColumnWidths"];
+                object obj = FState["ColumnWidths"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["ColumnWidths"] = ResolveColumnWidths(value);
+                FState["ColumnWidths"] = ResolveColumnWidths(value);
             }
         }
 

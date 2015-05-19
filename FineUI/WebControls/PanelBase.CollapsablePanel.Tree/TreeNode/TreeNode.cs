@@ -98,9 +98,18 @@ namespace FineUI
             {
                 if (_nodes == null)
                 {
-                    // 有时TreeInstance为null，比如在ASPX设置Nodes节点时
-                    // 有时TreeInstance不为null，比如通过编程的手段，先添加根节点，然后添加子节点
-                    _nodes = new TreeNodeCollection(TreeInstance, this);
+                    // 如果不加上 TreeInstance == null 的判断，则在设计时出现如下错误
+                    // 无法从其 ParentNode 属性的字符串表示形式 FineUI.TreeNode 创建 FineUI.TreeNode 类型的对象
+                    if (TreeInstance == null)
+                    {
+                        _nodes = new TreeNodeCollection(null, null);
+                    }
+                    else
+                    {
+                        // 有时TreeInstance为null，比如在ASPX设置Nodes节点时
+                        // 有时TreeInstance不为null，比如通过编程的手段，先添加根节点，然后添加子节点
+                        _nodes = new TreeNodeCollection(TreeInstance, this);
+                    }
                 }
                 return _nodes;
             }
@@ -108,7 +117,49 @@ namespace FineUI
 
         #endregion
 
-        #region EnablePostBack|OnClientClick
+        #region EnableExpandEvent
+
+        private bool _enableExpandEvent = false;
+        /// <summary>
+        /// 展开树节点是否回发
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("展开树节点是否回发")]
+        public bool EnableExpandEvent
+        {
+            get
+            {
+                return _enableExpandEvent;
+            }
+            set
+            {
+                _enableExpandEvent = value;
+            }
+        }
+
+        private bool _enableCollapseEvent = false;
+        /// <summary>
+        /// 折叠树节点是否回发
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("折叠树节点是否回发")]
+        public bool EnableCollapseEvent
+        {
+            get
+            {
+                return _enableCollapseEvent;
+            }
+            set
+            {
+                _enableCollapseEvent = value;
+            }
+        } 
+
+        #endregion
+
+        #region EnableClickEvent|OnClientClick
 
         private bool _enablePostBack = false;
         /// <summary>
@@ -117,7 +168,7 @@ namespace FineUI
         [Category(CategoryName.OPTIONS)]
         [DefaultValue(false)]
         [Description("单击树节点是否回发")]
-        public bool EnablePostBack
+        public bool EnableClickEvent
         {
             get
             {
@@ -193,7 +244,7 @@ namespace FineUI
 
         #endregion
 
-        #region EnableCheckBox|Checked|AutoPostBack
+        #region EnableCheckBox|Checked|EnableCheckEvent
 
         private bool _checked = false;
         /// <summary>
@@ -233,29 +284,7 @@ namespace FineUI
             }
         }
 
-        /*
-        private bool _autoPostBack = false;
-
-        /// <summary>
-        /// 是否自动回发（改变复选框状态）
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(false)]
-        [Description("是否自动回发（改变复选框状态）")]
-        public bool AutoPostBack
-        {
-            get
-            {
-                return _autoPostBack;
-            }
-            set
-            {
-                _autoPostBack = value;
-            }
-        }
-        */
-
-        private bool _enableCheckChangeEvent = false;
+        private bool _enableCheckEvent = false;
 
         /// <summary>
         /// 改变复选框状态是否自动回发
@@ -263,15 +292,15 @@ namespace FineUI
         [Category(CategoryName.OPTIONS)]
         [DefaultValue(false)]
         [Description("改变复选框状态是否自动回发")]
-        public bool AutoPostBack
+        public bool EnableCheckEvent
         {
             get
             {
-                return _enableCheckChangeEvent;
+                return _enableCheckEvent;
             }
             set
             {
-                _enableCheckChangeEvent = value;
+                _enableCheckEvent = value;
             }
         }
 
@@ -312,7 +341,7 @@ namespace FineUI
             {
                 if (String.IsNullOrEmpty(_nodeID))
                 {
-                    //_nodeID = String.Format("x_{0}", TreeInstance.NodeIDIncrement++); // ClientJavascriptIDManager.Instance.GetNextJavascriptID();
+                    //_nodeID = String.Format("f_{0}", TreeInstance.NodeIDIncrement++); // ClientJavascriptIDManager.Instance.GetNextJavascriptID();
                     _nodeID = TreeNodeIDManager.Instance.GetNextTreeNodeID();
                 }
                 return _nodeID;
@@ -643,7 +672,7 @@ namespace FineUI
         /// <param name="value"></param>
         private void SetPropertyValue(string name, string value)
         {
-            PropertyInfo pInfo = GetType().GetProperty(name);
+            PropertyInfo pInfo = GetType().GetProperty(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
             if (pInfo != null)
             {

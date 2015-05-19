@@ -5,43 +5,44 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格" EnableFrame="true" EnableCollapse="true" Width="800px" runat="server"
-            DataKeyNames="Guid" ForceFitAllTime="true">
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格" EnableCollapse="true" Width="800px" runat="server"
+            DataKeyNames="Guid">
             <Columns>
-                <x:GroupField HeaderText="安徽省" TextAlign="Center">
+                <f:BoundField DataField="Year" Width="80px" HeaderText="统计年份" />
+                <f:GroupField HeaderText="安徽省" TextAlign="Center">
                     <Columns>
-                        <x:GroupField HeaderText="合肥市" TextAlign="Center">
+                        <f:GroupField HeaderText="合肥市" TextAlign="Center">
                             <Columns>
-                                <x:BoundField Width="100px" DataField="AHData1" HeaderText="数据一" />
-                                <x:BoundField Width="100px" DataField="AHData2" HeaderText="数据二" />
+                                <f:BoundField Width="100px" DataField="AHData1" HeaderText="数据一" />
+                                <f:BoundField Width="100px" DataField="AHData2" HeaderText="数据二" />
                             </Columns>
-                        </x:GroupField>
+                        </f:GroupField>
                     </Columns>
-                </x:GroupField>
-                <x:GroupField HeaderText="河南省">
+                </f:GroupField>
+                <f:GroupField HeaderText="河南省">
                     <Columns>
-                        <x:GroupField HeaderText="驻马店市">
+                        <f:GroupField HeaderText="驻马店市">
                             <Columns>
-                                <x:BoundField Width="100px" DataField="HZData1" HeaderText="数据一" />
-                                <x:BoundField Width="100px" DataField="HZData2" HeaderText="数据二" />
+                                <f:BoundField Width="100px" DataField="HZData1" HeaderText="数据一" />
+                                <f:BoundField Width="100px" DataField="HZData2" HeaderText="数据二" />
                             </Columns>
-                        </x:GroupField>
-                        <x:GroupField HeaderText="漯河市">
+                        </f:GroupField>
+                        <f:GroupField HeaderText="漯河市">
                             <Columns>
-                                <x:BoundField Width="100px" DataField="HLData1" HeaderText="数据一" />
-                                <x:BoundField Width="100px" DataField="HLData2" HeaderText="数据二" />
+                                <f:BoundField Width="100px" DataField="HLData1" HeaderText="数据一" />
+                                <f:BoundField Width="100px" DataField="HLData2" HeaderText="数据二" />
                             </Columns>
-                        </x:GroupField>
+                        </f:GroupField>
                     </Columns>
-                </x:GroupField>
-                <x:BoundField BoxFlex="1" DataField="LogTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="记录时间" />
+                </f:GroupField>
+                <f:BoundField BoxFlex="1" DataField="LogTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="记录时间" />
             </Columns>
-        </x:Grid>
+        </f:Grid>
         <br />
         <br />
     </form>

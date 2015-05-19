@@ -105,12 +105,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Text"];
+                object obj = FState["Text"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Text"] = value;
+                FState["Text"] = value;
             }
         }
 
@@ -125,12 +125,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableAlignments"];
+                object obj = FState["EnableAlignments"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableAlignments"] = value;
+                FState["EnableAlignments"] = value;
             }
         }
 
@@ -144,12 +144,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableColors"];
+                object obj = FState["EnableColors"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableColors"] = value;
+                FState["EnableColors"] = value;
             }
         }
 
@@ -164,12 +164,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableFont"];
+                object obj = FState["EnableFont"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableFont"] = value;
+                FState["EnableFont"] = value;
             }
         }
 
@@ -184,12 +184,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableFontSize"];
+                object obj = FState["EnableFontSize"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableFontSize"] = value;
+                FState["EnableFontSize"] = value;
             }
         }
 
@@ -204,12 +204,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableFormat"];
+                object obj = FState["EnableFormat"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableFormat"] = value;
+                FState["EnableFormat"] = value;
             }
         }
 
@@ -224,12 +224,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableLinks"];
+                object obj = FState["EnableLinks"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableLinks"] = value;
+                FState["EnableLinks"] = value;
             }
         }
 
@@ -244,12 +244,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableLists"];
+                object obj = FState["EnableLists"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableLists"] = value;
+                FState["EnableLists"] = value;
             }
         }
 
@@ -264,12 +264,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableSourceEdit"];
+                object obj = FState["EnableSourceEdit"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableSourceEdit"] = value;
+                FState["EnableSourceEdit"] = value;
             }
         }
 
@@ -286,12 +286,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["FontFamilies"];
+                object obj = FState["FontFamilies"];
                 return obj == null ? null : (string[])obj;
             }
             set
             {
-                XState["FontFamilies"] = value;
+                FState["FontFamilies"] = value;
             }
         }
 
@@ -305,12 +305,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableChineseFont"];
+                object obj = FState["EnableChineseFont"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableChineseFont"] = value;
+                FState["EnableChineseFont"] = value;
             }
         }
 
@@ -328,7 +328,7 @@ namespace FineUI
             StringBuilder sb = new StringBuilder();
             if (PropertyModified("Text"))
             {
-                sb.AppendFormat("{0}.x_setValue();", XID);
+                sb.AppendFormat("{0}.f_setValue();", XID);
             }
 
             AddAjaxScript(sb);
@@ -381,12 +381,12 @@ namespace FineUI
             }
 
             
-            // 如果Text属性存在于XState中，则不要重复设置value属性，而是在render事件中使用XState的值
-            if (XState.ModifiedProperties.Contains("Text"))
+            // 如果Text属性存在于FState中，则不要重复设置value属性，而是在render事件中使用FState的值
+            if (FState.ModifiedProperties.Contains("Text"))
             {
                 //OB.RemoveProperty("value");
-                //OB.Listeners.AddProperty("initialize", JsHelper.GetFunction("cmp.x_setValue();", "cmp"), true);
-                OB.AddProperty("value", String.Format("{0}.Text", GetXStateScriptID()), true);
+                //OB.Listeners.AddProperty("initialize", JsHelper.GetFunction("cmp.f_setValue();", "cmp"), true);
+                OB.AddProperty("value", String.Format("{0}.Text", GetFStateScriptID()), true);
 
             }
 
@@ -417,13 +417,21 @@ namespace FineUI
             if (postValue != null && Text != postValue)
             {
                 Text = postValue;
-                XState.BackupPostDataProperty("Text");
+                FState.BackupPostDataProperty("Text");
                 return true;
             }
             else
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 触发回发数据改变事件
+        /// </summary>
+        public void RaisePostDataChangedEvent()
+        {
+            OnTextChanged(EventArgs.Empty);
         }
 
         /// <summary>
@@ -459,13 +467,7 @@ namespace FineUI
             }
         }
 
-        /// <summary>
-        /// 触发回发数据改变事件
-        /// </summary>
-        public void RaisePostDataChangedEvent()
-        {
-            OnTextChanged(EventArgs.Empty);
-        }
+        
 
         #endregion
     }

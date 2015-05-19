@@ -101,12 +101,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Text"];
+                object obj = FState["Text"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Text"] = value;
+                FState["Text"] = value;
             }
         }
 
@@ -121,12 +121,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["OnClientClick"];
+                object obj = FState["OnClientClick"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["OnClientClick"] = value;
+                FState["OnClientClick"] = value;
             }
         }
 
@@ -140,12 +140,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["NavigateUrl"];
+                object obj = FState["NavigateUrl"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["NavigateUrl"] = value;
+                FState["NavigateUrl"] = value;
             }
         }
 
@@ -159,12 +159,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Target"];
+                object obj = FState["Target"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Target"] = value;
+                FState["Target"] = value;
             }
         }
 
@@ -178,12 +178,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EncodeText"];
+                object obj = FState["EncodeText"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EncodeText"] = value;
+                FState["EncodeText"] = value;
             }
         }
 

@@ -5,24 +5,27 @@
 <html>
 <head id="head1" runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <meta name="sourcefiles" content="~/iframe/parent_postback2.aspx;~/iframe/parent_postback3.aspx" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
+        <f:PageManager ID="PageManager1" runat="server" />
         页面一：parent_postback.aspx
-    <x:Label ID="labResult" runat="server">
-    </x:Label>
         <br />
-        <x:Button ID="Button1" CssClass="inline" runat="server" Text="页面一中的按钮">
-        </x:Button>
-        <x:Button ID="Button2" runat="server" EnablePostBack="false" Text="刷新面板一中的IFrame">
-        </x:Button>
+        <f:Label ID="labResult" runat="server">
+        </f:Label>
         <br />
-        <x:Panel ID="Panel1" runat="server" ShowBorder="true" EnableFrame="true" EnableCollapse="true"
+        <f:Button ID="Button1" CssClass="marginr" runat="server" Text="页面一中的按钮">
+        </f:Button>
+        <f:Button ID="Button2" runat="server" EnablePostBack="false" Text="刷新面板一中的IFrame">
+        </f:Button>
+        <br />
+        <br />
+        <f:Panel ID="Panel1" runat="server" ShowBorder="true" EnableCollapse="true"
             Width="800px" Height="450px" EnableIFrame="true" IFrameUrl="parent_postback2.aspx"
             ShowHeader="true" Title="面板一">
-        </x:Panel>
+        </f:Panel>
     </form>
 </body>
 </html>

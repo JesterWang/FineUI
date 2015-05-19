@@ -38,13 +38,14 @@ namespace FineUI
         /// </summary>
         Left,
         /// <summary>
-        /// 子控件靠父容器的中间位置排列
-        /// </summary>
-        Center,
-        /// <summary>
         /// 子控件靠父容器的结束位置排列（废弃，请使用End代替）
         /// </summary>
         Right,
+
+        /// <summary>
+        /// 子控件靠父容器的中间位置排列
+        /// </summary>
+        Center,
         /// <summary>
         /// 子控件靠父容器的开始位置排列（默认值）
         /// </summary>

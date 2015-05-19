@@ -28,7 +28,7 @@ namespace FineUI.Examples.other
 
             Alert alert = new Alert();
             alert.Message = "你好 FineUI！";
-            alert.IconUrl = "~/images/success.png";
+            alert.IconUrl = "~/res/images/success.png";
             alert.Target = Target.Top;
             alert.Show();
 

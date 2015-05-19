@@ -64,12 +64,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Required"];
+                object obj = FState["Required"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["Required"] = value;
+                FState["Required"] = value;
             }
         }
 
@@ -83,12 +83,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["RequiredMessage"];
+                object obj = FState["RequiredMessage"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["RequiredMessage"] = value;
+                FState["RequiredMessage"] = value;
             }
         }
 
@@ -102,12 +102,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MaxLength"];
+                object obj = FState["MaxLength"];
                 return obj == null ? null : (int?)obj;
             }
             set
             {
-                XState["MaxLength"] = value;
+                FState["MaxLength"] = value;
             }
         }
 
@@ -121,12 +121,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MaxLengthMessage"];
+                object obj = FState["MaxLengthMessage"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["MaxLengthMessage"] = value;
+                FState["MaxLengthMessage"] = value;
             }
         }
 
@@ -141,12 +141,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MinLength"];
+                object obj = FState["MinLength"];
                 return obj == null ? null : (int?)obj;
             }
             set
             {
-                XState["MinLength"] = value;
+                FState["MinLength"] = value;
             }
         }
 
@@ -161,12 +161,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MinLengthMessage"];
+                object obj = FState["MinLengthMessage"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["MinLengthMessage"] = value;
+                FState["MinLengthMessage"] = value;
             }
         }
 
@@ -180,12 +180,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["RegexPattern"];
+                object obj = FState["RegexPattern"];
                 return obj == null ? RegexPattern.None : (RegexPattern)obj;
             }
             set
             {
-                XState["RegexPattern"] = value;
+                FState["RegexPattern"] = value;
             }
         }
 
@@ -201,12 +201,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Regex"];
+                object obj = FState["Regex"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Regex"] = value;
+                FState["Regex"] = value;
             }
         }
 
@@ -220,12 +220,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["RegexMessage"];
+                object obj = FState["RegexMessage"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["RegexMessage"] = value;
+                FState["RegexMessage"] = value;
             }
         }
 
@@ -241,12 +241,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["RegexIgnoreCase"];
+                object obj = FState["RegexIgnoreCase"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["RegexIgnoreCase"] = value;
+                FState["RegexIgnoreCase"] = value;
             }
         }
 
@@ -264,12 +264,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["CompareControl"];
+                object obj = FState["CompareControl"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["CompareControl"] = value;
+                FState["CompareControl"] = value;
             }
         }
 
@@ -285,12 +285,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["CompareValue"];
+                object obj = FState["CompareValue"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["CompareValue"] = value;
+                FState["CompareValue"] = value;
             }
         }
 
@@ -305,12 +305,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["CompareOperator"];
+                object obj = FState["CompareOperator"];
                 return obj == null ? Operator.Equal : (Operator)obj;
             }
             set
             {
-                XState["CompareOperator"] = value;
+                FState["CompareOperator"] = value;
             }
         }
 
@@ -324,12 +324,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["CompareType"];
+                object obj = FState["CompareType"];
                 return obj == null ? CompareType.String : (CompareType)obj;
             }
             set
             {
-                XState["CompareType"] = value;
+                FState["CompareType"] = value;
             }
         }
 
@@ -343,12 +343,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["CompareMessage"];
+                object obj = FState["CompareMessage"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["CompareMessage"] = value;
+                FState["CompareMessage"] = value;
             }
         }
 
@@ -362,16 +362,16 @@ namespace FineUI
         [Category(CategoryName.OPTIONS)]
         [DefaultValue("")]
         [Description("下一步获得焦点的控件（响应回车事件）")]
-        public string NextFocusControl
+        public virtual string NextFocusControl
         {
             get
             {
-                object obj = XState["NextFocusControl"];
+                object obj = FState["NextFocusControl"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["NextFocusControl"] = value;
+                FState["NextFocusControl"] = value;
             }
         }
 
@@ -466,14 +466,27 @@ namespace FineUI
 
             if (!String.IsNullOrEmpty(NextFocusControl))
             {
-                Control nextControl = ControlUtil.FindControl(Page, NextFocusControl);
+                ControlBase nextControl = ControlUtil.FindControlInUserControlOrPage(this, NextFocusControl) as ControlBase;
 
-                if (nextControl != null && nextControl is ControlBase)
+                if (nextControl != null)
                 {
                     //// true to enable the proxying of key events for the HTML input field (defaults to false)
                     //OB.AddProperty("enableKeyEvents", true);
                     // Fires when any key related to navigation (arrows, tab, enter, esc, etc.) is pressed. 
-                    OB.Listeners.AddProperty("specialkey", String.Format("function(field,e){{if(e.getKey()==e.ENTER){{{0}.focus(true,10);e.stopEvent();}}}}", (nextControl as ControlBase).XID), true);
+                    //OB.Listeners.AddProperty("specialkey", String.Format("function(field,e){{if(e.getKey()==e.ENTER){{{0}.focus(true,10);e.stopEvent();}}}}", (nextControl as ControlBase).XID), true);
+
+                    string enterScript = String.Empty;
+
+                    if (nextControl is Button)
+                    {
+                        enterScript = String.Format("{0}.el.dom.click();", nextControl.XID);
+                    }
+                    else
+                    {
+                        enterScript = String.Format("{0}.focus(true,10);", nextControl.XID);
+                    }
+
+                    AddListener("specialkey", String.Format("if(e.getKey()==e.ENTER){{{0}e.stopEvent();}}", enterScript), "field","e");
                 }
             }
 
@@ -485,10 +498,10 @@ namespace FineUI
             // 如果CompareControl 和 CompareValue 同时存在，则 CompareControl 拥有更高的优先级
             if (!String.IsNullOrEmpty(CompareControl))
             {
-                Control compareControl = ControlUtil.FindControl(Page, CompareControl);
+                Control compareControl = ControlUtil.FindControlInUserControlOrPage(this, CompareControl);
                 if (compareControl != null && compareControl is ControlBase)
                 {
-                    compareValue = String.Format("X.fieldValue({0})", JsHelper.Enquote((compareControl as ControlBase).ClientID));
+                    compareValue = String.Format("F.fieldValue({0})", JsHelper.Enquote((compareControl as ControlBase).ClientID));
                 }
             }
             else if (!String.IsNullOrEmpty(CompareValue))
@@ -519,50 +532,10 @@ namespace FineUI
                 }
 
                 string compareScript = String.Format("if({0}){{return true;}}else{{return {1};}}", compareExpressionScript, JsHelper.Enquote(CompareMessage));
-                OB.AddProperty("validator", String.Format("function(){{var value=X.fieldValue(this);{0}}}", compareScript), true);
+                OB.AddProperty("validator", String.Format("function(){{var value=F.fieldValue(this);{0}}}", compareScript), true);
             }
 
             #endregion
-        }
-
-        #endregion
-
-        #region GetMarkInvalidReference GetClearInvalidReference
-
-        /// <summary>
-        /// 设置字段验证失败的提示信息
-        /// </summary>
-        /// <param name="message">提示信息</param>
-        public void MarkInvalid(string message)
-        {
-            PageContext.RegisterStartupScript(GetMarkInvalidReference(message));
-        }
-
-        /// <summary>
-        /// 清除验证失败的提示信息
-        /// </summary>
-        public void ClearInvalid()
-        {
-            PageContext.RegisterStartupScript(GetClearInvalidReference());
-        }
-
-        /// <summary>
-        /// 获取字段验证失败提示信息的客户端脚本
-        /// </summary>
-        /// <param name="message">提示信息</param>
-        /// <returns>客户端脚本</returns>
-        public string GetMarkInvalidReference(string message)
-        {
-            return String.Format("{0}.markInvalid({1});", ScriptID, JsHelper.GetJsString(message));
-        }
-
-        /// <summary>
-        /// 获取清除验证失败提示信息的客户端脚本
-        /// </summary>
-        /// <returns>客户端脚本</returns>
-        public string GetClearInvalidReference()
-        {
-            return String.Format("{0}.clearInvalid();", ScriptID);
         }
 
         #endregion

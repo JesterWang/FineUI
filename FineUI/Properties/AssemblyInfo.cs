@@ -30,7 +30,7 @@ using System.Web.UI;
 [assembly: Guid("e5b98f13-3bde-4009-bc43-82267c23c5f6")]
 
 
-[assembly: TagPrefix("FineUI", "x")]   
+[assembly: TagPrefix("FineUI", "f")]   
 
 // Version information for an assembly consists of the following four values:
 //
@@ -42,7 +42,7 @@ using System.Web.UI;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("4.0.1.0")]
+[assembly: AssemblyVersion("4.2.0.0")]
 
 
 

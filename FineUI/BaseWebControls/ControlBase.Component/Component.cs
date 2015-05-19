@@ -65,12 +65,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["FocusOnPageLoad"];
+                object obj = FState["FocusOnPageLoad"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["FocusOnPageLoad"] = value;
+                FState["FocusOnPageLoad"] = value;
             }
         }
 
@@ -85,12 +85,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["CssClass"];
+                object obj = FState["CssClass"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["CssClass"] = value;
+                FState["CssClass"] = value;
             }
         }
 
@@ -104,12 +104,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["ContainerClass"];
+        //        object obj = FState["ContainerClass"];
         //        return obj == null ? "" : (string)obj;
         //    }
         //    set
         //    {
-        //        XState["ContainerClass"] = value;
+        //        FState["ContainerClass"] = value;
         //    }
         //}
 
@@ -123,12 +123,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["FormItemClass"];
+        //        object obj = FState["FormItemClass"];
         //        return obj == null ? "" : (string)obj;
         //    }
         //    set
         //    {
-        //        XState["FormItemClass"] = value;
+        //        FState["FormItemClass"] = value;
         //    }
         //}
 
@@ -142,12 +142,31 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["CssStyle"];
+                object obj = FState["CssStyle"];
                 return obj == null ? String.Empty : (string)obj;
             }
             set
             {
-                XState["CssStyle"] = value;
+                FState["CssStyle"] = value;
+            }
+        }
+
+        /// <summary>
+        /// 外边距
+        /// </summary>
+        [Category(CategoryName.LAYOUT)]
+        [DefaultValue("")]
+        [Description("外边距")]
+        public string Margin
+        {
+            get
+            {
+                object obj = FState["Margin"];
+                return obj == null ? "" : (string)obj;
+            }
+            set
+            {
+                FState["Margin"] = value;
             }
         }
 
@@ -217,7 +236,7 @@ namespace FineUI
 
             // 老的 CssClass 会在 X.state(x0,{"CssClass":"green"}) 时自动删除，并自动添加新的 CssClass。
             // 为什么不在这里先removeClass，再addClass？因为此时我们已经不知道之前的CssClass是什么了，这里取得的是已经修改过的。
-            // 在X.util的setXState函数中处理的
+            // 在X.util的setFState函数中处理的
             if (PropertyModified("CssClass"))
             {
                 //sb.AppendFormat("{0}.el.addClass({1});", XID, JsHelper.Enquote(CssClass));
@@ -259,6 +278,19 @@ namespace FineUI
 
             //// 不保持状态
             //OB.AddProperty("stateful", false);
+
+            if (!String.IsNullOrEmpty(Margin))
+            {
+                Container parentControl = Parent as Container;
+                if (parentControl != null && (parentControl.Layout == Layout.HBox || parentControl.Layout == Layout.VBox))
+                {
+                    OB.AddProperty("margins", Margin);
+                }
+                else
+                {
+                    OB.AddProperty("margin", Margin);
+                }
+            }
 
 
             #region old code

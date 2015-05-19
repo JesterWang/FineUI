@@ -5,26 +5,27 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:SimpleForm ID="SimpleForm1" BodyPadding="5px" runat="server" LabelWidth="150px" Width="650px" EnableFrame="true" EnableCollapse="true"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:SimpleForm ID="SimpleForm1" BodyPadding="5px" runat="server" LabelWidth="150px" Width="550px" EnableCollapse="true"
             ShowBorder="True" Title="简单表单" ShowHeader="True">
             <Items>
-                <x:DropDownList Label="模拟树的下拉列表" AutoPostBack="false" Required="true" EnableSimulateTree="true"
+                <f:DropDownList Label="模拟树的下拉列表" AutoPostBack="false" Required="true" EnableSimulateTree="true"
                     ShowRedStar="true" runat="server" ID="ddlBox">
-                </x:DropDownList>
+                </f:DropDownList>
 
-                <x:Button ID="Button1" Text="获取选中项" runat="server" OnClick="Button1_Click">
-                </x:Button>
+                <f:Button ID="Button1" Text="获取选中项" runat="server" OnClick="Button1_Click">
+                </f:Button>
 
-                <x:Label runat="server" ID="labResult">
-                </x:Label>
+
             </Items>
-        </x:SimpleForm>
+        </f:SimpleForm>
         <br />
+        <f:Label runat="server" ID="labResult">
+        </f:Label>
         <br />
     </form>
 </body>

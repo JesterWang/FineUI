@@ -53,7 +53,7 @@ namespace FineUI
         {
             get
             {
-                return "box-grid-cell-inner-image";
+                return "f-grid-cell-inner-image";
             }
         }
 
@@ -438,7 +438,7 @@ namespace FineUI
 
         #region Methods
 
-        internal override string GetColumnValue(GridRow row)
+        internal override object GetColumnValue(GridRow row)
         {
             HtmlNodeBuilder nb = new HtmlNodeBuilder("a");
 
@@ -645,7 +645,8 @@ namespace FineUI
 
 
             string jsContent = String.Format("var {0}={1};", XID, OB.ToString());
-            AddStartupScript(jsContent);
+            AddGridColumnScript(jsContent);
+            
         }
 
         #endregion

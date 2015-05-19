@@ -4,26 +4,29 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-    <x:PageManager ID="PageManager1" runat="server" />
-    <x:Grid ID="Grid1" PageSize="20" DataKeyNames="Remarks" runat="server" AllowPaging="True"
-        EnableCheckBoxSelect="True" IsDatabasePaging="false" ShowBorder="true"
-        ShowHeader="true" Width="650px" Height="200px" EnableMultiSelect="False" OnPageIndexChange="Grid1_PageIndexChange">
-        <Columns>
-            <x:BoundField TextAlign="Center" ExpandUnusedSpace="true" DataField="Remarks" DataFormatString="{0}"
-                HeaderText="备注" />
-        </Columns>
-        <PageItems>
-            <x:ToolbarSeparator ID="ToolbarSeparator4" runat="server">
-            </x:ToolbarSeparator>
-            <x:Button runat="server" ID="btnRefresh" Icon="DatabaseRefresh" OnClick="btnRefresh_Click"
-                ToolTip="刷新">
-            </x:Button>
-        </PageItems>
-    </x:Grid>
+        <f:PageManager ID="PageManager1" runat="server" AutoSizePanelID="MainPanel" />
+        <f:Panel runat="server" ID="MainPanel" ShowHeader="true" ShowBorder="true" Layout="VBox" BoxConfigAlign="Start" >
+            <Items>
+                <f:Panel runat="server" ID="BizTask" ShowHeader="true" ShowBorder="true" Layout="Fit" BoxFlex="1" Width="500px">
+                    <Items>
+                        <f:TabStrip runat="server" ID="TabStrip1" ShowBorder="false">
+                            <Tabs>
+                                <f:Tab ID="Tab1" runat="server">
+                                    <Content>
+                                        tab
+                                    </Content>
+                                </f:Tab>
+                            </Tabs>
+                        </f:TabStrip>
+                    </Items>
+                </f:Panel>
+
+            </Items>
+        </f:Panel>
+
     </form>
 </body>
 </html>

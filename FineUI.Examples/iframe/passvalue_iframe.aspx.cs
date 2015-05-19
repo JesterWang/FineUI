@@ -14,8 +14,10 @@ namespace FineUI.Examples.iframe
         {
             if (!IsPostBack)
             {
-                Button1.OnClientClick = Window1.GetSaveStateReference(TextBox1.ClientID)
-                    + Window1.GetShowReference("./passvalue_iframe_iframe.aspx");
+                string openUrl = String.Format("./passvalue_iframe_iframe.aspx?selected=<script>encodeURIComponent({0})</script>", tbxProvince.GetValueReference());
+
+                Button1.OnClientClick = Window1.GetSaveStateReference(tbxProvince.ClientID)
+                    + Window1.GetShowReference(openUrl);
             }
 
         }
@@ -23,6 +25,14 @@ namespace FineUI.Examples.iframe
         protected void Window1_Close(object sender, WindowCloseEventArgs e)
         {
             Alert.ShowInTop("触发了 Window1 的关闭事件！");
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            string openUrl = String.Format("./passvalue_iframe_iframe.aspx?selected={0}", HttpUtility.UrlEncode(tbxProvince.Text));
+
+            PageContext.RegisterStartupScript(Window1.GetSaveStateReference(tbxProvince.ClientID)
+                    + Window1.GetShowReference(openUrl));
         }
 
     }

@@ -43,7 +43,7 @@ namespace FineUI
     {
         #region static readonly
 
-        //private static readonly string PAGE_STATE_CHANGED_FUNCTION_NAME = "X.box_pageStateChanged";
+        //private static readonly string PAGE_STATE_CHANGED_FUNCTION_NAME = "F.box_pageStateChanged";
 
         #endregion
 
@@ -200,11 +200,6 @@ namespace FineUI
         /// <param name="scriptContent">客户端脚本</param>
         public static void RegisterStartupScript(string scriptContent)
         {
-            //Page page = HttpContext.Current.CurrentHandler as Page;
-            //if (page != null)
-            //{
-            //    ResourceManager.Instance.AddAbsoluteStartupScript(scriptContent);
-            //}
             ResourceManager manager = ResourceManager.Instance;
             if (manager.IsFineUIAjaxPostBack)
             {
@@ -228,7 +223,7 @@ namespace FineUI
         //public static string GetConfirmFormModifiedReference()
         //{
         //    //return String.Format("{0}();", PAGE_STATE_CHANGED_FUNCTION_NAME);
-        //    return "X.wnd.confirmFormModified();";
+        //    return "F.wnd.confirmFormModified();";
         //}
 
         //public static void RegisterPageStateChangedStartupScript()
@@ -269,7 +264,7 @@ namespace FineUI
         ///// <returns></returns>
         //private static string GetPageStateChangedReference()
         //{
-        //    return "X.util.isPageStateChanged();";
+        //    return "F.util.isPageStateChanged();";
         //}
 
         ///// <summary>

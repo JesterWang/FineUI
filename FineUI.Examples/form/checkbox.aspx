@@ -4,30 +4,30 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:SimpleForm ID="SimpleForm1" BodyPadding="5px" Width="550px" EnableFrame="true" EnableCollapse="true"
-            Title="简单表单" FooterBarAlign="Left" runat="server">
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:SimpleForm ID="SimpleForm1" BodyPadding="5px" Width="550px"  EnableCollapse="true"
+            Title="简单表单" runat="server">
             <Items>
-                <x:CheckBox ID="CheckBox2" ShowLabel="false" runat="server" Text="复选框" Checked="True">
-                </x:CheckBox>
-                <x:Button ID="btnSelectCheckBox" Text="选择/反选上面的复选框" OnClick="btnSelectCheckBox_Click"
+                <f:CheckBox ID="CheckBox2" ShowLabel="false" runat="server" Text="复选框" Checked="True">
+                </f:CheckBox>
+                <f:Button ID="btnSelectCheckBox" Text="选择/反选上面的复选框" OnClick="btnSelectCheckBox_Click"
                     runat="server">
-                </x:Button>
-                <x:Label ID="Label1" runat="server" ShowEmptyLabel="true">
-                </x:Label>
-                <x:CheckBox ID="CheckBox1" ShowLabel="false" runat="server" Text="自动回发的复选框（AutoPostBack=True）" OnCheckedChanged="CheckBox1_CheckedChanged"
+                </f:Button>
+                <f:Label ID="Label1" runat="server" ShowEmptyLabel="true">
+                </f:Label>
+                <f:CheckBox ID="CheckBox1" ShowLabel="false" runat="server" Text="自动回发的复选框（AutoPostBack=True）" OnCheckedChanged="CheckBox1_CheckedChanged"
                     Checked="True" AutoPostBack="True">
-                </x:CheckBox>
-                <x:Label ID="labResult" runat="server" ShowLabel="false">
-                </x:Label>
+                </f:CheckBox>
+                <f:Label ID="labResult" runat="server" ShowLabel="false">
+                </f:Label>
 
             </Items>
 
-        </x:SimpleForm>
+        </f:SimpleForm>
     </form>
 </body>
 </html>

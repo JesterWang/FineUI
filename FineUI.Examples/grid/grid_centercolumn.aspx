@@ -5,47 +5,43 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
-        /* .x-grid-hd-ct4
-        {
-            text-align: center;
+        /* 分组列的标题靠左显示 */
+        #Group.x-column-header {
+            text-align: left;
         }
-        .x-grid-col-ct4 
-        {
-            text-align: center;
-        }*/
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Grid ID="Grid1" Title="表格" EnableFrame="true" EnableCollapse="true" ShowBorder="true" ShowHeader="true" Width="900px"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Grid ID="Grid1" Title="表格"  EnableCollapse="true" ShowBorder="true" ShowHeader="true" Width="900px"
             runat="server" EnableCheckBoxSelect="true" DataKeyNames="Id,Name">
             <Columns>
-                <x:RowNumberField />
-                <x:BoundField Width="100px" DataField="Name" DataFormatString="{0}" HeaderText="姓名" />
-                <x:TemplateField Width="80px" HeaderText="性别">
+                <f:RowNumberField />
+                <f:BoundField Width="100px" DataField="Name" DataFormatString="{0}" HeaderText="姓名" />
+                <f:TemplateField Width="80px" HeaderText="性别">
                     <ItemTemplate>
                         <asp:Label ID="Label2" runat="server" Text='<%# GetGender(Eval("Gender")) %>'></asp:Label>
                     </ItemTemplate>
-                </x:TemplateField>
-                <x:BoundField Width="80px" DataField="EntranceYear" HeaderText="入学年份" />
-                <x:CheckBoxField Width="150px" TextAlign="Center" RenderAsStaticField="true" DataField="AtSchool"
-                    HeaderText="是否在校（居中）" />
-                <x:HyperLinkField HeaderText="所学专业（居中）" TextAlign="Center" DataToolTipField="Major"
+                </f:TemplateField>
+                <f:BoundField Width="80px" DataField="EntranceYear" HeaderText="入学年份" />
+                <%--<f:CheckBoxField Width="150px" TextAlign="Center" RenderAsStaticField="true" DataField="AtSchool"
+                    HeaderText="是否在校（居中）" />--%>
+                <f:HyperLinkField HeaderText="所学专业（居中）" TextAlign="Center" DataToolTipField="Major"
                     DataTextField="Major" DataTextFormatString="{0}" DataNavigateUrlFields="Major"
-                    DataNavigateUrlFormatString="http://gsa.ustc.edu.cn/search?q={0}" DataNavigateUrlFieldsEncode="true"
+                    DataNavigateUrlFormatString="http://gsa.ustc.edu.cn/search?q={0}" UrlEncode="true"
                     Target="_blank" ExpandUnusedSpace="True" />
-                <x:ImageField Width="150px" TextAlign="Right" DataImageUrlField="Group" DataImageUrlFormatString="~/images/16/{0}.png"
-                    HeaderText="分组（靠右）"></x:ImageField>
+                <f:ImageField ColumnID="Group" Width="250px" TextAlign="Right" DataImageUrlField="Group" DataImageUrlFormatString="~/res/images/16/{0}.png"
+                    HeaderText="分组（内容靠右，标题靠左）"></f:ImageField>
             </Columns>
-        </x:Grid>
+        </f:Grid>
         <br />
         <br />
         <br />
-        <x:HiddenField ID="highlightRows" runat="server">
-        </x:HiddenField>
+        <f:HiddenField ID="highlightRows" runat="server">
+        </f:HiddenField>
     </form>
 </body>
 </html>

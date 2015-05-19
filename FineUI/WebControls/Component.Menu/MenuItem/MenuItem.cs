@@ -50,7 +50,6 @@ namespace FineUI
     [PersistChildren(false)]
     public abstract class MenuItem : BaseMenuItem
     {
-
         #region Properties
 
         /// <summary>
@@ -63,12 +62,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["HideOnClick"];
+                object obj = FState["HideOnClick"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["HideOnClick"] = value;
+                FState["HideOnClick"] = value;
             }
         }
 
@@ -84,7 +83,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["IconUrl"];
+                object obj = FState["IconUrl"];
                 if (obj == null)
                 {
                     if (!DesignMode)
@@ -99,7 +98,7 @@ namespace FineUI
             }
             set
             {
-                XState["IconUrl"] = value;
+                FState["IconUrl"] = value;
             }
         }
 
@@ -114,12 +113,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Icon"];
+                object obj = FState["Icon"];
                 return obj == null ? Icon.None : (Icon)obj;
             }
             set
             {
-                XState["Icon"] = value;
+                FState["Icon"] = value;
             }
         }
 
@@ -133,17 +132,16 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Text"];
+                object obj = FState["Text"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Text"] = value;
+                FState["Text"] = value;
             }
         }
 
         #endregion
-
 
         #region Menu
 
@@ -215,7 +213,7 @@ namespace FineUI
         {
             base.CreateChildControls();
 
-            Menu.RenderWrapperNode = false;
+            //Menu.RenderWrapperNode = false;
             Controls.Add(Menu);
         }
 

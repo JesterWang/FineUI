@@ -24,7 +24,7 @@ namespace FineUI.Examples.usercontrol
         private void LoadData()
         {
             JObject jo = new JObject();
-            jo.Add("BoxMargin", "0");
+            jo.Add("Margin", "0");
             jo.Add("BoxFlex", 1);
             UserInfoControl5.Properties = jo.ToString(Formatting.None);
         }

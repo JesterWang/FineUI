@@ -101,6 +101,25 @@ namespace FineUI
         //    }
         //} 
 
+        /// <summary>
+        /// 布局类型
+        /// </summary>
+        [Category(CategoryName.LAYOUT)]
+        [DefaultValue(Layout.Anchor)]
+        [Description("布局类型")]
+        public override Layout Layout
+        {
+            get
+            {
+                object obj = FState["Layout"];
+                return obj == null ? Layout.Anchor : (Layout)obj;
+            }
+            set
+            {
+                FState["Layout"] = value;
+            }
+        }
+
         #endregion
 
         #region OnPreRender

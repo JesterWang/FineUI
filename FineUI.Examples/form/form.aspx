@@ -4,109 +4,105 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
-    <style>
-        .redcolor {
-        }
-    </style>
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="_form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Form Width="600px" BodyPadding="5px" ID="Form1" LabelWidth="100px" EnableFrame="true" EnableCollapse="true"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Form Width="600px" BodyPadding="5px" ID="Form1" LabelWidth="100px" EnableCollapse="true"
             runat="server" Title="表单 1">
             <Rows>
-                <x:FormRow ColumnWidths="50% 50%">
+                <f:FormRow ColumnWidths="50% 50%">
                     <Items>
-                        <x:Label ID="Label1" runat="server" Label="标签" Text="标签的值">
-                        </x:Label>
-                        <x:CheckBox ID="CheckBox1" runat="server" Text="复选框" Label="复选框" CssClass="redcolor">
-                        </x:CheckBox>
+                        <f:Label ID="Label1" runat="server" Label="标签" Text="标签的值">
+                        </f:Label>
+                        <f:CheckBox ID="CheckBox1" runat="server" Text="复选框" Label="复选框">
+                        </f:CheckBox>
                     </Items>
-                </x:FormRow>
-                <x:FormRow ColumnWidths="50% 50%">
+                </f:FormRow>
+                <f:FormRow ColumnWidths="50% 50%">
                     <Items>
-                        <x:DropDownList ID="DropDownList1" runat="server" Label="下拉列表" Required="true" ShowRedStar="True">
-                            <x:ListItem Selected="true" Text="可选项 1" Value="0"></x:ListItem>
-                            <x:ListItem Text="可选项 2" Value="1"></x:ListItem>
-                        </x:DropDownList>
-                        <x:TextBox ID="TextBox1" ShowRedStar="true" runat="server" Label="文本框" Required="true"
+                        <f:DropDownList ID="DropDownList1" runat="server" Label="下拉列表">
+                            <f:ListItem Text="可选项 1" Value="0" Selected="true"></f:ListItem>
+                            <f:ListItem Text="可选项 2" Value="1"></f:ListItem>
+                        </f:DropDownList>
+                        <f:TextBox ID="TextBox1" ShowRedStar="true" runat="server" Label="文本框" Required="true"
                             Text="">
-                        </x:TextBox>
+                        </f:TextBox>
                     </Items>
-                </x:FormRow>
-                <x:FormRow>
+                </f:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:Panel ID="Panel1" runat="server" ShowBorder="false"
+                        <f:Panel ID="Panel1" runat="server" ShowBorder="false"
                             ShowHeader="false">
                             <Items>
-                                <x:Button runat="server" Text="验证此表单并提交" CssClass="inline" ValidateForms="Form1"
+                                <f:Button runat="server" Text="验证此表单并提交" CssClass="marginr" ValidateForms="Form1"
                                     ID="btnSubmitForm1" OnClick="btnSubmitForm1_Click">
-                                </x:Button>
+                                </f:Button>
                             </Items>
-                        </x:Panel>
+                        </f:Panel>
                     </Items>
-                </x:FormRow>
+                </f:FormRow>
             </Rows>
-        </x:Form>
+        </f:Form>
         <br />
-        <x:Form Width="600px" LabelWidth="100px" BodyPadding="5px" EnableFrame="true" EnableCollapse="true"
+        <f:Form Width="600px" LabelWidth="100px" BodyPadding="5px" EnableCollapse="true"
             ID="Form2" runat="server" Title="表单 2">
             <Rows>
-                <x:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:Label ID="Label3" Label="电话" Text="0551-1234567" runat="server" />
-                        <x:Label ID="Label16" runat="server" Label="申请人" Text="admin">
-                        </x:Label>
+                        <f:Label ID="Label3" Label="电话" Text="0551-1234567" runat="server" />
+                        <f:Label ID="Label16" runat="server" Label="申请人" Text="admin">
+                        </f:Label>
                     </Items>
-                </x:FormRow>
-                <x:FormRow>
+                </f:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:Label ID="Label4" Label="编号" Text="200804170006" runat="server" />
-                        <x:TextBox ID="TextBox2" Required="true" ShowRedStar="true" Label="电子邮箱" RegexPattern="EMAIL"
+                        <f:Label ID="Label4" Label="编号" Text="200804170006" runat="server" />
+                        <f:TextBox ID="TextBox2" Required="true" ShowRedStar="true" Label="电子邮箱" RegexPattern="EMAIL"
                             RegexMessage="请输入有效的邮箱地址！" runat="server">
-                        </x:TextBox>
+                        </f:TextBox>
                     </Items>
-                </x:FormRow>
-                <x:FormRow>
+                </f:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:DropDownList ID="DropDownList3" Label="审批人" runat="server" Required="true" ShowRedStar="True">
-                            <x:ListItem Text="老大甲" Value="0"></x:ListItem>
-                            <x:ListItem Text="老大乙" Value="1"></x:ListItem>
-                            <x:ListItem Text="老大丙" Value="2"></x:ListItem>
-                        </x:DropDownList>
+                        <f:DropDownList ID="DropDownList3" Label="审批人" runat="server" ForceSelection="false" Required="true" ShowRedStar="True">
+                            <f:ListItem Text="老大甲" Value="0"></f:ListItem>
+                            <f:ListItem Text="老大乙" Value="1"></f:ListItem>
+                            <f:ListItem Text="老大丙" Value="2"></f:ListItem>
+                        </f:DropDownList>
                     </Items>
-                </x:FormRow>
-                <x:FormRow>
+                </f:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:NumberBox ID="NumberBox1" Label="申请数量" MaxValue="1000" Required="true" runat="server"
+                        <f:NumberBox ID="NumberBox1" Label="申请数量" NoNegative="true" MaxValue="1000" Required="true" runat="server"
                             ShowRedStar="True" />
                     </Items>
-                </x:FormRow>
-                <x:FormRow>
+                </f:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:TextArea ID="TextArea1" runat="server" Label="描述" ShowRedStar="True" Required="True">
-                        </x:TextArea>
+                        <f:TextArea ID="TextArea1" runat="server" Label="描述" ShowRedStar="True" Required="True">
+                        </f:TextArea>
                     </Items>
-                </x:FormRow>
-                <x:FormRow>
+                </f:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:Panel ID="Panel2" runat="server" ShowBorder="false"
+                        <f:Panel ID="Panel2" runat="server" ShowBorder="false"
                             ShowHeader="false">
                             <Items>
-                                <x:Button ID="btnSubmitForm2" Text="验证此表单并提交" CssClass="inline" runat="server" OnClick="btnSubmitForm2_Click"
+                                <f:Button ID="btnSubmitForm2" Text="验证此表单并提交" CssClass="marginr" runat="server" OnClick="btnSubmitForm2_Click"
                                     ValidateForms="Form2">
-                                </x:Button>
+                                </f:Button>
                             </Items>
-                        </x:Panel>
+                        </f:Panel>
                     </Items>
-                </x:FormRow>
+                </f:FormRow>
             </Rows>
-        </x:Form>
+        </f:Form>
         <br />
-        <x:Button ID="btnSubmitAll" Text="验证两个表单并提交" CssClass="inline" runat="server" OnClick="btnSubmitAll_Click"
+        <f:Button ID="btnSubmitAll" Text="验证两个表单并提交" CssClass="marginr" runat="server" OnClick="btnSubmitAll_Click"
             ValidateForms="Form1,Form2">
-        </x:Button>
+        </f:Button>
     </form>
 </body>
 </html>

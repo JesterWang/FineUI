@@ -51,7 +51,10 @@ namespace FineUI
         /// <param name="propertyName"></param>
         public void RemoveProperty(string propertyName)
         {
-            _defaultBuilder.RemoveProperty(propertyName);
+            if (_defaultBuilder.ContainsProperty(propertyName))
+            {
+                _defaultBuilder.RemoveProperty(propertyName);
+            }
         }
 
         #endregion
@@ -76,10 +79,9 @@ namespace FineUI
         /// <param name="persistOriginal">是否保持原样</param>
         public void AddProperty(string propertyName, object propertyValue, bool persistOriginal)
         {
-            if (_defaultBuilder.ContainsProperty(propertyName))
-            {
-                _defaultBuilder.RemoveProperty(propertyName);
-            }
+            //// 添加属性之前，要先删除之前已经添加的属性，否则会出粗
+            //RemoveProperty(propertyName);
+
 
             _defaultBuilder.AddProperty(propertyName, propertyValue, persistOriginal);
         }

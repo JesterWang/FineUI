@@ -7,17 +7,16 @@ using System.Web.UI;
 namespace FineUI
 {
     /// <summary>
-    /// 控件-控件相关脚本
+    /// 控件相关脚本
     /// </summary>
     internal class ScriptBlock
     {
-
-        private Control _control;
+        private ControlBase _control;
 
         /// <summary>
         /// 要注册脚本的控件
         /// </summary>
-        public Control Control
+        public ControlBase Control
         {
             get { return _control; }
             set { _control = value; }
@@ -37,16 +36,16 @@ namespace FineUI
 
 
 
-        private string _extraScript;
+        //private string _extraScript;
 
-        /// <summary>
-        /// 额外的脚本
-        /// </summary>
-        public string ExtraScript
-        {
-            get { return _extraScript; }
-            set { _extraScript = value; }
-        }
+        ///// <summary>
+        ///// 额外的脚本
+        ///// </summary>
+        //public string ExtraScript
+        //{
+        //    get { return _extraScript; }
+        //    set { _extraScript = value; }
+        //}
 
 
 
@@ -55,19 +54,19 @@ namespace FineUI
         }
 
 
-        public ScriptBlock(Control control, string script)
+        public ScriptBlock(ControlBase control, string script)
         {
             _control = control;
             _script = script;
             
         }
 
-        public ScriptBlock(Control control, string script, string extraScript)
-        {
-            _control = control;
-            _script = script;
-            _extraScript = extraScript;
-        }
+        //public ScriptBlock(Control control, string script, string extraScript)
+        //{
+        //    _control = control;
+        //    _script = script;
+        //    _extraScript = extraScript;
+        //}
 
        
     }

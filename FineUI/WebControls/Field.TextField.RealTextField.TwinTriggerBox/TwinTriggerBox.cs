@@ -59,7 +59,7 @@ namespace FineUI
         }
 
         #endregion
-        
+
         #region Properties
 
         /// <summary>
@@ -72,12 +72,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableEdit"];
+                object obj = FState["EnableEdit"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableEdit"] = value;
+                FState["EnableEdit"] = value;
             }
         }
 
@@ -92,12 +92,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ShowTrigger"];
+                object obj = FState["ShowTrigger"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ShowTrigger"] = value;
+                FState["ShowTrigger"] = value;
             }
         }
 
@@ -111,12 +111,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ShowTrigger1"];
+                object obj = FState["ShowTrigger1"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ShowTrigger1"] = value;
+                FState["ShowTrigger1"] = value;
             }
         }
 
@@ -131,12 +131,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ShowTrigger2"];
+                object obj = FState["ShowTrigger2"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ShowTrigger2"] = value;
+                FState["ShowTrigger2"] = value;
             }
         }
 
@@ -151,12 +151,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableTrigger1PostBack"];
+                object obj = FState["EnableTrigger1PostBack"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableTrigger1PostBack"] = value;
+                FState["EnableTrigger1PostBack"] = value;
             }
         }
 
@@ -171,12 +171,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableTrigger2PostBack"];
+                object obj = FState["EnableTrigger2PostBack"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableTrigger2PostBack"] = value;
+                FState["EnableTrigger2PostBack"] = value;
             }
         }
 
@@ -191,12 +191,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Trigger1IconUrl"];
+                object obj = FState["Trigger1IconUrl"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Trigger1IconUrl"] = value;
+                FState["Trigger1IconUrl"] = value;
             }
         }
 
@@ -210,12 +210,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Trigger2IconUrl"];
+                object obj = FState["Trigger2IconUrl"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Trigger2IconUrl"] = value;
+                FState["Trigger2IconUrl"] = value;
             }
         }
 
@@ -231,12 +231,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Trigger1Icon"];
+                object obj = FState["Trigger1Icon"];
                 return obj == null ? TriggerIcon.None : (TriggerIcon)obj;
             }
             set
             {
-                XState["Trigger1Icon"] = value;
+                FState["Trigger1Icon"] = value;
             }
         }
 
@@ -250,12 +250,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Trigger2Icon"];
+                object obj = FState["Trigger2Icon"];
                 return obj == null ? TriggerIcon.None : (TriggerIcon)obj;
             }
             set
             {
-                XState["Trigger2Icon"] = value;
+                FState["Trigger2Icon"] = value;
             }
         }
 
@@ -269,12 +269,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["OnClientTrigger1Click"];
+                object obj = FState["OnClientTrigger1Click"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["OnClientTrigger1Click"] = value;
+                FState["OnClientTrigger1Click"] = value;
             }
         }
 
@@ -288,12 +288,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["OnClientTrigger2Click"];
+                object obj = FState["OnClientTrigger2Click"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["OnClientTrigger2Click"] = value;
+                FState["OnClientTrigger2Click"] = value;
             }
         }
 
@@ -355,7 +355,8 @@ namespace FineUI
             if (!String.IsNullOrEmpty(renderScript))
             {
                 //renderScript += "this.updateLayout();";
-                OB.Listeners.AddProperty("afterrender", JsHelper.GetFunction(renderScript), true); 
+                //OB.Listeners.AddProperty("afterrender", JsHelper.GetFunction(renderScript), true); 
+                AddListener("afterrender", renderScript);
             }
 
 
@@ -369,8 +370,8 @@ namespace FineUI
             }
             else if (!String.IsNullOrEmpty(Trigger1IconUrl))
             {
-                string className = String.Format("fineui_{0}_twintriggerbox_icon1", XID);
-                string selector = String.Format(".x-form-field-wrap .x-form-twin-triggers .{0}", className);
+                string className = String.Format("f_{0}_twintriggerbox_icon1", XID);
+                string selector = String.Format(".{0}", className);
                 AddStartupCSS(className, StyleUtil.GetBackgroundStyle(selector, ResolveUrl(Trigger1IconUrl)));
 
                 OB.AddProperty("trigger1Cls", className);
@@ -383,8 +384,8 @@ namespace FineUI
             }
             else if (!String.IsNullOrEmpty(Trigger2IconUrl))
             {
-                string className = String.Format("fineui_{0}_twintriggerbox_icon2", XID);
-                string selector = String.Format(".x-form-field-wrap .x-form-twin-triggers .{0}", className);
+                string className = String.Format("f_{0}_twintriggerbox_icon2", XID);
+                string selector = String.Format(".{0}", className);
                 AddStartupCSS(className, StyleUtil.GetBackgroundStyle(selector, ResolveUrl(Trigger2IconUrl)));
 
                 OB.AddProperty("trigger2Cls", className);
@@ -395,55 +396,64 @@ namespace FineUI
 
             #region Trigger1Click/Trigger1Click
 
-            if (Enabled)
+            //if (Enabled)
+            //{
+            string clientTrigger1ClickScript = OnClientTrigger1Click;
+            if (!String.IsNullOrEmpty(clientTrigger1ClickScript) && !clientTrigger1ClickScript.EndsWith(";"))
             {
-                string clientTrigger1ClickScript = OnClientTrigger1Click;
-                if (!String.IsNullOrEmpty(clientTrigger1ClickScript) && !clientTrigger1ClickScript.EndsWith(";"))
-                {
-                    clientTrigger1ClickScript += ";";
-                }
-                string trigger1PostbackScript = String.Empty;
-                if (EnableTrigger1PostBack)
-                {
-                    trigger1PostbackScript = GetPostBackEventReference("Trigger$1");
-                }
-                //string trigger1ClickScript = String.Format("function(){{{0}}}", clientTrigger1ClickScript + trigger1PostbackScript);
-                //// createDelegate 用来为一个Function创建一个Scope
-                //OB.AddProperty(OptionName.OnTrigger1Click, String.Format("({0}).createDelegate(box)", trigger1ClickScript), true);
-                OB.AddProperty("onTrigger1Click", JsHelper.GetFunction(clientTrigger1ClickScript + trigger1PostbackScript), true);
-
-
-                string clientTrigger2ClickScript = OnClientTrigger2Click;
-                if (!String.IsNullOrEmpty(clientTrigger2ClickScript) && !clientTrigger2ClickScript.EndsWith(";"))
-                {
-                    clientTrigger2ClickScript += ";";
-                }
-                string trigger2PostbackScript = String.Empty;
-                if (EnableTrigger2PostBack)
-                {
-                    trigger2PostbackScript = GetPostBackEventReference("Trigger$2");
-                }
-                //string trigger2ClickScript = String.Format("function(){{{0}}}", clientTrigger2ClickScript + Trigger2PostbackScript);
-                //// createDelegate 用来为一个Function创建一个Scope
-                //OB.AddProperty(OptionName.OnTrigger2Click, String.Format("({0}).createDelegate(box)", trigger2ClickScript), true);
-                OB.AddProperty("onTrigger2Click", JsHelper.GetFunction(clientTrigger2ClickScript + trigger2PostbackScript), true);
-
+                clientTrigger1ClickScript += ";";
             }
+            string trigger1PostbackScript = String.Empty;
+            if (EnableTrigger1PostBack)
+            {
+                trigger1PostbackScript = GetPostBackEventReference("Trigger$1");
+            }
+            //string trigger1ClickScript = String.Format("function(){{{0}}}", clientTrigger1ClickScript + trigger1PostbackScript);
+            //// createDelegate 用来为一个Function创建一个Scope
+            //OB.AddProperty(OptionName.OnTrigger1Click, String.Format("({0}).createDelegate(box)", trigger1ClickScript), true);
+            OB.AddProperty("onTrigger1Click", JsHelper.GetFunction(clientTrigger1ClickScript + trigger1PostbackScript), true);
+
+
+            string clientTrigger2ClickScript = OnClientTrigger2Click;
+            if (!String.IsNullOrEmpty(clientTrigger2ClickScript) && !clientTrigger2ClickScript.EndsWith(";"))
+            {
+                clientTrigger2ClickScript += ";";
+            }
+            string trigger2PostbackScript = String.Empty;
+            if (EnableTrigger2PostBack)
+            {
+                trigger2PostbackScript = GetPostBackEventReference("Trigger$2");
+            }
+            //string trigger2ClickScript = String.Format("function(){{{0}}}", clientTrigger2ClickScript + Trigger2PostbackScript);
+            //// createDelegate 用来为一个Function创建一个Scope
+            //OB.AddProperty(OptionName.OnTrigger2Click, String.Format("({0}).createDelegate(box)", trigger2ClickScript), true);
+            OB.AddProperty("onTrigger2Click", JsHelper.GetFunction(clientTrigger2ClickScript + trigger2PostbackScript), true);
+
+            //}
 
             #endregion
 
             #region Specialkey
 
-            if (Enabled)
-            {
-                // 首先启用enableKeyEvents
-                //OB.AddProperty("enableKeyEvents", true);
-                OB.Listeners.AddProperty("specialkey", String.Format("function(field,e){{if(e.getKey()==e.ENTER){{{0}.onTrigger2Click();e.stopEvent();}}}}", XID), true);
-            }
+            //if (Enabled)
+            //{
+            // 首先启用enableKeyEvents
+            //OB.AddProperty("enableKeyEvents", true);
+            //OB.Listeners.AddProperty("specialkey", String.Format("function(field,e){{if(e.getKey()==e.ENTER){{{0}.onTrigger2Click();e.stopEvent();}}}}", XID), true);
+            AddListener("specialkey", String.Format("if(e.getKey()==e.ENTER){{{0}.onTrigger2Click();e.stopEvent();}}", XID), "field", "e");
+            //}
 
             #endregion
 
-			// X('SimpleForm1_ttbxMyBox2').triggerEl.item(0).show();
+            #region EnableEdit
+            // extjsv4.x 的enableedit=false，不能点击输入框触发
+            if (!EnableEdit)
+            {
+                //OB.Listeners.AddProperty("render", "function(field){field.mon(field.inputEl,'click',field.onTrigger2Click,field);}", true);
+                AddListener("render", "field.mon(field.inputEl,'click',field.onTrigger2Click,field);", "field");
+
+            }
+            #endregion
 
             string jsContent = String.Format("var {0}=Ext.create('Ext.form.field.Trigger',{1});", XID, OB.ToString());
             AddStartupScript(jsContent);

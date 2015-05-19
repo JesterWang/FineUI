@@ -65,12 +65,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EmptyText"];
+                object obj = FState["EmptyText"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["EmptyText"] = value;
+                FState["EmptyText"] = value;
             }
         }
 
@@ -85,12 +85,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Text"];
+                object obj = FState["Text"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Text"] = value;
+                FState["Text"] = value;
             }
         }
 
@@ -104,12 +104,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoPostBack"];
+                object obj = FState["AutoPostBack"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["AutoPostBack"] = value;
+                FState["AutoPostBack"] = value;
             }
         }
 
@@ -123,12 +123,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableBlurEvent"];
+                object obj = FState["EnableBlurEvent"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableBlurEvent"] = value;
+                FState["EnableBlurEvent"] = value;
             }
         }
 
@@ -165,7 +165,7 @@ namespace FineUI
             StringBuilder sb = new StringBuilder();
             if (PropertyModified("Text"))
             {
-                sb.AppendFormat("{0}.x_setValue();", XID);
+                sb.AppendFormat("{0}.f_setValue();", XID);
             }
 
             AddAjaxScript(sb);
@@ -191,13 +191,14 @@ namespace FineUI
 
             if (AutoPostBack)
             {
-                OB.Listeners.AddProperty("change", JsHelper.GetFunction(GetPostBackEventReference()), true);
+                //OB.Listeners.AddProperty("change", JsHelper.GetFunction(GetPostBackEventReference()), true);
+                AddListener("change", GetPostBackEventReference());
 
                 #region old code
                 //// First remove change event, because we has already register this event in super class - Field.
                 //OB.Listeners.RemoveProperty("change");
 
-                //string changeScript = "X.util.setPageStateChanged();";
+                //string changeScript = "F.util.setPageStateChanged();";
                 //changeScript += GetPostBackEventReference();
                 //OB.Listeners.AddProperty("change", JsHelper.GetFunction(changeScript), true);
 
@@ -215,8 +216,8 @@ namespace FineUI
 
             if (EnableBlurEvent)
             {
-                OB.Listeners.AddProperty("blur", JsHelper.GetFunction(GetPostBackEventReference("Blur")), true);
-
+                //OB.Listeners.AddProperty("blur", JsHelper.GetFunction(GetPostBackEventReference("Blur")), true);
+                AddListener("blur", GetPostBackEventReference("Blur"));
             }
 
             //if (EnableServerValidate)
@@ -252,7 +253,7 @@ namespace FineUI
                 if (Text != postValue)
                 {
                     Text = postValue;
-                    XState.BackupPostDataProperty("Text");
+                    FState.BackupPostDataProperty("Text");
                     return true;
                 }
             }

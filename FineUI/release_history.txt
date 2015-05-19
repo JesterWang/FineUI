@@ -1,15 +1,15 @@
-﻿关于FineUI
-基于 ExtJS 的专业 ASP.NET 控件库。
+﻿FineUI（开源版）
+基于 ExtJS 的开源 ASP.NET 控件库
 
 FineUI的使命
-创建 No JavaScript，No CSS，No UpdatePanel，No ViewState，No WebServices 的网站应用程序。
+创建 No JavaScript，No CSS，No UpdatePanel，No ViewState，No WebServices 的网站应用程序
 
 支持的浏览器
-IE 7.0+、Firefox 3.6+、Chrome 3.0+、Opera 10.5+、Safari 3.0+
+Chrome、Firefox、Safari、IE 8.0+
 
 授权协议
 Apache License v2.0
-注：ExtJS 库在 GPL v3 协议下发布(http://www.sencha.com/license)。
+注：ExtJS 库在 GPL v3 协议下发布(http://www.sencha.com/license)
     
 
 相关链接
@@ -20,14 +20,430 @@ Apache License v2.0
 下载：http://fineui.codeplex.com/
 
 
-FineUI 严格遵守 ExtJS 对开源软件的限制，不再内置 ExtJS 库，请通过如下两个途径获取ExtJS库：
-1. 获取适用于 FineUI 的 ExtJS 库：http://fineui.com/bbs/forum.php?mod=viewthread&tid=3218 
-2. 基于 FineUI 的空项目（Net2.0 和 Net4.5 两个版本）：http://fineui.com/bbs/forum.php?mod=viewthread&tid=2123
+FineUI 严格遵守 ExtJS 对开源软件的规定，不再内置 ExtJS 库，请自行获取：
+1. 获取适用于 FineUI 的 ExtJS 库
+	http://fineui.com/bbs/forum.php?mod=viewthread&tid=3218 
+2. 基于 FineUI 的空项目（已包含 ExtJS 库）
+	http://fineui.com/bbs/forum.php?mod=viewthread&tid=2123
 
 
 发布历史
 
-+2013-10-28 v4.0 beta1
++2015-05-20 v4.2.0
+	-增加示例：其他控件->面板与窗体->同时打开多个窗体。
+	-增加示例：第三方组件->jQueryUI Autocomplete->内联数据（位于Window控件中）。
+	-增加示例：其他控件->工具栏与菜单->工具栏上的图片（固定宽度）；工具栏上的图片（动态调整）。
+	-修正删除不存在的选项卡时可能出现的错误（揣兜-7085）。
+	+表格增强。
+		-增加示例：行与列样式->行样式（数据库分页）；行样式（内存分页）；列样式。
+		-增加示例：序号列->序号列（靠左显示）（dennisliu）。
+		-更新示例：杂项->文本居中显示（标题靠左）。
+		-增加示例：事件->行内按钮事件（内存分页）；行内按钮事件（数据库分页）。
+	+仅对表格内存分页有部分影响（不兼容提醒！）。
+		-表格属性SelectedRowIndex、SelectedRowIndexArray指的是在当前分页中的索引（和之前兼容，无需修改）。
+		+表格所有其他地方的RowIndex指的是在全部数据源中的索引（和之前不兼容，需要注意）。
+			-所有表格事件参数RowIndex属性，包括GridAfterEditEventArgs、GridRowClickEventArgs等。
+			-获取单元格编辑修改值grid1.GetModifiedData返回的键值。
+			-表格行实例的RowIndex属性。
+			-CheckBoxField的函数GetCheckedState的参数。
+	+修正一直存在的一个隐藏问题。
+		-此问题仅在用户多次快速点击页面上的回发按钮，并且网速比较慢时才可能会出现。
+		-关于如何重现本问题以及内部原因，请搜索论坛 - 验证视图状态MAC失败。
+	-修正多选下拉列表取消某项选中时出现的JS错误（uykonxu、揣兜-7053）。
+	-增加示例：杂项->捕获全局JavaScript错误。
+	-删除PageLoading控件，为PageManager增加PageLoadingImageUrl属性。
+	-优化官网示例首页[仅显示最新示例]逻辑，仅在叶子节点定义IsNew属性。
+	-增加客户端函数F.cookie和F.removeCookie，在前端处理官网首页配置菜单的点击事件。
+	-修正选项卡标题中放置红色[New!]时，底部出现的一行空白线。
+	-优化官网示例首页样式。
+
+
+
++2015-02-03 v4.1.6
+	-增加示例：表格控件->导出与下载->导出文件（FindControl，查找模板列中控件）。
+	-增加示例：表格控件->导出与下载->导出文件（多表头）。
+	-修正下拉列表数据绑定后在第一个位置插入项，而最终选中的非第一项的问题。
+	-修正下拉列表在没有数据项时，可能会触发SelectedIndexChanged事件的问题。
+	-BoxLayoutAlign的默认值由Start改为Stretch。
+	-增加示例：其他控件->选项卡控件->选项卡的位置。
+	-更新示例：表单控件->杂项->禁用与只读。
+	-修正AutoSizePanelID的面板中Submit按钮回车无效的问题（Ward_Lee）。
+	+支持一个面板拥有多个工具栏。
+		-增加示例：其他控件->工具栏与菜单->多行工具栏。
+		-增加示例：表格控件->分页与排序->数据库分页（底部工具栏）。
+	+重构表单改变确认对话框（不兼容提醒！）。
+		-删除Window控件的EnableConfirmOnClose属性，以及GetConfirmHideReference类似的5个方法。
+		-删除ActiveWindow中GetConfirmHideReference类似的5个方法。
+		-增加配置项EnableFormChangeConfirm，启用表单改变确认对话框（默认为false）。
+		-为面板控件增加GetClearDirtyReference方法，用来清空面板内表单字段的改变状态。
+		-更新示例：内联框架->窗体关闭前的确认对话框；保存按钮放在窗体工具栏中。
+
+
+
++2014-11-14 v4.1.5
+	+F.util.addMainTab函数在指定refreshWhenExist参数时也要更新标题（舞柯庶）。
+		-更新示例：杂项->向父页面添加选项卡。
+	-页面回发时如果脚本出错，不再弹出出错对话框，有助于快速定位错误。
+	-新增示例：表格控件->单元格编辑->行扩展列与单元格编辑/行扩展列与新增删除行。
+	-新增示例：导航控件->面板与窗体->窗体与表单。
+	-修正下拉列表（可编辑、不强制选择）清空内容后，后台依然可以获取SelectedItem的问题。
+	-下拉列表控件增加EmptyText属性并更新相关示例。
+	-修正下拉列表后台绑定后SelectedIndex返回-1的问题（yezie、brawei）。
+	-修正ShowLabel=false时，表单验证失败对话框消息中缺失字段标签字符串，更新示例：表单控件->表单布局->自定义表单布局。
+	-修正NextFocusControl是按钮出错的问题，增加示例：基本用法->登录页面（回车导航）（ZZZzzz）。
+	+修正多选下拉列表启用自动回发时，取消最后一个选中项不会自动回发的问题（偶然那么一次）。
+		-新增示例：表单控件->下拉列表控件->多选->下拉列表（自动回发）。
+
+
+
++2014-09-22 v4.1.4
+	-修正TriggerBox先禁用再启用后不能触发TriggerClick事件的问题（飘移-2870）。
+	+下拉列表增加MatchFieldWidth属性，可设置弹出框和字段宽度不同。
+		-增加示例：表单控件->下拉列表控件->下拉列表（MatchFieldWidth）。
+	-废除Region的Split和Position，请使用RegionSplit和RegionPosition属性。
+	-增加页面底部区域，显示版本和版权信息。
+	-修正表格在RecordCount=0时获取PageIndex出错的问题（userlm-6302）。
+	-修正表格AllowPaging=true，并且数据源为空出错的问题（tlxyniu、hroger-6289）。
+	-修正在母版页内容中放置Window控件，在页面回发时出错的问题。
+	-增加示例：表格控件->扩展列->全选列（单选）。
+	+Tree增加PreNodeDataBound事件。
+		-增加类TreePreNodeEventArgs，其Cancelled属性用来取消添加当前树节点。
+		-GridPreRowEventArgs增加Cancelled属性，作用同上。
+		-官网主框架增加[仅显示最新示例]菜单项。
+		-增加示例：表格控件->事件->行预绑定事件（Cancelled属性）。
+	+修正通过服务器端脚本关闭当前标签页可能出现的JS错误（xtb_sp-6277）。
+		-在IE11出现错误[无法获取未定义或 null 引用的属性 callback]。
+		-更新示例：杂项->向父页面添加选项卡。
+
+
+
++2014-09-09 v4.1.3
+	+母版页支持。
+		-增加新控件CPHConnector（ContentPlaceHolder）。
+		+增加三个示例，演示布局、接口以及动态加载在母版页中的运用：
+			-杂项->母版页->树（布局）。
+			-杂项->母版页->表格（布局、接口与动态加载）。
+			-杂项->母版页->表格与表单（布局、接口与动态加载）。
+	-修正UMEditor在从全屏恢复时滚动条消失的问题（Gnid-6187）。
+	+窗体控件增强。
+		+增加子窗体关闭后调用父页面JS函数的方法（txw999-6022）。
+			-分别为ActiveWindow和Window增加GetHideExecuteScriptReference方法。
+			-增加示例：内联框架->新窗口中选择省份（GetHideExecuteScriptReference）。
+		-窗体的Width和Height属性更新为AJAX属性，可以在后台改变
+		+修正在父页面弹出窗体时无法通过设置Title属性来改变标题的问题（舞柯庶-6031）。
+			-更新示例：内联框架->回发父页面（改变属性或者注册脚本）。
+	-HyperLinkField的DataNavigateUrlFieldsEncode属性已废除，请替换为UrlEncode属性。
+	+为ControlBase增加Listeners属性，方便设置控件的客户端事件处理函数，同时更新如下示例：
+		-表格控件->复选框列->全选复选框列（客户端实现）。
+		-表格控件->杂项->右键菜单（全选复选框）。
+		-杂项->自定义回发（__doPostBack）。
+		-杂项->自定义回发（F.customEvent）。
+		-杂项->文本框改变客户端事件。
+	-修正行扩展列无法显示隐藏的问题（zy32002-6195）。
+	-为Grid增加ShowPagingMessage，并更新示例：表格控件->分页与排序->数据库分页。
+	-增加示例：导航控件->工具栏与菜单->内联菜单（HideOnClick）。
+	-表格的PageIndex有效性检查，更新示例：表格控件->分页工具条->改变每页记录数。
+
+
+
++2014-08-29 v4.1.2
+	-修正树控件的EnableIcons属性无效的问题。
+	-为树控件增加NodeDataBound事件，并增加示例tree/tree_nodedatabound.aspx。
+	-修正F.util.initTreeTabStrip不处理父节点打开新标签页的问题。
+	-修正更新未打开选项卡IFrame地址出错的问题（xxdddail-6107）。
+	-修正选项卡非激活ContentPanel面板内容在外部显示的问题（张海-6011）。
+	-修正页面上只有一个input[type=text]时，回车键会默认提交表单的问题（隨風往事-6128）。
+	-表格增加EnableRowLines属性，增加示例：表格控件->杂项->隐藏表格标题栏。
+	-修正单选框列表和复选框列表默认设置ReadOnly=true无效的问题（mark_01-6160）。
+	-修正日期字段为DBNull.Value时导致RenderField绑定出错的问题。
+	-修正表格的[改变行背景色]示例在显示隐藏列时行背景色消失的问题（robsun-6162）。
+	+下拉列表增强。
+		+增加AutoSelectFirstItem属性，如果设置为false，则下拉列表可以默认为空。
+			-更新示例：表单控件->下拉列表控件->杂项->重置表单。
+			-可以使用Required属性做客户端验证，从而减少为下拉列表添加默认项[--请选择--]的麻烦。
+		-可多选，增加属性EnableMultiSelect、MultiSelectSeparator。
+		-增加示例：表单控件->下拉列表控件->多选下拉列表->多选。
+		-增加示例：表单控件->下拉列表控件->多选下拉列表->多选（可过滤，强制选择）。
+	
+
+
++2014-08-15 v4.1.1
+	-修正Form中表单字段设置宽度无效的问题（李明海-5929）。
+	-为TemplateField增加ExpandOnDoubleClick、ExpandOnEnter、ExpandToSelectRow三个属性（LZOM-5932）。
+	-BodyPadding支持纯数字形式，类似“5”“5 10”，之前只支持带单位的形式“5px”“5px 10px”。
+	-修正TriggerBox在EnableEdit=false的情况下，点击文本输入框不能触发的问题（Jango_Jing-5450）。
+	-修正可编辑单元格未定义DataKeyNames的情况下可能出现的错误（yygy-6002）。
+	-修正下拉列表在数据重新加载后没有更新选中值的问题（Gnid-6018）。
+	-确保PageManager在指定AutoSizePanelID的情况下，其初始化脚本在用户自定义脚本之前执行（yygy-6008）。
+	-将FState的相关操作放在页面初始化完毕后，防止出现与动态创建控件相关的问题（隨風往事-5925）。
+	-修正树节点的OnClientClick中包含return语句可能引起的错误（FineUserSG-6042）。
+	-修正Confirm对话框标题无效的问题（小豬仔-5987）。
+	-表格的行扩展列支持，并增加6个相关示例。
+
+
+
++2014-07-21 v4.1.0
+	-渲染到页面上的按钮，其外部容器display默认为inline-block。
+	-示例grid/grid_iframe_window.aspx减少两个Panel，实现和之前一样的效果。
+	+反射获取对象属性时，不仅包含public属性，而且包含private, internal属性。
+		-指定参数BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic。
+	+修正普通回发时主题丢失问题。
+		-重现步骤：选择Blue主题，打开aspnet/aspnet.aspx，点击“4.ASP.NET按钮”，页面回到默认的Neptune主题。
+	-增加示例other/keydown.aspx。
+	-为ControlUtil.FindParentControl增加重载方法，用来处理继承关系。
+	-为ControlBase的GetPostBackEventReference增加重置函数，指定是否返回启用AJAX的脚本。
+	-更新示例iframe/passvalue_iframe.aspx，增加父窗口向子窗口传值。
+	-GroupPanel的默认布局由Container改为Anchor。
+	-修正输出页面的X-UA-Compatible标签错误（zjfeiye-5803）。
+	-将icon目录移到res目录内部。
+	-修正打开包含IFrame的Window的过程中按下ESC键时，可能出现弹出框的问题（tucq168-5858）。
+	-Tree的EnableArrows属性默认为true。
+	-修正MenuCheckBox总是回发的问题，也即AutoPostBack设置无效。
+	+表单增强。
+		-Web.config和PageManager中FormOffsetRight的默认值从5px改为0px。
+		-Form控件中非最后一列的右侧空白默认为5px。
+		-修正定义在Form，SimpleForm上的OffsetRight、LabelSeparator无效的问题。
+		-增加示例form/form_disabled.aspx，将所有表单字段禁用、设置只读、应用无效标识。
+		-Form控件启用Items属性，Layout属性默认为Anchor，可以自行设置（之前为只读属性）。
+		-如果父控件的布局不是Anchor，则表单字段忽略OffsetRight属性（也即渲染到客户端的anchor属性）。
+		-更新示例form/layout_panel2.aspx。
+		-增加示例form/layout_contactus.aspx，演示用VBox和HBox进行复杂的表单布局。
+		-增加示例form/layout_checkout.aspx，演示用Form和GroupPanel制作更加复杂的表单。
+		-示例dropdownlist/shengshixian.aspx重构。
+		-修正FileUpload无法显示图标的问题，更新示例form/fileupload_autopostback.aspx。
+	+表格增强。
+		-增加简单购物车示例（grid/grid_edit_cart.aspx）。
+		-增加示例grid/grid_rowcommand_download.aspx，以便在表格行内下载文件。
+		-增加示例grid/grid_summary_scrollbar.aspx，演示绝对定位合计行与横向滚动条同时存在的情况。
+		-GridRow的Values属性类型更改为object[]。
+		-删除示例grid/grid_edit_save_manual.aspx。
+		-重构示例grid/grid_edit_save_auto.aspx，客户端更新表格行对应的表单，定时保存全部数据并显示提示信息。
+	+单元格编辑表格增强。
+		-可编辑单元格和CheckBoxField同时存在时，出现BackupPostDataProperty中无法添加相同键的问题（ji78-5797）。
+		-修正日期列在不进行修改即退出编辑状态后，显示左上角的已修改标识的问题。
+		+返回后台的日期字段为字符串是格式化后的（类似2014-07-20，而不是之前的2003-09-01T00:00:00）。
+			-修改后台的处理代码DateTime.Parse(rowDict["EntranceDate"]).ToString("yyyy-MM-dd")，直接使用rowDict["EntranceDate"]。
+		-修正重新绑定数据后，仍然显示左上角已修改标识的问题（zjfeiye-5779）。
+		-Grid的GetNewAddedList函数返回类型更改为List<Dictionary<string, object>>。
+		-Grid的GetModifiedDict函数返回类型更改为Dictionary<int, Dictionary<string, object>>。
+		+比如入学年份列标签定义了DataField=EntranceYear，FieldType=Int，那么后台拿到修改值就是整形值，无需再做转换。
+			-rowData["AtSchool"]=Convert.ToBoolean(rowDict["AtSchool"]);可以更改为：rowData["AtSchool"]=rowDict["AtSchool"];
+	-修正NumberBox的NoNegative属性无效的问题（yezie-5789）。
+	+删除无效或者重复的属性。
+		-删除TabStrip的属性EnableTitleBackgroundColor、EnableDeferredRender。
+		-删除Window的属性Plain。
+		-删除ToolbarPosition的枚举类型Footer、Buttons，这两个都用Bottom枚举类型代替。
+		-删除Region上的Margins属性，删除BoxComponent上的BoxMargin属性，这两个都可以使用Margin属性代替。
+	-修正用户控件中使用NextFocusControl时定位错误的问题（牙膏人-5835）。
+	+第三方编辑器示例重构。
+		-删除FCKEditor的示例。
+		-CKEditor的示例不再使用ASP.NET控件，而是直接调用JS。
+		-增加TinyMCE和UMEditor的示例。
+		-更新ueditor/ueditor.aspx示例，删除难以理解的jQuery Promise，使用简单的处理方式。
+		-更新ueditor/ueditor_two.aspx示例，使用Form的自定义布局，而不是原始的table标签。
+	-修正树控件绑定为空值无效的问题，更新示例tree/databind/tree_document.aspx（IT刀客）。
+
+
+
++2014-05-11 v4.0.6
+	-修正下拉列表禁用时提交数据错误的问题（惘思）。
+	+修正顶部菜单框架（右侧选项卡）在多次点击头部菜单后，出现“不能执行已释放 Script 的代码”的错误（failist）。
+		-IE的问题：外部页面使用已关闭IFrame页面的数据（或回调）时发生。
+		-修正方法是将initTreeTabStrip的调用放在父页面，如此以来mainTabStrip的回调存在于父页面，而非已关闭IFrame。
+	-使用google-code-prettify对示例源代码进行着色。
+	-添加到页面上的主题样式类由theme-neptune改名为f-theme-neptune。
+	+树控件增强。
+		-TreeNode的AutoPostBack改名为EnableCheckEvent，EnablePostBack改名为EnableClickEvent。
+		-NodeExpand事件改名为NodeLazyLoad，TreeExpandEventArgs改名为TreeNodeEventArgs。
+		-TreeNode增加属性EnableExpandEvent和EnableCollapseEvent，Tree增加事件NodeExpand和NodeCollapse。
+		-增加示例tree/tree_expand.aspx，更新示例tree/tree_ajax.aspx。
+	-支持Server.Transfer，需要设置EnableAjax=false（chwentao）。
+	-修正TriggerBox的TriggerIcon无效的问题。
+	+增加FineUI与My97DatePicker整合的示例（aspnet/my97.aspx）。
+		-自定义皮肤neptune，以便和FineUIv4.x的Neptune主题兼容。
+	-修正UserControlConnector无效的问题。
+	+为面板Panel、Tab、Region、GroupPanel、AccordionPane、Window增加Content属性。
+		-可以在一定程度上避免使用ContentPanel，从而减少页面层次结构，加快页面渲染速度。
+		-更新示例window/window.aspx、default.aspx。
+	+为FileUpload控件增加AcceptFileTypes属性，控制默认显示的文件类型（六月寒）。
+		-更新示例form/fileupload_toolbar.aspx。
+	+表格中模板列的CSS类名由x-grid-tpl更改为f-grid-tpl。
+	+为Component增加Margin属性。
+		-删除Region上的Margins属性，请使用新增的Margin属性。
+		-删除BoxComponent上的BoxMargin属性，请使用新增的Margin属性。
+	+Layout枚举值Border改名为Region，为BoxComponent增加RegionPosition和RegionSplit两个属性。
+		-普通的面板也支持Region布局，可以在一定程度上减少页面上的层次结构。
+		-更新示例iframe/topmenu4/default.aspx。
+	-为Web.config和PageManager增加IEEdge属性（在IE浏览器中使用最新的渲染模式），默认为true（⑥阿太⑥）。
+	-新增三列面板示例layout/column.aspx（binbin）。
+	-修正Alert对话框与ActiveWindow.GetHidePostBackReference冲突的问题（wlj928449657）。
+
+
+
++2014-03-03 v4.0.5
+	-修正表格在AJAX更新时加载慢的问题。
+	-修正表格在分页和排序同时存在，分页时会发送两次AJAX请求的问题（Gunu40）。
+	-修正表格在特殊情况下出现getEditor未定义的错误（yygy）。
+	-修正示例form/layout_panel.aspx的布局错位（隨風往事、死水沼泽）。
+	-修正合计行在Blue主题下的样式问题（yygy）。
+	-修正示例form/layout_panel2.aspx的布局错位。
+	-修正basic/login_captcha.aspx的布局错位。
+	-修正复选框列表的标签分隔符为半角冒号的问题（highong）。
+	-确保EnableIFrame=false时Target只能为Self。
+	-为CheckItem、RadioItem、ListItem增加可以设置是否选中的构造函数（五四）。
+
+
+
++2014-02-28 v4.0.4
+	-为Neptune主题下的工具条添加背景色（szjazz）。
+	-树控件增加EnableSingleClickExpand属性，实现单击展开树节点功能（erp8@live.cn）。
+	-修复手风琴控件首次加载后无法获取展开状态的问题（asdfsdgd）。
+	+将在线示例的设置按钮移到左侧面板的顶部。
+		-演示如何使用JS为面板添加工具图标。
+		-演示如何使用JS来显示上下文菜单。
+	+修正表格无法多选的问题。
+		-更新示例grid/grid_checkboxfield_rowcheckall.aspx。
+		-增加示例grid/grid_checkboxfield_rowcheckall_clientside.aspx。
+		-增加示例grid/grid_checkboxfield_rowcheckall_contextmenu.aspx，演示如何在表格中使用右键菜单。
+	+面板增加展开折叠事件（asdfsdgd）。
+		-增加EnableCollapseEvent属性和Collapse事件。
+		-增加EnableExpandEvent属性和Expand事件。
+		-增加示例window/panel_collapse.aspx。
+	+Accordion增强（asdfsdgd）。
+		-修正Accordion的EnableFill,ShowCollapseTool等属性失效的问题。
+		-ActiveIndex改名为ActivePaneIndex，并更新为AJAX属性。
+		-增加属性AutoPostBack和PaneIndexChanged事件。
+		-更新示例accordion/accordion.aspx。
+		-增加示例accordion/accordion_autopostback.aspx。
+	-为Button增加MenuID属性，增加示例button/button_menu_menuid.aspx。
+	-修正页面第一次加载时Window控件遮挡Alert对话框的问题。
+	-修正无法修改表单字段Label的问题。
+	+删除所有之前版本标记为废除的方法和属性。
+		-PanelBase: EnableBackgroundColor
+		-Calendar: EnableDateSelect
+		-PageManager: HideScrollbar
+		-DatePicker: EnableDateSelect
+		-TimePicker: EnableTimeSelect
+		-Window: Popup
+		-Grid: AutoPostBack, EnableRowSelect, EnableRowDoubleClick, EnableRowClick, GetSelectCountReference
+		-GlobalConfig: GetDefaultBackgroundColor
+	-修正IE8下无法上传文件的问题（猫咪君、asdfsdgd）。
+	-修正Window控件不支持EnableAjax的问题，增加示例grid/grid_excel_selectcolumns.aspx（◆◇_提拉米苏℡）。
+	-将控件的Visible属性设为只读，如果想隐藏控件并在随后的请求中显示出来，请使用Hidden属性。
+	-修正tabstrip/tabstrip_addtab.aspx示例中相同ID可以多次添加的问题（春节）。
+	-修正删除选中树节点后重新绑定出错的问题（Panda）。
+	-修正aspnet/fckeditor.aspx示例无法获取用户输入值的问题（xie_g_j）。
+	-添加extjs缺少提醒，避免初学者走弯路。
+
+
+
++2014-01-20 v4.0.3(beta)
+	-修正表格动态创建列与模板列的冲突问题，增加示例grid/grid_excel_dynamic_columns.aspx（气人号-4586）。
+	-配置项ExtjsBasePath改名为JSBasePath，控件标签前缀由x改名为f，配置项删除不再使用的ResourceHandler。
+	-子窗口向父窗口传值错误（小兵、水+木-4591）。
+	-修正没有项目的下拉列回发时会触发SelectedIndexChanged事件的问题（purplebolt-4571）。
+	-修正在父页面弹出的窗体在显示时加载两次的问题（Gunu40-4725）。
+	-更新示例form/textbox_autopostback.aspx，增加示例grid/grid_summary2.aspx。
+	+表格增强。
+		-单元格编辑支持。
+		-更新之前的6个示例；
+		-新增示例grid/grid_editor_cell_databind.aspx，演示在后台绑定可编辑表格中的下拉列表。
+		+修正向表格末尾添加行时，不能默认选中第一个单元格的问题（奋斗~-4658）。
+			-更新示例grid/grid_editor_cell_new.aspx和grid/grid_editor_cell_new_delete.aspx。
+	+为PageManager增加CustomEvent事件。
+		-为PageManager增加ValidateForms、ValidateTarget、ValidateMessageBox属性。
+		-为PageManager增加重载方法GetCustomEventReference。
+		-为Window增加重载方法GetIFrameCustomEventReference方法。
+		-更新示例iframe/window2.aspx，在保存之前首先验证IFrame中的表单。
+		-增加示例other/confirm_cancel2.aspx，演示如何在后台响应确认对话框的确定和取消按钮事件。
+	+根据网友反馈，删除Form和SimpleForm的SubmitButton属性，恢复按钮的Type属性（Submit/Reset）。
+		-尽管新版ExtJS不支持按钮的Submit属性，我们还是手工实现，为了和正常的HTML表单兼容。
+		-更新示例basic/login.aspx和basic/login_captcha.aspx。
+
+
+
++2014-01-20 v3.3.3
+	-下拉列表ForceSelection默认值保持为true，否则对现有项目影响很大（蓝色天空-4381）。
+	-下拉列表在页面第一次加载时出现错误提示（牙膏人-4390）。
+	-修正在父页面弹出的窗体在显示时加载两次的问题（Gunu40-4725）。
+	-修正表格动态创建列与模板列的冲突问题，增加示例grid/grid_excel_dynamic_columns.aspx（气人号-4586）。
+	+新增示例grid/grid_editor_cell_databind.aspx，演示在后台绑定可编辑表格中的下拉列表。
+		-注意与模板列中的下拉列表的后台绑定对比：grid/grid_edit_dropdownlist2.aspx。
+	+修正向表格末尾添加行时，不能默认选中第一个单元格的问题（奋斗~-4658）。
+		-更新示例grid/grid_editor_cell_new.aspx和grid/grid_editor_cell_new_delete.aspx。
+
+
+
++2013-12-14 v4.0.2(beta)
+	+表格合计行重构。
+		-增加属性EnableSummary、SummaryData、SummaryPosition。
+		-增加示例grid/grid_summary.aspx、。
+	+增强品牌意识。
+		-客户端库简称 X 统一改为 F。
+		-服务器控件标签前缀由 x 统一改为 f。
+		-自定义CSS、JavaScript前缀由 x_ 或者 box- 统一改为 f_ 或者 f- 。
+	+客户端事件由函数定义形式改为传入回调函数。
+		-函数onReady更改为F.ready(fn)。
+		-函数onAjaxReady更改为F.ajaxReady(fn)。
+		-函数X.util.beforeAjaxPostBackScript更改为F.beforeAjax(fn)。
+		-删除PageManager的ExecuteOnReadyWhenPostBack属性。
+	-更新需要JavaScript参与的示例，DOM相关操作改为jQuery实现。
+	-增加示例grid/grid_edit_enterkey_v.aspx，演示如果使用回车键遍历表格中所有文本框（⑥阿太⑥）。
+	-更新X.util.addMainTab方法，如果refreshWhenExist为true，则尝试更新iframe的url，而不是调用location.reload（KITTEN-4293）。
+	-如果面板的EnableIFrame为true，则忽略Items属性（purplebolt）。
+	-为窗体控件的GetShowReference增加重载方法，可以在打开窗体时指定宽度和高度（黑冰.cn）。
+	-修正Can not add property X_Rows_GZ to Newtonsoft.Json.Linq.JObject（今夕何夕、treedun、欧志辉）。
+	-增加示例iframe/topmenu4/default.aspx，演示IFrame中的树如何与父窗口中的选项卡控件交互（wolkai-4386）。
+	-修正IE8下数组不支持indexOf方法的问题。
+	-IE10下示例页面顶部背景空白（奋斗~-4173）。
+	-IE9/10下自定义按钮的图片显示不了（奋斗~-4197）。
+	-包含日期控件的页面回发时出错（奋斗~-4172）。
+	-选项卡示例中的多行文本框在IE7下没有展开（奋斗~-4198）。
+	-多行显示补全数据示例问题（慧信-4180）。
+	-示例站点Cookie冲突导致无法访问（石头oswica-4182）。
+	-主题为Access时，表格的序号列背景色异常（死水沼泽-4183）。
+	-最大化窗体不能响应浏览器窗口大小改变事件（老白杨-4403）。
+	-删除行布局（吉吉﹑-4200）。
+	+多表头问题（吉吉﹑-4242）。
+		-表格的ForceFitAllTime改名为ForceFit，此属性暂时不能和多表头一起使用。
+	+按钮的Type=Submit无效（Herb-4192）。
+		-删除Button的Type属性，为SimpleForm和Form控件增加属性SubmitButton。
+		-更新示例basic/login.aspx和form/form_reset.aspx。
+	+关闭窗体之前，检查窗体IFrame内表单是否已经改变，如果已经改变则弹出是否关闭的确认对话框以防止用户录入数据丢失。
+		-窗体启用EnableConfirmOnClose，EnableIFrame。
+		-窗体IFrame里面的关闭按钮通过ActiveWindow.GetConfirmHideReference等函数注册客户端事件。
+		-更新客户端函数F.wnd.getActiveWindow，直接返回窗体对象，浏览器窗口对象可以通过F.wnd.getActiveWindow().window来获取。
+		-窗体增加GetIFramePostBackEventReference函数，用来回发窗体内的IFrame页面。
+		-增加示例iframe/window.aspx和iframe/window2.aspx，演示如何使用窗体关闭确认对话框，并且第一次将保持按钮放在窗体的工具栏中。
+	-窗体控件的IsModal属性无效（purplebolt-4209）。
+	-删除面板的FooterBarAlign属性，为Toolbar控件增加ToolbarAlign属性（可能需要为Footer工具栏设置ToolbarAlign="Right"）。
+	-修正动态创建模板列无法导出的问题（hroger-4584）。
+
+
+
++2013-11-21 v3.3.2
+	-修正IE7/IE8下表格的日期列显示错误，IE不能正确解析Date.parse('2015-10-01')（夏雨雪）。
+	-修正表格中模板列在数据绑定时可能不更新的问题（小兵、舞柯庶、蒙奇.D.二毛、李明海）。
+	+更新示例grid/grid_pageitems_pagesize.aspx和grid/grid_pageitems_pagesize_database.aspx。
+		-在更改每页显示数目（PageSize）时，防止PageIndex越界。
+	-UEditor更新为1.2.6.1。
+	-增加自定义图片按钮示例button/button_custom.aspx（簫今Shawgin）。
+	+修正Collapsed属性在客户端改变后状态同步问题。
+		-重现步骤：window/group_panel.aspx示例，折叠分组面板二，点击下面的按钮，不能展开分组面板二。
+	+修正树控件的SelectedNodeIDArray属性在客户端改变后状态同步问题。
+		-重现步骤：tree/checkbox/tree_checkall.aspx示例，选中驻马店，点击河南省，则驻马店没能保持选中状态。
+	-修正TimerPicker无法赋值的问题（隨風往事、凤凰涅盘ing）。
+	-修正表格列绑定的数据库字段值为空时出错的问题（欧志辉）。
+	-修正引入样式文件的标签笔误，应为type=text/css（是梦~`）。
+	-DropDownList的ForceSelection属性默认为false，更新示例dropdownlist/dropdownlist_forceselection.aspx。
+	-更新X.util.addMainTab方法，如果refreshWhenExist为true，则尝试更新iframe的url，而不是调用location.reload（KITTEN）。
+	-如果面板的EnableIFrame为true，则忽略Items属性（purplebolt）。
+	-为窗体控件的GetShowReference增加重载方法，可以在打开窗体时指定宽度和高度（黑冰.cn）。
+	-修正Can not add property X_Rows_GZ to Newtonsoft.Json.Linq.JObject（今夕何夕、treedun、欧志辉）。
+
+
+	
++2013-10-28 v4.0.1(beta)
 	+修正面板的Collapsed属性在客户端改变后状态同步问题。
 		-重现步骤：window/group_panel.aspx示例，折叠分组面板二，点击下面的按钮，不能展开分组面板二。
 	+修正树控件的SelectedNodeIDArray属性在客户端改变后状态同步问题。
@@ -78,32 +494,13 @@ FineUI 严格遵守 ExtJS 对开源软件的限制，不再内置 ExtJS 库，�
 	+增加事件参数类CheckedEventArgs，复选框、单选框以及菜单按钮的CheckedChanged事件会接收这个事件参数。
 		-更新示例default.aspx、toolbar/menucheckbox.aspx、form/radiobutton.aspx，处理单选框列表时需要的技巧。
 	+窗体控件更新。
-		-如果删除面板初始属性IFrameUrl="#"或者IFrameUrl="about:blank"，则面板中的IFrame会延迟加载。
+		-如果删除面板初始属性IFrameUrl=#，则面板中的IFrame会延迟加载。
 		-对于设置了IFrameName的面板，初始属性IFrameUrl需要保留，比如iframe/topmenu/default.aspx。
 	-删除Region的EnableSplitTip、CollapsibleSplitTip、SplitTip、CollapseMode、CMargins属性。
 	-删除AccordionPane的EnableHightlight属性。
 	-全部200多个示例更新。
 
-
-
-+2013-11-** v3.3.2
-	-修正IE7/IE8下表格的日期列显示错误，IE不能正确解析Date.parse('2015-10-01')（夏雨雪）。
-	-修正表格中模板列在数据绑定时可能不更新的问题（小兵、舞柯庶、蒙奇.D.二毛、李明海）。
-	+更新示例grid/grid_pageitems_pagesize.aspx和grid/grid_pageitems_pagesize_database.aspx。
-		-在更改每页显示数目（PageSize）时，防止PageIndex越界。
-	-UEditor更新为1.2.6.1。
-	-增加自定义图片按钮示例button/button_custom.aspx（簫今Shawgin）。
-	-修正Window控件不支持EnableAjax的问题，增加示例grid/grid_excel_selectcolumns.aspx（◆◇_提拉米苏℡）。
-	+修正Collapsed属性在客户端改变后状态同步问题。
-		-重现步骤：window/group_panel.aspx示例，折叠分组面板二，点击下面的按钮，不能展开分组面板二。
-	+修正树控件的SelectedNodeIDArray属性在客户端改变后状态同步问题。
-		-重现步骤：tree/checkbox/tree_checkall.aspx示例，选中驻马店，点击河南省，则驻马店没能保持选中状态。
-	-修正TimerPicker无法赋值的问题（隨風往事、凤凰涅盘ing）。
-	-修正表格列绑定的数据库字段值为空时出错的问题（欧志辉）。
-	-修正引入样式文件的标签笔误，应为type=text/css（是梦~`）。
-	-DropDownList的ForceSelection属性默认为false，更新示例dropdownlist/dropdownlist_forceselection.aspx。
-
-
+	
 
 +2013-07-29 v3.3.1
 	-将工具YUICompressor替换为Microsoft Ajax Minifier（需要指定-evals:immediate）。

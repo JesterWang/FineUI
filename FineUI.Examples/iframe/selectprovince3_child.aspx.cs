@@ -19,9 +19,8 @@ namespace FineUI.Examples.iframe
             }
             else
             {
-                string eventTarget = Request.Form["__EVENTTARGET"];
-                string eventArgument = Request.Form["__EVENTARGUMENT"];
-                if (eventTarget == imgChina.ClientID && eventArgument.StartsWith("SelectProvince$"))
+                string eventArgument = GetRequestEventArgument();
+                if (eventArgument.StartsWith("SelectProvince$"))
                 {
                     PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference(eventArgument));
                 }

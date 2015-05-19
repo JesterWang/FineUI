@@ -13,5 +13,11 @@ namespace FineUI.Examples.form
         {
 
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Alert.Show("表单提交成功");
+        }
+
     }
 }

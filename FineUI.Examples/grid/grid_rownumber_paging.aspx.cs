@@ -35,7 +35,7 @@ namespace FineUI.Examples.grid
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            labResult.Text = HowManyRowsAreSelected(Grid1);
+            labResult.Text = HowManyRowsAreSelected(Grid1, true);
         }
 
         protected void Grid1_PageIndexChange(object sender, FineUI.GridPageEventArgs e)

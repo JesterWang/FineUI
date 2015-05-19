@@ -4,3 +4,8 @@ a.x-tree-node-text {
     text-decoration: none;
     color: #000;
 }
+
+
+.x-tree-noicon .x-tree-icon {
+    display: none;
+}

@@ -5,51 +5,52 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格" EnableFrame="true" EnableCollapse="true" Width="800px" runat="server"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格"  EnableCollapse="true" Width="800px" runat="server"
             DataKeyNames="Guid" AllowSorting="true" SortField="HZData1"
-            SortDirection="ASC" OnSort="Grid1_Sort" ForceFitAllTime="true">
+            SortDirection="ASC" OnSort="Grid1_Sort">
             <Columns>
-                <x:RowNumberField />
-                <x:GroupField HeaderText="安徽省" TextAlign="Center">
+                <f:RowNumberField />
+                <f:BoundField DataField="Year" Width="80px" HeaderText="统计年份" />
+                <f:GroupField HeaderText="安徽省" TextAlign="Center">
                     <Columns>
-                        <x:GroupField HeaderText="合肥市" TextAlign="Center">
+                        <f:GroupField HeaderText="合肥市" TextAlign="Center">
                             <Columns>
-                                <x:BoundField Width="100px" DataField="AHData1" SortField="AHData1" HeaderText="数据一"
+                                <f:BoundField Width="100px" DataField="AHData1" SortField="AHData1" HeaderText="数据一"
                                     TextAlign="Center" />
-                                <x:BoundField Width="100px" DataField="AHData2" SortField="AHData2" HeaderText="数据二"
+                                <f:BoundField Width="100px" DataField="AHData2" SortField="AHData2" HeaderText="数据二"
                                     TextAlign="Center" />
                             </Columns>
-                        </x:GroupField>
+                        </f:GroupField>
                     </Columns>
-                </x:GroupField>
-                <x:GroupField HeaderText="河南省" TextAlign="Center">
+                </f:GroupField>
+                <f:GroupField HeaderText="河南省" TextAlign="Center">
                     <Columns>
-                        <x:GroupField HeaderText="驻马店市" TextAlign="Center">
+                        <f:GroupField HeaderText="驻马店市" TextAlign="Center">
                             <Columns>
-                                <x:BoundField Width="100px" DataField="HZData1" SortField="HZData1" ColumnID="HZData1"
+                                <f:BoundField Width="100px" DataField="HZData1" SortField="HZData1" ColumnID="HZData1"
                                     HeaderText="数据一" TextAlign="Center" />
-                                <x:BoundField Width="100px" DataField="HZData2" SortField="HZData2" HeaderText="数据二"
+                                <f:BoundField Width="100px" DataField="HZData2" SortField="HZData2" HeaderText="数据二"
                                     TextAlign="Center" />
                             </Columns>
-                        </x:GroupField>
-                        <x:GroupField HeaderText="漯河市" TextAlign="Center">
+                        </f:GroupField>
+                        <f:GroupField HeaderText="漯河市" TextAlign="Center">
                             <Columns>
-                                <x:BoundField Width="100px" DataField="HLData1" SortField="HLData1" HeaderText="数据一"
+                                <f:BoundField Width="100px" DataField="HLData1" SortField="HLData1" HeaderText="数据一"
                                     TextAlign="Center" />
-                                <x:BoundField Width="100px" DataField="HLData2" SortField="HLData2" HeaderText="数据二"
+                                <f:BoundField Width="100px" DataField="HLData2" SortField="HLData2" HeaderText="数据二"
                                     TextAlign="Center" />
                             </Columns>
-                        </x:GroupField>
+                        </f:GroupField>
                     </Columns>
-                </x:GroupField>
-                <x:BoundField BoxFlex="1" DataField="LogTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="记录时间" />
+                </f:GroupField>
+                <f:BoundField BoxFlex="1" DataField="LogTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="记录时间" />
             </Columns>
-        </x:Grid>
+        </f:Grid>
         <br />
         <br />
     </form>

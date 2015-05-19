@@ -4,63 +4,24 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <style>
+       
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-    <x:PageManager ID="PageManager1" runat="server" AutoSizePanelID="TabStrip1" />
-    <x:TabStrip ID="TabStrip1" runat="server" ActiveTabIndex="0" ShowBorder="True">
-        <Tabs>
-            <x:Tab ID="ZtTab" runat="server"  Layout="Fit">
-                <Items>
-                    <x:Grid ID="ZtGrid" PageSize="20" DataKeyNames="Remarks" runat="server" AllowPaging="True"
-                        EnableCheckBoxSelect="True" IsDatabasePaging="True" ShowBorder="False"
-                        ShowHeader="False" EnableMultiSelect="False" ExpandAllRowExpanders="true">
-                        <Columns>
-                            <x:BoundField TextAlign="Center" ExpandUnusedSpace="true" DataField="Remarks" DataFormatString="{0}"
-                                HeaderText="备注" />
-                        </Columns>
-                        <PageItems>
-                            <x:ToolbarSeparator ID="ToolbarSeparator4" runat="server">
-                            </x:ToolbarSeparator>
-                            <x:Button IconUrl="~/images/collapse-all.gif" runat="server" EnablePress="true" Pressed="true"
-                                ID="btnZtShowRowExpanders" ToolTip="显示或隐藏详细信息">
-                            </x:Button>
-                            <x:ToolbarSeparator ID="ToolbarSeparator2" runat="server">
-                            </x:ToolbarSeparator>
-                            <x:Button runat="server" ID="butZtRefresh" Icon="DatabaseRefresh" OnClick="butRefresh_Click"
-                                ToolTip="刷新">
-                            </x:Button>
-                        </PageItems>
-                    </x:Grid>
-                </Items>
-            </x:Tab>
-            <x:Tab ID="XhycTab" runat="server"  Layout="Fit">
-                <Items>
-                    <x:Grid ID="XhycGrid" PageSize="20" DataKeyNames="Remarks" runat="server" AllowPaging="True"
-                        EnableCheckBoxSelect="True" IsDatabasePaging="True" ShowBorder="False"
-                        ShowHeader="False" EnableMultiSelect="False" ExpandAllRowExpanders="true">
-                        <Columns>
-                            <x:BoundField TextAlign="Center" ExpandUnusedSpace="true" DataField="Remarks" DataFormatString="{0}"
-                                HeaderText="备注" />
-                        </Columns>
-                        <PageItems>
-                            <x:ToolbarSeparator ID="ToolbarSeparator5" runat="server">
-                            </x:ToolbarSeparator>
-                            <x:Button IconUrl="~/images/collapse-all.gif" runat="server" EnablePress="true" Pressed="true"
-                                ID="btnXhycShowRowExpanders" ToolTip="显示或隐藏详细信息">
-                            </x:Button>
-                            <x:ToolbarSeparator ID="ToolbarSeparator3" runat="server">
-                            </x:ToolbarSeparator>
-                            <x:Button runat="server" ID="butXhycRefresh" Icon="DatabaseRefresh" OnClick="butRefresh_Click"
-                                ToolTip="刷新">
-                            </x:Button>
-                        </PageItems>
-                    </x:Grid>
-                </Items>
-            </x:Tab>
-        </Tabs>
-    </x:TabStrip>
+        <f:PageManager ID="PageManager1" AutoSizePanelID="Grid1" runat="server" />
+
+        <f:DropDownList runat="server" ID="ddlMessageBoxIcon">
+            <f:ListItem Value="None" Text="无图标" Selected="true" />
+            <f:ListItem Value="Information" Text="消息" />
+            <f:ListItem Value="Warning" Text="警告" />
+            <f:ListItem Value="Question" Text="问题" />
+            <f:ListItem Value="Error" Text="错误" />
+            <f:ListItem Value="Success" Text="成功" />
+        </f:DropDownList>
+        <f:Button Text="点击弹出对话框" runat="server" ID="btnHello" >
+        </f:Button>  
     </form>
 </body>
 </html>

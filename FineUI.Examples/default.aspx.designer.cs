@@ -49,22 +49,112 @@ namespace FineUI.Examples {
         protected global::FineUI.Region Region1;
         
         /// <summary>
-        /// ContentPanel1 控件。
+        /// leftPanel 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.ContentPanel ContentPanel1;
+        protected global::FineUI.Region leftPanel;
         
         /// <summary>
-        /// Button2 控件。
+        /// mainRegion 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Button Button2;
+        protected global::FineUI.Region mainRegion;
+        
+        /// <summary>
+        /// mainTabStrip 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.TabStrip mainTabStrip;
+        
+        /// <summary>
+        /// ToolbarFill2 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.ToolbarFill ToolbarFill2;
+        
+        /// <summary>
+        /// btnGotoOpenSourceSite 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Button btnGotoOpenSourceSite;
+        
+        /// <summary>
+        /// ToolbarSeparator2 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.ToolbarSeparator ToolbarSeparator2;
+        
+        /// <summary>
+        /// Button1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Button Button1;
+        
+        /// <summary>
+        /// bottomPanel 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Region bottomPanel;
+        
+        /// <summary>
+        /// litVersion 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litVersion;
+        
+        /// <summary>
+        /// litOnlineUserCount 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litOnlineUserCount;
+        
+        /// <summary>
+        /// windowSourceCode 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Window windowSourceCode;
+        
+        /// <summary>
+        /// menuSettings 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Menu menuSettings;
         
         /// <summary>
         /// btnExpandAll 控件。
@@ -83,6 +173,24 @@ namespace FineUI.Examples {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUI.MenuButton btnCollapseAll;
+        
+        /// <summary>
+        /// MenuSeparator4 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.MenuSeparator MenuSeparator4;
+        
+        /// <summary>
+        /// cbxShowOnlyNew 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.MenuCheckBox cbxShowOnlyNew;
         
         /// <summary>
         /// MenuSeparator1 控件。
@@ -211,85 +319,40 @@ namespace FineUI.Examples {
         protected global::FineUI.MenuSeparator MenuSeparator2;
         
         /// <summary>
-        /// Region2 控件。
+        /// MenuHyperLink2 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Region Region2;
+        protected global::FineUI.MenuHyperLink MenuHyperLink2;
         
         /// <summary>
-        /// mainRegion 控件。
+        /// MenuHyperLink1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Region mainRegion;
+        protected global::FineUI.MenuHyperLink MenuHyperLink1;
         
         /// <summary>
-        /// mainTabStrip 控件。
+        /// MenuSeparator3 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.TabStrip mainTabStrip;
+        protected global::FineUI.MenuSeparator MenuSeparator3;
         
         /// <summary>
-        /// ToolbarFill2 控件。
+        /// MenuHyperLink3 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.ToolbarFill ToolbarFill2;
-        
-        /// <summary>
-        /// btnGotoOpenSourceSite 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUI.Button btnGotoOpenSourceSite;
-        
-        /// <summary>
-        /// ToolbarSeparator1 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUI.ToolbarSeparator ToolbarSeparator1;
-        
-        /// <summary>
-        /// ToolbarSeparator2 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUI.ToolbarSeparator ToolbarSeparator2;
-        
-        /// <summary>
-        /// Button1 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUI.Button Button1;
-        
-        /// <summary>
-        /// windowSourceCode 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUI.Window windowSourceCode;
+        protected global::FineUI.MenuHyperLink MenuHyperLink3;
         
         /// <summary>
         /// XmlDataSource1 控件。

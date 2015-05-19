@@ -227,23 +227,31 @@ namespace FineUI
 
         #region GetColumnValue
 
-        internal override string GetColumnValue(GridRow row)
+        internal override object GetColumnValue(GridRow row)
         {
-            string text = String.Empty;
+            object result = String.Empty;
 
             if (!String.IsNullOrEmpty(DataField))
             {
                 object value = row.GetPropertyValue(DataField);
 
-                if (value == null)
+                if (value == null || value == DBNull.Value || (value is String && String.IsNullOrEmpty(value.ToString())))
                 {
-                    text = NullDisplayText;
+                    result = NullDisplayText;
                 }
                 else
                 {
                     if (FieldType == FieldType.Boolean)
                     {
-                        text = value.ToString().ToLower();
+                        result = Convert.ToBoolean(value);
+                    }
+                    else if (FieldType == FieldType.Int)
+                    {
+                        result = Convert.ToInt32(value);
+                    }
+                    else if (FieldType == FieldType.Float)
+                    {
+                        result = Convert.ToSingle(value);
                     }
                     else if (FieldType == FieldType.Date)
                     {
@@ -258,30 +266,80 @@ namespace FineUI
                             date = DateTime.Parse(value.ToString());
                         }
 
-                        // 2009-02-27T12:12:22
-                        text = date.ToString("s");
-                        int tIndex = text.IndexOf("T");
-                        if (tIndex >= 0)
-                        {
-                            text = text.Substring(0, tIndex) + "T00:00:00";
-                        }
+                        //// 2009-02-27T12:12:22
+                        //text = date.ToString("s");
+                        //int tIndex = text.IndexOf("T");
+                        //if (tIndex >= 0)
+                        //{
+                        //    text = text.Substring(0, tIndex) + "T00:00:00";
+                        //}
 
-                        //text = date.ToString(RendererArgument);
+                        result = date.ToString(RendererArgument);
                     }
                     else
                     {
-                        text = value.ToString();
-                    }
+                        result = value.ToString();
 
-                    if (HtmlEncode)
-                    {
-                        text = HttpUtility.HtmlEncode(text);
+                        if (HtmlEncode)
+                        {
+                            result = HttpUtility.HtmlEncode(result.ToString());
+                        }
                     }
                 }
             }
 
-            return text;
+            return result;
         }
+
+        #endregion
+
+        #region GetRenderer
+
+        private string GetRenderer()
+        {
+            if (!String.IsNullOrEmpty(RendererFunction))
+            {
+                return RendererFunction;
+            }
+
+            if (Renderer == Renderer.None)
+            {
+                return String.Empty;
+            }
+
+            if (Renderer == Renderer.Date)
+            {
+                string argument = "yyyy-MM-dd";
+                if (!String.IsNullOrEmpty(RendererArgument))
+                {
+                    argument = RendererArgument;
+                }
+                return String.Format("F.format.dateRenderer('{0}')", DateUtil.ConvertToClientDateFormat(argument));
+            }
+            else if (Renderer == Renderer.Ellipsis)
+            {
+                string argument = "10";
+                if (!String.IsNullOrEmpty(RendererArgument))
+                {
+                    argument = RendererArgument;
+                }
+                return String.Format("F.format.ellipsisRenderer({0})", argument);
+            }
+            //else if (Renderer == Renderer.Number)
+            //{
+            //    string argument = "0.00";
+            //    if (!String.IsNullOrEmpty(RendererArgument))
+            //    {
+            //        argument = RendererArgument;
+            //    }
+            //    return String.Format("F.format.number('{0}')", argument);
+            //}
+            else
+            {
+                return String.Format("F.format.{0}", RendererName.GetName(Renderer));
+            }
+
+        } 
 
         #endregion
 
@@ -315,56 +373,10 @@ namespace FineUI
             }
 
             string jsContent = String.Format("var {0}={1};", XID, OB.ToString());
-            AddStartupScript(jsContent);
-
+            AddGridColumnScript(jsContent);
+            
         }
 
-
-        private string GetRenderer()
-        {
-            if (!String.IsNullOrEmpty(RendererFunction))
-            {
-                return RendererFunction;
-            }
-
-            if (Renderer == Renderer.None)
-            {
-                return String.Empty;
-            }
-
-            if (Renderer == Renderer.Date)
-            {
-                string argument = "yyyy-MM-dd";
-                if (!String.IsNullOrEmpty(RendererArgument))
-                {
-                    argument = RendererArgument;
-                }
-                return String.Format("X.format.date('{0}')", ExtDateTimeConvertor.ConvertToExtDateFormat(argument));
-            }
-            else if (Renderer == Renderer.Ellipsis)
-            {
-                string argument = "10";
-                if (!String.IsNullOrEmpty(RendererArgument))
-                {
-                    argument = RendererArgument;
-                }
-                return String.Format("X.format.ellipsis({0})", argument);
-            }
-            else if (Renderer == Renderer.Number)
-            {
-                string argument = "0.00";
-                if (!String.IsNullOrEmpty(RendererArgument))
-                {
-                    argument = RendererArgument;
-                }
-                return String.Format("X.format.number('{0}')", argument);
-            }
-            else
-            {
-                return String.Format("X.format.{0}", RendererName.GetName(Renderer));
-            }
-
-        }
 
         #endregion
 

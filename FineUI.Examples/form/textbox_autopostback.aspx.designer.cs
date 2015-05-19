@@ -67,12 +67,30 @@ namespace FineUI.Examples.form {
         protected global::FineUI.TextBox TextBox3;
         
         /// <summary>
-        /// labResult 控件。
+        /// labResult1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Label labResult;
+        protected global::FineUI.Label labResult1;
+        
+        /// <summary>
+        /// labResult2 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Label labResult2;
+        
+        /// <summary>
+        /// labResult3 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Label labResult3;
     }
 }

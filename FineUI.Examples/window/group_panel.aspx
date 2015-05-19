@@ -4,32 +4,41 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Panel ID="Panel1" BodyPadding="5px" runat="server" EnableFrame="true"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Panel ID="Panel1" BodyPadding="5px" runat="server"
             EnableCollapse="True" Title="面板" Width="600px">
             <Items>
-                <x:GroupPanel runat="server" Title="分组面板一" ID="GroupPanel1" EnableCollapse="True">
+                <f:GroupPanel runat="server" Title="分组面板一" ID="GroupPanel1" EnableCollapse="True" Collapsed="true">
                     <Items>
-                        <x:SimpleForm ID="SimpleForm1" runat="server" ShowBorder="False"
+                        <f:SimpleForm ID="SimpleForm1" runat="server" ShowBorder="False"
                             ShowHeader="False">
                             <Items>
-                                <x:TextBox ID="TextBox1" Label="名称" runat="server">
-                                </x:TextBox>
-                                <x:TextArea ID="TextArea1" Label="备注" runat="server">
-                                </x:TextArea>
+                                <f:TextBox ID="TextBox1" Label="名称" runat="server">
+                                </f:TextBox>
+                                <f:TextArea ID="TextArea1" Label="备注" runat="server">
+                                </f:TextArea>
                             </Items>
-                        </x:SimpleForm>
+                        </f:SimpleForm>
                     </Items>
-                </x:GroupPanel>
-                <x:GroupPanel ID="GroupPanel2" Title="分组面板二" runat="server" EnableCollapse="True">
+                </f:GroupPanel>
+                <f:GroupPanel ID="GroupPanel2" Title="分组面板二" runat="server" EnableCollapse="True">
+                     <Toolbars>
+                        <f:Toolbar ID="Toolbar1" runat="server" Position="Bottom">
+                            <Items>
+                                <f:Button ID="Button3" runat="server" Text="左侧的按钮"></f:Button>
+                                <f:ToolbarFill ID="ToolbarFill1" runat="server"></f:ToolbarFill>
+                                <f:Button ID="Button1" runat="server" Text="右侧的按钮"></f:Button>
+                            </Items>
+                        </f:Toolbar>
+                    </Toolbars>
                     <Items>
-                        <x:ContentPanel ID="ContentPanel1" ShowBorder="false" ShowHeader="false"
+                        <f:ContentPanel ID="ContentPanel1" ShowBorder="false" ShowHeader="false"
                             runat="server">
-                            <a href="http://tech.163.com/special/jobsdead/" rel="&amp;a=7"
+                            <a href="http://tech.163.com/special/jobsdead/"
                                 style="font-size: 18px" target="_blank"><b>乔布斯</b></a><br />
                             <div>
                                 <p>
@@ -39,14 +48,17 @@
                                     遗憾的是，苹果的取得巨大成功还是无法给乔布斯一个健康的身体，乔布斯2003年被发现患有胰脏癌，随后又查出肝癌，危在旦夕的乔布斯在经历了8年的抗癌斗争、3次病休、若干次手术后，于2011年8月25日正式宣布从CEO位置辞职转做公司董事长，原COO库克正式接任乔布斯任CEO。2011年10月6日，乔布斯在苹果发布iPhone 4S后的第二天与世长辞。
                                 </p>
                             </div>
-                        </x:ContentPanel>
+                        </f:ContentPanel>
                     </Items>
-                </x:GroupPanel>
+                </f:GroupPanel>
             </Items>
-        </x:Panel>
+        </f:Panel>
         <br />
-        <x:Button ID="Button2" Text="展开/折叠分组面板二" OnClick="Button2_Click" runat="server">
-        </x:Button>
+        <f:Button ID="Button2" Text="展开/折叠分组面板二" OnClick="Button2_Click" runat="server">
+        </f:Button>
+        <br />
+        <br />
+        注：ExtJS这个地方有问题，第二个GroupPanel面板是有工具栏的，但是没有显示出来。查看<a href="http://fineui.com/demo_pro/#/demo_pro/window/group_panel.aspx" target="_blank">专业版示例</a>。
     </form>
 </body>
 </html>

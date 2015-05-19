@@ -5,56 +5,57 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <meta name="sourcefiles" content="~/usercontrol/UserInfoControl.ascx" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server"></x:PageManager>
-        <x:Panel runat="server" ID="Panel1" Width="600px" EnableFrame="true" EnableCollapse="true"
+        <f:PageManager ID="PageManager1" runat="server"></f:PageManager>
+        <f:Panel runat="server" ID="Panel1" Width="600px"  EnableCollapse="true"
             Height="300px" Layout="VBox" BoxConfigAlign="Stretch" BoxConfigPosition="Start"
-            BoxConfigPadding="5" BoxConfigChildMargin="0 0 5 0" Title="页面/面板一（Layout=VBox, Panel->(UserControlConnector->UserInfoControl,Panel)）">
+            BodyPadding="5px" BoxConfigChildMargin="0 0 5 0" Title="页面/面板一（Layout=VBox, Panel->(UserControlConnector->UserInfoControl,Panel)）">
             <Items>
-                <x:UserControlConnector ID="UserControlConnector1" runat="server">
+                <f:UserControlConnector ID="UserControlConnector1" runat="server">
                     <uc1:UserInfoControl ID="UserInfoControl1" UserName="陈萍萍" UserAge="20" UserCountry="合肥"
                         runat="server" />
-                </x:UserControlConnector>
-                <x:Panel runat="server" ID="Panel3" BodyPadding="5px" BoxFlex="1" BoxMargin="0"
+                </f:UserControlConnector>
+                <f:Panel runat="server" ID="Panel3" BodyPadding="5px" BoxFlex="1" Margin="0"
                     Title="页面/面板二">
                     <Items>
-                        <x:Label runat="server" Text="胡斐今年22岁，住在驻马店。">
-                        </x:Label>
+                        <f:Label runat="server" Text="胡斐今年22岁，住在驻马店。">
+                        </f:Label>
                     </Items>
-                </x:Panel>
+                </f:Panel>
             </Items>
-        </x:Panel>
+        </f:Panel>
         <br />
-        <x:Panel runat="server" ID="Panel2" Width="600px" EnableFrame="true" EnableCollapse="true"
+        <f:Panel runat="server" ID="Panel2" Width="600px"  EnableCollapse="true"
             Height="300px" Layout="VBox" BoxConfigAlign="Stretch" BoxConfigPosition="Start"
-            BoxConfigPadding="5" BoxConfigChildMargin="0 0 5 0" Title="页面/面板一">
+            BodyPadding="5px" BoxConfigChildMargin="0 0 5 0" Title="页面/面板一">
             <Items>
-                <x:UserControlConnector ID="UserControlConnector2" runat="server">
+                <f:UserControlConnector ID="UserControlConnector2" runat="server">
                     <uc1:UserInfoControl ID="UserInfoControl2" UserName="陈萍萍" UserAge="20" UserCountry="合肥"
                         runat="server" />
-                </x:UserControlConnector>
-                <x:UserControlConnector ID="UserControlConnector3" runat="server">
-                    <uc1:UserInfoControl ID="UserInfoControl3" Properties="{BoxMargin:'0',BoxFlex:1}" UserName="胡斐" UserAge="22" UserCountry="驻马店"
+                </f:UserControlConnector>
+                <f:UserControlConnector ID="UserControlConnector3" runat="server">
+                    <uc1:UserInfoControl ID="UserInfoControl3" Properties="{Margin:'0',BoxFlex:1}" UserName="胡斐" UserAge="22" UserCountry="驻马店"
                         runat="server" />
-                </x:UserControlConnector>
+                </f:UserControlConnector>
             </Items>
-        </x:Panel>
+        </f:Panel>
         <br />
-        <x:Panel runat="server" ID="Panel4" Width="600px" EnableFrame="true" EnableCollapse="true"
+        <f:Panel runat="server" ID="Panel4" Width="600px"  EnableCollapse="true"
             Height="300px" Layout="VBox" BoxConfigAlign="Stretch" BoxConfigPosition="Start"
-            BoxConfigPadding="5" BoxConfigChildMargin="0 0 5 0" Title="页面/面板二">
+            BodyPadding="5px" BoxConfigChildMargin="0 0 5 0" Title="页面/面板二">
             <Items>
-                <x:UserControlConnector ID="UserControlConnector4" runat="server">
+                <f:UserControlConnector ID="UserControlConnector4" runat="server">
                     <uc1:UserInfoControl ID="UserInfoControl4" UserName="陈萍萍" UserAge="20" UserCountry="合肥"
                         runat="server" />
                     <uc1:UserInfoControl ID="UserInfoControl5" UserName="胡斐" UserAge="22" UserCountry="驻马店"
                         runat="server" />
-                </x:UserControlConnector>
+                </f:UserControlConnector>
             </Items>
-        </x:Panel>
+        </f:Panel>
     </form>
 </body>
 </html>

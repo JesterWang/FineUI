@@ -4,7 +4,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         body {
             padding: 10px;
@@ -18,7 +18,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <img src="../images/icons.gif" alt="FineUI Icons" />
+        <img src="../res/images/icons.gif" alt="FineUI Icons" />
         <%--<asp:Literal EnableViewState="false" runat="server" ID="litIcons"></asp:Literal>--%>
     </form>
 </body>

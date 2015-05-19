@@ -12,8 +12,8 @@ namespace FineUI.Examples.iframe
         {
             if (!IsPostBack)
             {
-                // 这种方式也支持
-                //imgChina.Attributes["usemap"] = "#ChinaMap";
+                // 设置图片的 usemap 属性
+                imgChina.Attributes["usemap"] = "#ChinaMap";
 
                 labNote.Text = "图片来源：<a href=\"http://www.sbsm.gov.cn/article/zxbs/dtfw/\" target=\"_blank\">http://www.sbsm.gov.cn/article/zxbs/dtfw/</a>";
             }

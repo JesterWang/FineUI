@@ -31,13 +31,13 @@ namespace FineUI.Examples {
         protected global::FineUI.PageManager PageManager1;
         
         /// <summary>
-        /// Label1 控件。
+        /// Panel1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Label Label1;
+        protected global::FineUI.Panel Panel1;
         
         /// <summary>
         /// SimpleForm1 控件。
@@ -49,12 +49,21 @@ namespace FineUI.Examples {
         protected global::FineUI.SimpleForm SimpleForm1;
         
         /// <summary>
-        /// rblU_Sex 控件。
+        /// txtTitle 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.RadioButtonList rblU_Sex;
+        protected global::FineUI.TextBox txtTitle;
+        
+        /// <summary>
+        /// btnSearch 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Button btnSearch;
     }
 }

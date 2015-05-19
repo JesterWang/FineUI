@@ -44,6 +44,21 @@ namespace FineUI
     [ControlBuilder(typeof(ContentPanelBuilder))]
     public class UserControlConnector : ControlBase
     {
+        #region Properties
+
+        /// <summary>
+        /// 不向页面输出控件的外部容器
+        /// </summary>
+        internal override bool RenderWrapperNode
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
         #region OnPreRender
 
         /// <summary>
@@ -70,8 +85,10 @@ namespace FineUI
             base.OnFirstPreRender();
 
             // 不渲染，此控件只作为中间转化层
-            RenderWrapperNode = false;
+            //RenderWrapperNode = false;
             AddStartupScript(String.Empty);
+
+
 
             // 一个UserControlConnector里面可能放多个UserControl，
             // 每个UserControl中的所有直接子节点都不要即时渲染
@@ -94,6 +111,7 @@ namespace FineUI
                     }
                 }
             }
+
 
             // 重新设置父节点的注册脚本
             ControlBase parentControl = Parent as ControlBase;

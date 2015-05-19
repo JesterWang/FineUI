@@ -60,6 +60,18 @@ namespace FineUI
         #region Properties
 
         /// <summary>
+        /// 不向页面输出控件的外部容器
+        /// </summary>
+        internal override bool RenderWrapperNode
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+
+        /// <summary>
         /// 定时间隔（单位：秒）
         /// </summary>
         [Category(CategoryName.OPTIONS)]
@@ -69,12 +81,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Interval"];
+                object obj = FState["Interval"];
                 return obj == null ? 30 : (int)obj;
             }
             set
             {
-                XState["Interval"] = value;
+                FState["Interval"] = value;
             }
         }
 
@@ -101,7 +113,7 @@ namespace FineUI
         /// </summary>
         protected override void OnFirstPreRender()
         {
-            RenderWrapperNode = false;
+            //RenderWrapperNode = false;
 
             base.OnFirstPreRender();
 
@@ -118,11 +130,11 @@ namespace FineUI
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendFormat("window.clearInterval({0}.x_timer);", XID);
+            sb.AppendFormat("window.clearInterval({0}.f_timer);", XID);
 
             if (Enabled)
             {
-                sb.AppendFormat("{0}.x_timer=window.setInterval(function(){{{1}}}, {2});", XID, GetPostBackEventReference(), Interval * 1000);
+                sb.AppendFormat("{0}.f_timer=window.setInterval(function(){{{1}}}, {2});", XID, GetPostBackEventReference(), Interval * 1000);
             }
 
             return sb.ToString();

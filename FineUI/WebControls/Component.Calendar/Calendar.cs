@@ -73,19 +73,19 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["SelectedDate"];
+                object obj = FState["SelectedDate"];
                 return obj == null ? null : (DateTime?)obj;
             }
             set
             {
                 if (DesignMode)
                 {
-                    XState["SelectedDate"] = value;
+                    FState["SelectedDate"] = value;
                 }
                 else
                 {
                     // 传入的值可能包含时间信息，这里就是为了把时间信息去掉，只保留日期信息
-                    XState["SelectedDate"] = DateTime.ParseExact(value.Value.ToString(DateFormatString), DateFormatString, CultureInfo.InvariantCulture);
+                    FState["SelectedDate"] = DateTime.ParseExact(value.Value.ToString(DateFormatString), DateFormatString, CultureInfo.InvariantCulture);
                 }
             }
         }
@@ -101,12 +101,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["DateFormatString"];
+                object obj = FState["DateFormatString"];
                 return obj == null ? "yyyy-MM-dd" : (string)obj;
             }
             set
             {
-                XState["DateFormatString"] = value;
+                FState["DateFormatString"] = value;
             }
         }
 
@@ -121,12 +121,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MaxDate"];
+                object obj = FState["MaxDate"];
                 return obj == null ? null : (DateTime?)obj;
             }
             set
             {
-                XState["MaxDate"] = value;
+                FState["MaxDate"] = value;
             }
         }
 
@@ -141,34 +141,34 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MinDate"];
+                object obj = FState["MinDate"];
                 return obj == null ? null : (DateTime?)obj;
             }
             set
             {
-                XState["MinDate"] = value;
+                FState["MinDate"] = value;
             }
         }
 
-        /// <summary>
-        /// 选择日期是否自动回发
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(false)]
-        [Description("选择日期是否自动回发")]
-        [Obsolete("此属性已废除，请使用EnableDateSelectEvent属性")]
-        public bool EnableDateSelect
-        {
-            get
-            {
-                object obj = XState["EnableDateSelect"];
-                return obj == null ? false : (bool)obj;
-            }
-            set
-            {
-                XState["EnableDateSelect"] = value;
-            }
-        }
+        ///// <summary>
+        ///// 选择日期是否自动回发
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(false)]
+        //[Description("选择日期是否自动回发")]
+        //[Obsolete("此属性已废除，请使用EnableDateSelectEvent属性")]
+        //public bool EnableDateSelect
+        //{
+        //    get
+        //    {
+        //        object obj = FState["EnableDateSelect"];
+        //        return obj == null ? false : (bool)obj;
+        //    }
+        //    set
+        //    {
+        //        FState["EnableDateSelect"] = value;
+        //    }
+        //}
 
         /// <summary>
         /// 选择日期是否自动回发
@@ -180,12 +180,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableDateSelectEvent"];
+                object obj = FState["EnableDateSelectEvent"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableDateSelectEvent"] = value;
+                FState["EnableDateSelectEvent"] = value;
             }
         }
 
@@ -218,7 +218,7 @@ namespace FineUI
 
             if (PropertyModified("SelectedDate"))
             {
-                sb.AppendFormat("{0}.setValue({1});", XID, ExtDateTimeConvertor.GetExtDateObject(SelectedDate.Value));
+                sb.AppendFormat("{0}.setValue({1});", XID, DateUtil.GetClientDateObject(SelectedDate.Value));
             }
 
             AddAjaxScript(sb);
@@ -233,7 +233,7 @@ namespace FineUI
 
             
             // extjs 的日期格式化字符串
-            string extjsDateFormatString = ExtDateTimeConvertor.ConvertToExtDateFormat(DateFormatString);
+            string extjsDateFormatString = DateUtil.ConvertToClientDateFormat(DateFormatString);
             OB.AddProperty("format", extjsDateFormatString);
 
             //if (EnableChineseAltFormats)
@@ -243,23 +243,24 @@ namespace FineUI
 
             if (SelectedDate != null)
             {
-                OB.AddProperty("value", ExtDateTimeConvertor.GetExtDateObject(SelectedDate.Value), true);
+                OB.AddProperty("value", DateUtil.GetClientDateObject(SelectedDate.Value), true);
             }
 
             if (MaxDate != null)
             {
-                OB.AddProperty("maxDate", ExtDateTimeConvertor.GetExtDateObject(MaxDate.Value), true);
+                OB.AddProperty("maxDate", DateUtil.GetClientDateObject(MaxDate.Value), true);
             }
 
             if (MinDate != null)
             {
-                OB.AddProperty("minDate", ExtDateTimeConvertor.GetExtDateObject(MinDate.Value), true);
+                OB.AddProperty("minDate", DateUtil.GetClientDateObject(MinDate.Value), true);
             }
 
 
             if (EnableDateSelectEvent)
             {
-                OB.Listeners.AddProperty("select", JsHelper.GetFunction(GetPostBackEventReference("Select")), true);
+                //OB.Listeners.AddProperty("select", JsHelper.GetFunction(GetPostBackEventReference("Select")), true);
+                AddListener("select", GetPostBackEventReference("Select"));
             }
 
 
@@ -338,8 +339,7 @@ namespace FineUI
                 if (currentSelectedDate != SelectedDate)
                 {
                     SelectedDate = currentSelectedDate;
-                    XState.BackupPostDataProperty("SelectedDate");
-                    return true;
+                    FState.BackupPostDataProperty("SelectedDate");
                 }
             }
             

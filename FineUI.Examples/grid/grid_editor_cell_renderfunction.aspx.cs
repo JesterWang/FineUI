@@ -37,13 +37,13 @@ namespace FineUI.Examples.grid
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Dictionary<int, Dictionary<string, string>> modifiedDict = Grid1.GetModifiedDict();
+            Dictionary<int, Dictionary<string, object>> modifiedDict = Grid1.GetModifiedDict();
 
             for (int i = 0, count = Grid1.Rows.Count; i < count; i++)
             {
                 if (modifiedDict.ContainsKey(i))
                 {
-                    Dictionary<string, string> rowDict = modifiedDict[i];
+                    Dictionary<string, object> rowDict = modifiedDict[i];
 
                     // 更新数据源
                     DataTable table = GetSourceData();
@@ -58,7 +58,7 @@ namespace FineUI.Examples.grid
                     // 性别
                     if (rowDict.ContainsKey("Gender"))
                     {
-                        rowData["Gender"] = Convert.ToInt32(rowDict["Gender"]);
+                        rowData["Gender"] = rowDict["Gender"];
                     }
                     // 入学年份
                     if (rowDict.ContainsKey("EntranceYear"))
@@ -68,12 +68,12 @@ namespace FineUI.Examples.grid
                     // 入学日期
                     if (rowDict.ContainsKey("EntranceDate"))
                     {
-                        rowData["EntranceDate"] = DateTime.Parse(rowDict["EntranceDate"]).ToString("yyyy-MM-dd");
+                        rowData["EntranceDate"] = rowDict["EntranceDate"];
                     }
                     // 是否在校
                     if (rowDict.ContainsKey("AtSchool"))
                     {
-                        rowData["AtSchool"] = Convert.ToBoolean(rowDict["AtSchool"]);
+                        rowData["AtSchool"] = rowDict["AtSchool"];
                     }
                     // 所学专业
                     if (rowDict.ContainsKey("Major"))

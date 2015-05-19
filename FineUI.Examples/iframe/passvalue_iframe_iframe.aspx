@@ -5,29 +5,24 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style>
-        body, body.x-body {
+        body.f-body {
             padding: 0;
         }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" AutoSizePanelID="Panel1" runat="server"></x:PageManager>
-        <x:Panel ID="Panel1" runat="server" Layout="Fit" ShowBorder="False" ShowHeader="false"
-            BodyPadding="5px">
+        <f:PageManager ID="PageManager1" AutoSizePanelID="SimpleForm1" runat="server"></f:PageManager>
+        <f:SimpleForm ID="SimpleForm1" LabelAlign="Top" ShowBorder="false" ShowHeader="false" Title="SimpleForm"
+            BodyPadding="5px" runat="server" EnableCollapse="True">
             <Items>
-                <x:SimpleForm ID="SimpleForm1" ShowBorder="false" ShowHeader="false" Title="SimpleForm"
-                    BodyPadding="5px" runat="server" EnableCollapse="True">
-                    <Items>
-                        <x:DropDownList ID="ddlSheng" Label="请选择省份" ShowRedStar="true" runat="server" AutoPostBack="true"
-                            OnSelectedIndexChanged="ddlSheng_SelectedIndexChanged">
-                        </x:DropDownList>
-                    </Items>
-                </x:SimpleForm>
+                <f:RadioButtonList ID="ddlSheng" Label="请选择省份" ColumnNumber="4" ShowRedStar="true" runat="server" AutoPostBack="true"
+                    OnSelectedIndexChanged="ddlSheng_SelectedIndexChanged">
+                </f:RadioButtonList>
             </Items>
-        </x:Panel>
+        </f:SimpleForm>
     </form>
 </body>
 </html>

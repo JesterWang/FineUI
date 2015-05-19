@@ -7,17 +7,18 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <x:PageManager ID="PageManager1" runat="server" />
-    <x:Label runat="server" ID="Label1">
-    </x:Label>
-    <x:SimpleForm ID="SimpleForm1" runat="server">
-        <Items>
-            <x:RadioButtonList ID="rblU_Sex" Label="性别" runat="server" ShowRedStar="true" Width="100">
-                <x:RadioItem Text="男" Value="1" Selected="true" />
-                <x:RadioItem Text="女" Value="2" />
-            </x:RadioButtonList>
-        </Items>
-    </x:SimpleForm>
+        <f:PageManager ID="PageManager1" AutoSizePanelID="Panel1" runat="server" />
+        <f:Panel ID="Panel1" ShowBorder="false" ShowHeader="false" AutoScroll="true" runat="server">
+            <Items>
+                <f:SimpleForm ID="SimpleForm1" runat="server" BodyPadding="5px" Title="SimpleForm"
+                    LabelAlign="Right" BoxConfigChildMargin="0 5 0 0" LabelWidth="80">
+                    <Items>
+                        <f:TextBox ID="txtTitle" runat="server" Label="标题" Text=""></f:TextBox>
+                        <f:Button Type="Submit" ID="btnSearch" Text="查询" Icon="Zoom" Size="Medium" runat="server" />
+                    </Items>
+                </f:SimpleForm>
+            </Items>
+        </f:Panel>
     </form>
 </body>
 </html>

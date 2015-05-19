@@ -4,27 +4,27 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:SimpleForm ID="SimpleForm1" BodyPadding="5px" runat="server" Width="550px" EnableFrame="true" EnableCollapse="true"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:SimpleForm ID="SimpleForm1" BodyPadding="5px" runat="server" Width="550px"  EnableCollapse="true"
             ShowBorder="True" Title="表单" ShowHeader="True">
             <Items>
-                <x:TriggerBox ID="tbxMyBox1" ShowLabel="false" Readonly="false" TriggerIcon="Search"
+                <f:TriggerBox ID="tbxMyBox1" ShowLabel="false" TriggerIcon="Search"
                     OnTriggerClick="tbxMyBox1_TriggerClick" EmptyText="打开弹出窗口" runat="server">
-                </x:TriggerBox>
+                </f:TriggerBox>
             </Items>
-        </x:SimpleForm>
-        <x:Window ID="Window1" Title="弹出窗口" BodyPadding="10px" IsModal="true" Hidden="true"
+        </f:SimpleForm>
+        <f:Window ID="Window1" Title="弹出窗口" BodyPadding="10px" IsModal="true" Hidden="true"
             EnableMaximize="true" EnableResize="true" Target="Top" Width="450px" Height="300px"
             runat="server">
             <Items>
-                <x:Button ID="btnCloseWindow" Text="关闭当前窗口" OnClick="btnCloseWindow_Click" runat="server">
-                </x:Button>
+                <f:Button ID="btnCloseWindow" Text="关闭当前窗口" OnClick="btnCloseWindow_Click" runat="server">
+                </f:Button>
             </Items>
-        </x:Window>
+        </f:Window>
     </form>
 </body>
 </html>

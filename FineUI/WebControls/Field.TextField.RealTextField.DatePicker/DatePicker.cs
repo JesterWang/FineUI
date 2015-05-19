@@ -61,12 +61,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableEdit"];
+                object obj = FState["EnableEdit"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableEdit"] = value;
+                FState["EnableEdit"] = value;
             }
         }
 
@@ -83,7 +83,7 @@ namespace FineUI
             {
                 if (DesignMode)
                 {
-                    object obj = XState["SelectedDate"];
+                    object obj = FState["SelectedDate"];
                     return obj == null ? null : (DateTime?)obj;
                 }
                 else
@@ -114,7 +114,7 @@ namespace FineUI
             {
                 if (DesignMode)
                 {
-                    XState["SelectedDate"] = value;
+                    FState["SelectedDate"] = value;
                 }
                 else
                 {
@@ -141,12 +141,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableChineseAltFormats"];
+                object obj = FState["EnableChineseAltFormats"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableChineseAltFormats"] = value;
+                FState["EnableChineseAltFormats"] = value;
             }
         }
 
@@ -162,12 +162,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AltFormats"];
+                object obj = FState["AltFormats"];
                 return obj == null ? null : (string[])obj;
             }
             set
             {
-                XState["AltFormats"] = value;
+                FState["AltFormats"] = value;
             }
         }
 
@@ -181,12 +181,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["DateFormatString"];
+                object obj = FState["DateFormatString"];
                 return obj == null ? "yyyy-MM-dd" : (string)obj;
             }
             set
             {
-                XState["DateFormatString"] = value;
+                FState["DateFormatString"] = value;
             }
         }
 
@@ -201,12 +201,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MaxDate"];
+                object obj = FState["MaxDate"];
                 return obj == null ? null : (DateTime?)obj;
             }
             set
             {
-                XState["MaxDate"] = value;
+                FState["MaxDate"] = value;
             }
         }
 
@@ -221,34 +221,34 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["MinDate"];
+                object obj = FState["MinDate"];
                 return obj == null ? null : (DateTime?)obj;
             }
             set
             {
-                XState["MinDate"] = value;
+                FState["MinDate"] = value;
             }
         }
 
 
-        /// <summary>
-        /// 选择日期是否自动回发
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(false)]
-        [Description("选择日期是否自动回发")]
-        [Obsolete("此属性已废除，请使用EnableTimeSelectEvent属性")]
-        public bool EnableDateSelect
-        {
-            get
-            {
-                return EnableDateSelectEvent;
-            }
-            set
-            {
-                EnableDateSelectEvent = value;
-            }
-        }
+        ///// <summary>
+        ///// 选择日期是否自动回发
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(false)]
+        //[Description("选择日期是否自动回发")]
+        //[Obsolete("此属性已废除，请使用EnableTimeSelectEvent属性")]
+        //public bool EnableDateSelect
+        //{
+        //    get
+        //    {
+        //        return EnableDateSelectEvent;
+        //    }
+        //    set
+        //    {
+        //        EnableDateSelectEvent = value;
+        //    }
+        //}
 
         /// <summary>
         /// 选择日期是否自动回发
@@ -260,12 +260,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableDateSelectEvent"];
+                object obj = FState["EnableDateSelectEvent"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableDateSelectEvent"] = value;
+                FState["EnableDateSelectEvent"] = value;
             }
         }
 
@@ -300,7 +300,7 @@ namespace FineUI
             //ResourceManager.Instance.AddJavaScriptComponent("menu");
 
             // extjs 的日期格式化字符串
-            string extjsDateFormatString = ExtDateTimeConvertor.ConvertToExtDateFormat(DateFormatString);
+            string extjsDateFormatString = DateUtil.ConvertToClientDateFormat(DateFormatString);
             OB.AddProperty("format", extjsDateFormatString);
 
             if (EnableChineseAltFormats)
@@ -312,7 +312,7 @@ namespace FineUI
                 StringBuilder formats = new StringBuilder();
                 foreach (string format in AltFormats)
                 {
-                    formats.Append(ExtDateTimeConvertor.ConvertToExtDateFormat(format));
+                    formats.Append(DateUtil.ConvertToClientDateFormat(format));
                     formats.Append("|");
                 }
                  OB.AddProperty("altFormats", formats.ToString().TrimEnd('|'));
@@ -339,7 +339,8 @@ namespace FineUI
 
             if (EnableDateSelectEvent)
             {
-                OB.Listeners.AddProperty("select", JsHelper.GetFunction(GetPostBackEventReference("Select")), true);
+                //OB.Listeners.AddProperty("select", JsHelper.GetFunction(GetPostBackEventReference("Select")), true);
+                AddListener("select", GetPostBackEventReference("Select"));
             }
 
             string jsContent = String.Format("var {0}=Ext.create('Ext.form.field.Date',{1});", XID, OB.ToString());

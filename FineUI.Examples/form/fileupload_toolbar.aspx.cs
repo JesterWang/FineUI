@@ -44,7 +44,7 @@ namespace FineUI.Examples.form
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            if (imgPhoto.ImageUrl == "~/images/blank.png")
+            if (imgPhoto.ImageUrl == "~/res/images/blank.png")
             {
                 filePhoto.MarkInvalid("请先上传个人头像！");
 

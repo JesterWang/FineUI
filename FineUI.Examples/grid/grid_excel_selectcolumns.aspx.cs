@@ -16,7 +16,7 @@ namespace FineUI.Examples.data
         {
             if (!IsPostBack)
             {
-                btnSelectColumns.OnClientClick = Window1.GetShowReference("../grid/grid_iframe_window.aspx");
+                btnSelectColumns.OnClientClick = Window1.GetShowReference("../grid/grid_excel_selectcolumns_iframe_window.aspx");
 
                 BindGrid();
             }
@@ -35,25 +35,34 @@ namespace FineUI.Examples.data
 
         #region Events
 
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void Window1_Close(object sender, FineUI.WindowCloseEventArgs e)
         {
             Response.ClearContent();
             Response.AddHeader("content-disposition", "attachment; filename=MyExcelFile.xls");
             Response.ContentType = "application/excel";
-            Response.Write(GetGridTableHtml(Grid1));
+            Response.ContentEncoding = System.Text.Encoding.UTF8;
+            Response.Write(GetGridTableHtml(Grid1, e.CloseArgument.Split('#')));
             Response.End();
         }
 
-        private string GetGridTableHtml(Grid grid)
+        private string GetGridTableHtml(Grid grid, string[] columns)
         {
             StringBuilder sb = new StringBuilder();
+
+            sb.Append("<meta http-equiv=\"content-type\" content=\"application/excel; charset=UTF-8\"/>");
+
+            List<string> columnHeaderTexts = new List<string>(columns);
+            List<int> columnIndexs = new List<int>();
 
             sb.Append("<table cellspacing=\"0\" rules=\"all\" border=\"1\" style=\"border-collapse:collapse;\">");
 
             sb.Append("<tr>");
             foreach (GridColumn column in grid.Columns)
             {
-                sb.AppendFormat("<td>{0}</td>", column.HeaderText);
+                if(columnHeaderTexts.Contains(column.HeaderText)) {
+                    sb.AppendFormat("<td>{0}</td>", column.HeaderText);
+                    columnIndexs.Add(column.ColumnIndex);
+                }
             }
             sb.Append("</tr>");
 
@@ -61,40 +70,46 @@ namespace FineUI.Examples.data
             foreach (GridRow row in grid.Rows)
             {
                 sb.Append("<tr>");
+                int columnIndex = 0;
                 foreach (object value in row.Values)
                 {
-                    string html = value.ToString();
-                    if (html.StartsWith(Grid.TEMPLATE_PLACEHOLDER_PREFIX))
+                    if (columnIndexs.Contains(columnIndex))
                     {
-                        // 模板列
-                        string templateID = html.Substring(Grid.TEMPLATE_PLACEHOLDER_PREFIX.Length);
-                        Control templateCtrl = row.FindControl(templateID);
-                        html = GetRenderedHtmlSource(templateCtrl);
-                    }
-                    else
-                    {
-                        // 处理CheckBox
-                        if (html.Contains("box-grid-static-checkbox"))
+                        string html = value.ToString();
+                        if (html.StartsWith(Grid.TEMPLATE_PLACEHOLDER_PREFIX))
                         {
-                            if (html.Contains("uncheck"))
+                            // 模板列
+                            string templateID = html.Substring(Grid.TEMPLATE_PLACEHOLDER_PREFIX.Length);
+                            Control templateCtrl = row.FindControl(templateID);
+                            html = GetRenderedHtmlSource(templateCtrl);
+                        }
+                        else
+                        {
+                            // 处理CheckBox
+                            if (html.Contains("f-grid-static-checkbox"))
                             {
-                                html = "×";
+                                if (html.Contains("uncheck"))
+                                {
+                                    html = "×";
+                                }
+                                else
+                                {
+                                    html = "√";
+                                }
                             }
-                            else
+
+                            // 处理图片
+                            if (html.Contains("<img"))
                             {
-                                html = "√";
+                                string prefix = Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "");
+                                html = html.Replace("src=\"", "src=\"" + prefix);
                             }
                         }
 
-                        // 处理图片
-                        if (html.Contains("<img"))
-                        {
-                            string prefix = Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "");
-                            html = html.Replace("src=\"", "src=\"" + prefix);
-                        }
+                        sb.AppendFormat("<td>{0}</td>", html);
                     }
 
-                    sb.AppendFormat("<td>{0}</td>", html);
+                    columnIndex++;
                 }
                 sb.Append("</tr>");
             }
@@ -128,14 +143,7 @@ namespace FineUI.Examples.data
 
         #endregion
 
-        protected void Window1_Close(object sender, FineUI.WindowCloseEventArgs e)
-        {
-            Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment; filename=MyExcelFile.xls");
-            Response.ContentType = "application/excel";
-            Response.Write(GetGridTableHtml(Grid1));
-            Response.End();
-        }
+        
 
     }
 }

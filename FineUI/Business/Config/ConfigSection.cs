@@ -52,7 +52,7 @@ namespace FineUI
         /// <summary>
         /// 语言
         /// </summary>
-        [ConfigurationProperty(ConfigPropertyName.LANGUAGE, DefaultValue = ConfigPropertyValue.LANGUAGE_DEFAULT)]
+        [ConfigurationProperty(ConfigPropertyName.LANGUAGE, DefaultValue = ConfigPropertyValue.LANGUAGE_DEFAULT_STRING)]
         public string Language
         {
             get
@@ -180,7 +180,7 @@ namespace FineUI
         /// <summary>
         /// AJAX提示信息的类型
         /// </summary>
-        [ConfigurationProperty(ConfigPropertyName.AJAXLOADINGTYPE, DefaultValue = ConfigPropertyValue.AJAX_LOADING_TYPE_DEFAULT)]
+        [ConfigurationProperty(ConfigPropertyName.AJAXLOADINGTYPE, DefaultValue = ConfigPropertyValue.AJAX_LOADING_TYPE_DEFAULT_STRING)]
         public string AjaxLoadingType
         {
             get
@@ -242,18 +242,18 @@ namespace FineUI
         }
 
         /// <summary>
-        /// ExtJS文件夹所在的根目录
+        /// JS文件夹所在的根目录
         /// </summary>
-        [ConfigurationProperty(ConfigPropertyName.EXTJSBASEPATH, DefaultValue = ConfigPropertyValue.EXTJS_BASE_PATH_DEFAULT)]
-        public string ExtjsBasePath
+        [ConfigurationProperty(ConfigPropertyName.JSBASEPATH, DefaultValue = ConfigPropertyValue.JS_BASE_PATH_DEFAULT)]
+        public string JSBasePath
         {
             get
             {
-                return (string)base[ConfigPropertyName.EXTJSBASEPATH];
+                return (string)base[ConfigPropertyName.JSBASEPATH];
             }
             set
             {
-                base[ConfigPropertyName.EXTJSBASEPATH] = value;
+                base[ConfigPropertyName.JSBASEPATH] = value;
             }
         }
 
@@ -306,18 +306,52 @@ namespace FineUI
         }
 
         /// <summary>
-        /// 是否启用XState压缩（默认为true）
+        /// 是否启用FState压缩（默认为false）
         /// </summary>
-        [ConfigurationProperty(ConfigPropertyName.ENABLEXSTATECOMPRESS, DefaultValue = ConfigPropertyValue.ENABLE_XSTATE_COMPRESS)]
-        public bool EnableXStateCompress
+        [ConfigurationProperty(ConfigPropertyName.ENABLEFSTATECOMPRESS, DefaultValue = ConfigPropertyValue.ENABLE_FSTATE_COMPRESS)]
+        public bool EnableFStateCompress
         {
             get
             {
-                return (bool)base[ConfigPropertyName.ENABLEXSTATECOMPRESS];
+                return (bool)base[ConfigPropertyName.ENABLEFSTATECOMPRESS];
             }
             set
             {
-                base[ConfigPropertyName.ENABLEXSTATECOMPRESS] = value;
+                base[ConfigPropertyName.ENABLEFSTATECOMPRESS] = value;
+            }
+        }
+
+
+        /// <summary>
+        /// 是否向页面输出IE=edge标识
+        /// </summary>
+        [ConfigurationProperty(ConfigPropertyName.IEEDGE, DefaultValue = true)]
+        public bool IEEdge
+        {
+            get
+            {
+                return (bool)base[ConfigPropertyName.IEEDGE];
+            }
+            set
+            {
+                base[ConfigPropertyName.IEEDGE] = value;
+            }
+        }
+
+
+        /// <summary>
+        /// 是否启用表单改变确认对话框
+        /// </summary>
+        [ConfigurationProperty(ConfigPropertyName.ENABLEFORMCHANGECONFIRM, DefaultValue = ConfigPropertyValue.ENABLE_FORMCHANGECONFIRM_DEFAULT)]
+        public bool EnableFormChangeConfirm
+        {
+            get
+            {
+                return (bool)base[ConfigPropertyName.ENABLEFORMCHANGECONFIRM];
+            }
+            set
+            {
+                base[ConfigPropertyName.ENABLEFORMCHANGECONFIRM] = value;
             }
         }
 

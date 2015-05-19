@@ -42,9 +42,9 @@ namespace FineUI
         /// </summary>
         Anchor,
         /// <summary>
-        /// 边框布局（只用于RegionPanel控件）
+        /// 区域布局
         /// </summary>
-        Border,
+        Region,
         /// <summary>
         /// 自适应布局（用于只有一个子控件的情况）
         /// </summary>
@@ -69,10 +69,6 @@ namespace FineUI
         /// 绝对定位布局
         /// </summary>
         Absolute,
-        /// <summary>
-        /// 行布局
-        /// </summary>
-        Row,
         /// <summary>
         /// 表格布局
         /// </summary>
@@ -107,7 +103,7 @@ namespace FineUI
                 case Layout.Anchor:
                     result = "anchor";
                     break;
-                case Layout.Border:
+                case Layout.Region:
                     result = "border";
                     break;
                 case Layout.Card:
@@ -124,12 +120,6 @@ namespace FineUI
                     break;
                 case Layout.Absolute:
                     result = "absolute";
-                    break;
-                //case LayoutType.Center:
-                //    result = "ux.center";
-                //    break;
-                case Layout.Row:
-                    result = "ux.row";
                     break;
                 case Layout.Table:
                     result = "table";

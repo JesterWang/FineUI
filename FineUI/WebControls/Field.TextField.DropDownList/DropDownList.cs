@@ -61,15 +61,36 @@ namespace FineUI
         /// </summary>
         public DropDownList()
         {
-            AddServerAjaxProperties("X_Items");
-            AddClientAjaxProperties("SelectedValue", "Text");
+            AddServerAjaxProperties("F_Items");
+            AddClientAjaxProperties("SelectedValue", "SelectedValueArray", "Text");
 
-            AddGzippedAjaxProperties("X_Items");
+            AddGzippedAjaxProperties("F_Items");
         }
 
         #endregion
 
         #region SelectedIndex/SelectedValue/SelectedItem
+
+
+        /// <summary>
+        /// 文本框为空时显示的文本
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue("")]
+        [Description("文本框为空时显示的文本")]
+        public virtual string EmptyText
+        {
+            get
+            {
+                object obj = FState["EmptyText"];
+                return obj == null ? "" : (string)obj;
+            }
+            set
+            {
+                FState["EmptyText"] = value;
+            }
+        }
+
 
         /// <summary>
         /// [AJAX属性]用户输入的文本（只有在允许编辑和不强制选择的情况下才有效）
@@ -81,12 +102,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Text"];
+                object obj = FState["Text"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Text"] = value;
+                FState["Text"] = value;
             }
         }
 
@@ -94,6 +115,8 @@ namespace FineUI
         /// <summary>
         /// [AJAX属性]选中项的值
         /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [Description("[AJAX属性]选中项的值")]
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string SelectedValue
@@ -101,18 +124,24 @@ namespace FineUI
             get
             {
                 string value = null;
-                if (SelectedItem != null)
+                if (SelectedItem == null)
+                {
+                    /*
+                    // 如果强制选择一项，我们可能需要选中第一项
+                    if (AutoSelectFirstItem)
+                    {
+                        if (Items.Count > 0)
+                        {
+                            SelectedIndex = 0;
+                            // If SelectedValue is null, then we select the first item of the list.
+                            value = Items[0].Value;
+                        }
+                    }
+                    */
+                }
+                else
                 {
                     value = SelectedItem.Value;
-                    //// 如果强制选择一项，我们可能需要选中第一项
-                    //if (ForceSelection)
-                    //{
-                    //    if (Items.Count > 0)
-                    //    {
-                    //        SelectedIndex = 0;
-                    //        value = Items[0].Value;
-                    //    }
-                    //}
                 }
                 return value;
             }
@@ -145,6 +174,13 @@ namespace FineUI
         {
             get
             {
+                //if (!Page.IsPostBack)
+                //{
+                //    // 获取参数前先尝试修正数据
+                //    ProcessAutoSelectFirstItem();
+                //}
+
+
                 int selectedIndex = -1;
                 for (int i = 0, count = Items.Count; i < count; i++)
                 {
@@ -154,6 +190,18 @@ namespace FineUI
                         break;
                     }
                 }
+
+                //// 自动修正（仅在页面第一次加载时有效）
+                //if (selectedIndex == -1 && AutoSelectFirstItem && !Page.IsPostBack && Items.Count > 0)
+                //{
+                //    selectedIndex = 0;
+                //}
+                // 自动修正（仅在页面第一次加载时有效），但是不改变Items属性
+                if (selectedIndex == -1 && AutoSelectFirstItem && !Page.IsPostBack && Items.Count > 0)
+                {
+                    selectedIndex = 0;
+                }
+
                 return selectedIndex;
             }
             set
@@ -211,24 +259,265 @@ namespace FineUI
 
         #endregion
 
+        #region SelectedIndexArray/SelectedValueArray/SelectedItemArray
+
+        /// <summary>
+        /// [AJAX属性]选中项的值
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [Description("[AJAX属性]选中项的值")]
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string[] SelectedValueArray
+        {
+            get
+            {
+                //if (!Page.IsPostBack)
+                //{
+                //    // 获取参数前先尝试修正数据
+                //    ProcessAutoSelectFirstItem();
+                //}
+
+                List<string> selectedValues = new List<string>();
+                for (int i = 0, count = Items.Count; i < count; i++)
+                {
+                    ListItem item = Items[i];
+                    if (item.Selected)
+                    {
+                        selectedValues.Add(item.Value);
+                    }
+                }
+
+                /*
+                // 如果强制选择一项，我们可能需要选中第一项
+                if (selectedValues.Count == 0 && AutoSelectFirstItem)
+                {
+                    if (Items.Count > 0)
+                    {
+                        SelectedIndex = 0;
+                        selectedValues.Add(Items[0].Value);
+                    }
+                }
+                */
+                // 自动修正（仅在页面第一次加载时有效），但是不改变Items属性
+                if (selectedValues.Count == 0 && AutoSelectFirstItem && !Page.IsPostBack && Items.Count > 0)
+                {
+                    selectedValues.Add(Items[0].Value);
+                }
+
+                return selectedValues.ToArray();
+            }
+            set
+            {
+                List<string> selectedValues = new List<string>(value);
+                for (int i = 0, count = Items.Count; i < count; i++)
+                {
+                    ListItem item = Items[i];
+                    if (selectedValues.Contains(item.Value))
+                    {
+                        item.Selected = true;
+                    }
+                    else
+                    {
+                        item.Selected = false;
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// [AJAX属性]选中项的索引
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [Description("[AJAX属性]选中项的索引")]
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int[] SelectedIndexArray
+        {
+            get
+            {
+                //if (!Page.IsPostBack)
+                //{
+                //    // 获取参数前先尝试修正数据
+                //    ProcessAutoSelectFirstItem();
+                //}
+
+                List<int> selectedIndexs = new List<int>();
+                for (int i = 0, count = Items.Count; i < count; i++)
+                {
+                    if (Items[i].Selected)
+                    {
+                        selectedIndexs.Add(i);
+                    }
+                }
+
+                // 自动修正（仅在页面第一次加载时有效），但是不改变Items属性
+                if (selectedIndexs.Count == 0 && AutoSelectFirstItem && !Page.IsPostBack && Items.Count > 0)
+                {
+                    selectedIndexs.Add(0);
+                }
+
+                return selectedIndexs.ToArray();
+            }
+            set
+            {
+                List<int> selectedIndexs = new List<int>(value);
+                for (int i = 0, count = Items.Count; i < count; i++)
+                {
+                    if (selectedIndexs.Contains(i))
+                    {
+                        Items[i].Selected = true;
+                    }
+                    else
+                    {
+                        Items[i].Selected = false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 选中项
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [Description("选中项")]
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public ListItem[] SelectedItemArray
+        {
+            get
+            {
+                //if (!Page.IsPostBack)
+                //{
+                //    // 获取参数前先尝试修正数据
+                //    ProcessAutoSelectFirstItem();
+                //}
+
+                List<ListItem> selectedItems = new List<ListItem>();
+                for (int i = 0, count = Items.Count; i < count; i++)
+                {
+                    ListItem item = Items[i];
+                    if (item.Selected)
+                    {
+                        selectedItems.Add(item);
+                    }
+                }
+
+                // 自动修正（仅在页面第一次加载时有效），但是不改变Items属性
+                if (selectedItems.Count == 0 && AutoSelectFirstItem && !Page.IsPostBack && Items.Count > 0)
+                {
+                    selectedItems.Add(Items[0]);
+                }
+
+                return selectedItems.ToArray();
+            }
+        }
+
+        #endregion
+
         #region Properties
+
+        /// <summary>
+        /// 下拉列表和字段的宽度相匹配
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(true)]
+        [Description("下拉列表和字段的宽度相匹配")]
+        public bool MatchFieldWidth
+        {
+            get
+            {
+                object obj = FState["MatchFieldWidth"];
+                return obj == null ? true : (bool)obj;
+            }
+            set
+            {
+                FState["MatchFieldWidth"] = value;
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// 如果未定义选中项，则自动选中第一个子项（默认为true）
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(true)]
+        [Description("如果未定义选中项，则自动选中第一个子项（默认为true）")]
+        public bool AutoSelectFirstItem
+        {
+            get
+            {
+                object obj = FState["AutoSelectFirstItem"];
+                return obj == null ? true : (bool)obj;
+            }
+            set
+            {
+                FState["AutoSelectFirstItem"] = value;
+            }
+        }
+
+
+        /// <summary>
+        /// 是否可以选择多项
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("是否可以选择多项")]
+        public bool EnableMultiSelect
+        {
+            get
+            {
+                object obj = FState["EnableMultiSelect"];
+                return obj == null ? false : (bool)obj;
+            }
+            set
+            {
+                FState["EnableMultiSelect"] = value;
+            }
+        }
+
+
+        private const string MULTISELECT_SEPARATOR_DEFAULT = ", ";
+
+        /// <summary>
+        /// 选择多项的分隔符
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(typeof(string), MULTISELECT_SEPARATOR_DEFAULT)]
+        [Description("选择多项的分隔符")]
+        public string MultiSelectSeparator
+        {
+            get
+            {
+                object obj = FState["MultiSelectSeparator"];
+                return obj == null ? MULTISELECT_SEPARATOR_DEFAULT : (string)obj;
+            }
+            set
+            {
+                FState["MultiSelectSeparator"] = value;
+            }
+        }
+
 
         /// <summary>
         /// 是否强制选中下拉列表中的项（启用编辑的情况下）
         /// </summary>
         [Category(CategoryName.OPTIONS)]
-        [DefaultValue(false)]
+        [DefaultValue(true)]
         [Description("是否强制选中下拉列表中的项（启用编辑的情况下）")]
         public bool ForceSelection
         {
             get
             {
-                object obj = XState["ForceSelection"];
-                return obj == null ? false : (bool)obj;
+                object obj = FState["ForceSelection"];
+                return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["ForceSelection"] = value;
+                FState["ForceSelection"] = value;
             }
         }
 
@@ -243,12 +532,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableEdit"];
+                object obj = FState["EnableEdit"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableEdit"] = value;
+                FState["EnableEdit"] = value;
             }
         }
 
@@ -263,12 +552,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableSimulateTree"];
+                object obj = FState["EnableSimulateTree"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableSimulateTree"] = value;
+                FState["EnableSimulateTree"] = value;
             }
         }
 
@@ -282,12 +571,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["DataSimulateTreeLevelField"];
+                object obj = FState["DataSimulateTreeLevelField"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["DataSimulateTreeLevelField"] = value;
+                FState["DataSimulateTreeLevelField"] = value;
                 //// 如果设置了DataSimulateTreeLevelField，则设置EnableSimulateTree=true
                 //if (!String.IsNullOrEmpty(value))
                 //{
@@ -306,12 +595,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["DataEnableSelectField"];
+                object obj = FState["DataEnableSelectField"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["DataEnableSelectField"] = value;
+                FState["DataEnableSelectField"] = value;
             }
         }
 
@@ -325,12 +614,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoPostBack"];
+                object obj = FState["AutoPostBack"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["AutoPostBack"] = value;
+                FState["AutoPostBack"] = value;
             }
         }
 
@@ -345,12 +634,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["Resizable"];
+        //        object obj = FState["Resizable"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["Resizable"] = value;
+        //        FState["Resizable"] = value;
         //    }
         //}
 
@@ -479,12 +768,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["DataTextField"];
+                object obj = FState["DataTextField"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["DataTextField"] = value;
+                FState["DataTextField"] = value;
             }
         }
 
@@ -499,12 +788,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["DataTextFormatString"];
+                object obj = FState["DataTextFormatString"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["DataTextFormatString"] = value;
+                FState["DataTextFormatString"] = value;
             }
         }
 
@@ -518,12 +807,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["DataValueField"];
+                object obj = FState["DataValueField"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["DataValueField"] = value;
+                FState["DataValueField"] = value;
             }
         }
 
@@ -557,7 +846,7 @@ namespace FineUI
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public JArray X_Items
+        public JArray F_Items
         {
             get
             {
@@ -626,13 +915,13 @@ namespace FineUI
         }
         #endregion
 
-        #region LoadXState/SaveXState
+        #region LoadFState/SaveFState
         //private string lastSelectedValue = null;
-        //protected override void LoadXState(JObject state, string property)
+        //protected override void LoadFState(JObject state, string property)
         //{
-        //    base.LoadXState(state, property);
+        //    base.LoadFState(state, property);
 
-        //    if (property == "X_Items")
+        //    if (property == "F_Items")
         //    {
         //        XItemsFromJSON(state.getJArray(property));
         //        // After recover Items property, we should recover SelectedValue according to Items.
@@ -650,7 +939,7 @@ namespace FineUI
         //{
         //    base.OnInit(e);
 
-        //    SaveXProperty("X_Items", XItemsToJSON().ToString());
+        //    SaveXProperty("F_Items", XItemsToJSON().ToString());
         //    SaveXProperty("X_SelectedValue", SelectedValue);
         //}
 
@@ -659,23 +948,23 @@ namespace FineUI
         //    base.OnBothPreRender();
 
         //    // Items has been changed in server-side code after onInit.
-        //    if (XPropertyModified("X_Items", XItemsToJSON().ToString()))
+        //    if (XPropertyModified("F_Items", XItemsToJSON().ToString()))
         //    {
-        //        XState.AddModifiedProperty("X_Items");
+        //        FState.AddModifiedProperty("F_Items");
         //        // If Items have been changed, then we must reset the SelectedValue.
-        //        XState.AddModifiedProperty("X_SelectedValue");
+        //        FState.AddModifiedProperty("X_SelectedValue");
         //    }
 
         //    if (XPropertyModified("X_SelectedValue", SelectedValue))
         //    {
-        //        XState.AddModifiedProperty("X_SelectedValue");
+        //        FState.AddModifiedProperty("X_SelectedValue");
         //    }
 
         //}
 
-        //protected override void SaveXState(JObject state, string property)
+        //protected override void SaveFState(JObject state, string property)
         //{
-        //    if (property == "X_Items")
+        //    if (property == "F_Items")
         //    {
         //        state.put(property, XItemsToJSON());
         //    }
@@ -729,13 +1018,22 @@ namespace FineUI
         {
             get
             {
-                return String.Format("{0}_Value", ClientID);
+                return String.Format("{0}$Value", UniqueID);
             }
         }
 
         #endregion
 
         #region OnPreRender
+
+        private string Render_AutoPostBackID
+        {
+            get
+            {
+                return String.Format("{0}_autopostback", XID);
+            }
+        }
+
 
         /// <summary>
         /// 渲染 HTML 之前调用（AJAX回发）
@@ -745,34 +1043,87 @@ namespace FineUI
             base.OnAjaxPreRender();
 
             StringBuilder sb = new StringBuilder();
-            if (PropertyModified("X_Items"))
-            {
-                sb.AppendFormat("{0}.x_loadData();", XID);
 
-                // TODO: 修改Items记录后要更新SelectedValue
+            bool dataReloaded = false;
+            if (PropertyModified("F_Items"))
+            {
+                dataReloaded = true;
+                sb.AppendFormat("{0}.f_loadData();", XID);
             }
 
-            if (PropertyModified("SelectedValue"))
+
+            bool selectedValueChanged = false;
+            if (EnableMultiSelect)
             {
-                //if (ClientPropertyModifiedInServer("SelectedValue"))
+                if (PropertyModified("SelectedValueArray"))
+                {
+                    selectedValueChanged = true;
+                }
+            }
+            else
+            {
+                if (PropertyModified("SelectedValue"))
+                {
+                    selectedValueChanged = true;
+                }
+            }
 
-                sb.AppendFormat("{0}.x_setValue();", XID);
-
+            // 修改Items记录后要更新SelectedValue
+            if (dataReloaded || selectedValueChanged)
+            {
+                sb.AppendFormat("{0}.f_setValue();", XID);
             }
 
             AddAjaxScript(sb);
         }
+
+        private void ProcessAutoSelectFirstItem()
+        {
+            //// 如果强制选择一项，我们可能需要选中第一项
+            //if (SelectedItem == null && AutoSelectFirstItem)
+            //{
+            //    if (Items.Count > 0)
+            //    {
+            //        SelectedIndex = 0;
+            //    }
+            //}
+
+            // 自动修正
+            if (AutoSelectFirstItem && Items.Count > 0)
+            {
+                bool hasSelection = false;
+                foreach (ListItem item in Items)
+                {
+                    if (item.Selected)
+                    {
+                        hasSelection = true;
+                        break;
+                    }
+                }
+
+                // 没有选中任何一项，则选中第一项
+                if (!hasSelection)
+                {
+                    Items[0].Selected = true;
+                }
+            }
+        }
+
 
         /// <summary>
         /// 渲染 HTML 之前调用（页面第一次加载或者普通回发）
         /// </summary>
         protected override void OnFirstPreRender()
         {
-            // 确保 X_Items 和 SelectedValue 在页面第一次加载时都存在于x_state中
-            XState.AddModifiedProperty("X_Items");
-            XState.AddModifiedProperty("SelectedValue");
+            ProcessAutoSelectFirstItem();
+
+            // 确保 F_Items 和 SelectedValue 在页面第一次加载时都存在于f_state中
+            FState.AddModifiedProperty("F_Items");
+            FState.AddModifiedProperty("SelectedValue");
+            FState.AddModifiedProperty("SelectedValueArray");
 
             base.OnFirstPreRender();
+
 
             #region examples
 
@@ -804,7 +1155,15 @@ namespace FineUI
 
             #endregion
 
+
+
             #region Properties
+
+            if (!MatchFieldWidth)
+            {
+                OB.AddProperty("matchFieldWidth", false);
+            }
+
 
             if (EnableEdit)
             {
@@ -816,10 +1175,13 @@ namespace FineUI
             }
 
 
-
             if (ForceSelection)
             {
                 OB.AddProperty("forceSelection", true);
+            }
+            else
+            {
+                OB.AddProperty("forceSelection", false);
             }
 
             //if (Resizable)
@@ -830,17 +1192,42 @@ namespace FineUI
             OB.AddProperty("hiddenName", SelectedValueHiddenFieldID);
 
 
+            if (!String.IsNullOrEmpty(EmptyText))
+            {
+                OB.AddProperty("emptyText", EmptyText);
+            }
+
+
+
             JsObjectBuilder storeBuilder = new JsObjectBuilder();
             storeBuilder.AddProperty("fields", "['value','text','enabled','prefix']", true);
-            storeBuilder.AddProperty("data", String.Format("X.simulateTree.transform({0}.X_Items)", GetXStateScriptID()), true);
+            storeBuilder.AddProperty("data", String.Format("F.simulateTree.transform({0}.F_Items)", GetFStateScriptID()), true);
             OB.AddProperty("store", String.Format("Ext.create('Ext.data.ArrayStore',{0})", storeBuilder), true);
 
-            OB.AddProperty("value", String.Format("{0}.SelectedValue", GetXStateScriptID()), true);
+            OB.AddProperty("value", String.Format("{0}.{1}", GetFStateScriptID(), EnableMultiSelect ? "SelectedValueArray" : "SelectedValue"), true);
 
-            OB.AddProperty("tpl", "X.util.ddlTPL", true);
+            //OB.AddProperty("value", "['Value1','Value4']", true);
+
+            OB.AddProperty("tpl", "F.util.ddlTPL", true);
 
             OB.AddProperty("queryMode", "local");
             OB.AddProperty("triggerAction", "all");
+
+            if (EnableMultiSelect)
+            {
+                OB.AddProperty("multiSelect", true);
+
+
+                if (MultiSelectSeparator != MULTISELECT_SEPARATOR_DEFAULT)
+                {
+                    OB.AddProperty("delimiter", MultiSelectSeparator);
+                }
+
+            }
+
+           
+
+
 
             #region old code
             //OB.AddProperty("mode", "local");
@@ -885,7 +1272,7 @@ namespace FineUI
 
             // 不管是不是disableSelectFields.Count > 0，都要执行下面的语句，因为可能页面加载时为0，在Ajax后不为零
             //if (disableSelectFields.Count > 0)
-            //OB.AddProperty(OptionName.Tpl, String.Format("'<tpl for=\".\"><div class=\"x-combo-list-item {{[X.util.isHiddenFieldContains(\"{0}\",xindex-1) ? \"box-combo-list-item-disable-select\" : \"\"]}}\">{{text}}</div></tpl>'", DisableSelectRowIndexsHiddenID), true);
+            //OB.AddProperty(OptionName.Tpl, String.Format("'<tpl for=\".\"><div class=\"x-combo-list-item {{[F.util.isHiddenFieldContains(\"{0}\",xindex-1) ? \"f-combo-list-item-disable-select\" : \"\"]}}\">{{text}}</div></tpl>'", DisableSelectRowIndexsHiddenID), true);
             //var tplStr = "'<tpl for=\".\"><div class=\"x-combo-list-item\">{text}</div></tpl>'";
             //var tplStr = "new Ext.XTemplate('<tpl for=\".\"><div class=\"x-combo-list-item\">{text}</div></tpl>')";
 
@@ -898,7 +1285,7 @@ namespace FineUI
             //string setSimulateTreeTextScript = String.Empty;
             //if (EnableSimulateTree)
             //{
-            //    string setSimulateTextScript = String.Format("var text=Ext.get('{0}').dom.value;if(text.lastIndexOf('<img')>=0){{Ext.get('{0}').dom.value=X.util.stripHtmlTags(text);}}", ClientID);
+            //    string setSimulateTextScript = String.Format("var text=Ext.get('{0}').dom.value;if(text.lastIndexOf('<img')>=0){{Ext.get('{0}').dom.value=F.util.stripHtmlTags(text);}}", ClientID);
             //    setSimulateTreeTextFunctionScript = String.Format("{0}_setSimulateText=function(){{{1}}};", ClientJavascriptID, setSimulateTextScript);
 
             //    // 加载完毕后，显示选中的值
@@ -947,20 +1334,34 @@ namespace FineUI
 
             #region AutoPostBack
 
+            string autoPostBackScript = String.Empty;
+
+            if (AutoPostBack)
+            {
+                autoPostBackScript = String.Format("var {0}={1};", Render_AutoPostBackID, JsHelper.GetFunction("if(cmp.f_tmp_lastvalue!==cmp.getValue()){" + GetPostBackEventReference() + "}", "cmp"));
+            }
             StringBuilder beforeselectSB = new StringBuilder();
             // 是否能选中一项（如果此项不能选中，则点击没用）
-            //beforeselectSB.AppendFormat("if(X.util.isHiddenFieldContains('{0}',index)){{return false;}}", DisableRowIndexsHiddenID);
+            //beforeselectSB.AppendFormat("if(F.util.isHiddenFieldContains('{0}',index)){{return false;}}", DisableRowIndexsHiddenID);
             beforeselectSB.Append("if(!record.data.enabled){return false;}");
 
             if (AutoPostBack)
             {
-                beforeselectSB.Append("cmp.x_tmp_lastvalue=cmp.getValue();");
+                beforeselectSB.Append("cmp.f_tmp_lastvalue=cmp.getValue();");
 
-                string selectScript = "if(cmp.x_tmp_lastvalue!==cmp.getValue()){" + GetPostBackEventReference() + "}";
-                OB.Listeners.AddProperty("select", JsHelper.GetFunction(selectScript, "cmp"), true);
+                //string selectScript = "if(cmp.f_tmp_lastvalue!==cmp.getValue()){" + GetPostBackEventReference() + "}";
+                beforeselectSB.AppendFormat("window.setTimeout(function(){{{0}(cmp);}},100);", Render_AutoPostBackID);
+                //AddListener("select", selectScript, "cmp");
             }
 
-            OB.Listeners.AddProperty("beforeselect", JsHelper.GetFunction(beforeselectSB.ToString(), "cmp", "record", "index"), true);
+            AddListener("beforeselect", beforeselectSB.ToString(), "cmp", "record", "index");
+
+            //if (EnableMultiSelect)
+            //{
+            //    StringBuilder beforedeselectSB = new StringBuilder();
+            //    beforedeselectSB.AppendFormat("window.setTimeout(function(){{{0}(cmp);}},100);", Render_AutoPostBackID);
+            //    AddListener("beforedeselect", beforedeselectSB.ToString(), "cmp", "record", "index");
+            //}
 
             #region old code
             //if (AutoPostBack)
@@ -988,9 +1389,20 @@ namespace FineUI
 
             #region Listeners - render
 
-            //string renderScript = "cmp.x_loadData();cmp.x_setValue();";
+            //string renderScript = "cmp.f_loadData();cmp.f_setValue();";
 
             //OB.Listeners.AddProperty("render", JsHelper.GetFunction(renderScript, "cmp"), true);
+
+            string renderScript = String.Empty;
+            if (!MatchFieldWidth)
+            {
+                renderScript = String.Format("cmp.getPicker().addCls('f-field-ddlpop-autowidth')");
+            }
+
+            if (!String.IsNullOrEmpty(renderScript))
+            {
+                AddListener("render", renderScript, "cmp");
+            }
 
             #endregion
 
@@ -998,27 +1410,27 @@ namespace FineUI
 
             string contentScript = String.Format("var {0}=Ext.create('Ext.form.field.ComboBox',{1});", XID, OB.ToString());
 
-            AddStartupScript(contentScript);
+            AddStartupScript(autoPostBackScript + contentScript);
 
             #region old code
-            //List<string> totalModifiedProperties = XState.GetTotalModifiedProperties();
+            //List<string> totalModifiedProperties = FState.GetTotalModifiedProperties();
             //StringBuilder loadDataSB = new StringBuilder();
-            //if (totalModifiedProperties.Contains("X_Items"))
+            //if (totalModifiedProperties.Contains("F_Items"))
             //{
-            //    loadDataSB.AppendFormat("{0}.x_loadData();", XID);
+            //    loadDataSB.AppendFormat("{0}.f_loadData();", XID);
             //}
             //else
             //{
-            //    loadDataSB.AppendFormat("{0}.store.loadData({1});", XID, X_Items.ToString());
+            //    loadDataSB.AppendFormat("{0}.store.loadData({1});", XID, F_Items.ToString());
             //}
 
             //if (totalModifiedProperties.Contains("SelectedValue"))
             //{
-            //    loadDataSB.AppendFormat("{0}.x_setValue();", XID);
+            //    loadDataSB.AppendFormat("{0}.f_setValue();", XID);
             //}
             //else
             //{
-            //    loadDataSB.AppendFormat("{0}.x_setValue({1});", XID, JsHelper.Enquote(SelectedValue));
+            //    loadDataSB.AppendFormat("{0}.f_setValue({1});", XID, JsHelper.Enquote(SelectedValue));
             //} 
             #endregion
 
@@ -1124,11 +1536,11 @@ namespace FineUI
         /// </summary>
         public override void DataBind()
         {
+            // Clear all items
+            Items.Clear();
+
             if (_dataSource != null)
             {
-                // Clear all items
-                Items.Clear();
-
                 if (_dataSource is IDataReader)
                 {
                     DataTable dataTable = new DataTable();
@@ -1164,6 +1576,9 @@ namespace FineUI
                     throw new Exception("DataSource doesn't support data type: " + _dataSource.GetType().ToString());
                 }
             }
+
+            //// 重新绑定数据后，判断是否自动选择第一项
+            //ProcessAutoSelectFirstItem();
 
             base.DataBind();
         }
@@ -1332,7 +1747,15 @@ namespace FineUI
                 // 如果需要模拟树
                 if (!String.IsNullOrEmpty(DataSimulateTreeLevelField))
                 {
-                    item.SimulateTreeLevel = Convert.ToInt32(GetPropertyValue(obj, DataSimulateTreeLevelField));
+                    string treeLevelStr = GetPropertyValue(obj, DataSimulateTreeLevelField);
+                    if (String.IsNullOrEmpty(treeLevelStr))
+                    {
+                        item.SimulateTreeLevel = 0;
+                    }
+                    else
+                    {
+                        item.SimulateTreeLevel = Convert.ToInt32(treeLevelStr);
+                    }
                 }
 
                 // 是否可以选择
@@ -1356,6 +1779,7 @@ namespace FineUI
 
             result = ObjectUtil.GetPropertyValue(obj, propertyName);
 
+            // DBNull.Value.ToString() == ""
             return result == null ? String.Empty : result.ToString();
         }
 
@@ -1377,29 +1801,66 @@ namespace FineUI
         /// <returns>回发数据是否改变</returns>
         public bool LoadPostData(string postDataKey, System.Collections.Specialized.NameValueCollection postCollection)
         {
-            string postText = postCollection[postDataKey];
-            string postValue = postCollection[SelectedValueHiddenFieldID];
-
-
-            ListItem item = Items.FindByValue(postValue);
-            if (item != null && item.Text == postText)
+            // 如果下拉列表被禁用，则postText为null。由于Enabled只能在服务器端被改变，所以被禁用时，不处理回发数据即可
+            if (!Enabled)
             {
-                if (SelectedValue != postValue)
+                return false;
+            }
+
+            // 如果下拉列表没有任何项，则不会触发数据改变事件
+            if (Items.Count == 0)
+            {
+                return false;
+            }
+
+
+            string postText = postCollection[postDataKey];
+
+            if (EnableMultiSelect)
+            {
+                string[] postValues = postCollection.GetValues(SelectedValueHiddenFieldID);
+                if (postValues == null)
                 {
-                    SelectedValue = postValue;
-                    XState.BackupPostDataProperty("SelectedValue");
+                    postValues = new string[0];
+                }
+                if (!StringUtil.CompareStringArray(postValues, SelectedValueArray))
+                {
+                    SelectedValueArray = postValues;
+                    FState.BackupPostDataProperty("SelectedValueArray");
                     return true;
                 }
+
             }
             else
             {
-                SelectedValue = null;
-                XState.BackupPostDataProperty("SelectedValue");
+                string postValue = postCollection[SelectedValueHiddenFieldID];
 
-                Text = postText;
-                XState.BackupPostDataProperty("Text");
-                return true;
+                ListItem item = Items.FindByValue(postValue);
+                if (item != null && item.Text == postText)
+                {
+                    // 本次选中的是下拉项
+                    if (SelectedValue != postValue)
+                    {
+                        SelectedValue = postValue;
+                        FState.BackupPostDataProperty("SelectedValue");
+                        return true;
+                    }
+                }
+                else
+                {
+                    //// 本次是用户输入的值
+                    //if (Text != postText)
+                    //{
+                    SelectedValue = null;
+                    FState.BackupPostDataProperty("SelectedValue");
+
+                    Text = postText;
+                    FState.BackupPostDataProperty("Text");
+                    return true;
+                    //}
+                }
             }
+
 
             return false;
         }

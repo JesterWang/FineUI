@@ -5,38 +5,38 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-    <x:PageManager ID="PageManager1" runat="server" />
-    <x:Grid ID="Grid1" Title="表格" EnableFrame="true" EnableCollapse="true" Width="800px" ShowBorder="true" ShowHeader="true"
+    <f:PageManager ID="PageManager1" runat="server" />
+    <f:Grid ID="Grid1" Title="表格"  EnableCollapse="true" Width="800px" ShowBorder="true" ShowHeader="true"
         runat="server" EnableCheckBoxSelect="True" DataKeyNames="Id,Name"
         EnableRowClickEvent="true" OnRowClick="Grid1_RowClick">
         <Columns>
-            <x:RowNumberField />
-            <x:BoundField Width="100px" ExpandUnusedSpace="true" DataField="Name" DataFormatString="{0}" HeaderText="姓名" />
-            <x:TemplateField Width="80px" HeaderText="性别">
+            <f:RowNumberField />
+            <f:BoundField Width="100px" ExpandUnusedSpace="true" DataField="Name" DataFormatString="{0}" HeaderText="姓名" />
+            <f:TemplateField Width="80px" HeaderText="性别">
                 <ItemTemplate>
                     <asp:Label ID="Label2" runat="server" Text='<%# GetGender(Eval("Gender")) %>'></asp:Label>
                 </ItemTemplate>
-            </x:TemplateField>
-            <x:BoundField Width="100px" DataField="EntranceYear" HeaderText="入学年份" />
-            <x:CheckBoxField Width="80px" RenderAsStaticField="true" DataField="AtSchool" HeaderText="是否在校1" />
-            <x:CheckBoxField ColumnID="CheckBoxField1" Width="100px" RenderAsStaticField="false"
+            </f:TemplateField>
+            <f:BoundField Width="100px" DataField="EntranceYear" HeaderText="入学年份" />
+            <f:CheckBoxField Width="80px" RenderAsStaticField="true" DataField="AtSchool" HeaderText="是否在校1" />
+            <f:CheckBoxField ColumnID="CheckBoxField1" Width="100px" RenderAsStaticField="false"
                 DataField="AtSchool" HeaderText="是否在校1" />
-            <x:CheckBoxField ColumnID="CheckBoxField2" Width="100px" RenderAsStaticField="false"
+            <f:CheckBoxField ColumnID="CheckBoxField2" Width="100px" RenderAsStaticField="false"
                 DataField="AtSchool" HeaderText="是否在校2" />
-            <x:CheckBoxField ColumnID="CheckBoxField3" Width="100px" RenderAsStaticField="false"
+            <f:CheckBoxField ColumnID="CheckBoxField3" Width="100px" RenderAsStaticField="false"
                 DataField="AtSchool" HeaderText="是否在校3" />
         </Columns>
-    </x:Grid>
+    </f:Grid>
     <br />
-    <x:Button ID="Button1" runat="server" Text="选中行复选框的状态" OnClick="Button1_Click">
-    </x:Button>
+    <f:Button ID="Button1" runat="server" Text="选中行复选框的状态" OnClick="Button1_Click">
+    </f:Button>
     <br />
-    <x:Label ID="labResult" EncodeText="false" runat="server">
-    </x:Label>
+    <f:Label ID="labResult" EncodeText="false" runat="server">
+    </f:Label>
     </form>
 </body>
 </html>

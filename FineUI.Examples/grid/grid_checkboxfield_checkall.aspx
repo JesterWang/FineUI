@@ -5,39 +5,39 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-    <x:PageManager ID="PageManager1" runat="server" />
-    <x:Grid ID="Grid1" Title="表格" EnableFrame="true" EnableCollapse="true" Width="800px" ShowBorder="true" ShowHeader="true"
+    <f:PageManager ID="PageManager1" runat="server" />
+    <f:Grid ID="Grid1" Title="表格"  EnableCollapse="true" Width="800px" ShowBorder="true" ShowHeader="true"
         runat="server" EnableCheckBoxSelect="True" DataKeyNames="Id,Name" OnRowCommand="Grid1_RowCommand"
        >
         <Columns>
-            <x:RowNumberField />
-            <x:BoundField Width="100px" DataField="Name" DataFormatString="{0}" HeaderText="姓名" />
-            <x:TemplateField Width="80px" HeaderText="性别">
+            <f:RowNumberField />
+            <f:BoundField Width="100px" DataField="Name" DataFormatString="{0}" HeaderText="姓名" />
+            <f:TemplateField Width="80px" HeaderText="性别">
                 <ItemTemplate>
                     <asp:Label ID="Label2" runat="server" Text='<%# GetGender(Eval("Gender")) %>'></asp:Label>
                 </ItemTemplate>
-            </x:TemplateField>
-            <x:BoundField Width="80px" DataField="EntranceYear" HeaderText="入学年份" />
-            <x:CheckBoxField Width="80px" RenderAsStaticField="true" DataField="AtSchool" HeaderText="是否在校" />
-            <x:CheckBoxField ColumnID="CheckBoxField1" Width="80px" RenderAsStaticField="false"
+            </f:TemplateField>
+            <f:BoundField Width="80px" DataField="EntranceYear" HeaderText="入学年份" />
+            <f:CheckBoxField Width="80px" RenderAsStaticField="true" DataField="AtSchool" HeaderText="是否在校" />
+            <f:CheckBoxField ColumnID="CheckBoxField1" Width="80px" RenderAsStaticField="false"
                 ShowHeaderCheckBox="true" DataField="AtSchool" HeaderText="是否在校" />
-            <x:HyperLinkField HeaderText="所学专业" DataToolTipField="Major" DataTextField="Major"
+            <f:HyperLinkField HeaderText="所学专业" DataToolTipField="Major" DataTextField="Major"
                 DataTextFormatString="{0}" DataNavigateUrlFields="Major" DataNavigateUrlFormatString="http://gsa.ustc.edu.cn/search?q={0}"
-                DataNavigateUrlFieldsEncode="true" Target="_blank" ExpandUnusedSpace="True" />
-            <x:LinkButtonField HeaderText="&nbsp;" Width="60px" CommandName="Action1" Text="按钮 1" />
-            <x:LinkButtonField HeaderText="&nbsp;" Width="60px" CommandName="Action2" Text="按钮 2" />
+                UrlEncode="true" Target="_blank" ExpandUnusedSpace="True" />
+            <f:LinkButtonField HeaderText="&nbsp;" Width="60px" CommandName="Action1" Text="按钮 1" />
+            <f:LinkButtonField HeaderText="&nbsp;" Width="60px" CommandName="Action2" Text="按钮 2" />
         </Columns>
-    </x:Grid>
+    </f:Grid>
     <br />
-    <x:Button ID="Button1" runat="server" Text="选中行复选框的状态" OnClick="Button1_Click">
-    </x:Button>
+    <f:Button ID="Button1" runat="server" Text="选中行复选框的状态" OnClick="Button1_Click">
+    </f:Button>
     <br />
-    <x:Label ID="labResult" EncodeText="false" runat="server">
-    </x:Label>
+    <f:Label ID="labResult" EncodeText="false" runat="server">
+    </f:Label>
     </form>
 </body>
 </html>

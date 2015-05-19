@@ -5,7 +5,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style>
         .redcolor {
         }
@@ -13,73 +13,73 @@
 </head>
 <body>
     <form id="_form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Form Width="600px" LabelWidth="100px" BodyPadding="5px" EnableFrame="true" EnableCollapse="true"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Form Width="600px" LabelWidth="100px" BodyPadding="5px" EnableCollapse="true"
             ID="Form2" runat="server" Title="表单">
             <Rows>
-                <x:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:Label ID="labTitle" Label="标题" HideMode="Display" Text="申请单" runat="server" />
-                        <x:Label ID="labLiuShuiHao" Label="流水号" HideMode="Visibility" Text="123456789" runat="server" />
+                        <f:Label ID="labTitle" Label="标题" HideMode="Display" Text="申请单" runat="server" />
+                        <f:Label ID="labLiuShuiHao" Label="流水号" HideMode="Visibility" Text="123456789" runat="server" />
                     </Items>
-                </x:FormRow>
-                <x:FormRow>
+                </f:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:Label ID="Label3" Label="电话" Text="0551-1234567" runat="server" />
-                        <x:Label ID="Label16" runat="server" Label="申请人" Text="admin">
-                        </x:Label>
+                        <f:Label ID="Label3" Label="电话" Text="0551-1234567" runat="server" />
+                        <f:Label ID="Label16" runat="server" Label="申请人" Text="admin">
+                        </f:Label>
                     </Items>
-                </x:FormRow>
-                <x:FormRow>
+                </f:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:Label ID="Label4" Label="编号" Text="200804170006" runat="server" />
-                        <x:TextBox ID="TextBox2" Required="true" ShowRedStar="true" Label="电子邮箱" RegexPattern="EMAIL"
+                        <f:Label ID="Label4" Label="编号" Text="200804170006" runat="server" />
+                        <f:TextBox ID="TextBox2" Required="true" ShowRedStar="true" Label="电子邮箱" RegexPattern="EMAIL" EmptyText="请输入常用电子邮箱"
                             RegexMessage="请输入有效的邮箱地址！" runat="server">
-                        </x:TextBox>
+                        </f:TextBox>
                     </Items>
-                </x:FormRow>
-                <x:FormRow>
+                </f:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:DropDownList ID="DropDownList3" Label="审批人" Required="true" runat="server" ShowRedStar="True">
-                            <x:ListItem Text="老大甲" Value="0"></x:ListItem>
-                            <x:ListItem Text="老大乙" Value="1"></x:ListItem>
-                            <x:ListItem Text="老大丙" Value="1"></x:ListItem>
-                        </x:DropDownList>
+                        <f:DropDownList ID="DropDownList3" Label="审批人" EmptyText="请选择审批人" Required="true" runat="server" ShowRedStar="True" AutoSelectFirstItem="false">
+                            <f:ListItem Text="老大甲" Value="0"></f:ListItem>
+                            <f:ListItem Text="老大乙" Value="1"></f:ListItem>
+                            <f:ListItem Text="老大丙" Value="2"></f:ListItem>
+                        </f:DropDownList>
                     </Items>
-                </x:FormRow>
-                <x:FormRow>
+                </f:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:NumberBox ID="NumberBox1" Label="申请数量" MaxValue="1000" Required="true" runat="server"
+                        <f:NumberBox ID="NumberBox1" Label="申请数量" EmptyText="请输入申请数量" MaxValue="1000" Required="true" runat="server"
                             ShowRedStar="True" />
                     </Items>
-                </x:FormRow>
-                <x:FormRow>
+                </f:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:TextArea ID="TextArea1" runat="server" Label="描述" ShowRedStar="True" Required="True">
-                        </x:TextArea>
+                        <f:TextArea ID="TextArea1" runat="server" Label="描述" ShowRedStar="True" Required="True">
+                        </f:TextArea>
                     </Items>
-                </x:FormRow>
-                <x:FormRow>
+                </f:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:Panel ID="Panel2" runat="server" ShowBorder="false"
+                        <f:Panel ID="Panel2" runat="server" ShowBorder="false"
                             ShowHeader="false">
                             <Items>
-                                <x:Button ID="btnSubmitForm2" Text="验证表单并提交" CssClass="inline" runat="server" OnClick="btnSubmitForm2_Click"
+                                <f:Button ID="btnSubmitForm2" Text="验证表单并提交" CssClass="marginr" runat="server" OnClick="btnSubmitForm2_Click"
                                     ValidateForms="Form2">
-                                </x:Button>
+                                </f:Button>
                             </Items>
-                        </x:Panel>
+                        </f:Panel>
                     </Items>
-                </x:FormRow>
+                </f:FormRow>
             </Rows>
-        </x:Form>
+        </f:Form>
         <br />
-        <x:Button ID="btnShowHideTitle" Text="显示隐藏标题" CssClass="inline" runat="server"
+        <f:Button ID="btnShowHideTitle" Text="显示隐藏标题" CssClass="marginr" runat="server"
             OnClick="btnShowHideTitle_Click">
-        </x:Button>
-        <x:Button ID="btnShowHideLiuShuiHao" Text="显示隐藏流水号" runat="server"
+        </f:Button>
+        <f:Button ID="btnShowHideLiuShuiHao" Text="显示隐藏流水号" runat="server"
             OnClick="btnShowHideLiuShuiHao_Click">
-        </x:Button>
+        </f:Button>
         <br />
         <br />
         注意：比较上述两个按钮的异同（控件的HideMode属性）。

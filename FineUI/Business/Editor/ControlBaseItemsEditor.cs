@@ -49,6 +49,7 @@ namespace FineUI
                 typeof(SplitButton), 
                 typeof(Timer), 
                 typeof(UserControlConnector),
+                typeof(CPHConnector),
                 typeof(CheckBox),
                 typeof(CheckBoxList),
                 typeof(HtmlEditor),

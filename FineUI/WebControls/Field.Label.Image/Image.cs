@@ -101,7 +101,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ImageUrl"];
+                object obj = FState["ImageUrl"];
                 if (obj == null)
                 {
                     if (!DesignMode)
@@ -116,7 +116,7 @@ namespace FineUI
             }
             set
             {
-                XState["ImageUrl"] = value;
+                FState["ImageUrl"] = value;
             }
         }
 
@@ -131,12 +131,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Icon"];
+                object obj = FState["Icon"];
                 return obj == null ? Icon.None : (Icon)obj;
             }
             set
             {
-                XState["Icon"] = value;
+                FState["Icon"] = value;
             }
         }
 
@@ -151,12 +151,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ImageWidth"];
+                object obj = FState["ImageWidth"];
                 return obj == null ? Unit.Empty : (Unit)obj;
             }
             set
             {
-                XState["ImageWidth"] = value;
+                FState["ImageWidth"] = value;
             }
         }
 
@@ -171,12 +171,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ImageHeight"];
+                object obj = FState["ImageHeight"];
                 return obj == null ? Unit.Empty : (Unit)obj;
             }
             set
             {
-                XState["ImageHeight"] = value;
+                FState["ImageHeight"] = value;
             }
         }
 
@@ -190,12 +190,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ImageCssClass"];
+                object obj = FState["ImageCssClass"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["ImageCssClass"] = value;
+                FState["ImageCssClass"] = value;
             }
         }
 
@@ -209,12 +209,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ImageCssStyle"];
+                object obj = FState["ImageCssStyle"];
                 return obj == null ? String.Empty : (string)obj;
             }
             set
             {
-                XState["ImageCssStyle"] = value;
+                FState["ImageCssStyle"] = value;
             }
         }
 
@@ -228,12 +228,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ImageAlt"];
+                object obj = FState["ImageAlt"];
                 return obj == null ? String.Empty : (string)obj;
             }
             set
             {
-                XState["ImageAlt"] = value;
+                FState["ImageAlt"] = value;
             }
         }
 

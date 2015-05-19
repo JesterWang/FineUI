@@ -72,12 +72,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Text"];
+                object obj = FState["Text"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Text"] = value;
+                FState["Text"] = value;
             }
         }
 
@@ -91,12 +91,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Checked"];
+                object obj = FState["Checked"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["Checked"] = value;
+                FState["Checked"] = value;
             }
         }
 
@@ -110,12 +110,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoPostBack"];
+                object obj = FState["AutoPostBack"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["AutoPostBack"] = value;
+                FState["AutoPostBack"] = value;
             }
         }
 
@@ -147,7 +147,7 @@ namespace FineUI
             StringBuilder sb = new StringBuilder();
             if (PropertyModified("Checked"))
             {
-                sb.AppendFormat("{0}.x_setValue();", XID);
+                sb.AppendFormat("{0}.f_setValue();", XID);
 
             }
 
@@ -184,7 +184,8 @@ namespace FineUI
                 //string checkEventScript = String.Format("this.on('check',{0});", JsHelper.GetFunction(GetPostBackEventReference()));
                 //OB.Listeners.AddProperty("render", "function(){" + checkEventScript + "}", true);
 
-                OB.Listeners.AddProperty("change", JsHelper.GetFunction(GetPostBackEventReference()), true);
+                //OB.Listeners.AddProperty("change", JsHelper.GetFunction(GetPostBackEventReference()), true);
+                AddListener("change", GetPostBackEventReference());
             }
 
 
@@ -210,7 +211,7 @@ namespace FineUI
             if (Checked != postChecked)
             {
                 Checked = postChecked;
-                XState.BackupPostDataProperty("Checked");
+                FState.BackupPostDataProperty("Checked");
                 return true;
             }
 

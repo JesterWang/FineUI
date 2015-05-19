@@ -91,29 +91,4 @@ namespace FineUI.Examples.data
     }
 
 
-
-    public class GenderTemplate : ITemplate
-    {
-
-        public void InstantiateIn(System.Web.UI.Control container)
-        {
-            AspNet.Label labGender = new AspNet.Label();
-            labGender.DataBinding += new EventHandler(labGender_DataBinding);
-            container.Controls.Add(labGender);
-        }
-
-        private void labGender_DataBinding(object sender, EventArgs e)
-        {
-            AspNet.Label labGender = (AspNet.Label)sender;
-
-            IDataItemContainer dataItemContainer = (IDataItemContainer)labGender.NamingContainer;
-
-            int gender = Convert.ToInt32(((DataRowView)dataItemContainer.DataItem)["Gender"]);
-
-            labGender.Text = (gender == 1) ? "男" : "女";
-        }
-
-    }
-
-
 }

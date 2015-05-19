@@ -46,29 +46,29 @@ namespace FineUI
     [ToolboxBitmap(typeof(MenuText), "toolbox.MenuText.bmp")]
     [Description("菜单项文本控件")]
     [ControlBuilder(typeof(NotAllowWhitespaceLiteralsBuilder))]
-    public class MenuText : BaseMenuItem
+    public class MenuText : MenuItem
     {
 
         #region Properties
 
-        /// <summary>
-        /// 文本
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue("")]
-        [Description("文本")]
-        public virtual string Text
-        {
-            get
-            {
-                object obj = XState["Text"];
-                return obj == null ? "" : (string)obj;
-            }
-            set
-            {
-                XState["Text"] = value;
-            }
-        }
+        ///// <summary>
+        ///// 文本
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue("")]
+        //[Description("文本")]
+        //public virtual string Text
+        //{
+        //    get
+        //    {
+        //        object obj = FState["Text"];
+        //        return obj == null ? "" : (string)obj;
+        //    }
+        //    set
+        //    {
+        //        FState["Text"] = value;
+        //    }
+        //}
 
         #endregion
 
@@ -99,19 +99,10 @@ namespace FineUI
             base.OnFirstPreRender();
 
 
-            OB.AddProperty("text", Text);
+            //OB.AddProperty("text", Text);
 
 
-            string jsContent = String.Format("var {0}=Ext.create('Ext.menu.TextItem',{1});", XID, OB.ToString());
-
-
-            //if (AjaxForceCompleteUpdate)
-            //{
-            //    ClearAjaxUpdateScript();
-            //    AddAjaxUpdateScript(jsContent);
-            //    AjaxForceCompleteUpdate = false;
-            //}
-
+            string jsContent = String.Format("var {0}=Ext.create('Ext.menu.Item',{1});", XID, OB.ToString());
             AddStartupScript(jsContent);
 
         }

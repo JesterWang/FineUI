@@ -19,13 +19,12 @@ namespace FineUI.Examples.iframe
             }
             else
             {
-                string eventTarget = Request.Form["__EVENTTARGET"];
-                string eventArgument = Request.Form["__EVENTARGUMENT"];
-                if (eventTarget == imgChina.ClientID && eventArgument.StartsWith("SelectProvince$"))
+                string eventArgument = GetRequestEventArgument();
+                if (eventArgument.StartsWith("SelectProvince$"))
                 {
                     string provinceName = eventArgument.Substring("SelectProvince$".Length);
 
-                    PageContext.RegisterStartupScript("X.wnd.getActiveWindow()[1].selectProvince('" + provinceName + "');" + ActiveWindow.GetHideReference());
+                    PageContext.RegisterStartupScript("F.wnd.getActiveWindow().window.selectProvince('" + provinceName + "');" + ActiveWindow.GetHideReference());
                 }
             }
         }

@@ -46,7 +46,7 @@ namespace FineUI
     /// 树控件
     /// </summary>
     [Designer("FineUI.Design.TreeDesigner, FineUI.Design")]
-    [ToolboxData("<{0}:Tree Title=\"Tree\" EnableArrows=\"true\" AutoScroll=\"true\" runat=\"server\"></{0}:Tree>")]
+    [ToolboxData("<{0}:Tree Title=\"Tree\" AutoScroll=\"true\" runat=\"server\"></{0}:Tree>")]
     [ToolboxBitmap(typeof(Tree), "toolbox.Tree.bmp")]
     [Description("树控件")]
     [ParseChildren(true)]
@@ -62,9 +62,9 @@ namespace FineUI
         public Tree()
         {
             AddServerAjaxProperties();
-            AddClientAjaxProperties("X_Nodes", "SelectedNodeIDArray");
+            AddClientAjaxProperties("F_Nodes", "SelectedNodeIDArray");
 
-            AddGzippedAjaxProperties("X_Nodes");
+            AddGzippedAjaxProperties("F_Nodes");
         }
 
         //internal int NodeIDIncrement = 0;
@@ -72,6 +72,19 @@ namespace FineUI
         #endregion
 
         #region Unsupported Properties
+
+        /// <summary>
+        /// 不支持此属性
+        /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public override ITemplate Content
+        {
+            get
+            {
+                return base.Content;
+            }
+        }
 
         /// <summary>
         /// 不支持此属性
@@ -146,41 +159,61 @@ namespace FineUI
 
         #region Properties
 
-        ///// <summary>
-        ///// 单击切换节点的折叠展开状态
-        ///// </summary>
-        //[Category(CategoryName.OPTIONS)]
-        //[DefaultValue(false)]
-        //[Description("单击切换节点的折叠展开状态")]
-        //public bool EnableSingleClickExpand
-        //{
-        //    get
-        //    {
-        //        object obj = XState["EnableSingleClickExpand"];
-        //        return obj == null ? false : (bool)obj;
-        //    }
-        //    set
-        //    {
-        //        XState["EnableSingleClickExpand"] = value;
-        //    }
-        //}
+        
+        /// <summary>
+        /// 单击切换节点的折叠展开状态
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("单击切换节点的折叠展开状态")]
+        public bool EnableSingleClickExpand
+        {
+            get
+            {
+                object obj = FState["EnableSingleClickExpand"];
+                return obj == null ? false : (bool)obj;
+            }
+            set
+            {
+                FState["EnableSingleClickExpand"] = value;
+            }
+        }
 
         /// <summary>
         /// 启用箭头
         /// </summary>
         [Category(CategoryName.OPTIONS)]
-        [DefaultValue(false)]
+        [DefaultValue(true)]
         [Description("启用箭头")]
         public bool EnableArrows
         {
             get
             {
-                object obj = XState["EnableArrows"];
-                return obj == null ? false : (bool)obj;
+                object obj = FState["EnableArrows"];
+                return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableArrows"] = value;
+                FState["EnableArrows"] = value;
+            }
+        }
+
+        /// <summary>
+        /// 启用节点之间连线
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(true)]
+        [Description("启用节点之间连线")]
+        public bool EnableLines
+        {
+            get
+            {
+                object obj = FState["EnableLines"];
+                return obj == null ? true : (bool)obj;
+            }
+            set
+            {
+                FState["EnableLines"] = value;
             }
         }
 
@@ -188,18 +221,18 @@ namespace FineUI
         /// 启用动画
         /// </summary>
         [Category(CategoryName.OPTIONS)]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         [Description("启用动画")]
         public bool EnableAnimate
         {
             get
             {
-                object obj = XState["EnableAnimate"];
-                return obj == null ? true : (bool)obj;
+                object obj = FState["EnableAnimate"];
+                return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableAnimate"] = value;
+                FState["EnableAnimate"] = value;
             }
         }
 
@@ -213,34 +246,17 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableSingleExpand"];
+                object obj = FState["EnableSingleExpand"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableSingleExpand"] = value;
+                FState["EnableSingleExpand"] = value;
             }
         }
 
 
-        /// <summary>
-        /// 启用节点之间连线
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(true)]
-        [Description("启用节点之间连线")]
-        public bool EnableLines
-        {
-            get
-            {
-                object obj = XState["EnableLines"];
-                return obj == null ? true : (bool)obj;
-            }
-            set
-            {
-                XState["EnableLines"] = value;
-            }
-        }
+       
 
         /// <summary>
         /// 启用图标
@@ -252,12 +268,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableIcons"];
+                object obj = FState["EnableIcons"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["EnableIcons"] = value;
+                FState["EnableIcons"] = value;
             }
         }
 
@@ -271,12 +287,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoLeafIdentification"];
+                object obj = FState["AutoLeafIdentification"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["AutoLeafIdentification"] = value;
+                FState["AutoLeafIdentification"] = value;
             }
         }
 
@@ -291,12 +307,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableMultiSelect"];
+                object obj = FState["EnableMultiSelect"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableMultiSelect"] = value;
+                FState["EnableMultiSelect"] = value;
             }
         }
 
@@ -343,7 +359,16 @@ namespace FineUI
             {
                 if (_nodes == null)
                 {
-                    _nodes = new TreeNodeCollection(this, null);
+                    // 如果不加上 DesignMode 的判断，则在设计时出现如下错误
+                    // 无法从TreeInstance属性的字符串表示形式创建FineUI.Tree类型的对象
+                    if (DesignMode)
+                    {
+                        _nodes = new TreeNodeCollection(null, null);
+                    }
+                    else
+                    {
+                        _nodes = new TreeNodeCollection(this, null);
+                    }
                 }
                 return _nodes;
             }
@@ -400,13 +425,13 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["SelectedNodeIDArray"];
+                object obj = FState["SelectedNodeIDArray"];
                 return obj == null ? new string[] { } : (string[])obj;
             }
             set
             {
                 // 排序主要是为了拿两次的值做比较
-                XState["SelectedNodeIDArray"] = GetSortedArray(value).ToArray();
+                FState["SelectedNodeIDArray"] = GetSortedArray(value).ToArray();
             }
         }
 
@@ -491,14 +516,14 @@ namespace FineUI
 
         #endregion
 
-        #region X_Nodes
+        #region F_Nodes
 
         /// <summary>
         /// 树节点集合的 JSON 表示（内部使用）
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public JArray X_Nodes
+        public JArray F_Nodes
         {
             get
             {
@@ -536,11 +561,15 @@ namespace FineUI
                 // 12 - iconUrl - 这个是客户端用来生成图标的
                 // 13 - ToolTip
                 // 14 - OnClientClick
-                // 15 - EnablePostBack
-                // 16 - AutoPostBack
-                // 17 - CommandName
-                // 18 - CommandArgument
-                // 19 - Nodes
+                // 15 - EnableClickEvent
+                // 16 - CommandName
+                // 17 - CommandArgument
+
+                // 18 - EnableCheckEvent
+                // 19 - EnableExpandEvent
+                // 20 - EnableCollapseEvent
+
+                // 21 - Nodes
                 treeNode.Text = ja2[0].Value<string>(); //ja2.getString(0);
                 treeNode.Leaf = ja2[1].Value<int>() == 1 ? true : false;
                 treeNode.NodeID = ja2[2].Value<string>(); ;
@@ -560,13 +589,19 @@ namespace FineUI
                 treeNode.ToolTip = ja2[13].Value<string>(); 
 
                 treeNode.OnClientClick = ja2[14].Value<string>();
-                treeNode.EnablePostBack = ja2[15].Value<int>() == 1 ? true : false;
-                treeNode.AutoPostBack = ja2[16].Value<int>() == 1 ? true : false;
-                treeNode.CommandName = ja2[17].Value<string>();
-                treeNode.CommandArgument = ja2[18].Value<string>();
+                treeNode.EnableClickEvent = ja2[15].Value<int>() == 1 ? true : false;
+                treeNode.CommandName = ja2[16].Value<string>();
+                treeNode.CommandArgument = ja2[17].Value<string>();
+                
+
+                treeNode.EnableCheckEvent = ja2[18].Value<int>() == 1 ? true : false;
+
+                treeNode.EnableExpandEvent = ja2[19].Value<int>() == 1 ? true : false;
+                treeNode.EnableCollapseEvent = ja2[20].Value<int>() == 1 ? true : false;
+                
 
 
-                JArray childNodes = ja2[19].Value<JArray>(); // ja2.getJArray(20);
+                JArray childNodes = ja2[21].Value<JArray>();
                 if (childNodes != null && childNodes.Count > 0)
                 {
                     FromNodesJArray(childNodes, treeNode.Nodes);
@@ -596,11 +631,15 @@ namespace FineUI
                 // 12 - iconUrl - 这个是客户端用来生成图标的
                 // 13 - ToolTip
                 // 14 - OnClientClick
-                // 15 - EnablePostBack
-                // 16 - AutoPostBack
-                // 17 - CommandName
-                // 18 - CommandArgument
-                // 19 - Nodes
+                // 15 - EnableClickEvent
+                // 16 - CommandName
+                // 17 - CommandArgument
+
+                // 18 - EnableCheckEvent
+                // 19 - EnableExpandEvent
+                // 20 - EnableCollapseEvent
+
+                // 21 - Nodes
                 ja2.Add(node.Text);
                 ja2.Add(node.Leaf ? 1 : 0);
                 ja2.Add(node.NodeID);
@@ -620,11 +659,16 @@ namespace FineUI
                 ja2.Add(String.IsNullOrEmpty(node.ToolTip) ? "" : node.ToolTip);
 
                 ja2.Add(node.OnClientClick);
-                ja2.Add(node.EnablePostBack ? 1 : 0);
-
-                ja2.Add(node.AutoPostBack ? 1 : 0);
+                ja2.Add(node.EnableClickEvent ? 1 : 0);
                 ja2.Add(node.CommandName);
                 ja2.Add(node.CommandArgument);
+
+
+                ja2.Add(node.EnableCheckEvent ? 1 : 0);
+
+                ja2.Add(node.EnableExpandEvent ? 1 : 0);
+                ja2.Add(node.EnableCollapseEvent ? 1 : 0);
+                
 
                 if (node.Nodes != null && node.Nodes.Count > 0)
                 {
@@ -758,8 +802,8 @@ namespace FineUI
                 ////////listenersBuilder.AddProperty("beforeappend", String.Format("function(node,deep,anim){{\r\nif(!node.loaded){{alert(node.id);\r\n}}}}"), true);
 
                 //////// 折叠/展开
-                ////////listenersBuilder.AddProperty(OptionName.Expand, String.Format("function(node){{X.util.addValueToHiddenField('{0}',node.id);}}", ExpandedNodesHiddenFieldID), true);
-                ////////listenersBuilder.AddProperty(OptionName.Collapse, String.Format("function(node){{X.util.removeValueFromHiddenField('{0}',node.id);}}", ExpandedNodesHiddenFieldID), true);
+                ////////listenersBuilder.AddProperty(OptionName.Expand, String.Format("function(node){{F.util.addValueToHiddenField('{0}',node.id);}}", ExpandedNodesHiddenFieldID), true);
+                ////////listenersBuilder.AddProperty(OptionName.Collapse, String.Format("function(node){{F.util.removeValueFromHiddenField('{0}',node.id);}}", ExpandedNodesHiddenFieldID), true);
                 //////listenersBuilder.AddProperty("expand", Render_NodeExpandScriptID, true);
                 //////listenersBuilder.AddProperty("collapse", Render_NodeCollapseScriptID, true);
 
@@ -809,7 +853,7 @@ namespace FineUI
                 ////    //if (!node.AutoPostBack)
                 ////    //{
                 ////    //    // 改变CheckBox，不需要自动回发，则将checkchange指向预定义的函数，这有助于减少代码量
-                ////    //    //listenersBuilder.AddProperty("checkchange", String.Format("function(node,checked){{if(checked){{X.util.addValueToHiddenField('{0}',node.id);}}else{{X.util.removeValueFromHiddenField('{0}',node.id);}}}}", CheckedNodesHiddenFieldID), true);
+                ////    //    //listenersBuilder.AddProperty("checkchange", String.Format("function(node,checked){{if(checked){{F.util.addValueToHiddenField('{0}',node.id);}}else{{F.util.removeValueFromHiddenField('{0}',node.id);}}}}", CheckedNodesHiddenFieldID), true);
                 ////    //    listenersBuilder.AddProperty("checkchange", Render_NodeCheckChangeScriptID, true);
                 ////    //}
                 ////    //else
@@ -926,10 +970,10 @@ namespace FineUI
         {
             base.OnInitControl();
 
-            // 修复Tree的节点，这里可能会修改树节点的属性，从而影响 X_Nodes 的计算结果
+            // 修复Tree的节点，这里可能会修改树节点的属性，从而影响 F_Nodes 的计算结果
             // 在这个地方调用是安全的：
             //      -> 页面第一次加载时，运行到这里 ASPX 上面的标签已经初始化完毕
-            //      -> 页面回发时（包括正常回发或者AJAX回发），此时请求表单中 X_STATE 已经恢复完毕
+            //      -> 页面回发时（包括正常回发或者AJAX回发），此时请求表单中 F_STATE 已经恢复完毕
             FixTreeNodes();
         }
 
@@ -954,22 +998,22 @@ namespace FineUI
             StringBuilder sb = new StringBuilder();
 
             bool reloaded = false;
-            if (PropertyModified("X_Nodes"))
+            if (PropertyModified("F_Nodes"))
             {
-                sb.AppendFormat("{0}.x_loadData();", XID);
+                sb.AppendFormat("{0}.f_loadData();", XID);
                 reloaded = true;
             }
 
             if (reloaded)
             {
                 // 如果重新加载了数据，则要重新设置选中项
-                sb.AppendFormat("{0}.x_selectNodes();", XID);
+                sb.AppendFormat("{0}.f_selectNodes();", XID);
             }
             else
             {
                 if (PropertyModified("SelectedNodeIDArray"))
                 {
-                    sb.AppendFormat("{0}.x_selectNodes();", XID);
+                    sb.AppendFormat("{0}.f_selectNodes();", XID);
                 }
             }
 
@@ -982,9 +1026,9 @@ namespace FineUI
         /// </summary>
         protected override void OnFirstPreRender()
         {
-            // 确保 X_Nodes 在页面第一次加载时都存在于 X_STATE 中，因为客户端需要这个数据来渲染树控件
-            // 并且这个代码要放在 base.OnFirstPreRender(); 之前，因为在那里面会生成 X_STATE
-            XState.AddModifiedProperty("X_Nodes");
+            // 确保 F_Nodes 在页面第一次加载时都存在于 F_STATE 中，因为客户端需要这个数据来渲染树控件
+            // 并且这个代码要放在 base.OnFirstPreRender(); 之前，因为在那里面会生成 F_STATE
+            FState.AddModifiedProperty("F_Nodes");
 
             base.OnFirstPreRender();
 
@@ -993,14 +1037,15 @@ namespace FineUI
             #region options
 
             OB.AddProperty("useArrows", EnableArrows);
+            OB.AddProperty("lines", EnableLines);
+
             OB.AddProperty("animate", EnableAnimate);
 
             OB.AddProperty("singleExpand", EnableSingleExpand);
-            OB.AddProperty("lines", EnableLines);
+            
 
             if (!EnableIcons)
             {
-                //bodyCssClass: 'x-tree-noicon'
                 OB.AddProperty("bodyCls", "x-tree-noicon");
             }
 
@@ -1035,7 +1080,7 @@ namespace FineUI
 
             JsObjectBuilder listenersBuilder = new JsObjectBuilder();
 
-            string paramStr = String.Format("Expand${0}", "#ID#");
+            string paramStr = String.Format("LazyLoad${0}", "#ID#");
             string postBackScript = GetPostBackEventReference(paramStr);
             postBackScript = postBackScript.Replace("#ID#'", "'+op.id");
             listenersBuilder.AddProperty("beforeload", String.Format("function(store,op){{if(op.action==='read'&&op.id!=='root'){{{0}}}return false;}}", postBackScript), true);
@@ -1055,26 +1100,46 @@ namespace FineUI
             #region Listeners
 
             string beforeclickScript = "if(node.disabled){return false;}";
-            OB.Listeners.AddProperty("beforeitemclick", JsHelper.GetFunction(beforeclickScript, "view", "node", "item", "index"), true);
+            //OB.Listeners.AddProperty("beforeitemclick", JsHelper.GetFunction(beforeclickScript, "view", "node", "item", "index"), true);
+            AddListener("beforeitemclick", beforeclickScript, "view", "node", "item", "index");
 
-            //if (EnableSingleClickExpand)
-            //{
-            //    string itemclickScript = "if(!node.isLeaf()){if(node.isExpanded()){node.collapse();}else{node.expand();}}";
-            //    OB.Listeners.AddProperty("itemclick", JsHelper.GetFunction(itemclickScript, "view", "node", "item", "index"), true);
-            //}
 
-            string itemclickScript = "var args='Command$'+node.getId()+'$'+node.raw.x_commandname+'$'+node.raw.x_commandargument;";
+            string singleclickexpandScript = "";
+            if (EnableSingleClickExpand)
+            {
+                //singleclickexpandScript = "if(!node.isLeaf()){if(node.isExpanded()){node.collapse();}else{node.expand();}}";
+                singleclickexpandScript = "if(node.isExpandable()&&!node.isLeaf()){if(node.isExpanded()){this.collapseNode(node);}else{this.expandNode(node);}}";
+            }
+
+            string itemclickScript = "var args='Command$'+node.getId()+'$'+node.raw.f_commandname+'$'+node.raw.f_commandargument;";
             itemclickScript += GetPostBackEventReference("#Click#").Replace("'#Click#'", "args");
-            itemclickScript = String.Format("if(node.raw.x_enablepostback){{{0}}}", itemclickScript);
-            itemclickScript = "if(node.raw.x_clientclick){eval(node.raw.x_clientclick);}" + itemclickScript; // new Function(node.raw.x_clientclick)();
-            OB.Listeners.AddProperty("itemclick", JsHelper.GetFunction(itemclickScript, "view", "node", "item", "index"), true);
+            itemclickScript = String.Format("if(node.raw.f_enableclickevent){{{0}}}", itemclickScript);
+            itemclickScript = "if(node.raw.f_clientclick){if(new Function(node.raw.f_clientclick)()===false){return;}}" + itemclickScript;
+            //itemclickScript = "if(node.raw.f_clientclick){eval(node.raw.f_clientclick);}" + itemclickScript; // new Function(node.raw.f_clientclick)();
+            //OB.Listeners.AddProperty("itemclick", JsHelper.GetFunction(singleclickexpandScript + itemclickScript, "view", "node", "item", "index"), true);
+            AddListener("itemclick", singleclickexpandScript + itemclickScript, "view", "node", "item", "index");
+
 
 
             string checkchangeScript = "var args='Check$'+node.getId()+'$'+checked;";
             checkchangeScript += GetPostBackEventReference("#CheckChange#").Replace("'#CheckChange#'", "args");
-            checkchangeScript = String.Format("if(node.raw.x_autopostback){{{0}}}", checkchangeScript);
-            OB.Listeners.AddProperty("checkchange", JsHelper.GetFunction(checkchangeScript, "node", "checked"), true);
+            checkchangeScript = String.Format("if(node.raw.f_enablecheckevent){{{0}}}", checkchangeScript);
+            //OB.Listeners.AddProperty("checkchange", JsHelper.GetFunction(checkchangeScript, "node", "checked"), true);
+            AddListener("checkchange", checkchangeScript, "node", "checked");
 
+
+            string expandScript = "var args='Expand$'+node.getId();";
+            expandScript += GetPostBackEventReference("#Expand#").Replace("'#Expand#'", "args");
+            expandScript = String.Format("if(node.raw.f_enableexpandevent){{{0}}}", expandScript);
+            //OB.Listeners.AddProperty("itemexpand", JsHelper.GetFunction(expandScript, "node"), true);
+            AddListener("itemexpand", expandScript, "node");
+
+
+            string collapseScript = "var args='Collapse$'+node.getId();";
+            collapseScript += GetPostBackEventReference("#Collapse#").Replace("'#Collapse#'", "args");
+            collapseScript = String.Format("if(node.raw.f_enablecollapseevent){{{0}}}", collapseScript);
+            //OB.Listeners.AddProperty("itemcollapse", JsHelper.GetFunction(collapseScript, "node"), true);
+            AddListener("itemcollapse", collapseScript, "node");
 
             #endregion
 
@@ -1087,7 +1152,7 @@ namespace FineUI
             }
             else
             {
-                selectModelScript = "Ext.create('Ext.selection.TreeModel')";
+                selectModelScript = "Ext.create('Ext.selection.TreeModel',{mode:'SINGLE'})";
             }
             OB.AddProperty("selModel", selectModelScript, true);
 
@@ -1122,7 +1187,7 @@ namespace FineUI
             #region renderScript
 
             //string renderScript = String.Empty;
-            ////renderScript += "cmp.x_loadData();";
+            ////renderScript += "cmp.f_loadData();";
             //if (SelectedNodeIDArray.Length > 0)
             //{
             //    renderScript += "var model=cmp.getSelectionModel();";
@@ -1132,20 +1197,23 @@ namespace FineUI
             //    }
             //}
 
-            ////renderScript = "function(cmp){window.setTimeout(function(){ cmp.x_loadData(); },1000);}";
+            ////renderScript = "function(cmp){window.setTimeout(function(){ cmp.f_loadData(); },1000);}";
 
-            OB.Listeners.AddProperty("render", JsHelper.GetFunction("cmp.x_loadData();", "cmp"), true);
+            //OB.Listeners.AddProperty("render", JsHelper.GetFunction("cmp.f_loadData();", "cmp"), true);
+            AddListener("render", "cmp.f_loadData();", "cmp");
 
-            OB.Listeners.AddProperty("viewready", JsHelper.GetFunction("cmp.x_selectNodes();", "cmp"), true);
+
+            //OB.Listeners.AddProperty("viewready", JsHelper.GetFunction("cmp.f_selectNodes();", "cmp"), true);
+            AddListener("viewready", "cmp.f_selectNodes();", "cmp");
 
             #endregion
 
             #region AddStartupScript
             //// 展开,折叠,点击,选中CheckBox事件处理函数，
             //// 因为这些函数会被几乎每个节点使用，所以提取出公共的方法来
-            //scripts.AppendFormat("{0}=function(node){{X.util.addValueToHiddenField('{1}',node.id);}};", Render_NodeExpandScriptID, ExpandedNodesHiddenFieldID);
-            //scripts.AppendFormat("{0}=function(node){{X.util.removeValueFromHiddenField('{1}',node.id);}};", Render_NodeCollapseScriptID, ExpandedNodesHiddenFieldID);
-            //scripts.AppendFormat("{0}=function(node,checked){{if(checked){{X.util.addValueToHiddenField('{1}',node.id);}}else{{X.util.removeValueFromHiddenField('{1}',node.id);}}}};", Render_NodeCheckChangeScriptID, CheckedNodesHiddenFieldID);
+            //scripts.AppendFormat("{0}=function(node){{F.util.addValueToHiddenField('{1}',node.id);}};", Render_NodeExpandScriptID, ExpandedNodesHiddenFieldID);
+            //scripts.AppendFormat("{0}=function(node){{F.util.removeValueFromHiddenField('{1}',node.id);}};", Render_NodeCollapseScriptID, ExpandedNodesHiddenFieldID);
+            //scripts.AppendFormat("{0}=function(node,checked){{if(checked){{F.util.addValueToHiddenField('{1}',node.id);}}else{{F.util.removeValueFromHiddenField('{1}',node.id);}}}};", Render_NodeCheckChangeScriptID, CheckedNodesHiddenFieldID);
             //scripts.AppendFormat("{0}=function(node){{Ext.get('{1}').dom.value=node.id;}};", Render_NodeClickScriptID, SelectedNodeHiddenFieldID);
 
             //scripts.AppendLine(hiddenFieldsScript);
@@ -1280,8 +1348,8 @@ namespace FineUI
                     ////listenersBuilder.AddProperty("beforeappend", String.Format("function(node,deep,anim){{\r\nif(!node.loaded){{alert(node.id);\r\n}}}}"), true);
 
                     //// 折叠/展开
-                    ////listenersBuilder.AddProperty(OptionName.Expand, String.Format("function(node){{X.util.addValueToHiddenField('{0}',node.id);}}", ExpandedNodesHiddenFieldID), true);
-                    ////listenersBuilder.AddProperty(OptionName.Collapse, String.Format("function(node){{X.util.removeValueFromHiddenField('{0}',node.id);}}", ExpandedNodesHiddenFieldID), true);
+                    ////listenersBuilder.AddProperty(OptionName.Expand, String.Format("function(node){{F.util.addValueToHiddenField('{0}',node.id);}}", ExpandedNodesHiddenFieldID), true);
+                    ////listenersBuilder.AddProperty(OptionName.Collapse, String.Format("function(node){{F.util.removeValueFromHiddenField('{0}',node.id);}}", ExpandedNodesHiddenFieldID), true);
                     //listenersBuilder.AddProperty("expand", Render_NodeExpandScriptID, true);
                     //listenersBuilder.AddProperty("collapse", Render_NodeCollapseScriptID, true);
 
@@ -1344,7 +1412,7 @@ namespace FineUI
                         if (!node.AutoPostBack)
                         {
                             // 改变CheckBox，不需要自动回发，则将checkchange指向预定义的函数，这有助于减少代码量
-                            //listenersBuilder.AddProperty("checkchange", String.Format("function(node,checked){{if(checked){{X.util.addValueToHiddenField('{0}',node.id);}}else{{X.util.removeValueFromHiddenField('{0}',node.id);}}}}", CheckedNodesHiddenFieldID), true);
+                            //listenersBuilder.AddProperty("checkchange", String.Format("function(node,checked){{if(checked){{F.util.addValueToHiddenField('{0}',node.id);}}else{{F.util.removeValueFromHiddenField('{0}',node.id);}}}}", CheckedNodesHiddenFieldID), true);
                             listenersBuilder.AddProperty("checkchange", Render_NodeCheckChangeScriptID, true);
                         }
                         else
@@ -1406,14 +1474,14 @@ namespace FineUI
         /// <seealso cref="DataSource" />
         public override void DataBind()
         {
+            // 重新绑定数据前清空选中的值
+            SelectedNodeIDArray = null;
+
+            // 清空所有节点
+            Nodes.Clear();
+
             if (_dataSource != null)
             {
-                // 重新绑定数据前清空选中的值
-                SelectedNodeIDArray = null;
-
-                // 清空所有节点
-                Nodes.Clear();
-
                 if (DataSource is DataSet)
                 {
                     DataSet ds = DataSource as DataSet;
@@ -1501,46 +1569,89 @@ namespace FineUI
             XmlDocument xdoc = new XmlDocument();
             xdoc.LoadXml(xml);
 
-            DataBindToXml(xdoc);
+            DataBindToXml(null, xdoc.DocumentElement.ChildNodes);
         }
 
-        private void DataBindToXml(XmlDocument xdoc)
-        {
-            XmlNodeList nodes = xdoc.DocumentElement.ChildNodes;
+        //private void DataBindToXml(XmlDocument xdoc)
+        //{
+        //    XmlNodeList nodes = xdoc.DocumentElement.ChildNodes;
 
+        //    foreach (XmlNode node in nodes)
+        //    {
+        //        if (node.NodeType == XmlNodeType.Element)
+        //        {
+        //            TreeNode treeNode = new TreeNode();
+        //            Nodes.Add(treeNode);
+
+        //            LoadXmlNode(treeNode, node);
+
+
+        //        }
+        //    }
+        //}
+
+        private void DataBindToXml(TreeNode treeNode, XmlNodeList nodes)
+        {
             foreach (XmlNode node in nodes)
-            {
-                if (node.NodeType == XmlNodeType.Element)
-                {
-                    TreeNode treeNode = new TreeNode();
-                    Nodes.Add(treeNode);
-
-                    LoadXmlNode(treeNode, node);
-
-                    //OnNodeDataBound(oNewNode, node);
-                }
-            }
-        }
-
-        private void LoadXmlNode(TreeNode treeNode, XmlNode xmlNode)
-        {
-            treeNode.ReadXmlAttributes(xmlNode.Attributes, this);
-
-            foreach (XmlNode node in xmlNode.ChildNodes)
             {
                 // Only process Xml elements (ignore comments, etc)
                 if (node.NodeType == XmlNodeType.Element)
                 {
-                    TreeNode childNode = new TreeNode();
-                    treeNode.Nodes.Add(childNode);
+                    TreePreNodeEventArgs preArgs = new TreePreNodeEventArgs(node);
 
-                    LoadXmlNode(childNode, node);
+                    OnPreNodeDataBound(preArgs);
 
-                    //OnNodeDataBound(oNewNode, node);
+                    // 事件处理函数要求取消添加本节点
+                    if (!preArgs.Cancelled)
+                    {
+                        TreeNode childNode = new TreeNode();
+                        if (treeNode == null)
+                        {
+                            Nodes.Add(childNode);
+                        }
+                        else
+                        {
+                            treeNode.Nodes.Add(childNode);
+                        }
+
+                        childNode.ReadXmlAttributes(node.Attributes, this);
+
+                        OnNodeDataBound(new TreeNodeEventArgs(childNode, node));
+
+
+                        DataBindToXml(childNode, node.ChildNodes);
+                    }
                 }
             }
-
         }
+
+        //private void LoadXmlNode(TreeNode treeNode, XmlNode xmlNode)
+        //{
+        //    treeNode.ReadXmlAttributes(xmlNode.Attributes, this);
+
+        //    OnNodeDataBound(new TreeNodeEventArgs(treeNode, xmlNode));
+
+        //    foreach (XmlNode node in xmlNode.ChildNodes)
+        //    {
+        //        // Only process Xml elements (ignore comments, etc)
+        //        if (node.NodeType == XmlNodeType.Element)
+        //        {
+        //            TreePreNodeEventArgs preArgs = new TreePreNodeEventArgs(node);
+
+        //            OnPreNodeDataBound(preArgs);
+
+        //            // 事件处理函数要求取消添加本节点
+        //            if (!preArgs.Cancelled)
+        //            {
+        //                TreeNode childNode = new TreeNode();
+        //                treeNode.Nodes.Add(childNode);
+
+        //                LoadXmlNode(childNode, node);
+        //            }
+        //        }
+        //    }
+
+        //}
 
         #endregion
 
@@ -1604,7 +1715,7 @@ namespace FineUI
             if (!StringUtil.CompareStringArray(SelectedNodeIDArray, selectedNodeIDArray))
             {
                 SelectedNodeIDArray = selectedNodeIDArray;
-                XState.BackupPostDataProperty("SelectedNodeIDArray");
+                FState.BackupPostDataProperty("SelectedNodeIDArray");
             }
 
 
@@ -1645,7 +1756,7 @@ namespace FineUI
                 FindNode(nodeID).Checked = true;
             }
 
-            XState.BackupPostDataProperty("X_Nodes");
+            FState.BackupPostDataProperty("F_Nodes");
 
 
             return false;
@@ -1664,8 +1775,10 @@ namespace FineUI
         /// 处理回发事件
         /// </summary>
         /// <param name="eventArgument">事件参数</param>
-        public void RaisePostBackEvent(string eventArgument)
+        public override void RaisePostBackEvent(string eventArgument)
         {
+            base.RaisePostBackEvent(eventArgument);
+
             if (eventArgument.StartsWith("Command$"))
             {
                 string[] commandArgs = eventArgument.Split('$');
@@ -1674,12 +1787,28 @@ namespace FineUI
                     OnNodeCommand(new TreeCommandEventArgs(FindNode(commandArgs[1]), commandArgs[2], commandArgs[3]));
                 }
             }
+            else if (eventArgument.StartsWith("LazyLoad$"))
+            {
+                string[] commandArgs = eventArgument.Split('$');
+                if (commandArgs.Length == 2)
+                {
+                    OnNodeLazyLoad(new TreeNodeEventArgs(FindNode(commandArgs[1])));
+                }
+            }
             else if (eventArgument.StartsWith("Expand$"))
             {
                 string[] commandArgs = eventArgument.Split('$');
                 if (commandArgs.Length == 2)
                 {
-                    OnNodeExpand(new TreeExpandEventArgs(FindNode(commandArgs[1])));
+                    OnNodeExpand(new TreeNodeEventArgs(FindNode(commandArgs[1])));
+                }
+            }
+            else if (eventArgument.StartsWith("Collapse$"))
+            {
+                string[] commandArgs = eventArgument.Split('$');
+                if (commandArgs.Length == 2)
+                {
+                    OnNodeCollapse(new TreeNodeEventArgs(FindNode(commandArgs[1])));
                 }
             }
             else if (eventArgument.StartsWith("Check$"))
@@ -1691,6 +1820,78 @@ namespace FineUI
                 }
             }
 
+        }
+
+        #endregion
+
+        #region OnNodeDataBound
+
+        private static readonly object _nodeDataBoundHandlerKey = new object();
+
+        /// <summary>
+        /// 节点绑定后事件
+        /// </summary>
+        [Category(CategoryName.ACTION)]
+        [Description("节点绑定后事件")]
+        public event EventHandler<TreeNodeEventArgs> NodeDataBound
+        {
+            add
+            {
+                Events.AddHandler(_nodeDataBoundHandlerKey, value);
+            }
+            remove
+            {
+                Events.RemoveHandler(_nodeDataBoundHandlerKey, value);
+            }
+        }
+
+        /// <summary>
+        /// 触发节点绑定后事件
+        /// </summary>
+        /// <param name="e">事件参数</param>
+        protected virtual void OnNodeDataBound(TreeNodeEventArgs e)
+        {
+            EventHandler<TreeNodeEventArgs> handler = Events[_nodeDataBoundHandlerKey] as EventHandler<TreeNodeEventArgs>;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        #endregion
+
+        #region OnPreNodeDataBound
+
+        private static readonly object _preNodeDataBoundHandlerKey = new object();
+
+        /// <summary>
+        /// 节点预绑定事件
+        /// </summary>
+        [Category(CategoryName.ACTION)]
+        [Description("节点预绑定事件")]
+        public event EventHandler<TreePreNodeEventArgs> PreNodeDataBound
+        {
+            add
+            {
+                Events.AddHandler(_preNodeDataBoundHandlerKey, value);
+            }
+            remove
+            {
+                Events.RemoveHandler(_preNodeDataBoundHandlerKey, value);
+            }
+        }
+
+        /// <summary>
+        /// 触发节点预绑定事件
+        /// </summary>
+        /// <param name="e">事件参数</param>
+        protected virtual void OnPreNodeDataBound(TreePreNodeEventArgs e)
+        {
+            EventHandler<TreePreNodeEventArgs> handler = Events[_preNodeDataBoundHandlerKey] as EventHandler<TreePreNodeEventArgs>;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
 
         #endregion
@@ -1776,7 +1977,7 @@ namespace FineUI
         /// </summary>
         [Category(CategoryName.ACTION)]
         [Description("节点展开事件")]
-        public event EventHandler<TreeExpandEventArgs> NodeExpand
+        public event EventHandler<TreeNodeEventArgs> NodeExpand
         {
             add
             {
@@ -1792,9 +1993,81 @@ namespace FineUI
         /// 触发节点展开事件
         /// </summary>
         /// <param name="e">事件参数</param>
-        protected virtual void OnNodeExpand(TreeExpandEventArgs e)
+        protected virtual void OnNodeExpand(TreeNodeEventArgs e)
         {
-            EventHandler<TreeExpandEventArgs> handler = Events[_nodeExpandHandlerKey] as EventHandler<TreeExpandEventArgs>;
+            EventHandler<TreeNodeEventArgs> handler = Events[_nodeExpandHandlerKey] as EventHandler<TreeNodeEventArgs>;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        #endregion
+
+        #region OnNodeCollapse
+
+        private static readonly object _nodeCollapseHandlerKey = new object();
+
+        /// <summary>
+        /// 节点展开事件
+        /// </summary>
+        [Category(CategoryName.ACTION)]
+        [Description("节点展开事件")]
+        public event EventHandler<TreeNodeEventArgs> NodeCollapse
+        {
+            add
+            {
+                Events.AddHandler(_nodeCollapseHandlerKey, value);
+            }
+            remove
+            {
+                Events.RemoveHandler(_nodeCollapseHandlerKey, value);
+            }
+        }
+
+        /// <summary>
+        /// 触发节点展开事件
+        /// </summary>
+        /// <param name="e">事件参数</param>
+        protected virtual void OnNodeCollapse(TreeNodeEventArgs e)
+        {
+            EventHandler<TreeNodeEventArgs> handler = Events[_nodeCollapseHandlerKey] as EventHandler<TreeNodeEventArgs>;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        #endregion
+
+        #region OnNodeLazyLoad
+
+        private static readonly object _nodeLazyLoadHandlerKey = new object();
+
+        /// <summary>
+        /// 节点延迟加载事件
+        /// </summary>
+        [Category(CategoryName.ACTION)]
+        [Description("节点延迟加载事件")]
+        public event EventHandler<TreeNodeEventArgs> NodeLazyLoad
+        {
+            add
+            {
+                Events.AddHandler(_nodeLazyLoadHandlerKey, value);
+            }
+            remove
+            {
+                Events.RemoveHandler(_nodeLazyLoadHandlerKey, value);
+            }
+        }
+
+        /// <summary>
+        /// 触发节点延迟加载事件
+        /// </summary>
+        /// <param name="e">事件参数</param>
+        protected virtual void OnNodeLazyLoad(TreeNodeEventArgs e)
+        {
+            EventHandler<TreeNodeEventArgs> handler = Events[_nodeLazyLoadHandlerKey] as EventHandler<TreeNodeEventArgs>;
             if (handler != null)
             {
                 handler(this, e);

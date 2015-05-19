@@ -20,7 +20,7 @@ namespace FineUI
 
             if (response.StatusCode == 302)
             {
-                if (application.Request.Form["X_AJAX"] == "true")
+                if (application.Request.Form["F_AJAX"] == "true")
                 {
                     string redirectLocation = response.RedirectLocation;
                     List<HttpCookie> cookies = new List<HttpCookie>(response.Cookies.Count);
@@ -37,7 +37,7 @@ namespace FineUI
                         response.AppendCookie(cookies[i]);
                     }
                     response.Cache.SetCacheability(HttpCacheability.NoCache);
-                    response.ContentType = "text/plain";
+                    response.ContentType = "text/html";
                     response.Write(String.Format("window.location.href='{0}';", redirectLocation));
                 }
             }

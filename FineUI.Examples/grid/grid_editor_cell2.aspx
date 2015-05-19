@@ -9,74 +9,75 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <x:PageManager ID="PageManager1" runat="server" />
-    <x:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格" EnableFrame="true" EnableCollapse="true" Width="800px" runat="server"
+    <f:PageManager ID="PageManager1" runat="server" />
+    <f:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格" EnableFrame="true" EnableCollapse="true" Width="800px" runat="server"
         DataKeyNames="Id,Name" AllowCellEditing="true" ClicksToEdit="1">
         <Columns>
-            <x:TemplateField Width="60px">
+            <f:TemplateField Width="60px">
                 <ItemTemplate>
                     <asp:Label ID="Label1" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label>
                 </ItemTemplate>
-            </x:TemplateField>
-            <x:RenderField Width="100px" DataField="Name" HeaderText="姓名">
+            </f:TemplateField>
+            <f:RenderField Width="100px" DataField="Name" HeaderText="姓名">
                 <Editor>
-                    <x:TextBox ID="tbxEditorName" runat="server">
-                    </x:TextBox>
+                    <f:TextBox ID="tbxEditorName" runat="server">
+                    </f:TextBox>
                 </Editor>
-            </x:RenderField>
-            <x:RenderField Width="100px" DataField="Gender" FieldType="Int" RendererFunction="renderGender" HeaderText="性别">
+            </f:RenderField>
+            <f:RenderField Width="100px" DataField="Gender" FieldType="String" 
+                RendererFunction="renderGender" HeaderText="性别">
                 <Editor>
-                    <x:DropDownList runat="server">
-                        <x:ListItem Text="男" Value="1" />
-                        <x:ListItem Text="女" Value="0" />
-                    </x:DropDownList>
+                    <f:DropDownList runat="server">
+                        <f:ListItem Text="男" Value="1" />
+                        <f:ListItem Text="女" Value="0" />
+                    </f:DropDownList>
                 </Editor>
-            </x:RenderField>
-            <x:RenderField Width="100px" DataField="EntranceYear" HeaderText="入学年份">
+            </f:RenderField>
+            <f:RenderField Width="100px" DataField="EntranceYear" HeaderText="入学年份">
                 <Editor>
-                    <x:NumberBox ID="tbxEditorEntranceYear" NoDecimal="true" NoNegative="true" MinValue="2000"
+                    <f:NumberBox ID="tbxEditorEntranceYear" NoDecimal="true" NoNegative="true" MinValue="2000"
                         MaxValue="2010" runat="server">
-                    </x:NumberBox>
+                    </f:NumberBox>
                 </Editor>
-            </x:RenderField>
-            <x:RenderField Width="100px" DataField="AtSchool" HeaderText="是否在校">
+            </f:RenderField>
+            <f:RenderField Width="100px" DataField="AtSchool" HeaderText="是否在校">
                 <Editor>
-                    <x:CheckBox runat="server"></x:CheckBox>
+                    <f:CheckBox runat="server"></f:CheckBox>
                 </Editor>
-            </x:RenderField>
-            <x:RenderField Width="100px" DataField="LogTime" FieldType="Date" Renderer="Date"
+            </f:RenderField>
+            <f:RenderField Width="100px" DataField="LogTime" FieldType="Date" Renderer="Date"
                 RendererArgument="yyyy-MM-dd" HeaderText="登记时间">
                 <Editor>
-                    <x:DatePicker runat="server">
-                    </x:DatePicker>
+                    <f:DatePicker runat="server">
+                    </f:DatePicker>
                 </Editor>
-            </x:RenderField>
-            <x:RenderField Width="100px" DataField="Major" ExpandUnusedSpace="true" HeaderText="所学专业">
+            </f:RenderField>
+            <f:RenderField Width="100px" DataField="Major" ExpandUnusedSpace="true" HeaderText="所学专业">
                 <Editor>
-                    <x:TextBox ID="tbxEditorMajor" runat="server">
-                    </x:TextBox>
+                    <f:TextBox ID="tbxEditorMajor" runat="server">
+                    </f:TextBox>
                 </Editor>
-            </x:RenderField>
+            </f:RenderField>
         </Columns>
-    </x:Grid>
+    </f:Grid>
     <br />
     <br />
     <br />
     <br />
-    <x:Button ID="Button2" runat="server" Text="重新绑定表格" OnClick="Button2_Click">
-    </x:Button>
+    <f:Button ID="Button2" runat="server" Text="重新绑定表格" OnClick="Button2_Click">
+    </f:Button>
     <br />
-    <x:Button runat="server" ID="Button1" OnClick="Button1_Click" Text="获取用户输入的分组值">
-    </x:Button>
+    <f:Button runat="server" ID="Button1" OnClick="Button1_Click" Text="获取用户输入的分组值">
+    </f:Button>
     <br />
-    <x:Label ID="labResult" EncodeText="false" runat="server">
-    </x:Label>
+    <f:Label ID="labResult" EncodeText="false" runat="server">
+    </f:Label>
     <br />
     </form>
     <script>
 
-        function renderGender(value, metadata, record, rowIndex, colIndex) {
-            return value == 1 ? '男' : '女';
+        function renderGender(value) {
+            return value === '1' ? '男' : '女';
         }
 
     </script>

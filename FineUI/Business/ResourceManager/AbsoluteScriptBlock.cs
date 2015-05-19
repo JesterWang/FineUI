@@ -42,7 +42,7 @@ namespace FineUI
         public AbsoluteScriptBlock(string script)
         {
             _script = script;
-            _level = 100;
+            _level = Constants.ABSOLUTE_STARTUP_SCRIPT_DEFAULT_LEVEL;
         }
 
 

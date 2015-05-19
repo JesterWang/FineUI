@@ -5,28 +5,15 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-        .x-grid-row-body .expander {
-            padding: 5px;
-        }
-
-            .x-grid-row-body .expander p {
-                padding: 5px;
-            }
-
-            .x-grid-row-body .expander strong {
-                font-weight: bold;
-            }
-    </style>
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格" EnableFrame="true" EnableCollapse="true" Width="800px"
-            Height="450px" runat="server" DataKeyNames="Id,Name">
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格" EnableCollapse="true" Width="800px" Height="450px"
+            runat="server" DataKeyNames="Id,Name" ExpandAllRowExpanders="true">
             <Columns>
-                <x:TemplateField RenderAsRowExpander="true">
+                <f:TemplateField RenderAsRowExpander="true">
                     <ItemTemplate>
                         <div class="expander">
                             <p>
@@ -37,63 +24,36 @@
                             </p>
                         </div>
                     </ItemTemplate>
-                </x:TemplateField>
-                <x:TemplateField Width="60px">
-                    <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label>
-                    </ItemTemplate>
-                </x:TemplateField>
-                <x:BoundField Width="100px" DataField="Name" DataFormatString="{0}" HeaderText="姓名" />
-                <x:TemplateField Width="80px" HeaderText="性别">
+                </f:TemplateField>
+                <f:RowNumberField />
+                <f:BoundField Width="100px" DataField="Name" DataFormatString="{0}" HeaderText="姓名" />
+                <f:TemplateField Width="80px" HeaderText="性别">
                     <ItemTemplate>
                         <%-- Container.DataItem 的类型是 System.Data.DataRowView 或者用户自定义类型 --%>
                         <asp:Label ID="Label2" runat="server" Text='<%# GetGender(Eval("Gender")) %>'></asp:Label>
                     </ItemTemplate>
-                </x:TemplateField>
-                <x:BoundField Width="80px" DataField="EntranceYear" HeaderText="入学年份" />
-                <x:CheckBoxField Width="80px" RenderAsStaticField="true" DataField="AtSchool" HeaderText="是否在校" />
-                <x:HyperLinkField HeaderText="所学专业" DataToolTipField="Major" DataTextField="Major"
+                </f:TemplateField>
+                <f:BoundField Width="80px" DataField="EntranceYear" HeaderText="入学年份" />
+                <f:CheckBoxField Width="80px" RenderAsStaticField="true" DataField="AtSchool" HeaderText="是否在校" />
+                <f:HyperLinkField HeaderText="所学专业" DataToolTipField="Major" DataTextField="Major"
                     DataTextFormatString="{0}" DataNavigateUrlFields="Major" DataNavigateUrlFormatString="http://gsa.ustc.edu.cn/search?q={0}"
-                    DataNavigateUrlFieldsEncode="true" Target="_blank" ExpandUnusedSpace="True" />
-                <x:ImageField Width="80px" DataImageUrlField="Group" DataImageUrlFormatString="~/images/16/{0}.png"
-                    HeaderText="分组"></x:ImageField>
-                <x:BoundField Width="100px" DataField="LogTime" DataFormatString="{0:yyyy-MM-dd}"
-                    HeaderText="注册日期" />
+                    UrlEncode="true" Target="_blank" ExpandUnusedSpace="True" />
+                <f:ImageField Width="80px" DataImageUrlField="Group" DataImageUrlFormatString="~/res/images/16/{0}.png"
+                    HeaderText="分组"></f:ImageField>
+                <f:BoundField Width="100px" DataField="LogTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="注册日期" />
             </Columns>
-        </x:Grid>
+        </f:Grid>
         <br />
-        <x:Button ID="Button1" runat="server" Text="重新绑定表格" OnClick="Button1_Click">
-        </x:Button>
+        <f:Button ID="Button1" runat="server" Text="重新绑定表格" CssClass="marginr" OnClick="Button1_Click">
+        </f:Button>
+        <f:Button ID="btnExpandRowExpanders" runat="server" CssClass="marginr" Text="展开全部的行扩展列" OnClick="btnExpandRowExpanders_Click">
+        </f:Button>
+        <f:Button ID="btnCollapseRowExpanders" runat="server" Text="折叠全部的行扩展列" OnClick="btnCollapseRowExpanders_Click">
+        </f:Button>
         <br />
         <br />
-        注：请注意如何在重新绑定数据后，保持所有扩展列的展开状态。
-    <br />
-        这个示例演示了如何通过编写JavaScript脚本来处理不常见的逻辑，如果你对JavaScript不熟悉请参考下一个完成相同功能的示例（一个属性搞定）。
+        注：通过一个简单的属性，来控制是否展开所有行扩展列（即使在重新绑定数据后，依然能够保持所有扩展列的展开状态）。
     <br />
     </form>
-    <script type="text/javascript">
-        var gridClientID = '<%= Grid1.ClientID %>';
-
-        function expandAllRows(grid) {
-            var store = grid.getStore();
-            var expander = grid.getPlugin(gridClientID + '_rowexpander');
-            for (var i = 0, count = store.getCount() ; i < count; i++) {
-                var record = store.getAt(i);
-                expander.toggleRow(i, record);
-            }
-        }
-
-        // 页面第一个加载完毕后执行的函数
-        function onReady() {
-            var grid = X(gridClientID);
-            expandAllRows(grid);
-        }
-
-        // 页面AJAX回发后执行的函数
-        function onAjaxReady() {
-            var grid = X(gridClientID);
-            expandAllRows(grid);
-        }
-    </script>
 </body>
 </html>

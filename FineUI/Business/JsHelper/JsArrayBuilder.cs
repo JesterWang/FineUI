@@ -38,11 +38,14 @@ namespace FineUI
 
         private List<string> _properties = new List<string>();
 
-        //public List<string> Properties
-        //{
-        //    get { return _properties; }
-        //    set { _properties = value; }
-        //}
+        /// <summary>
+        /// 内部保存的数据
+        /// </summary>
+        public List<string> Properties
+        {
+            get { return _properties; }
+            set { _properties = value; }
+        }
 
         #endregion
 
@@ -134,6 +137,18 @@ namespace FineUI
                 }
             }
         }
+
+        #endregion
+
+        #region bars["bottom"]
+        
+        /// <summary>
+        /// 将整个数组中元素顺序反转
+        /// </summary>
+        public void Reverse()
+        {
+            _properties.Reverse();
+        } 
 
         #endregion
 

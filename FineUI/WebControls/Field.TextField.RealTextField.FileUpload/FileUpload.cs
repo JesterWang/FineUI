@@ -47,6 +47,7 @@ namespace FineUI
     [ControlBuilder(typeof(NotAllowWhitespaceLiteralsBuilder))]
     public class FileUpload : RealTextField, IPostBackEventHandler
     {
+        
         #region Constructor
 
         /// <summary>
@@ -81,6 +82,26 @@ namespace FineUI
         #region Properties
 
         /// <summary>
+        /// 允许上传的文件类型（仅部分浏览器支持）
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue("")]
+        [Description("允许上传的文件类型（仅部分浏览器支持）")]
+        public string AcceptFileTypes
+        {
+            get
+            {
+                object obj = FState["AcceptFileTypes"];
+                return obj == null ? "" : (string)obj;
+            }
+            set
+            {
+                FState["AcceptFileTypes"] = value;
+            }
+        }
+
+
+        /// <summary>
         /// 按钮文本
         /// </summary>
         [Category(CategoryName.OPTIONS)]
@@ -90,12 +111,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ButtonText"];
+                object obj = FState["ButtonText"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["ButtonText"] = value;
+                FState["ButtonText"] = value;
             }
         }
 
@@ -109,12 +130,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ButtonOnly"];
+                object obj = FState["ButtonOnly"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["ButtonOnly"] = value;
+                FState["ButtonOnly"] = value;
             }
         }
 
@@ -130,12 +151,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ButtonIcon"];
+                object obj = FState["ButtonIcon"];
                 return obj == null ? Icon.None : (Icon)obj;
             }
             set
             {
-                XState["ButtonIcon"] = value;
+                FState["ButtonIcon"] = value;
             }
         }
 
@@ -150,12 +171,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ButtonIconUrl"];
+                object obj = FState["ButtonIconUrl"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["ButtonIconUrl"] = value;
+                FState["ButtonIconUrl"] = value;
             }
         }
 
@@ -270,7 +291,7 @@ namespace FineUI
             base.OnFirstPreRender();
 
 
-            AddStartupAbsoluteScript("X.form_upload_file=true;");
+            AddStartupAbsoluteScript("F.form_upload_file=true;");
 
 
             if (!String.IsNullOrEmpty(ButtonText))
@@ -288,10 +309,10 @@ namespace FineUI
             if (!String.IsNullOrEmpty(resolvedIconUrl))
             {
                 OptionBuilder buttonOB = new OptionBuilder();
-                buttonOB.AddProperty("cls", " x-btn-text-icon");
+                //buttonOB.AddProperty("cls", " x-btn-text-icon");
                 buttonOB.AddProperty("icon", resolvedIconUrl);
 
-                OB.AddProperty("buttonCfg", buttonOB);
+                OB.AddProperty("buttonConfig", buttonOB);
             }
 
             //if (AutoPostBack)
@@ -299,6 +320,13 @@ namespace FineUI
             //    OB.Listeners.RemoveProperty("change");
             //    OB.Listeners.AddProperty("fileselected", JsHelper.GetFunction(GetPostBackEventReference()), true);
             //}
+
+            if (!String.IsNullOrEmpty(AcceptFileTypes))
+            {
+                string acceptScript = "cmp.fileInputEl.set({accept:'" + AcceptFileTypes + "'});";
+                //OB.Listeners.AddProperty("afterrender", JsHelper.GetFunction(acceptScript, "cmp"), true);
+                AddListener("afterrender", acceptScript, "cmp");
+            }
 
             string jsContent = String.Format("var {0}=Ext.create('Ext.form.field.File',{1});", XID, OB.ToString());
             AddStartupScript(jsContent);
@@ -320,13 +348,7 @@ namespace FineUI
             return false;
         }
 
-        /// <summary>
-        /// 触发回发数据改变事件
-        /// </summary>
-        public override void RaisePostDataChangedEvent()
-        {
-            
-        }
+       
 
         #endregion
 

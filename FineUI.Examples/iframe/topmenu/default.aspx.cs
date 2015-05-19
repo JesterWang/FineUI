@@ -64,7 +64,6 @@ namespace FineUI.Examples.iframe.topmenu
         protected void lbtnSYS_Click(object sender, EventArgs e)
         {
             BindLeftTree("sys");
-
         }
 
 

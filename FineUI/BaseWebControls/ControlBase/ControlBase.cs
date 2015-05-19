@@ -41,6 +41,7 @@ using System.Collections;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO.Compression;
+using System.ComponentModel.Design;
 
 
 namespace FineUI
@@ -50,6 +51,8 @@ namespace FineUI
     /// </summary>
     [AspNetHostingPermission(SecurityAction.Demand, Level = AspNetHostingPermissionLevel.Minimal)]
     [AspNetHostingPermission(SecurityAction.InheritanceDemand, Level = AspNetHostingPermissionLevel.Minimal)]
+    [ParseChildren(true)]
+    [PersistChildren(false)]
     public abstract class ControlBase : Control, INamingContainer
     {
         #region Constructor
@@ -60,19 +63,19 @@ namespace FineUI
         public ControlBase()
         {
 
-            _state = new XState(this);
+            _state = new FState(this);
 
             AddServerAjaxProperties("Hidden", "Enabled");
             AddClientAjaxProperties();
 
         }
 
-        private XState _state = null;
+        private FState _state = null;
 
         /// <summary>
-        /// XState用来在服务器和客户端之间持久化控件状态。
+        /// FState用来在服务器和客户端之间持久化控件状态。
         /// </summary>
-        protected XState XState
+        protected FState FState
         {
             get
             {
@@ -192,6 +195,19 @@ namespace FineUI
 
         #region Internal Properties
 
+        //private ControlBase _virtualParent;
+
+        ///// <summary>
+        ///// 虚拟的父控件，为了保证生产JS脚本的顺序（比如在处理按钮的MenuID属性时使用）
+        ///// </summary>
+        //[Browsable(false)]
+        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        //internal ControlBase VirtualParent
+        //{
+        //    get { return _virtualParent; }
+        //    set { _virtualParent = value; }
+        //}
+
 
         private string _xid = String.Empty;
 
@@ -213,7 +229,7 @@ namespace FineUI
         }
 
         /// <summary>
-        /// 获取控件实例的JavaScript代码（比如：X('RegionPanel1_Button1')）
+        /// 获取控件实例的JavaScript代码（比如：F('RegionPanel1_Button1')）
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -221,7 +237,7 @@ namespace FineUI
         {
             get
             {
-                return String.Format("X('{0}')", ClientID);
+                return String.Format("F('{0}')", ClientID);
             }
         }
 
@@ -244,6 +260,23 @@ namespace FineUI
                 _renderWrapperNode = value;
             }
         }
+
+
+        private bool _wrapperNodeInlineBlock = true;
+
+        internal virtual bool WrapperNodeInlineBlock
+        {
+            get
+            {
+                return _wrapperNodeInlineBlock;
+            }
+            set
+            {
+                _wrapperNodeInlineBlock = value;
+            }
+        }
+
+
 
         private OptionBuilder _optionBuilder;
 
@@ -268,7 +301,7 @@ namespace FineUI
 
         /// <summary>
         /// 从 HTTP 请求中恢复当前控件的状态
-        /// 比如当前请求 Request.Form["X_STATE"] = {"btnClientClick":{"OnClientClick":"X.util.alert(\"This is an alert dialog\",\"\",Ext.MessageBox.INFO,'');"},"btnPressed":{"Pressed":false}}
+        /// 比如当前请求 Request.Form["F_STATE"] = {"btnClientClick":{"OnClientClick":"F.util.alert(\"This is an alert dialog\",\"\",Ext.MessageBox.INFO,'');"},"btnPressed":{"Pressed":false}}
         /// 并且当前控件的 ClientID 是 "btnPressed"，则返回值为 JObject 对象 {"Pressed":false}
         /// </summary>
         internal JObject PostBackState
@@ -285,33 +318,40 @@ namespace FineUI
                         _postBackState = new JObject();
                     }
 
-                    // 启用XState压缩
-                    if (EnableXStateCompress)
+                    // 启用FState压缩
+                    if (EnableFStateCompress)
                     {
                         foreach (string property in _gzippedAjaxProperties)
                         {
-                            string gzippedString = _postBackState.Value<string>(property + "_GZ");
-                            if (!String.IsNullOrEmpty(gzippedString))
+                            string gzPropertyName = property + "_GZ";
+                            JToken gzToken = _postBackState[gzPropertyName];
+                            if (gzToken != null)
                             {
-                                // 从压缩后的Gzip字符串恢复属性的值（可能为JObject/JArray/String）
-                                PropertyInfo info = this.GetType().GetProperty(property);
-                                if (info != null)
+                                string gzippedString = gzToken.Value<string>();
+                                if (!String.IsNullOrEmpty(gzippedString))
                                 {
-                                    string ungzippedString = StringUtil.Ungzip(gzippedString);
-                                    if (info.PropertyType == typeof(String))
+                                    // 从压缩后的Gzip字符串恢复属性的值（可能为JObject/JArray/String）
+                                    PropertyInfo info = this.GetType().GetProperty(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                                    if (info != null)
                                     {
-                                        _postBackState[property] = ungzippedString;
-                                    }
-                                    else if (info.PropertyType == typeof(JObject))
-                                    {
-                                        _postBackState[property] = JObject.Parse(ungzippedString);
-                                    }
-                                    else if (info.PropertyType == typeof(JArray))
-                                    {
-                                        _postBackState[property] = JArray.Parse(ungzippedString);
+                                        string ungzippedString = StringUtil.Ungzip(gzippedString);
+                                        if (info.PropertyType == typeof(String))
+                                        {
+                                            _postBackState[property] = ungzippedString;
+                                        }
+                                        else if (info.PropertyType == typeof(JObject))
+                                        {
+                                            _postBackState[property] = JObject.Parse(ungzippedString);
+                                        }
+                                        else if (info.PropertyType == typeof(JArray))
+                                        {
+                                            _postBackState[property] = JArray.Parse(ungzippedString);
+                                        }
                                     }
                                 }
 
+                                // 从回发的PostBackState中删除GZ属性，已经还原了压缩之前的属性
+                                _postBackState.Remove(gzPropertyName);
                             }
                         }
                     }
@@ -423,17 +463,17 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Attributes"];
+                object obj = FState["Attributes"];
                 if (obj == null)
                 {
-                    XState["Attributes"] = new JObject();
-                    obj = XState["Attributes"];
+                    FState["Attributes"] = new JObject();
+                    obj = FState["Attributes"];
                 }
                 return (JObject)obj;
             }
             set
             {
-                XState["Attributes"] = value;
+                FState["Attributes"] = value;
             }
         }
 
@@ -466,23 +506,21 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Enabled"];
+                object obj = FState["Enabled"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                XState["Enabled"] = value;
+                FState["Enabled"] = value;
             }
         }
 
-
         /// <summary>
-        /// 指示控件是否被渲染出来（如果想要显示隐藏控件，请使用Hidden属性）
+        /// 指示控件是否被渲染出来（显示隐藏控件，请使用Hidden属性）
         /// </summary>
-        [Category(CategoryName.BASEOPTIONS)]
-        [DefaultValue(true)]
-        [Description("指示控件是否被渲染出来（如果想要显示隐藏控件，请使用Hidden属性）")]
-        public override bool Visible
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool RenderToClient
         {
             get
             {
@@ -491,6 +529,21 @@ namespace FineUI
             set
             {
                 base.Visible = value;
+            }
+        }
+
+
+        /// <summary>
+        /// 只读属性，指示控件是否被渲染出来（显示隐藏控件，请使用Hidden属性）
+        /// </summary>
+        [Category(CategoryName.BASEOPTIONS)]
+        [DefaultValue(true)]
+        [Description("只读属性，指示控件是否被渲染出来（显示隐藏控件，请使用Hidden属性）")]
+        public override bool Visible
+        {
+            get
+            {
+                return base.Visible;
             }
         }
 
@@ -505,12 +558,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Hidden"];
+                object obj = FState["Hidden"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["Hidden"] = value;
+                FState["Hidden"] = value;
             }
         }
 
@@ -524,12 +577,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["HideMode"];
+                object obj = FState["HideMode"];
                 return obj == null ? HideMode.Display : (HideMode)obj;
             }
             set
             {
-                XState["HideMode"] = value;
+                FState["HideMode"] = value;
             }
         }
 
@@ -544,7 +597,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableAjax"];
+                object obj = FState["EnableAjax"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -560,38 +613,38 @@ namespace FineUI
             }
             set
             {
-                XState["EnableAjax"] = value;
+                FState["EnableAjax"] = value;
             }
         }
 
 
         /// <summary>
-        /// 是否启用XState压缩（默认为true）
+        /// 是否启用FState压缩（默认为false）
         /// </summary>
         [Category(CategoryName.BASEOPTIONS)]
-        [DefaultValue(true)]
-        [Description("是否启用XState压缩（默认为true）")]
-        public virtual bool EnableXStateCompress
+        [DefaultValue(false)]
+        [Description("是否启用FState压缩（默认为false）")]
+        public virtual bool EnableFStateCompress
         {
             get
             {
-                object obj = XState["EnableXStateCompress"];
+                object obj = FState["EnableFStateCompress"];
                 if (obj == null)
                 {
                     if (DesignMode)
                     {
-                        return true;
+                        return false;
                     }
                     else
                     {
-                        return PageManager.Instance.EnableXStateCompress;
+                        return PageManager.Instance.EnableFStateCompress;
                     }
                 }
                 return (bool)obj;
             }
             set
             {
-                XState["EnableXStateCompress"] = value;
+                FState["EnableFStateCompress"] = value;
             }
         }
 
@@ -606,7 +659,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableAjaxLoading"];
+                object obj = FState["EnableAjaxLoading"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -622,7 +675,7 @@ namespace FineUI
             }
             set
             {
-                XState["EnableAjaxLoading"] = value;
+                FState["EnableAjaxLoading"] = value;
             }
         }
 
@@ -637,7 +690,7 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AjaxLoadingType"];
+                object obj = FState["AjaxLoadingType"];
                 if (obj == null)
                 {
                     if (DesignMode)
@@ -653,7 +706,7 @@ namespace FineUI
             }
             set
             {
-                XState["AjaxLoadingType"] = value;
+                FState["AjaxLoadingType"] = value;
             }
         }
 
@@ -671,6 +724,32 @@ namespace FineUI
             }
         }
 
+
+        #endregion
+
+        #region Listeners
+
+        private ListenerCollection _listeners;
+
+        /// <summary>
+        /// 客户端事件列表
+        /// </summary>
+        [Description("客户端事件列表")]
+        [Category(CategoryName.OPTIONS)]
+        [NotifyParentProperty(true)]
+        [PersistenceMode(PersistenceMode.InnerProperty)]
+        [Editor(typeof(CollectionEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        public virtual ListenerCollection Listeners
+        {
+            get
+            {
+                if (_listeners == null)
+                {
+                    _listeners = new ListenerCollection();
+                }
+                return _listeners;
+            }
+        }
 
         #endregion
 
@@ -692,31 +771,50 @@ namespace FineUI
                 // 如果控件没有设置 ID，则自动创建一个（比如：ct100）
                 base.EnsureID();
 
-                // 此时，ASPX 页面上标签定义的控件已经初始化完毕
-                // 如果当前是页面回发，则从 HTTP 请求的表单数据中（X_STATE）恢复当前控件的状态
-                if (Page.IsPostBack)
+                // 确保ResourceManager实例的Page和当前页面一致
+                ResourceManager.EnsureResourceManagerInstance(Page);
+
+                // 如果在Page_Init之后创建的控件，则不会触发InitComplete，就需要立即调用。那么就需要判断当前页面是否已经初始化完成
+                if (ResourceManager.Instance.IsPageInitCompleted)
                 {
-                    RecoverPropertiesFromJObject(PostBackState);
+                    Page_InitComplete(null, null);
                 }
-
-                // 向子控件公开方法，可以在备份初始化属性之前修改属性值
-                OnInitControl();
-
-                // 备份初始化属性值
-                XState.BackupInitializedProperties();
-
-                // 标识初始化完成
-                InitialComplete = true;
-
+                else
+                {
+                    // 页面初始化完毕后，再进行FState的相关操作（类似LoadViewState阶段，但LoadViewState并非每个控件都会经历，所以只能注册页面的InitComplete）
+                    Page.InitComplete += Page_InitComplete;
+                }
             }
         }
+
+        private void Page_InitComplete(object sender, EventArgs e)
+        {
+            // 如果是页面回发，则恢复FState
+            if (Page.IsPostBack)
+            {
+                RecoverPropertiesFromJObject(PostBackState);
+            }
+
+
+            // 向子控件公开方法，可以在备份初始化属性之前修改属性值
+            OnInitControl();
+
+            // 备份初始化属性值
+            FState.BackupInitializedProperties();
+
+            // 标识初始化完成
+            InitialComplete = true;
+    
+
+        }
+
 
         /// <summary>
         /// 在备份初始化属性之前修改属性值
         /// 
         /// 此时对控件的属性做修改是安全的：
         ///  1. 页面第一次加载时，运行到这里 ASPX 上面的标签已经初始化完毕
-        ///  2. 页面回发时（包括正常回发或者AJAX回发），此时请求表单中 X_STATE 已经恢复完毕
+        ///  2. 页面回发时（包括正常回发或者AJAX回发），此时请求表单中 F_STATE 已经恢复完毕
         /// </summary>
         protected virtual void OnInitControl()
         {
@@ -749,7 +847,14 @@ namespace FineUI
         {
             if (RenderWrapperNode)
             {
-                writer.Write(String.Format("<div id=\"{0}\">", WrapperID));
+                if (WrapperNodeInlineBlock)
+                {
+                    writer.Write(String.Format("<div id=\"{0}\" class=\"f-inline-block\">", WrapperID));
+                }
+                else
+                {
+                    writer.Write(String.Format("<div id=\"{0}\">", WrapperID));
+                }
             }
         }
 
@@ -802,7 +907,7 @@ namespace FineUI
             OnBothPreRender();
 
             // 计算被修改的属性列表
-            XState.CalculateModifiedProperties();
+            FState.CalculateModifiedProperties();
 
             if (IsFineUIAjaxPostBack)
             {
@@ -812,7 +917,7 @@ namespace FineUI
                 {
                     ResourceManager.Instance.AjaxScriptList.Add(_ajaxScriptBuilder.ToString());
 
-                    // 添加在 JavaScript 中使用的控件变量的短格式（比如 x0=X('RegionPanel1_Button1')）
+                    // 添加在 JavaScript 中使用的控件变量的短格式（比如 x0=F('RegionPanel1_Button1')）
                     ResourceManager.Instance.AddAjaxShortName(ClientID, XID);
                 }
             }
@@ -839,13 +944,13 @@ namespace FineUI
             StringBuilder sb = new StringBuilder();
             #region old code
             // There are new properties need to be persisted during the next postback.
-            // Re-write the "x_props" property of the component instance.
-            //if (XState.TotalModifiedProperties.Count > PostBackState.Count)
+            // Re-write the "f_props" property of the component instance.
+            //if (FState.TotalModifiedProperties.Count > PostBackState.Count)
             //{
-            //    sb.AppendFormat("{0}.x_props={1};", XID, new JArray(XState.TotalModifiedProperties));
+            //    sb.AppendFormat("{0}.f_props={1};", XID, new JArray(FState.TotalModifiedProperties));
             //}
 
-            //foreach (string property in XState.ModifiedProperties)
+            //foreach (string property in FState.ModifiedProperties)
             //{
             //    string propertyValue = String.Empty;
 
@@ -865,15 +970,15 @@ namespace FineUI
             //        propertyValue = JsHelper.Enquote(StringUtil.GetEnumName((Enum)info.GetValue(this, null)));
             //    }
 
-            //    sb.AppendFormat("{0}.x_p_{1}={2};", XID, property, propertyValue);
+            //    sb.AppendFormat("{0}.f_p_{1}={2};", XID, property, propertyValue);
             //} 
             #endregion
 
-            List<string> currentModifiedProperties = XState.ModifiedProperties;
+            List<string> currentModifiedProperties = FState.ModifiedProperties;
             if (currentModifiedProperties.Count > 0)
             {
-                // 更新当前控件的 X_STATE 状态
-                sb.AppendFormat("X.state({0},{1});", XID, ConvertPropertiesToJObject(currentModifiedProperties).ToString(Formatting.None));
+                // 更新当前控件的 F_STATE 状态
+                sb.AppendFormat("F.state({0},{1});", XID, ConvertPropertiesToJObject(currentModifiedProperties).ToString(Formatting.None));
             }
 
             sb.Append(GetHiddenPropertyChangedScript());
@@ -889,7 +994,7 @@ namespace FineUI
         protected virtual void OnFirstPreRender()
         {
             #region old code
-            //foreach (string property in XState.TotalModifiedProperties)
+            //foreach (string property in FState.TotalModifiedProperties)
             //{
             //    object propertyValue = null;
 
@@ -907,28 +1012,28 @@ namespace FineUI
             //        propertyValue = StringUtil.GetEnumName((Enum)info.GetValue(this, null));
             //    }
 
-            //    OB.AddProperty("x_p_" + property, propertyValue);
+            //    OB.AddProperty("f_p_" + property, propertyValue);
 
             //}
 
             //// These properties has been modified in the past postbacks.
             //// Every FineUI control should has this property.
-            //OB.AddProperty("x_props", new JArray(XState.TotalModifiedProperties), true);
+            //OB.AddProperty("f_props", new JArray(FState.TotalModifiedProperties), true);
 
             #endregion
 
-            List<string> totalModifiedProperties = XState.GetTotalModifiedProperties();
+            List<string> totalModifiedProperties = FState.GetTotalModifiedProperties();
             if (totalModifiedProperties.Count > 0)
             {
                 string xstate = ConvertPropertiesToJObject(totalModifiedProperties).ToString(Formatting.None);
-                AddStartupScript(String.Format("var {0}={1};", GetXStateScriptID(), xstate));
-                OB.AddProperty("x_state", GetXStateScriptID(), true);
+                AddStartupScript(String.Format("var {0}={1};", GetFStateScriptID(), xstate));
+                OB.AddProperty("f_state", GetFStateScriptID(), true);
             }
             else
             {
-                OB.AddProperty("x_state", "{}", true);
+                OB.AddProperty("f_state", "{}", true);
             }
-           
+
 
 
             // Every component need this property.
@@ -953,7 +1058,11 @@ namespace FineUI
                 OB.AddProperty("disabled", true);
             }
 
-
+			foreach (Listener listener in Listeners)
+            {
+                OB.Listeners.AddProperty(listener.Event, listener.Handler, true);
+            }
+			
             #region old code
 
             //if (AjaxPropertyChanged("Hidden", Hidden))
@@ -979,10 +1088,10 @@ namespace FineUI
 
 
         /// <summary>
-        /// 获取XState的JS变量
+        /// 获取FState的JS变量
         /// </summary>
         /// <returns></returns>
-        protected string GetXStateScriptID()
+        protected string GetFStateScriptID()
         {
             return String.Format("{0}_state", XID);
         }
@@ -1000,12 +1109,12 @@ namespace FineUI
         /// <returns></returns>
         protected bool PropertyModified(string propertyName)
         {
-            bool modified = XState.ModifiedProperties.Contains(propertyName);
+            bool modified = FState.ModifiedProperties.Contains(propertyName);
             if (modified)
             {
                 if (ClientAjaxProperties.Contains(propertyName))
                 {
-                    if (XState.ClientPropertiesModifiedInServer.Contains(propertyName))
+                    if (FState.ClientPropertiesModifiedInServer.Contains(propertyName))
                     {
                         return true;
                     }
@@ -1042,7 +1151,7 @@ namespace FineUI
 
         //protected bool ClientPropertyModifiedInServer(string propertyName)
         //{
-        //    return XState.ClientPropertiesModifiedInServer.Contains(propertyName);
+        //    return FState.ClientPropertiesModifiedInServer.Contains(propertyName);
         //}
 
 
@@ -1054,11 +1163,11 @@ namespace FineUI
         ///// <returns></returns>
         //protected bool TotalPropertyModified(string propertyName)
         //{
-        //    return XState.TotalModifiedProperties.Contains(propertyName);
+        //    return FState.TotalModifiedProperties.Contains(propertyName);
         //}
 
         ///// <summary>
-        ///// Get client value of a property in the postback state(X_STATE).
+        ///// Get client value of a property in the postback state(F_STATE).
         ///// </summary>
         ///// <param name="propertyName"></param>
         ///// <returns></returns>
@@ -1070,7 +1179,7 @@ namespace FineUI
 
         #endregion
 
-        #region RecoverPropertiesFromXState ConvertPropertiesToXState
+        #region RecoverPropertiesFromFState ConvertPropertiesToFState
 
         /// <summary>
         /// 从JObject恢复控件的属性
@@ -1081,7 +1190,7 @@ namespace FineUI
             foreach (JProperty propertyObj in state.Properties())
             {
                 string property = propertyObj.Name;
-                PropertyInfo info = this.GetType().GetProperty(property);
+                PropertyInfo info = this.GetType().GetProperty(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                 if (info != null)
                 {
                     if (info.PropertyType.BaseType == typeof(Enum))
@@ -1163,15 +1272,21 @@ namespace FineUI
             JObject jo = new JObject();
             foreach (string property in propertyList)
             {
+                // 如果包含压缩后的属性，则忽略
+                if (property.EndsWith("_GZ"))
+                {
+                    continue;
+                }
+
+                string propertyStringValueUsedInGzipped = String.Empty;
                 bool propertyGzippped = false;
-                if (EnableXStateCompress)
+                if (EnableFStateCompress)
                 {
                     propertyGzippped = _gzippedAjaxProperties.Contains(property);
                 }
 
                 object propertyValue = GetPropertyJSONValue(property);
 
-                string propertyStringValueUsedInGzipped = String.Empty;
 
                 if (propertyValue is JToken)
                 {
@@ -1249,7 +1364,7 @@ namespace FineUI
         {
             object propValue = null;
 
-            PropertyInfo info = this.GetType().GetProperty(prop);
+            PropertyInfo info = this.GetType().GetProperty(prop, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             if (info != null)
             {
                 propValue = info.GetValue(this, null);
@@ -1284,7 +1399,7 @@ namespace FineUI
         /// AJAX 回发阶段，添加反映属性改变的 JavaScript 脚本
         /// </summary>
         /// <param name="script"></param>
-        protected void AddAjaxScript(string script)
+        internal void AddAjaxScript(string script)
         {
             if (!String.IsNullOrEmpty(script))
             {
@@ -1296,7 +1411,7 @@ namespace FineUI
         /// AJAX 回发阶段，添加反映属性改变的 JavaScript 脚本
         /// </summary>
         /// <param name="sb"></param>
-        protected void AddAjaxScript(StringBuilder sb)
+        internal void AddAjaxScript(StringBuilder sb)
         {
             if (sb.Length > 0)
             {
@@ -1422,14 +1537,14 @@ namespace FineUI
 
         /// <summary>
         /// 获取 Hidden 属性改变的 JavaScript 脚本
-        /// 有些控件可能需要特别的逻辑，因此这里为虚函数（比如 Window 控件）
+        /// 有些控件可能需要特别的逻辑，因此这里为虚函数（比如 Window 控件、Tab 控件）
         /// </summary>
         /// <returns>客户端脚本</returns>
         protected virtual string GetHiddenPropertyChangedScript()
         {
             if (PropertyModified("Hidden"))
             {
-                return String.Format("{0}.x_setVisible();", XID);
+                return String.Format("{0}.f_setVisible();", XID);
             }
             return String.Empty;
         }
@@ -1443,7 +1558,7 @@ namespace FineUI
         {
             if (PropertyModified("Enabled"))
             {
-                return String.Format("{0}.x_setDisabled();", XID);
+                return String.Format("{0}.f_setDisabled();", XID);
             }
             return String.Empty;
         }
@@ -1468,41 +1583,33 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetPostBackEventReference(string eventArgument)
         {
-            #region old code
-            // 必须调用 Page.ClientScript.GetPostBackEventReference，不能手工返回js字符串
-            ////return Page.ClientScript.GetPostBackEventReference(this, argument) + ";";
-            //if (EnableAjax)
-            //{
-            //    return String.Format("__doAjaxPostBack('{0}','{1}');", this.ClientID, argument);
-            //}
-            //else
-            //{
-            //    //return String.Format("__doPostBack('{0}','{1}');", this.ClientID, argument);
-            //    return Page.ClientScript.GetPostBackEventReference(this, argument) + ";";
-            //} 
+            return GetPostBackEventReference(eventArgument, EnableAjax);
+        }
 
-
-            //if (PageManager.Instance.EnableAjax && !EnableAjax)
-            //{
-            //    postBackScript += GetSetHiddenFieldValueScript(ResourceManager.DISABLE_AJAX_CONTROL_ID, this.UniqueID);
-            //}
-            #endregion
-
+        /// <summary>
+        /// 获取回发页面的客户端脚本（比如：__doPostBack('btnChangeEnable','true');)
+        /// </summary>
+        /// <param name="eventArgument">事件参数</param>
+        /// <param name="enableAjax">是否启用AJAX</param>
+        /// <returns>客户端脚本</returns>
+        public string GetPostBackEventReference(string eventArgument, bool enableAjax)
+        {
             StringBuilder sb = new StringBuilder();
 
-            if (EnableAjax != PageManager.Instance.EnableAjax)
+            if (enableAjax != PageManager.Instance.EnableAjax)
             {
-                sb.AppendFormat("X.control_enable_ajax={0};", EnableAjax ? "true" : "false");
+                sb.AppendFormat("F.control_enable_ajax={0};", enableAjax ? "true" : "false");
             }
+
 
             if (EnableAjaxLoading != PageManager.Instance.EnableAjaxLoading)
             {
-                sb.AppendFormat("X.control_enable_ajax_loading={0};", EnableAjaxLoading ? "true" : "false");
+                sb.AppendFormat("F.control_enable_ajax_loading={0};", EnableAjaxLoading ? "true" : "false");
             }
 
             if (AjaxLoadingType != PageManager.Instance.AjaxLoadingType)
             {
-                sb.AppendFormat("X.control_ajax_loading_type='{0}';", AjaxLoadingTypeName.GetName(AjaxLoadingType));
+                sb.AppendFormat("F.control_ajax_loading_type='{0}';", AjaxLoadingTypeName.GetName(AjaxLoadingType));
             }
 
             sb.Append(Page.ClientScript.GetPostBackEventReference(this, eventArgument));
@@ -1534,7 +1641,7 @@ namespace FineUI
         /// <returns></returns>
         protected string GetSetHiddenFieldValueScript(string id, string value)
         {
-            return String.Format("X.util.setHiddenFieldValue('{0}','{1}');", id, value);
+            return String.Format("F.setHidden('{0}','{1}');", id, value);
         }
 
 
@@ -1551,7 +1658,7 @@ namespace FineUI
             {
                 return GetSetHiddenFieldValueScript(id, value);
             }
-            return String.Format("{2}.X.util.setHiddenFieldValue('{0}','{1}');", id, value, windowObj);
+            return String.Format("{2}.F.setHidden('{0}','{1}');", id, value, windowObj);
         }
 
         #endregion
@@ -1570,6 +1677,39 @@ namespace FineUI
                 string propValue = Attributes.Value<string>(propName);
                 htmlBuilder.SetProperty(propName, propValue);
             }
+        }
+
+        #endregion
+
+        #region protected GetListenerFunction AddListener
+
+        /// <summary>
+        /// 获取客户端事件处理函数
+        /// </summary>
+        /// <param name="eventName"></param>
+        /// <param name="jsContent"></param>
+        /// <param name="funParameters"></param>
+        /// <returns></returns>
+        protected string GetListenerFunction(string eventName, string jsContent, params string[] funParameters)
+        {
+            var handler = Listeners.GetEventHandler(eventName);
+            if (!String.IsNullOrEmpty(handler))
+            {
+                jsContent += String.Format("return {0}.apply(this,arguments);", handler);
+            }
+
+            return JsHelper.GetFunction(jsContent, funParameters);
+        }
+
+        /// <summary>
+        /// 向 OB 中添加客户端事件处理函数
+        /// </summary>
+        /// <param name="eventName"></param>
+        /// <param name="jsContent"></param>
+        /// <param name="funParameters"></param>
+        protected void AddListener(string eventName, string jsContent, params string[] funParameters)
+        {
+            OB.Listeners.AddProperty(eventName, GetListenerFunction(eventName, jsContent, funParameters), true);
         }
 
         #endregion
@@ -1835,7 +1975,7 @@ namespace FineUI
         //        }
 
         //        // 更新Javascript对象和UI重新布局
-        //        startupScript += String.Format("X.ajax.updateObject(X.{0},{1},{2});",
+        //        startupScript += String.Format("F.ajax.updateObject(X.{0},{1},{2});",
         //            ClientJavascriptID,
         //            String.Format("function(){{{0}}}", scriptContent),
         //            RenderWrapperDiv.ToString().ToLower());

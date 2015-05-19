@@ -12,7 +12,6 @@ namespace FineUI.Examples.iframe
         {
             if (!IsPostBack)
             {
-                btnConfirmFormClose.OnClientClick = ActiveWindow.GetConfirmHidePostBackReference();
                 btnClosePostBack.OnClientClick = ActiveWindow.GetHidePostBackReference();
             }
 

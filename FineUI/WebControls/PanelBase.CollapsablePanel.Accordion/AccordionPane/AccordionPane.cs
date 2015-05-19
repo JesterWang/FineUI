@@ -65,8 +65,8 @@ namespace FineUI
 
         #region static readonly
 
-        //private static readonly string ACCORDION_HEADER_SELECT = "box-accordion-hd-select";
-        //private static readonly string ACCORDION_HEADER_HOVER = "box-accordion-hd-hover";
+        //private static readonly string ACCORDION_HEADER_SELECT = "f-accordion-hd-select";
+        //private static readonly string ACCORDION_HEADER_HOVER = "f-accordion-hd-hover";
 
         #endregion
 
@@ -112,12 +112,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["Collapsed"];
+        //        object obj = FState["Collapsed"];
         //        return obj == null ? true : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["Collapsed"] = value;
+        //        FState["Collapsed"] = value;
         //    }
         //}
 
@@ -132,12 +132,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableHightlight"];
+                object obj = FState["EnableHightlight"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableHightlight"] = value;
+                FState["EnableHightlight"] = value;
             }
         }
 
@@ -197,6 +197,14 @@ namespace FineUI
             {
                 throw new Exception("AccordionPane must inside the control Accordion!");
             }
+
+            
+            if (parentControl.AutoPostBack)
+            {
+                //OB.Listeners.AddProperty("expand", JsHelper.GetFunction(parentControl.GetPostBackEventReference("PaneIndexChanged")), true);
+                AddListener("expand", parentControl.GetPostBackEventReference("PaneIndexChanged"));
+            }
+
             #endregion
 
 
@@ -250,7 +258,7 @@ namespace FineUI
 
             //    StringBuilder sb = new StringBuilder();
 
-            //    sb.Append("<ul class=\"box-accrodion-link-ul\">");
+            //    sb.Append("<ul class=\"f-accrodion-link-ul\">");
             //    foreach (AccordionLink link in Links)
             //    {
             //        #region li
@@ -282,7 +290,7 @@ namespace FineUI
 
             //        #endregion
 
-            //        sb.AppendFormat("<li {1}>{0}</li>", nb.ToString(), link.Selected ? "class=\"box-accrodion-link-select\"" : "");
+            //        sb.AppendFormat("<li {1}>{0}</li>", nb.ToString(), link.Selected ? "class=\"f-accrodion-link-select\"" : "");
             //    }
             //    sb.Append("</ul>");
 
@@ -313,7 +321,8 @@ namespace FineUI
             if (!String.IsNullOrEmpty(renderScript))
             {
                 renderScript = JsHelper.GetDeferScript(renderScript, 100);
-                OB.Listeners.AddProperty("render", JsHelper.GetFunction(renderScript), true);
+                //OB.Listeners.AddProperty("render", JsHelper.GetFunction(renderScript), true);
+                AddListener("render", renderScript);
             }
 
             string jsContent = String.Format("var {0}=Ext.create('Ext.panel.Panel',{1});", XID, OB.ToString());

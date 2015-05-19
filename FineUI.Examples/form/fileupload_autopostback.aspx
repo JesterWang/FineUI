@@ -5,7 +5,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style>
         .photo {
             height: 150px;
@@ -21,29 +21,29 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:SimpleForm ID="SimpleForm1" BodyPadding="5px" runat="server" Width="550px" EnableFrame="true" EnableCollapse="true"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:SimpleForm ID="SimpleForm1" BodyPadding="5px" runat="server" Width="550px" EnableCollapse="true"
             ShowBorder="True" Title="表单" ShowHeader="True">
             <Items>
-                <x:Image ID="imgPhoto" CssClass="photo" ImageUrl="~/images/blank.png" ShowEmptyLabel="true" runat="server">
-                </x:Image>
-                <x:FileUpload runat="server" ID="filePhoto" ShowRedStar="false" ShowEmptyLabel="true"
-                    ButtonText="上传个人头像" ButtonOnly="true" Required="false"
+                <f:Image ID="imgPhoto" CssClass="photo" ImageUrl="~/res/images/blank.png" ShowEmptyLabel="true" runat="server">
+                </f:Image>
+                <f:FileUpload runat="server" ID="filePhoto" ShowRedStar="false" ShowEmptyLabel="true"
+                    ButtonText="上传个人头像" ButtonOnly="true" Required="false" ButtonIcon="ImageAdd"
                     AutoPostBack="true" OnFileSelected="filePhoto_FileSelected">
-                </x:FileUpload>
-                <x:TextBox runat="server" Label="用户名" ID="tbxUserName" Required="true" ShowRedStar="true">
-                </x:TextBox>
-                <x:TextBox runat="server" Label="邮箱" ID="tbxEmail" Required="true" RegexPattern="EMAIL"
+                </f:FileUpload>
+                <f:TextBox runat="server" Label="用户名" ID="tbxUserName" Required="true" ShowRedStar="true">
+                </f:TextBox>
+                <f:TextBox runat="server" Label="邮箱" ID="tbxEmail" Required="true" RegexPattern="EMAIL"
                     ShowRedStar="true">
-                </x:TextBox>
-                <x:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" ValidateForms="SimpleForm1"
+                </f:TextBox>
+                <f:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" ValidateForms="SimpleForm1"
                     Text="提交表单">
-                </x:Button>
-                <x:Label ID="labResult" EncodeText="false" runat="server">
-                </x:Label>
+                </f:Button>
             </Items>
-        </x:SimpleForm>
-
+        </f:SimpleForm>
+        <br />
+        <f:Label ID="labResult" EncodeText="false" runat="server">
+        </f:Label>
     </form>
 </body>
 </html>

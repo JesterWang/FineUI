@@ -4,29 +4,29 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Form Width="550px" BodyPadding="5px" ID="Form2" EnableFrame="true" EnableCollapse="true"
-            Title="表单" LabelWidth="120px" runat="server">
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Form Width="550px" BodyPadding="5px" ID="Form2"  EnableCollapse="true"
+            Title="表单" LabelWidth="120px" LabelAlign="Top" runat="server">
             <Rows>
-                <x:FormRow>
+                <f:FormRow>
                     <Items>
-                        <x:Label ID="Label1" runat="server" ShowLabel="false" Text="这是一个标签">
-                        </x:Label>
+                        <f:Label ID="Label1" runat="server" ShowLabel="false" Text="这是一个标签">
+                        </f:Label>
                     </Items>
-                </x:FormRow>
+                </f:FormRow>
             </Rows>
-        </x:Form>
+        </f:Form>
         <br />
         注：用户名和性别两个控件是动态创建的。
     <br />
         <br />
-        <x:Button ID="Button1" runat="server" ValidateForms="Form2" ValidateTarget="Top"
+        <f:Button ID="Button1" runat="server" ValidateForms="Form2" ValidateTarget="Top"
             Text="验证表单并提交" OnClick="Button1_Click">
-        </x:Button>
+        </f:Button>
     </form>
 </body>
 </html>

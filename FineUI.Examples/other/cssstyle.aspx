@@ -4,7 +4,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .red span {
             font-weight: bold;
@@ -21,20 +21,20 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <%--<x:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="通过 CssStyle 修改文本的样式">
-    </x:Button>
+        <f:PageManager ID="PageManager1" runat="server" />
+        <%--<f:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="通过 CssStyle 修改文本的样式">
+    </f:Button>
     <br />
-    <x:Label ID="Label1" runat="server" Text="文本一，注意观察文本的样式">
-    </x:Label>--%>
+    <f:Label ID="Label1" runat="server" Text="文本一，注意观察文本的样式">
+    </f:Label>--%>
 
         <br />
         <br />
-        <x:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="通过 CssClass 修改文本的样式">
-        </x:Button>
+        <f:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="通过 CssClass 修改文本的样式">
+        </f:Button>
         <br />
-        <x:Label ID="Label2" runat="server" CssClass="red" Text="文本二，注意观察文本的样式">
-        </x:Label>
+        <f:Label ID="Label2" runat="server" CssClass="red" Text="文本二，注意观察文本的样式">
+        </f:Label>
         <br />
         <br />
         <br />

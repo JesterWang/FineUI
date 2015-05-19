@@ -6,6 +6,8 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Text;
 
+using Newtonsoft.Json.Linq;
+
 namespace FineUI.Examples.grid
 {
     public partial class grid_summary : PageBase
@@ -15,10 +17,35 @@ namespace FineUI.Examples.grid
             if (!IsPostBack)
             {
                 BindGrid();
+
+                OutputSummaryData();
             }
         }
 
         #region BindGrid
+
+        private void OutputSummaryData()
+        {
+            DataTable source = GetDataTable2();
+
+            float donateTotal = 0.0f;
+            float feeTotal = 0.0f;
+            foreach (DataRow row in source.Rows)
+            {
+                donateTotal += Convert.ToInt32(row["Donate"]);
+                feeTotal += Convert.ToInt32(row["Fee"]);
+            }
+
+            
+            JObject summary = new JObject();
+            //summary.Add("major", "全部合计");
+            summary.Add("fee", feeTotal.ToString("F2"));
+            summary.Add("donate", donateTotal.ToString("F2"));
+
+
+            Grid1.SummaryData = summary;
+
+        }
 
         private void BindGrid()
         {
@@ -34,7 +61,6 @@ namespace FineUI.Examples.grid
         }
 
         
-
         /// <summary>
         /// 模拟返回总项数
         /// </summary>

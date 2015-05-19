@@ -71,6 +71,19 @@ namespace FineUI
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public override ITemplate Content
+        {
+            get
+            {
+                return base.Content;
+            }
+        }
+
+        /// <summary>
+        /// 不支持此属性
+        /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override ControlBaseCollection Items
         {
             get
@@ -162,33 +175,33 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoPostBack"];
+                object obj = FState["AutoPostBack"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["AutoPostBack"] = value;
+                FState["AutoPostBack"] = value;
             }
         }
 
-        /// <summary>
-        /// 显示标题的背景颜色
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(true)]
-        [Description("显示标题的背景颜色")]
-        public bool EnableTitleBackgroundColor
-        {
-            get
-            {
-                object obj = XState["EnableTitleBackgroundColor"];
-                return obj == null ? true : (bool)obj;
-            }
-            set
-            {
-                XState["EnableTitleBackgroundColor"] = value;
-            }
-        }
+        ///// <summary>
+        ///// 显示标题的背景颜色
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(true)]
+        //[Description("显示标题的背景颜色")]
+        //public bool EnableTitleBackgroundColor
+        //{
+        //    get
+        //    {
+        //        object obj = FState["EnableTitleBackgroundColor"];
+        //        return obj == null ? true : (bool)obj;
+        //    }
+        //    set
+        //    {
+        //        FState["EnableTitleBackgroundColor"] = value;
+        //    }
+        //}
 
         /// <summary>
         /// 是否启用右键菜单（可用来关闭当前Tab和所有其他Tab）
@@ -200,12 +213,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["EnableTabCloseMenu"];
+                object obj = FState["EnableTabCloseMenu"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["EnableTabCloseMenu"] = value;
+                FState["EnableTabCloseMenu"] = value;
             }
         }
 
@@ -240,53 +253,53 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["TabPosition"];
+                object obj = FState["TabPosition"];
                 return obj == null ? TabPosition.Top : (TabPosition)obj;
             }
             set
             {
-                XState["TabPosition"] = value;
+                FState["TabPosition"] = value;
             }
         }
 
 
-        /// <summary>
-        /// 是否启用延迟加载选项卡
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(false)]
-        [Description("是否启用延迟加载选项卡")]
-        public bool EnableDeferredRender
-        {
-            get
-            {
-                object obj = XState["EnableDeferredRender"];
-                return obj == null ? false : (bool)obj;
-            }
-            set
-            {
-                XState["EnableDeferredRender"] = value;
-            }
-        }
+        ///// <summary>
+        ///// 是否启用延迟加载选项卡
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(false)]
+        //[Description("是否启用延迟加载选项卡")]
+        //public bool EnableDeferredRender
+        //{
+        //    get
+        //    {
+        //        object obj = FState["EnableDeferredRender"];
+        //        return obj == null ? false : (bool)obj;
+        //    }
+        //    set
+        //    {
+        //        FState["EnableDeferredRender"] = value;
+        //    }
+        //}
 
 
 
         /// <summary>
-        /// [AJAX属性]当前激活选项卡的索引
+        /// [AJAX属性]激活选项卡的索引
         /// </summary>
         [Category(CategoryName.OPTIONS)]
         [DefaultValue(0)]
-        [Description("[AJAX属性]当前激活选项卡的索引")]
+        [Description("[AJAX属性]激活选项卡的索引")]
         public int ActiveTabIndex
         {
             get
             {
-                object obj = XState["ActiveTabIndex"];
+                object obj = FState["ActiveTabIndex"];
                 return obj == null ? 0 : (int)obj;
             }
             set
             {
-                XState["ActiveTabIndex"] = value;
+                FState["ActiveTabIndex"] = value;
             }
         }
 
@@ -360,11 +373,11 @@ namespace FineUI
 
         #endregion
 
-        #region old code - LoadXState/SaveXState
+        #region old code - LoadFState/SaveFState
 
-        //protected override void LoadXState(JObject state, string property)
+        //protected override void LoadFState(JObject state, string property)
         //{
-        //    base.LoadXState(state, property);
+        //    base.LoadFState(state, property);
 
         //    // This property is persisted inside every Tabs.
         //    //if (property == "X_AutoPostBackTabs")
@@ -384,22 +397,22 @@ namespace FineUI
         //{
         //    base.OnBothPreRender();
 
-        //    //// Make sure X_AutoPostBackTabs property exist in X_STATE during page's first load.
+        //    //// Make sure X_AutoPostBackTabs property exist in F_STATE during page's first load.
         //    //if (!Page.IsPostBack)
         //    //{
-        //    //    XState.AddModifiedProperties("X_AutoPostBackTabs");
+        //    //    FState.AddModifiedProperties("X_AutoPostBackTabs");
         //    //}
         //    //else
         //    //{
         //    //    // Items has been changed in server-side code after onInit.
         //    //    if (XPropertyModified("X_AutoPostBackTabs", AutoPostBackTabsToJSON().ToString()))
         //    //    {
-        //    //        XState.AddModifiedProperties("X_AutoPostBackTabs");
+        //    //        FState.AddModifiedProperties("X_AutoPostBackTabs");
         //    //    }
         //    //}
         //}
 
-        //protected override void SaveXState(JObject state, string property)
+        //protected override void SaveFState(JObject state, string property)
         //{
         //    //if (property == "X_AutoPostBackTabs")
         //    //{
@@ -467,9 +480,7 @@ namespace FineUI
             StringBuilder sb = new StringBuilder();
             if (PropertyModified("ActiveTabIndex"))
             {
-                //if (ClientPropertyModifiedInServer("ActiveTabIndex"))
-
-                sb.AppendFormat("{0}.x_setActiveTab();", XID);
+                sb.AppendFormat("{0}.f_setActiveTab();", XID);
 
             }
 
@@ -514,16 +525,17 @@ namespace FineUI
 
             //OB.AddProperty(OptionName.TabMargin, TabMargin.Value);
             OB.AddProperty("tabPosition", TabPositionHelper.GetName(TabPosition));
-            //if (Plain) OB.AddProperty(OptionName.Plain, Plain);
-            if (!EnableTitleBackgroundColor)
-            {
-                OB.AddProperty("plain", true);
-            }
+            
+
+            //if (!EnableTitleBackgroundColor)
+            //{
+            //    OB.AddProperty("plain", true);
+            //}
 
 
-            // 去掉deferredRender=true，渲染速度会提高200ms左右
-            // 每个Tab是否只在第一次访问时渲染，false表示全部渲染，否则没有访问的Tab的内容渲染的位置不正确。
-            OB.AddProperty("deferredRender", EnableDeferredRender);
+            
+            // 全部渲染，否则没有访问的Tab的内容渲染的位置不正确。
+            OB.AddProperty("deferredRender", false);
 
             //OB.AddProperty("bufferResize", true);
 
@@ -587,19 +599,20 @@ namespace FineUI
 
             // 如果要激活的Tab含有IFrame，则需要加载IFrame
             // 改变Tab需要回发的脚本
-            // Make sure X_AutoPostBackTabs property exist in X_STATE during page's first load.
-            //string tabchangeScript2 = String.Format("if(tabPanel.x_autoPostBackTabsContains(tab.id)){{{0}}}", GetPostBackEventReference());
+            // Make sure X_AutoPostBackTabs property exist in F_STATE during page's first load.
+            //string tabchangeScript2 = String.Format("if(tabPanel.f_autoPostBackTabsContains(tab.id)){{{0}}}", GetPostBackEventReference());
 
-            string tabchangeScript = "X.wnd.updateIFrameNode(tab);";
+            string tabchangeScript = "F.wnd.updateIFrameNode(tab);";
             string postbackScript = String.Empty;
             if (AutoPostBack)
             {
-                tabchangeScript += "if(!tab.x_dynamic_added_tab){" + GetPostBackEventReference() + "}";
+                tabchangeScript += "if(!tab.f_dynamic_added_tab){" + GetPostBackEventReference("TabIndexChanged") + "}";
             }
 
             // 如果是动态添加的Tab，不做任何处理（在js/box/extender.js中）
-            //string tabchangeScript = "X.wnd.updateIFrameNode(tab);if(!tab.x_dynamic_added_tab){" + postbackScript + "}";
-            OB.Listeners.AddProperty("tabchange", JsHelper.GetFunction(tabchangeScript, "tabPanel", "tab"), true);
+            //string tabchangeScript = "F.wnd.updateIFrameNode(tab);if(!tab.f_dynamic_added_tab){" + postbackScript + "}";
+            //OB.Listeners.AddProperty("tabchange", JsHelper.GetFunction(tabchangeScript, "tabPanel", "tab"), true);
+            AddListener("tabchange", tabchangeScript, "tabPanel", "tab");
 
             #endregion
 
@@ -643,7 +656,7 @@ namespace FineUI
         /// <param name="postDataKey">回发数据键</param>
         /// <param name="postCollection">回发数据集</param>
         /// <returns>回发数据是否改变</returns>
-        public bool LoadPostData(string postDataKey, System.Collections.Specialized.NameValueCollection postCollection)
+        public virtual bool LoadPostData(string postDataKey, System.Collections.Specialized.NameValueCollection postCollection)
         {
             string postValue = postCollection[ActiveTabIndexHiddenFieldID];
 
@@ -651,9 +664,9 @@ namespace FineUI
             if (ActiveTabIndex != postActiveTabIndex)
             {
                 ActiveTabIndex = postActiveTabIndex;
-                XState.BackupPostDataProperty("ActiveTabIndex");
-                return true;
+                FState.BackupPostDataProperty("ActiveTabIndex");
             }
+
             return false;
         }
 
@@ -662,7 +675,7 @@ namespace FineUI
         /// </summary>
         public void RaisePostDataChangedEvent()
         {
-            OnTabIndexChanged(EventArgs.Empty);
+            //OnTabIndexChanged(EventArgs.Empty);
         }
 
         #endregion
@@ -675,7 +688,10 @@ namespace FineUI
         /// <param name="eventArgument">事件参数</param>
         public void RaisePostBackEvent(string eventArgument)
         {
-            OnTabIndexChanged(EventArgs.Empty);
+            if (eventArgument == "TabIndexChanged")
+            {
+                OnTabIndexChanged(EventArgs.Empty);
+            }
         }
 
         #endregion
@@ -757,7 +773,7 @@ namespace FineUI
             if (!String.IsNullOrEmpty(iconUrl))
             {
                 string className = String.Format("icon_{0}", System.Guid.NewGuid().ToString("N"));
-                iconScript = String.Format("X.util.addCSS('{0}','{1}');", className, StyleUtil.GetNoRepeatBackgroundStyle("." + className, ResolveUrl(iconUrl)));
+                iconScript = String.Format("F.addCSS('{0}','{1}');", className, StyleUtil.GetNoRepeatBackgroundStyle("." + className, ResolveUrl(iconUrl)));
 
                 options.AddProperty("iconCls", className);
             }

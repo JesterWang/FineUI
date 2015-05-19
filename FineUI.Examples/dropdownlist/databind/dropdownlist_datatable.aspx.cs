@@ -28,47 +28,47 @@ namespace FineUI.Examples.dropdownlist
             table.Columns.Add(column2);
 
             DataRow row = table.NewRow();
-            row[0] = "选项 1";
+            row[0] = "可选项1";
             row[1] = "1";
             table.Rows.Add(row);
             row = table.NewRow();
 
-            row[0] = "选项 2";
+            row[0] = "可选项2";
             row[1] = "2";
             table.Rows.Add(row);
 
             row = table.NewRow();
-            row[0] = "选项 3";
+            row[0] = "可选项3";
             row[1] = "3";
             table.Rows.Add(row);
 
             row = table.NewRow();
-            row[0] = "选项 4";
+            row[0] = "可选项4";
             row[1] = "4";
             table.Rows.Add(row);
 
             row = table.NewRow();
-            row[0] = "选项 5";
+            row[0] = "可选项5";
             row[1] = "5";
             table.Rows.Add(row);
 
             row = table.NewRow();
-            row[0] = "选项 6";
+            row[0] = "可选项6";
             row[1] = "6";
             table.Rows.Add(row);
 
             row = table.NewRow();
-            row[0] = "选项 7";
+            row[0] = "可选择项7";
             row[1] = "7";
             table.Rows.Add(row);
 
             row = table.NewRow();
-            row[0] = "选项 8";
+            row[0] = "可选择项8";
             row[1] = "8";
             table.Rows.Add(row);
 
             row = table.NewRow();
-            row[0] = "选项 9";
+            row[0] = "可选择项9";
             row[1] = "9";
             table.Rows.Add(row);
 
@@ -97,6 +97,10 @@ namespace FineUI.Examples.dropdownlist
             if (DropDownList1.SelectedItem != null)
             {
                 labResult.Text = String.Format("选中项：{0}（值：{1}）", DropDownList1.SelectedItem.Text, DropDownList1.SelectedValue);
+            }
+            else
+            {
+                labResult.Text = "无选中项";
             }
         }
 

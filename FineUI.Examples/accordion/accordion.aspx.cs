@@ -17,7 +17,18 @@ namespace FineUI.Examples.accordion
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Alert.ShowInTop(String.Format("当前展开的是第 {0} 个面板", Accordion1.ActiveIndex + 1));
+            Alert.ShowInTop(String.Format("当前展开的是第 {0} 个面板", Accordion1.ActivePaneIndex + 1));
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            var nextIndex = Accordion1.ActivePaneIndex + 1;
+            if (nextIndex >= Accordion1.Panes.Count)
+            {
+                nextIndex = 0;
+            }
+
+            Accordion1.ActivePaneIndex = nextIndex;
         }
     }
 }

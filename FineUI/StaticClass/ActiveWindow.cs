@@ -42,7 +42,7 @@ namespace FineUI
         // aw = aw
         //private static readonly string ACTIVE_WINDOW_SCRIPT = "if(!aw){var aw=parent.window.X.window_default_group.getActive();}";
         //private static readonly string ACTIVE_WINDOW_SCRIPT = "var parentClientID=box_getParentClientIdFromUrl();if(parentClientID){var window2=parent.window;var aw=parent.window.Ext.getCmp(parentClientID);if(aw.box_property_frame_element_name){window2=parent.Ext.query('iframe[name='+aw.box_property_frame_element_name+']')[0].contentWindow;aw=eval('window2.X.'+aw.id);}}";
-        //private static readonly string ACTIVE_WINDOW_SCRIPT = "var aw=X.wnd.getActiveWindow();";
+        //private static readonly string ACTIVE_WINDOW_SCRIPT = "var aw=F.wnd.getActiveWindow();";
 
         #endregion
 
@@ -87,7 +87,7 @@ namespace FineUI
 
             #endregion
 
-            return String.Format("X.wnd.writeBackValue.apply(window,{0});", JsHelper.GetJsStringArray(values));
+            return String.Format("F.wnd.writeBackValue.apply(window,{0});", JsHelper.EnquoteStringArray(values));
 
         }
 
@@ -101,7 +101,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public static string GetHideReference()
         {
-            return "(function(){var aw=X.wnd.getActiveWindow();if(aw){aw[0].x_hide();}})();";
+            return "(function(){var aw=F.wnd.getActiveWindow();if(aw){aw.f_hide();}})();";
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace FineUI
         {
             //return ACTIVE_WINDOW_SCRIPT + "if(aw){eval('aw[1].X.'+aw[0].id+'_hide_refresh();');}";
             //return ACTIVE_WINDOW_SCRIPT + "if(aw){aw[0].box_hide_refresh();}";
-            return "(function(){var aw=X.wnd.getActiveWindow();if(aw){aw[0].x_hide_refresh();}})();";
+            return "(function(){var aw=F.wnd.getActiveWindow();if(aw){aw.f_hide_refresh();}})();";
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace FineUI
         {
             //return ACTIVE_WINDOW_SCRIPT + "if(aw){eval('aw[1].X.'+aw[0].id+'_hide_postback();');}";
             //return ACTIVE_WINDOW_SCRIPT + "if(aw){aw[0].box_hide_postback();}";
-            return "(function(){var aw=X.wnd.getActiveWindow();if(aw){aw[0].x_hide_postback();}})();";
+            return "(function(){var aw=F.wnd.getActiveWindow();if(aw){aw.f_hide_postback();}})();";
         }
 
         /// <summary>
@@ -136,50 +136,74 @@ namespace FineUI
             //return ACTIVE_WINDOW_SCRIPT + "if(aw){eval('aw[1].X.'+aw[0].id+'_hide_postback(\"" + argument + "\");');}";
             //return ACTIVE_WINDOW_SCRIPT + "if(aw){aw[0].box_hide_postback('" + argument + "');}";
 
-            //return "(function(){var aw=X.wnd.getActiveWindow(); if(aw){ aw[0].box_hide_postback('" + argument + "'); }})();";
-            return "(function(){var aw=X.wnd.getActiveWindow();if(aw){aw[0].x_hide_postback(" + JsHelper.GetJsString(argument) + ");}})();";
+            //return "(function(){var aw=F.wnd.getActiveWindow(); if(aw){ aw[0].box_hide_postback('" + argument + "'); }})();";
+            return "(function(){var aw=F.wnd.getActiveWindow();if(aw){aw.f_hide_postback(" + JsHelper.Enquote(argument) + ");}})();";
         }
 
-        #endregion
-
-        #region GetConfirmHideReference
 
         /// <summary>
-        /// 获取先确认当前页面中表单是否更改，然后关闭当前激活窗体的客户端脚本
-        /// </summary>
-        /// <returns>客户端脚本</returns>
-        public static string GetConfirmHideReference()
-        {
-            return String.Format("X.wnd.confirmFormModified(function(){{{0}}});", GetHideReference());
-        }
-
-        /// <summary>
-        /// 获取先确认当前页面中表单是否更改，然后关闭当前激活窗体，再刷新父页面的客户端脚本
-        /// </summary>
-        /// <returns>客户端脚本</returns>
-        public static string GetConfirmHideRefreshReference()
-        {
-            return String.Format("X.wnd.confirmFormModified(function(){{{0}}});", GetHideRefreshReference());
-        }
-
-        /// <summary>
-        /// 获取先确认当前页面中表单是否更改，然后关闭当前激活窗体，再回发父页面的客户端脚本
-        /// </summary>
-        /// <returns>客户端脚本</returns>
-        public static string GetConfirmHidePostBackReference()
-        {
-            return String.Format("X.wnd.confirmFormModified(function(){{{0}}});", GetHidePostBackReference());
-        }
-
-        /// <summary>
-        /// 获取先确认当前页面中表单是否更改，然后关闭当前激活窗体，再回发父页面的客户端脚本
+        /// 获取关闭当前激活窗体并执行脚本的客户端脚本
         /// </summary>
         /// <param name="argument">回发参数</param>
         /// <returns>客户端脚本</returns>
-        public static string GetConfirmHidePostBackReference(string argument)
+        public static string GetHideExecuteScriptReference(string argument)
         {
-            return String.Format("X.wnd.confirmFormModified(function(){{{0}}});", GetHidePostBackReference(argument));
+            return "(function(){var aw=F.wnd.getActiveWindow();if(aw){aw.f_hide_executescript(" + JsHelper.Enquote(argument) + ");}})();";
         }
+
+
+
+        #endregion
+
+        #region oldcode
+
+        ///// <summary>
+        ///// 获取先确认当前页面中表单是否更改，然后关闭当前激活窗体的客户端脚本
+        ///// </summary>
+        ///// <returns>客户端脚本</returns>
+        //public static string GetConfirmHideReference()
+        //{
+        //    return String.Format("F.wnd.confirmModified(function(){{{0}}});", GetHideReference());
+        //}
+
+        ///// <summary>
+        ///// 获取先确认当前页面中表单是否更改，然后关闭当前激活窗体，再刷新父页面的客户端脚本
+        ///// </summary>
+        ///// <returns>客户端脚本</returns>
+        //public static string GetConfirmHideRefreshReference()
+        //{
+        //    return String.Format("F.wnd.confirmModified(function(){{{0}}});", GetHideRefreshReference());
+        //}
+
+        ///// <summary>
+        ///// 获取先确认当前页面中表单是否更改，然后关闭当前激活窗体，再回发父页面的客户端脚本
+        ///// </summary>
+        ///// <returns>客户端脚本</returns>
+        //public static string GetConfirmHidePostBackReference()
+        //{
+        //    return String.Format("F.wnd.confirmModified(function(){{{0}}});", GetHidePostBackReference());
+        //}
+
+        ///// <summary>
+        ///// 获取先确认当前页面中表单是否更改，然后关闭当前激活窗体，再回发父页面的客户端脚本
+        ///// </summary>
+        ///// <param name="argument">回发参数</param>
+        ///// <returns>客户端脚本</returns>
+        //public static string GetConfirmHidePostBackReference(string argument)
+        //{
+        //    return String.Format("F.wnd.confirmModified(function(){{{0}}});", GetHidePostBackReference(argument));
+        //}
+
+        ///// <summary>
+        ///// 获取先确认当前页面中表单是否更改，然后关闭当前激活窗体，再执行脚本的客户端脚本
+        ///// </summary>
+        ///// <param name="argument">执行的脚本</param>
+        ///// <returns>客户端脚本</returns>
+        //public static string GetConfirmHideExecuteScriptReference(string argument)
+        //{
+        //    return String.Format("F.wnd.confirmModified(function(){{{0}}});", GetHideExecuteScriptReference(argument));
+        //}
+
 
         #endregion
     }

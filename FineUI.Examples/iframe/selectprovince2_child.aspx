@@ -5,20 +5,25 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
+    <style>
+        body.f-body {
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-    <x:PageManager ID="PageManager1" AutoSizePanelID="Panel1" runat="server"></x:PageManager>
-    <x:Panel ID="Panel1" runat="server" ShowBorder="False" ShowHeader="false" BodyPadding="5px"
+    <f:PageManager ID="PageManager1" AutoSizePanelID="Panel1" runat="server"></f:PageManager>
+    <f:Panel ID="Panel1" runat="server" ShowBorder="False" ShowHeader="false" BodyPadding="5px"
         >
         <Items>
-            <x:Image runat="server" ID="imgChina" ImageUrl="~/images/china.gif">
-            </x:Image>
-            <x:Label runat="server" EncodeText="false" ID="labNote">
-            </x:Label>
+            <f:Image runat="server" ID="imgChina" ImageUrl="~/res/images/china.gif">
+            </f:Image>
+            <f:Label runat="server" EncodeText="false" ID="labNote">
+            </f:Label>
         </Items>
-    </x:Panel>
+    </f:Panel>
     <asp:Label runat="server" ID="labTest"></asp:Label>
     <map id="ChinaMap" name="ChinaMap">
         <area href="javascript:select('黑龙江');" coords="398,52,442,72" shape="rect">
@@ -68,7 +73,7 @@
         var imgClientID = '<%= imgChina.ClientID %>';
 
         function select(provinceName) {
-            __doPostBack(imgClientID, 'SelectProvince$' + provinceName);
+            __doPostBack('', 'SelectProvince$' + provinceName);
         }
 
     </script>

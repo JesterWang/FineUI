@@ -5,23 +5,23 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Panel ShowBorder="true" Title="面板" BodyPadding="5px" Height="300px" EnableFrame="true" EnableCollapse="true"
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Panel ShowBorder="true" Title="面板" BodyPadding="5px" Height="300px"  EnableCollapse="true"
             Width="650px" runat="server">
             <Toolbars>
-                <x:Toolbar ID="Toolbar1" runat="server">
+                <f:Toolbar ID="Toolbar1" runat="server">
                     <Items>
-                        <x:Button ID="Button1" EnablePostBack="false" OnClientClick="window.open('../default.aspx', '_blank');"
+                        <f:Button ID="Button1" EnablePostBack="false" OnClientClick="window.open('../default.aspx', '_blank');"
                             Text="点击打开新窗体（内联按钮）" runat="server">
-                        </x:Button>
+                        </f:Button>
                     </Items>
-                </x:Toolbar>
+                </f:Toolbar>
             </Toolbars>
-        </x:Panel>
+        </f:Panel>
     </form>
 </body>
 </html>

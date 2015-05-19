@@ -12,7 +12,11 @@ namespace FineUI.Examples.window
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                Label labTextInWindow = Window2.FindControl("labTextInWindow") as Label;
+                labTextInWindow.Text = "这是初始值！";
+            }
         }
 
 
@@ -21,9 +25,10 @@ namespace FineUI.Examples.window
             Window2.Hidden = true;
         }
 
-        protected void btnChangeContent_Click(object sender, EventArgs e)
+        protected void btnChangeText_Click(object sender, EventArgs e)
         {
-            labWindowContent.Text = String.Format("这是窗体的内容（{0}）", DateTime.Now.ToLongTimeString());
+            Label labTextInWindow = Window2.FindControl("labTextInWindow") as Label;
+            labTextInWindow.Text = "这是修改后的值！" + DateTime.Now.ToLongTimeString();
         }
 
     }

@@ -35,7 +35,7 @@ namespace FineUI.Examples.window
 
         protected void Button5_Click(object sender, EventArgs e)
         {
-            ToolbarText1.Text = String.Format("工具条文本一 ", DateTime.Now.ToLongTimeString());
+            ToolbarText1.Text = String.Format("工具条文本一（{0}）", DateTime.Now.ToLongTimeString());
         }
 
         protected void Button6_Click(object sender, EventArgs e)

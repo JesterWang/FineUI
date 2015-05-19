@@ -93,16 +93,40 @@ namespace FineUI
         [Category(CategoryName.OPTIONS)]
         [DefaultValue(false)]
         [Description("是否可以拖动分隔条")]
+        [Obsolete("已废除，请使用RegionSplit属性")]
         public bool Split
         {
             get
             {
-                object obj = XState["Split"];
-                return obj == null ? false : (bool)obj;
+                //object obj = FState["Split"];
+                //return obj == null ? false : (bool)obj;
+                return RegionSplit;
             }
             set
             {
-                XState["Split"] = value;
+                RegionSplit = value;
+            }
+        }
+
+
+        /// <summary>
+        /// 位置
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(Position.Center)]
+        [Description("位置")]
+        [Obsolete("已废除，请使用RegionPosition属性")]
+        public Position Position
+        {
+            get
+            {
+                //object obj = FState["PositionType"];
+                //return obj == null ? Position.Center : (Position)obj;
+                return RegionPosition;
+            }
+            set
+            {
+                RegionPosition = value;
             }
         }
 
@@ -117,12 +141,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["EnableSplitTip"];
+        //        object obj = FState["EnableSplitTip"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["EnableSplitTip"] = value;
+        //        FState["EnableSplitTip"] = value;
         //    }
         //}
 
@@ -137,12 +161,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["SplitTip"];
+        //        object obj = FState["SplitTip"];
         //        return obj == null ? "" : (string)obj;
         //    }
         //    set
         //    {
-        //        XState["SplitTip"] = value;
+        //        FState["SplitTip"] = value;
         //    }
         //}
 
@@ -156,34 +180,34 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["CollapsibleSplitTip"];
+        //        object obj = FState["CollapsibleSplitTip"];
         //        return obj == null ? "" : (string)obj;
         //    }
         //    set
         //    {
-        //        XState["CollapsibleSplitTip"] = value;
+        //        FState["CollapsibleSplitTip"] = value;
         //    }
         //}
 
 
-        /// <summary>
-        /// 边距
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue("")]
-        [Description("边距")]
-        public string Margins
-        {
-            get
-            {
-                object obj = XState["Margins"];
-                return obj == null ? "" : (string)obj;
-            }
-            set
-            {
-                XState["Margins"] = value;
-            }
-        }
+        ///// <summary>
+        ///// 外边距
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue("")]
+        //[Description("外边距")]
+        //[Obsolete("已废除，请使用Margin属性")]
+        //public string Margins
+        //{
+        //    get
+        //    {
+        //        return Margin;
+        //    }
+        //    set
+        //    {
+        //        Margin = value;
+        //    }
+        //}
 
         ///// <summary>
         ///// 折叠后的边距
@@ -195,34 +219,15 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["CMargins"];
+        //        object obj = FState["CMargins"];
         //        return obj == null ? "" : (string)obj;
         //    }
         //    set
         //    {
-        //        XState["CMargins"] = value;
+        //        FState["CMargins"] = value;
         //    }
         //}
 
-
-        /// <summary>
-        /// 位置
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(Position.Center)]
-        [Description("位置")]
-        public Position Position
-        {
-            get
-            {
-                object obj = XState["PositionType"];
-                return obj == null ? Position.Center : (Position)obj;
-            }
-            set
-            {
-                XState["PositionType"] = value;
-            }
-        }
 
         ///// <summary>
         ///// 折叠模式（通过点击工具栏上的按钮还是点击分隔条上的按钮来展开折叠面板）
@@ -234,12 +239,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["CollapseMode"];
+        //        object obj = FState["CollapseMode"];
         //        return obj == null ? CollapseMode.Default : (CollapseMode)obj;
         //    }
         //    set
         //    {
-        //        XState["CollapseMode"] = value;
+        //        FState["CollapseMode"] = value;
         //    }
         //}
 
@@ -324,18 +329,18 @@ namespace FineUI
             //// 默认Layout
             //OB.AddProperty(OptionName.Layout, LayoutTypeName.GetName(Layout));
 
-            // 必须设置位置
-            OB.AddProperty("region", PositionHelper.GetName(Position));
+            //// 必须设置位置
+            //OB.AddProperty("region", PositionHelper.GetName(Position));
 
-            if (!String.IsNullOrEmpty(Margins))
-            {
-                OB.AddProperty("margins", Margins);
-            }
+            ////if (!String.IsNullOrEmpty(Margins))
+            ////{
+            ////    OB.AddProperty("margins", Margins);
+            ////}
 
-            if (Split)
-            {
-                OB.AddProperty("split", true);
-            }
+            //if (Split)
+            //{
+            //    OB.AddProperty("split", true);
+            //}
 
             //if (EnableSplitTip)
             //{

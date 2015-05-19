@@ -52,7 +52,7 @@ namespace FineUI
         //public static readonly string SCRIPT_CONTENT_TEMPLATE = "\r\n<script type=\"text/javascript\">{0}</script>\r\n";
         public static readonly string STYLE_INCLUDE_TEMPLATE = "<link href=\"{0}\" rel=\"stylesheet\" type=\"text/css\"/>\r\n";
         public static readonly string STYLE_CONTENT_TEMPLATE = "<style type=\"text/css\">{0}</style>\r\n";
-        public static readonly string META_TEMPLATE = "\r\n<meta name=\"{0}\" content=\"{1}\" />\r\n";
+        public static readonly string META_TEMPLATE = "<meta http-equiv=\"{0}\" content=\"{1}\" />\r\n";
 
 
         #endregion
@@ -64,15 +64,23 @@ namespace FineUI
             #region powered-by
 
             string metaName = "powered-by";
-            string metaContent = String.Format("FineUI v{0} - 基于 ExtJS 的专业 ASP.NET 控件库 - http://fineui.com/", GlobalConfig.ProductVersion);
+            string metaContent = String.Format("FineUI v{0} - 基于 ExtJS 的开源 ASP.NET 控件库 - http://fineui.com/", GlobalConfig.ProductVersion);
             AddContentToHead(page, CONTROL_ID_PREFIX + "comments", String.Format(META_TEMPLATE, metaName, metaContent));
+
+
+            // 是否向页面输出IE=edge标识
+            if (PageManager.Instance.IEEdge)
+            {
+                AddContentToHead(page, CONTROL_ID_PREFIX + "xua", String.Format(META_TEMPLATE, "X-UA-Compatible", "IE=edge,chrome=1"));
+            }
+
 
             #endregion
 
             // ExtJS CSS & JS 版本号，只有升级更新CSS或者JS时才需要更新。
             //string extjsCSSJSVersion = "3";
             //string fineuiVersion = GlobalConfig.ProductVersion;
-            string extjsBasePath = page.ResolveUrl(GlobalConfig.GetExtjsBasePath());
+            string extjsBasePath = page.ResolveUrl(GlobalConfig.GetJSBasePath());
 
             #region css
 

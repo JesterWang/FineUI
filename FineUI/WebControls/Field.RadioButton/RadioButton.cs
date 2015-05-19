@@ -70,12 +70,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Text"];
+                object obj = FState["Text"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["Text"] = value;
+                FState["Text"] = value;
             }
         }
 
@@ -89,12 +89,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Checked"];
+                object obj = FState["Checked"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["Checked"] = value;
+                FState["Checked"] = value;
 
                 ProcessOthersInGroup();
             }
@@ -134,12 +134,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["GroupName"];
+                object obj = FState["GroupName"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["GroupName"] = value;
+                FState["GroupName"] = value;
             }
         }
 
@@ -154,12 +154,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoPostBack"];
+                object obj = FState["AutoPostBack"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["AutoPostBack"] = value;
+                FState["AutoPostBack"] = value;
             }
         }
 
@@ -206,7 +206,7 @@ namespace FineUI
             StringBuilder sb = new StringBuilder();
             if (PropertyModified("Checked"))
             {
-                sb.AppendFormat("{0}.x_setValue();", XID);
+                sb.AppendFormat("{0}.f_setValue();", XID);
 
             }
 
@@ -245,14 +245,15 @@ namespace FineUI
                 string checkScript = String.Empty;
                 if (!String.IsNullOrEmpty(GroupName))
                 {
-                    checkScript = "if(X.util.checkGroupLastTime('" + GroupName + "')){" + GetPostBackEventReference() + "}";
+                    checkScript = "if(F.util.checkGroupLastTime('" + GroupName + "')){" + GetPostBackEventReference() + "}";
                 }
                 else
                 {
                     checkScript = GetPostBackEventReference();
                 }
 
-                OB.Listeners.AddProperty("change", JsHelper.GetFunction(checkScript), true);
+                //OB.Listeners.AddProperty("change", JsHelper.GetFunction(checkScript), true);
+                AddListener("change", checkScript);
             }
 
             #endregion
@@ -278,7 +279,7 @@ namespace FineUI
             if (Checked != postChecked)
             {
                 Checked = postChecked;
-                XState.BackupPostDataProperty("Checked");
+                FState.BackupPostDataProperty("Checked");
                 return true;
             }
 
@@ -290,7 +291,7 @@ namespace FineUI
             //    if (Checked != postChecked)
             //    {
             //        Checked = postChecked;
-            //        XState.BackupPostDataProperty("Checked");
+            //        FState.BackupPostDataProperty("Checked");
             //        return true;
             //    }
             //}
@@ -304,7 +305,7 @@ namespace FineUI
             //        if (Checked != postChecked)
             //        {
             //            Checked = postChecked;
-            //            XState.BackupPostDataProperty("Checked");
+            //            FState.BackupPostDataProperty("Checked");
             //            return true;
             //        }
             //    }

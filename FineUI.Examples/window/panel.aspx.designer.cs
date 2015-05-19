@@ -76,13 +76,13 @@ namespace FineUI.Examples.window {
         protected global::FineUI.ToolbarSeparator ToolbarSeparator2;
         
         /// <summary>
-        /// ToolbarText3 控件。
+        /// Button1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.ToolbarText ToolbarText3;
+        protected global::FineUI.Button Button1;
         
         /// <summary>
         /// ToolbarFill1 控件。
@@ -121,15 +121,6 @@ namespace FineUI.Examples.window {
         protected global::FineUI.Button Button2;
         
         /// <summary>
-        /// Button3 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUI.Button Button3;
-        
-        /// <summary>
         /// Button4 控件。
         /// </summary>
         /// <remarks>
@@ -137,6 +128,15 @@ namespace FineUI.Examples.window {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUI.Button Button4;
+        
+        /// <summary>
+        /// Button3 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Button Button3;
         
         /// <summary>
         /// Button5 控件。

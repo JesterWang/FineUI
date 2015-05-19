@@ -61,10 +61,10 @@ namespace FineUI
         /// </summary>
         public CheckBoxList()
         {
-            AddServerAjaxProperties("X_Items");
+            AddServerAjaxProperties("F_Items");
             AddClientAjaxProperties("SelectedValueArray");
 
-            AddGzippedAjaxProperties("X_Items");
+            AddGzippedAjaxProperties("F_Items");
         }
 
         #endregion
@@ -118,12 +118,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Required"];
+                object obj = FState["Required"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["Required"] = value;
+                FState["Required"] = value;
             }
         }
 
@@ -137,12 +137,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["RequiredMessage"];
+                object obj = FState["RequiredMessage"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["RequiredMessage"] = value;
+                FState["RequiredMessage"] = value;
             }
         }
 
@@ -157,12 +157,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoPostBack"];
+                object obj = FState["AutoPostBack"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["AutoPostBack"] = value;
+                FState["AutoPostBack"] = value;
             }
         }
 
@@ -176,12 +176,12 @@ namespace FineUI
         //{
         //    get
         //    {
-        //        object obj = XState["Checked"];
+        //        object obj = FState["Checked"];
         //        return obj == null ? false : (bool)obj;
         //    }
         //    set
         //    {
-        //        XState["Checked"] = value;
+        //        FState["Checked"] = value;
         //    }
         //}
 
@@ -195,12 +195,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ColumnNumber"];
+                object obj = FState["ColumnNumber"];
                 return obj == null ? 0 : (int)obj;
             }
             set
             {
-                XState["ColumnNumber"] = value;
+                FState["ColumnNumber"] = value;
             }
         }
 
@@ -214,12 +214,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ColumnVertical"];
+                object obj = FState["ColumnVertical"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["ColumnVertical"] = value;
+                FState["ColumnVertical"] = value;
             }
         }
 
@@ -237,12 +237,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["DataTextField"];
+                object obj = FState["DataTextField"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["DataTextField"] = value;
+                FState["DataTextField"] = value;
             }
         }
 
@@ -256,12 +256,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["DataTextFormatString"];
+                object obj = FState["DataTextFormatString"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["DataTextFormatString"] = value;
+                FState["DataTextFormatString"] = value;
             }
         }
 
@@ -275,12 +275,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["DataValueField"];
+                object obj = FState["DataValueField"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["DataValueField"] = value;
+                FState["DataValueField"] = value;
             }
         }
 
@@ -460,7 +460,7 @@ namespace FineUI
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public JArray X_Items
+        public JArray F_Items
         {
             get
             {
@@ -512,23 +512,23 @@ namespace FineUI
         //    // Items has been changed in server-side code after onInit.
         //    if (itemsHashCode != XItemsToState().ToString().GetHashCode())
         //    {
-        //        XState.AddModifiedProperty("X_Items");
+        //        FState.AddModifiedProperty("F_Items");
         //    }
         //}
 
-        //protected override void LoadXState(JObject state, string property)
+        //protected override void LoadFState(JObject state, string property)
         //{
-        //    base.LoadXState(state, property);
+        //    base.LoadFState(state, property);
 
-        //    if (property == "X_Items")
+        //    if (property == "F_Items")
         //    {
         //        XItemsFromState(state.getJArray(property));
         //    }
         //}
 
-        //protected override void SaveXState(JObject state, string property)
+        //protected override void SaveFState(JObject state, string property)
         //{
-        //    if (property == "X_Items")
+        //    if (property == "F_Items")
         //    {
         //        state.put(property, XItemsToState());
         //    }
@@ -573,27 +573,27 @@ namespace FineUI
 
             StringBuilder sb = new StringBuilder();
 
-            if (PropertyModified("X_Items"))
+            if (PropertyModified("F_Items"))
             {
-                sb.AppendFormat("{0}.x_reloadData('{1}');", XID, UniqueID); //, GetItemsJArray().ToString(Formatting.None));
+                sb.AppendFormat("{0}.f_reloadData('{1}');", XID, UniqueID); //, GetItemsJArray().ToString(Formatting.None));
 
                 // 注意，在x_reloadData中重新创建了列表实例，所以要重新赋值
-                sb.AppendFormat("{0}=X('{1}');", XID, ClientID);
+                sb.AppendFormat("{0}=F('{1}');", XID, ClientID);
 
                 //if (Items.Count == 0)
                 //{
-                //    sb.AppendFormat("{0}.x_toBeDeleted();", XID);
+                //    sb.AppendFormat("{0}.f_toBeDeleted();", XID);
                 //}
 
                 dataReloaded = true;
             }
 
-
+            // 基于 extjs 的实现，如果数据重新加载了，则客户端会重新初始化控件示例
             if (!dataReloaded)
             {
                 if (PropertyModified("SelectedValueArray"))
                 {
-                    sb.AppendFormat("{0}.x_setValue();", XID);
+                    sb.AppendFormat("{0}.f_setValue();", XID);
 
                 }
             }
@@ -606,6 +606,10 @@ namespace FineUI
         /// </summary>
         protected override void OnFirstPreRender()
         {
+            // 确保 F_Items 和 SelectedValue 在页面第一次加载时都存在于f_state中
+            FState.AddModifiedProperty("F_Items");
+            FState.AddModifiedProperty("SelectedValueArray");
+
             base.OnFirstPreRender();
 
             #region options
@@ -641,36 +645,30 @@ namespace FineUI
             #endregion
 
             #region Items
-
+            /*
             string xstateName = String.Format("{0}_xstate", XID);
             string xitemsName = String.Format("{0}_xitems", XID);
             string hasDataName = xstateName;
 
-            string xstate = OB.GetProperty("x_state");
-            OB.AddProperty("x_state", xstateName, true);
+            string xstate = OB.GetProperty("f_state");
+            OB.AddProperty("f_state", xstateName, true);
 
             string jsState = String.Format("var {0}={1};", xstateName, xstate);
 
-            if (!XState.ModifiedProperties.Contains("X_Items"))
+            if (!FState.ModifiedProperties.Contains("F_Items"))
             {
-                xstate = ConvertPropertiesToJObject(new List<string> { "X_Items", "SelectedValueArray" }).ToString(Formatting.None);
+                xstate = ConvertPropertiesToJObject(new List<string> { "F_Items", "SelectedValueArray" }).ToString(Formatting.None);
                 jsState += String.Format("var {0}={1};", xitemsName, xstate);
                 hasDataName = xitemsName;
             }
 
-            //if (Items.Count > 0)
-            //{
-            //    //OB.AddProperty("items", GetItemsJArray().ToString(Formatting.None), true);
-            //    OB.AddProperty("items", String.Format("X.util.resolveCheckBoxGroup('{0}',{1})", UniqueID, hasDataName), true);
-            //}
             OB.AddProperty("name", UniqueID);
-            OB.AddProperty("items", String.Format("X.util.resolveCheckBoxGroup('{0}',{1},false)", UniqueID, hasDataName), true);
+            OB.AddProperty("items", String.Format("F.util.resolveCheckBoxGroup('{0}',{1},false)", UniqueID, hasDataName), true);
+            */
 
+            OB.AddProperty("name", UniqueID);
+            OB.AddProperty("items", String.Format("F.util.resolveCheckBoxGroup('{0}',{1},false)", UniqueID, GetFStateScriptID()), true);
 
-            //if (Items.Count == 0)
-            //{
-            //    OB.Listeners.AddProperty("afterrender", JsHelper.GetFunction("cmp.x_toBeDeleted();", "cmp"), true);
-            //}
 
             #endregion
 
@@ -679,7 +677,8 @@ namespace FineUI
             if (AutoPostBack)
             {
                 // 道理和RadioButtonList类似。
-                OB.Listeners.AddProperty("change", String.Format("function(group,checkedArray){{if(typeof(checkedArray)!=='boolean'){{{0}}}}}", GetPostBackEventReference()), true);
+                //OB.Listeners.AddProperty("change", String.Format("function(group,checkedArray){{if(typeof(checkedArray)!=='boolean'){{{0}}}}}", GetPostBackEventReference()), true);
+                AddListener("change", String.Format("if(typeof(checkedArray)!=='boolean'){{{0}}}", GetPostBackEventReference()), "group", "checkedArray");
             }
             /*
             if (!String.IsNullOrEmpty(SelectedValue))
@@ -725,8 +724,16 @@ namespace FineUI
             #endregion
 
 
+            // EXTJS的BUG，不支持默认Readonly=true的情况，需要自己修正
+            if (Readonly)
+            {
+                //OB.Listeners.AddProperty("render", JsHelper.GetFunction("cmp.setReadOnly(true);", "cmp"), true);
+                AddListener("render", "cmp.setReadOnly(true);", "cmp");
+            }
+
+
             string jsContent = String.Format("var {0}=Ext.create('Ext.form.CheckboxGroup',{1});", XID, OB.ToString());
-            AddStartupScript(jsState + jsContent);
+            AddStartupScript(jsContent);
         }
 
         #region old code
@@ -765,13 +772,11 @@ namespace FineUI
         /// </summary>
         public override void DataBind()
         {
-            base.DataBind();
+            // 1. 首先清空 Items 属性
+            Items.Clear();
 
             if (_dataSource != null)
             {
-                // 1. 首先清空 Items 属性
-                Items.Clear();
-
                 // 2. 绑定到数据源
                 if (_dataSource is IDataReader)
                 {
@@ -807,12 +812,14 @@ namespace FineUI
                     throw new Exception("DataSource doesn't support data type: " + _dataSource.GetType().ToString());
                 }
 
-                // X_Items属性不是ServerAjaxProperty，所以只在页面第一次加载时判断是否改变
-                if (!Page.IsPostBack)
-                {
-                    XState.AddModifiedProperty("X_Items");
-                }
+                //// F_Items属性不是ServerAjaxProperty，所以只在页面第一次加载时判断是否改变
+                //if (!Page.IsPostBack)
+                //{
+                //    FState.AddModifiedProperty("F_Items");
+                //}
             }
+
+            base.DataBind();
         }
 
         /// <summary>
@@ -1001,11 +1008,19 @@ namespace FineUI
             if (!StringUtil.CompareStringArray(selectedValueArray, SelectedValueArray))
             {
                 SelectedValueArray = selectedValueArray;
-                XState.BackupPostDataProperty("SelectedValueArray");
+                FState.BackupPostDataProperty("SelectedValueArray");
                 return true;
             }
             
             return false;
+        }
+
+        /// <summary>
+        /// 触发回发数据改变事件
+        /// </summary>
+        public virtual void RaisePostDataChangedEvent()
+        {
+            OnSelectedIndexChanged(EventArgs.Empty);
         }
 
         private object _handlerKey = new object();
@@ -1040,13 +1055,7 @@ namespace FineUI
             }
         }
 
-        /// <summary>
-        /// 触发回发数据改变事件
-        /// </summary>
-        public virtual void RaisePostDataChangedEvent()
-        {
-            OnSelectedIndexChanged(EventArgs.Empty);
-        }
+        
 
         #endregion
     }

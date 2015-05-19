@@ -4,9 +4,9 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style>
-        .customlabel .x-form-display-field {
+        .customlabel span {
             color: red;
             font-weight: bold;
         }
@@ -14,22 +14,22 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <x:PageManager ID="PageManager1" runat="server" />
-        <x:Label ID="Label1" Text="普通的 Label 标签，会自动编码字符串（比如：<strong></strong>）" runat="server">
-        </x:Label>
+        <f:PageManager ID="PageManager1" runat="server" />
+        <f:Label ID="Label1" Text="普通的 Label 标签，会自动编码字符串（比如：<strong></strong>）" runat="server">
+        </f:Label>
         <br />
-        <x:Label ID="Label4" EncodeText="false" Text="<a href='http://www.ustc.edu.cn/' target='_blank'>中国科学技术大学（Label 标签生成的链接）</a>"
+        <f:Label ID="Label4" EncodeText="false" Text="<a href='http://www.ustc.edu.cn/' target='_blank'>中国科学技术大学（Label 标签生成的链接）</a>"
             runat="server">
-        </x:Label>
+        </f:Label>
         <br />
-        <x:Label ID="Label2" EncodeText="false" CssClass="customlabel" Text="修改文本的样式（CssClass）" runat="server">
-        </x:Label>
+        <f:Label ID="Label2" EncodeText="false" CssClass="customlabel" Text="修改文本的样式（CssClass）" runat="server">
+        </f:Label>
         <br />
-        <x:Label ID="Label3" Enabled="true" EncodeText="false" Text="<span style='color:red;font-weight:bold;'>修改文本的样式（内嵌HTML）</span>"
+        <f:Label ID="Label3" Enabled="true" EncodeText="false" Text="<span style='color:red;font-weight:bold;'>修改文本的样式（内嵌HTML）</span>"
             runat="server">
-        </x:Label>
+        </f:Label>
         <br />
-        <x:Button ID="btnChangeEnable" Text="启用/禁用最后一个标签" runat="server" OnClick="btnChangeEnable_Click" />
+        <f:Button ID="btnChangeEnable" Text="启用/禁用最后一个标签" runat="server" OnClick="btnChangeEnable_Click" />
     </form>
 </body>
 </html>

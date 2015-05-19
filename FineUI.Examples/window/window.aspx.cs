@@ -18,6 +18,7 @@ namespace FineUI.Examples.window
                 btnHideInClient.OnClientClick = Window2.GetHideReference();
                 btnHideInClient2.OnClientClick = Window2.GetHidePostBackReference("btnHideInClient2");
 
+                //PageContext.RegisterStartupScript(Window2.GetShowReference(300, 300));
 
                 PageContext.RegisterStartupScript(Window2.GetShowReference() + Window2.GetMaximizeReference());
 
@@ -33,11 +34,12 @@ namespace FineUI.Examples.window
         protected void btnHideInServer_Click(object sender, EventArgs e)
         {
             Window2.Hidden = true;
+            //PageContext.RegisterStartupScript(Window2.GetHideReference());
         }
 
         protected void Window2_Close(object sender, WindowCloseEventArgs e)
         {
-            Alert.ShowInTop("窗体被关闭了。参数：" + e.CloseArgument);
+            Alert.ShowInTop("窗体被关闭了。参数：" + (String.IsNullOrEmpty(e.CloseArgument) ? "无" : e.CloseArgument));
         }
 
 

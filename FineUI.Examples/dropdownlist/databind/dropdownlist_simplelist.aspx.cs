@@ -22,15 +22,15 @@ namespace FineUI.Examples.dropdownlist
         private void BindStringListToDropDownList()
         {
             List<string> strList = new List<string>();
-            strList.Add("选项 1");
-            strList.Add("选项 2");
-            strList.Add("选项 3");
-            strList.Add("选项 4");
-            strList.Add("选项 5");
-            strList.Add("选项 6");
-            strList.Add("选项 7");
-            strList.Add("选项 8");
-            strList.Add("选项 9");
+            strList.Add("可选项1");
+            strList.Add("可选项2");
+            strList.Add("可选项3");
+            strList.Add("可选项4");
+            strList.Add("可选项5");
+            strList.Add("可选项6");
+            strList.Add("可选择项7");
+            strList.Add("可选择项8");
+            strList.Add("可选择项9");
             strList.Add("这是一个很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的可选项");
 
             DropDownList1.DataSource = strList;
@@ -43,7 +43,7 @@ namespace FineUI.Examples.dropdownlist
 
         protected void btnSelectItem6_Click(object sender, EventArgs e)
         {
-            DropDownList1.SelectedValue = "选项 6";
+            DropDownList1.SelectedValue = "可选项6";
         }
 
         protected void btnGetSelection_Click(object sender, EventArgs e)
@@ -51,6 +51,10 @@ namespace FineUI.Examples.dropdownlist
             if (DropDownList1.SelectedItem != null)
             {
                 labResult.Text = String.Format("选中项：{0}（值：{1}）", DropDownList1.SelectedItem.Text, DropDownList1.SelectedValue);
+            }
+            else
+            {
+                labResult.Text = "无选中项";
             }
         } 
 

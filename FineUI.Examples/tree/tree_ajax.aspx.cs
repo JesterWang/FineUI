@@ -16,7 +16,7 @@ namespace FineUI.Examples.data
         }
 
 
-        protected void Tree1_NodeExpand(object sender, FineUI.TreeExpandEventArgs e)
+        protected void Tree1_NodeLazyLoad(object sender, TreeNodeEventArgs e)
         {
             DynamicAppendNode(e.Node);
         }

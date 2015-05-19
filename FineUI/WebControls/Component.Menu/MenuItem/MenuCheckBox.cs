@@ -74,12 +74,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["GroupName"];
+                object obj = FState["GroupName"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["GroupName"] = value;
+                FState["GroupName"] = value;
             }
         }
 
@@ -94,12 +94,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Checked"];
+                object obj = FState["Checked"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["Checked"] = value;
+                FState["Checked"] = value;
             }
         }
 
@@ -113,12 +113,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AutoPostBack"];
+                object obj = FState["AutoPostBack"];
                 return obj == null ? false : (bool)obj;
             }
             set
             {
-                XState["AutoPostBack"] = value;
+                FState["AutoPostBack"] = value;
             }
         }
 
@@ -151,7 +151,7 @@ namespace FineUI
             StringBuilder sb = new StringBuilder();
             if (PropertyModified("Checked"))
             {
-                sb.AppendFormat("{0}.x_setChecked();", XID);
+                sb.AppendFormat("{0}.f_setChecked();", XID);
             }
 
 
@@ -178,17 +178,21 @@ namespace FineUI
 
             #region AutoPostBack
 
-            string checkScript = String.Empty;
-            if (!String.IsNullOrEmpty(GroupName))
+            if (AutoPostBack)
             {
-                checkScript = "if(X.util.checkGroupLastTime('" + GroupName + "')){" + GetPostBackEventReference() + "}";
-            }
-            else
-            {
-                checkScript = GetPostBackEventReference();
-            }
+                string checkScript = String.Empty;
+                if (!String.IsNullOrEmpty(GroupName))
+                {
+                    checkScript = "if(F.util.checkGroupLastTime('" + GroupName + "')){" + GetPostBackEventReference() + "}";
+                }
+                else
+                {
+                    checkScript = GetPostBackEventReference();
+                }
 
-            OB.Listeners.AddProperty("checkchange", JsHelper.GetFunction(checkScript), true);
+                //OB.Listeners.AddProperty("checkchange", JsHelper.GetFunction(checkScript), true);
+                AddListener("checkchange", checkScript);
+            }
 
             #endregion
 
@@ -213,7 +217,7 @@ namespace FineUI
             if (Checked != postChecked)
             {
                 Checked = postChecked;
-                XState.BackupPostDataProperty("Checked");
+                FState.BackupPostDataProperty("Checked");
                 return true;
             }
 

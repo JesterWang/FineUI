@@ -54,15 +54,15 @@ namespace FineUI
         //public static readonly string SCRIPT_ONREADY_TEMPLATE = "window.box=new (function(){this._onReady=function(){window.boxPage_render_start_time=new Date();Ext.QuickTips.init();#CONTENT#};this._onReady();})();" + DEBUG_LINE_BREAK;
 
         // Ext.onReady(function(){window.startOnReady2=new Date();});
-        //public static readonly string WINDOW_DEFAULT_GROUP_ID = "X.window_default_group";
-        //public static readonly string COOKIE_PROVIDER_ID = "X.cookie_provider";
-        //public static readonly string HIDDEN_FIELDS_ID = "X.hiddenFields";
+        //public static readonly string WINDOW_DEFAULT_GROUP_ID = "F.window_default_group";
+        //public static readonly string COOKIE_PROVIDER_ID = "F.cookie_provider";
+        //public static readonly string HIDDEN_FIELDS_ID = "F.hiddenFields";
 
 
-        public static readonly string PAGE_STATE_CHANGED_ID = "X_CHANGED";
+        public static readonly string PAGE_STATE_CHANGED_ID = "F_CHANGED";
 
         // 在FineUI-Utility.js中被使用，不要修改
-        public static readonly string DISABLED_CONTROL_BEFORE_POSTBACK = "X_TARGET";
+        public static readonly string DISABLED_CONTROL_BEFORE_POSTBACK = "F_TARGET";
 
 
 
@@ -70,11 +70,21 @@ namespace FineUI
 
         //public static readonly string CREATE_EXT_OBJECT_PREFIX = "box_destroyObject(X.{0});";
 
-        //public static readonly string PRELOAD_IMAGES_ID = "X.preload_images";
+        //public static readonly string PRELOAD_IMAGES_ID = "F.preload_images";
 
         #endregion
 
         #region fields
+
+        private bool _isPageInitCompleted = false;
+
+        public bool IsPageInitCompleted
+        {
+            get { return _isPageInitCompleted; }
+            set { _isPageInitCompleted = value; }
+        }
+
+
 
         private List<AbsoluteScriptBlock> _startupAbsoluteScriptBlockList = new List<AbsoluteScriptBlock>();
         public List<AbsoluteScriptBlock> StartupAbsoluteScriptBlockList
@@ -134,8 +144,8 @@ namespace FineUI
         private Dictionary<string, string> _ajaxShortNameList = new Dictionary<string, string>();
         /// <summary>
         /// AJAX时使用到的所有短名称列表
-        /// 比如：X('SimpleForm1_tbxUserName')  -> cmp0
-        /// X('SimpleForm1_tbxPassword') -> cmp1
+        /// 比如：F('SimpleForm1_tbxUserName')  -> cmp0
+        /// F('SimpleForm1_tbxPassword') -> cmp1
         /// </summary>
         public Dictionary<string, string> AjaxShortNameList
         {
@@ -157,9 +167,15 @@ namespace FineUI
         #region Instance
 
         public ResourceManager()
+            : this(HttpContext.Current.Handler as Page)
         {
-            _page = HttpContext.Current.Handler as Page;
+        }
+
+        public ResourceManager(Page page)
+        {
+            _page = page;
             _page.PreRenderComplete += new EventHandler(Page_PreRenderComplete);
+            _page.InitComplete += Page_InitComplete;
         }
 
         private Page _page = null;
@@ -190,9 +206,39 @@ namespace FineUI
             }
         }
 
+        /// <summary>
+        /// 确保ResourceManager实例的Page和当前页面一致
+        /// </summary>
+        /// <param name="page"></param>
+        internal static void EnsureResourceManagerInstance(Page page)
+        {
+            ResourceManager rm = ResourceManager.Instance;
+
+            // 在 Server.Transfer 时会进入此分支
+            if (rm.Page != page)
+            {
+                rm = new ResourceManager(page);
+                HttpContext.Current.Items[ResourceManager.RESOURCE_MANAGER_CONTEXT_NAME] = rm;
+            }
+        }
+
+
         #endregion
 
         #region Page_PreRenderComplete
+
+        protected void Page_InitComplete(object sender, EventArgs e)
+        {
+            IsPageInitCompleted = true;
+
+            if (!IsFineUIAjaxPostBack)
+            {
+                // 页头注册公共CSS/Javascript
+                CommonResourceHelper.RegisterCommonResource(Page);
+            }
+
+        }
+
 
         /// <summary>
         /// 准备呈现页面内容，在保存页面状态之前
@@ -204,10 +250,9 @@ namespace FineUI
             // 如果是 FineUI 的Ajax
             if (IsFineUIAjaxPostBack)
             {
-                // 注意：这里不能设置 text/html，因为有上传控件时，会把返回的内容放在IFRAME中模拟Ajax过程。
-                //HttpContext.Current.Response.ContentType = "text/plain";
+                // The server response is parsed by the browser to create the document for the IFRAME. If the server is using JSON to send the return object, then the Content-Type header must be set to "text/html" in order to tell the browser to insert the text unchanged into the document body.
                 HttpContext.Current.Trace.IsEnabled = false;
-                HttpContext.Current.Response.ContentType = "text/plain";
+                HttpContext.Current.Response.ContentType = "text/html";
                 //HttpContext.Current.Response.ContentEncoding = Encoding.UTF8;
                 //HttpContext.Current.Response.Charset = "UTF-8";
                 HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -230,9 +275,6 @@ namespace FineUI
         /// </summary>
         private void SetupFirstLoadResource()
         {
-            // 页头注册公共CSS/Javascript
-            CommonResourceHelper.RegisterCommonResource(Page);
-
             // 注册样式
             RegisterStartupCss();
 
@@ -357,7 +399,7 @@ namespace FineUI
 
             StringBuilder beforeBuilder = new StringBuilder();
 
-            beforeBuilder.Append("X.init();");
+            //beforeBuilder.Append("F.init();");
 
             // ExtJS2.2的BUG，Ext.onReady会被调用两次（在ExtJS 2.2.1中已经修正）
             // Ext.onReady在extjsv3.1.0中依然有问题，在IE下有时会导致页面空白，不能继续执行，只有在点击Stop按钮或者重新刷新后才行。
@@ -369,40 +411,116 @@ namespace FineUI
             // 空白图片，只在 IE6 和 IE7 下设置（默认为 http://www.sencha.com/s.gif ），其他浏览器下使用 data URL
             //beforeBuilder.AppendFormat("if(Ext.isIE6||Ext.isIE7){{Ext.BLANK_IMAGE_URL='{0}';}}", ResourceHelper.GetWebResourceUrl("FineUI.res.img.s.gif"));
 
-            //beforeBuilder.Append("X.util.init();");
+            //beforeBuilder.Append("F.util.init();");
 
             // form 相关配置
             //beforeBuilder.Append("var fieldPro=Ext.form.Base.prototype;");
             //beforeBuilder.AppendFormat("fieldPro.msgTarget='{0}';", MsgTargetHelper.GetName(PageManager.Instance.FormMessageTarget));
             //beforeBuilder.AppendFormat("fieldPro.labelWidth={0};", PageManager.Instance.FormLabelWidth.Value);
             //beforeBuilder.AppendFormat("fieldPro.labelSeparator='{0}';", PageManager.Instance.FormLabelSeparator);
-            beforeBuilder.AppendFormat("X.util.init('{0}',{1},'{2}','{3}',{4},'{5}',{6},'{7}');",
-                MessageTargetHelper.GetName(PageManager.Instance.FormMessageTarget),
-                PageManager.Instance.FormLabelWidth.Value,
-                PageManager.Instance.FormLabelSeparator,
-                //PageManager.Instance.EnableBigFont.ToString().ToLower(),
-                Page.ResolveUrl(ResourceHelper.GetEmptyImageUrl()), //String.Format("{0}/res/images/s.gif", GlobalConfig.GetExtjsBasePath())), //ResourceHelper.GetWebResourceUrlResAxd("FineUI.res.img.s.gif&v=1"),
-                //PageManager.Instance.EnableAspnetSubmitButtonAjax.ToString().ToLower(),
-                PageManager.Instance.EnableAjaxLoading.ToString().ToLower(),
-                AjaxLoadingTypeName.GetName(PageManager.Instance.AjaxLoadingType),
-                PageManager.Instance.EnableAjax.ToString().ToLower(),
-                ThemeHelper.GetName(PageManager.Instance.Theme)
-                );
+            //beforeBuilder.AppendFormat("F.util.init('{0}',{1},'{2}','{3}',{4},'{5}',{6},'{7}',{8});",
+            //    MessageTargetHelper.GetName(PageManager.Instance.FormMessageTarget),
+            //    PageManager.Instance.FormLabelWidth.Value,
+            //    PageManager.Instance.FormLabelSeparator,
+            //    //PageManager.Instance.EnableBigFont.ToString().ToLower(),
+            //    Page.ResolveUrl(ResourceHelper.GetEmptyImageUrl()), //String.Format("{0}/res/images/s.gif", GlobalConfig.GetExtjsBasePath())), //ResourceHelper.GetWebResourceUrlResAxd("FineUI.res.img.s.gif&v=1"),
+            //    //PageManager.Instance.EnableAspnetSubmitButtonAjax.ToString().ToLower(),
+            //    PageManager.Instance.EnableAjaxLoading.ToString().ToLower(),
+            //    AjaxLoadingTypeName.GetName(PageManager.Instance.AjaxLoadingType),
+            //    PageManager.Instance.EnableAjax.ToString().ToLower(),
+            //    ThemeHelper.GetName(PageManager.Instance.Theme),
+            //    PageManager.Instance.EnableFormChangeConfirm.ToString().ToLower()
+            //    );
 
-            if (PageManager.Instance.BeforeAjaxPostBackScript != String.Empty)
+
+            //beforeBuilder.AppendFormat("F.util.init('{0}',{1},'{2}','{3}',{4},'{5}',{6},'{7}',{8});",
+            //    MessageTargetHelper.GetName(PageManager.Instance.FormMessageTarget),
+            //    PageManager.Instance.FormLabelWidth.Value,
+            //    PageManager.Instance.FormLabelSeparator,
+            //    //PageManager.Instance.EnableBigFont.ToString().ToLower(),
+            //    Page.ResolveUrl(ResourceHelper.GetEmptyImageUrl()), //String.Format("{0}/res/images/s.gif", GlobalConfig.GetExtjsBasePath())), //ResourceHelper.GetWebResourceUrlResAxd("FineUI.res.img.s.gif&v=1"),
+            //    //PageManager.Instance.EnableAspnetSubmitButtonAjax.ToString().ToLower(),
+            //    PageManager.Instance.EnableAjaxLoading.ToString().ToLower(),
+            //    AjaxLoadingTypeName.GetName(PageManager.Instance.AjaxLoadingType),
+            //    PageManager.Instance.EnableAjax.ToString().ToLower(),
+            //    ThemeHelper.GetName(PageManager.Instance.Theme),
+            //    PageManager.Instance.EnableFormChangeConfirm.ToString().ToLower()
+            //    );
+
+            JsObjectBuilder initObj = new JsObjectBuilder();
+
+            if (PageManager.Instance.FormMessageTarget != ConfigPropertyValue.FORM_MESSAGETARGET_DEFAULT)
             {
-                beforeBuilder.AppendFormat("X.util.beforeAjaxPostBackScript=function(){{{0}}};", PageManager.Instance.BeforeAjaxPostBackScript);
+                initObj.AddProperty("msgTarget", MessageTargetHelper.GetName(PageManager.Instance.FormMessageTarget));
             }
 
-            //beforeBuilder.Append("X.ajax.hookPostBack();");
-
-            if (PageManager.Instance.EnableAjax)
+            if (PageManager.Instance.FormLabelWidth != ConfigPropertyValue.FORM_LABELWIDTH_DEFAULT)
             {
-                if (PageManager.Instance.AjaxTimeout != ConfigPropertyValue.AJAX_TIMEOUT_DEFAULT)
-                {
-                    beforeBuilder.AppendFormat("Ext.Ajax.timeout={0};", PageManager.Instance.AjaxTimeout * 1000);
-                }
+                initObj.AddProperty("labelWidth", PageManager.Instance.FormLabelWidth.Value);
             }
+
+            if (PageManager.Instance.FormLabelSeparator != ConfigPropertyValue.FORM_LABELSEPARATOR_DEFAULT)
+            {
+                initObj.AddProperty("labelSeparator", PageManager.Instance.FormLabelSeparator);
+            }
+
+            //initObj.AddProperty("blankImageUrl", Page.ResolveUrl(ResourceHelper.GetEmptyImageUrl()));
+
+            if (PageManager.Instance.EnableAjaxLoading != ConfigPropertyValue.ENABLE_AJAX_LOADING_DEFAULT)
+            {
+                initObj.AddProperty("enableAjaxLoading", PageManager.Instance.EnableAjaxLoading.ToString().ToLower());
+            }
+
+            if (PageManager.Instance.AjaxLoadingType != ConfigPropertyValue.AJAX_LOADING_TYPE_DEFAULT)
+            {
+                initObj.AddProperty("ajaxLoadingType", AjaxLoadingTypeName.GetName(PageManager.Instance.AjaxLoadingType));
+            }
+
+            if (PageManager.Instance.EnableAjax != ConfigPropertyValue.ENABLE_AJAX_DEFAULT)
+            {
+                initObj.AddProperty("enableAjax", PageManager.Instance.EnableAjax.ToString().ToLower());
+            }
+
+            if (PageManager.Instance.Theme != Theme.Neptune)
+            {
+                initObj.AddProperty("theme", ThemeHelper.GetName(PageManager.Instance.Theme));
+            }
+
+            if (PageManager.Instance.Language != ConfigPropertyValue.LANGUAGE_DEFAULT)
+            {
+                initObj.AddProperty("language", LanguageHelper.GetName(PageManager.Instance.Language));
+            }
+
+
+
+            if (PageManager.Instance.EnableFormChangeConfirm)
+            {
+                initObj.AddProperty("formChangeConfirm", PageManager.Instance.EnableFormChangeConfirm.ToString().ToLower());
+            }
+
+            if (PageManager.Instance.AjaxTimeout != ConfigPropertyValue.AJAX_TIMEOUT_DEFAULT)
+            {
+                initObj.AddProperty("ajaxTimeout", PageManager.Instance.AjaxTimeout);
+            }
+
+            initObj.AddProperty("_version", GlobalConfig.ProductVersion);
+
+            beforeBuilder.AppendFormat("F.init({0});", initObj);
+
+            //if (PageManager.Instance.BeforeAjaxPostBackScript != String.Empty)
+            //{
+            //    beforeBuilder.AppendFormat("F.util.beforeAjaxPostBackScript=function(){{{0}}};", PageManager.Instance.BeforeAjaxPostBackScript);
+            //}
+
+            //beforeBuilder.Append("F.ajax.hookPostBack();");
+
+            //if (PageManager.Instance.EnableAjax)
+            //{
+            //    if (PageManager.Instance.AjaxTimeout != ConfigPropertyValue.AJAX_TIMEOUT_DEFAULT)
+            //    {
+            //        beforeBuilder.AppendFormat("Ext.Ajax.timeout={0};", PageManager.Instance.AjaxTimeout * 1000);
+            //    }
+            //}
 
             //if (PageManager.Instance.EnableBigFont)
             //{
@@ -422,7 +540,7 @@ namespace FineUI
             // 保存页面中可输入的表单字段状态是否发生变化的隐藏字段
             //innderBuilder.AppendFormat("var sn=document.createElement('input');sn.type='hidden';sn.value='false';sn.id=sn.name='{0}';Ext.getBody().query('form')[0].appendChild(sn);", PAGE_STATE_CHANGED_ID);
             //innderBuilder.AppendFormat("Ext.DomHelper.append(document.forms[0],{{tag:'input',type:'hidden',value:'false',id:'{0}',name:'{0}'}});", PAGE_STATE_CHANGED_ID);
-            //beforeBuilder.AppendFormat("X.util.setHiddenFieldValue('{0}','false');", PAGE_STATE_CHANGED_ID);
+            //beforeBuilder.AppendFormat("F.util.setHiddenFieldValue('{0}','false');", PAGE_STATE_CHANGED_ID);
 
             // 5.预加载图片
             //beforeBuilder.AppendFormat("{0}=[];", PRELOAD_IMAGES_ID);
@@ -433,7 +551,7 @@ namespace FineUI
 
             #region afterBuilder
 
-            StringBuilder afterBuilder = new StringBuilder();
+            //StringBuilder afterBuilder = new StringBuilder();
 
             //afterBuilder.Append("\r\n");
 
@@ -443,7 +561,7 @@ namespace FineUI
             //afterBuilder.Append("box_alertDEBUG();");
 
             //afterBuilder.Append("if(typeof(onReady)==='function'){onReady.call(window);}");
-            afterBuilder.Append("X.ready();");
+            //afterBuilder.Append("F.util.triggerReady();");
             //// 如果是回发并且允许回发注册onReady脚本
             //if (!Page.IsPostBack || (Page.IsPostBack && PageManager.Instance.ExecuteOnReadyWhenPostBack))
             //{
@@ -452,7 +570,7 @@ namespace FineUI
             //afterBuilder.Append("\r\n");
 
             //#if DEBUG
-            //            afterBuilder.Append("window.x_render_end_time = new Date();");
+            //            afterBuilder.Append("window.f_render_end_time = new Date();");
             //#endif
             #endregion
 
@@ -460,7 +578,7 @@ namespace FineUI
             // 需要注册script
             //string contentScript = String.Format("EXTASPNET_READY=function(){{{0}}};", beforeBuilder.ToString() + script + afterBuilder.ToString());
             //contentScript += "Ext.onReady(EXTASPNET_READY);";//Ext.EventManager.on(window,'onload',function(){EXTASPNET_READY();});";//if(Ext.isIE){}else{Ext.onReady(EXTASPNET_READY);}";
-            string contentScript = String.Format("Ext.onReady(function(){{{0}}});", beforeBuilder.ToString() + script + afterBuilder.ToString());
+            string contentScript = String.Format("F.load(function(){{{0}}});", beforeBuilder.ToString() + script);
             //#if DEBUG
             //            contentScript += "var x_end_time=new Date();";
             //#endif
@@ -474,7 +592,9 @@ namespace FineUI
 
             #endregion
 
-            return contentScript;
+            string checkScript = "if(!F&&!Ext){if(confirm('ERROR: extjs folder is lost, download it now?')){window.location.href='http://fineui.com/bbs/forum.php?mod=viewthread&tid=3218';}}";
+
+            return checkScript + contentScript;
         }
 
 
@@ -510,9 +630,6 @@ namespace FineUI
 
                 if (controlScript.Level < 0)
                 {
-                    //#if DEBUG
-                    //                    controlScript.Script = controlScript.Script;
-                    //#endif
                     result.Add(new ScriptBlock(null, controlScript.Script));
                 }
                 else
@@ -545,13 +662,6 @@ namespace FineUI
                 //#endif 
                 #endregion
 
-
-                //#if DEBUG
-                //                if (!String.IsNullOrEmpty(controlScript.Script)) controlScript.Script = "\r\n" + controlScript.Script;
-                //                if (!String.IsNullOrEmpty(controlScript.ExtraScript)) controlScript.ExtraScript = "\r\n" + controlScript.ExtraScript;
-                //#endif
-
-
                 result.Insert(insertIndex, controlScript);
             }
 
@@ -559,7 +669,7 @@ namespace FineUI
 
             #region 计算渲染时间
 
-            //string timeScript ="X.endDateTime=new Date();";
+            //string timeScript ="F.endDateTime=new Date();";
             //string totalTime = "'FineUI渲染时间：'+X.endDateTime.getElapsed(X.startDateTime)+'ms'";
             //totalTime += "+'['+X.startPageLayoutDateTime.getElapsed(X.startDateTime)+','";
             //totalTime += "+X.endPageLayoutDateTime.getElapsed(X.startPageLayoutDateTime)+']'";
@@ -640,25 +750,24 @@ namespace FineUI
 
         /// <summary>
         /// 取得应该将Script插入的位置
-        /// modified by 30372245@qq.com, 要能够向上回溯，因为控件A的父的父控件可能不存在列表中
+        /// 要能够向上回溯，因为控件的父控件可能不存在列表中，而父控件的父控件存在列表中
         /// </summary>
         /// <param name="testControl"></param>
-        /// <param name="testList"></param>
+        /// <param name="checkList"></param>
         /// <returns></returns>
-        private int GetInsertIndex(Control testControl, List<ScriptBlock> testList)
+        private int GetInsertIndex(ControlBase testControl, List<ScriptBlock> checkList)
         {
-            int returnIndex = testList.Count;
+            int returnIndex = checkList.Count;
 
+            // 这个地方不能是ControlBase，比如用户控件中控件，要能向上回溯到UserControlConnector
             Control parentControl = testControl.Parent;
-            // 如果父控件不是HtmlForm
-            while (parentControl != null && !(parentControl is System.Web.UI.HtmlControls.HtmlForm))
+            while (parentControl != null)
             {
-                for (int i = 0, count = testList.Count; i < count; i++)
+                for (int i = 0, count = checkList.Count; i < count; i++)
                 {
-                    Control existControl = testList[i].Control;
+                    Control checkControl = checkList[i].Control;
 
-                    // 如果existControl不为空
-                    if (existControl != null && parentControl.ID == existControl.ID)
+                    if (checkControl != null && parentControl == checkControl)
                     {
                         return i;
                     }
@@ -667,8 +776,15 @@ namespace FineUI
                 parentControl = parentControl.Parent;
             }
 
-
-            return returnIndex;
+            if (testControl is Menu)
+            {
+                // 如果菜单控件没有上级，则默认将脚本放在最前面
+                return 0;
+            }
+            else
+            {
+                return returnIndex;
+            }
         }
 
         ///// <summary>
@@ -742,7 +858,7 @@ namespace FineUI
 
         public void AddAbsoluteStartupScript(string script)
         {
-            AddAbsoluteStartupScript(script, 100);
+            AddAbsoluteStartupScript(script, Constants.ABSOLUTE_STARTUP_SCRIPT_DEFAULT_LEVEL);
         }
 
         public void AddAbsoluteStartupScript(string script, int level)
@@ -766,15 +882,7 @@ namespace FineUI
 
         #region AddStartupScript/IsStartupScriptExist
 
-        //public void AddJavaScriptComponent(string component)
-        //{
-        //    if (!_javascriptComponentList.Contains(component))
-        //    {
-        //        _javascriptComponentList.Add(component);
-        //    }
-        //}
-
-        public void AddStartupScript(Control control, string script)
+        public void AddStartupScript(ControlBase control, string script)
         {
             AddStartupScript(control, script, String.Empty);
         }
@@ -786,18 +894,10 @@ namespace FineUI
         /// <param name="control"></param>
         /// <param name="script"></param>
         /// <param name="extraScript"></param>
-        public void AddStartupScript(Control control, string script, string extraScript)
+        public void AddStartupScript(ControlBase control, string script, string extraScript)
         {
             ScriptBlock cs = new ScriptBlock(control, script);
 
-            //// modified by leizhang5 @2008-6-2
-            //// 如果control == null， 则后添加的脚本先渲染（也就是说：子控件相关的脚本先于父控件执行）
-            //if (control == null)
-            //{
-            //    _startupScriptBlockList.Insert(0, cs);
-            //}
-            //else
-            //{
             ScriptBlock existBlock = GetStartupScript(control);
             if (existBlock == null)
             {
@@ -806,9 +906,8 @@ namespace FineUI
             else
             {
                 existBlock.Script += script;
-                existBlock.ExtraScript += extraScript;
+                //existBlock.ExtraScript += extraScript;
             }
-            //}
         }
 
 
@@ -817,7 +916,7 @@ namespace FineUI
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
-        public bool IsStartupScriptExist(Control control)
+        public bool IsStartupScriptExist(ControlBase control)
         {
             foreach (ScriptBlock cs in _startupScriptBlockList)
             {
@@ -831,7 +930,7 @@ namespace FineUI
         }
 
 
-        public ScriptBlock GetStartupScript(Control control)
+        public ScriptBlock GetStartupScript(ControlBase control)
         {
             foreach (ScriptBlock cs in _startupScriptBlockList)
             {
@@ -845,7 +944,7 @@ namespace FineUI
         }
 
 
-        public void RemoveStartupScript(Control control)
+        public void RemoveStartupScript(ControlBase control)
         {
             for (int i = 0; i < _startupScriptBlockList.Count; i++)
             {
@@ -869,9 +968,9 @@ namespace FineUI
             {
                 if (_requestState == null && Page.IsPostBack)
                 {
-                    //string state = HttpUtility.UrlDecode(HttpContext.Current.Request.Form["X_STATE"]);
-                    string state = HttpContext.Current.Request.Form["X_STATE"];
-                    string xstateURI = HttpContext.Current.Request.Form["X_STATE_URI"];
+                    //string state = HttpUtility.UrlDecode(HttpContext.Current.Request.Form["F_STATE"]);
+                    string state = HttpContext.Current.Request.Form["F_STATE"];
+                    string xstateURI = HttpContext.Current.Request.Form["F_STATE_URI"];
                     if (!String.IsNullOrEmpty(state))
                     {
                         if (String.IsNullOrEmpty(xstateURI))
@@ -914,7 +1013,7 @@ namespace FineUI
         {
             get
             {
-                return HttpContext.Current.Request.Form["X_AJAX"] == "true";
+                return HttpContext.Current.Request.Form["F_AJAX"] == "true";
             }
         }
 

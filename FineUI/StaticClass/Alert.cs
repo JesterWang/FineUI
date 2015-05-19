@@ -495,7 +495,7 @@ namespace FineUI
             // Icon 或者 IconUrl 不为空
             if (!String.IsNullOrEmpty(resolvedIconUrl))
             {
-                string className = String.Format("box-{0}-alert-icon", System.Guid.NewGuid().ToString("N"));
+                string className = String.Format("f-{0}-alert-icon", System.Guid.NewGuid().ToString("N"));
 
                 var addCSSPrefix = String.Empty;
                 if (target == Target.Parent)
@@ -506,7 +506,7 @@ namespace FineUI
                 {
                     addCSSPrefix = "top.";
                 }
-                addCSSScript = String.Format("{0}X.util.addCSS('{1}','{2}');", addCSSPrefix, className, StyleUtil.GetNoRepeatBackgroundStyle("." + className, resolvedIconUrl));
+                addCSSScript = String.Format("{0}F.addCSS('{1}','{2}');", addCSSPrefix, className, StyleUtil.GetNoRepeatBackgroundStyle("." + className, resolvedIconUrl));
 
                 iconScriptFragment = String.Format("'{0}'", className);
             }
@@ -528,14 +528,14 @@ namespace FineUI
                 String.IsNullOrEmpty(okScript) &&
                 String.IsNullOrEmpty(resolvedIconUrl))
             {
-                return addCSSScript + String.Format("{0}.X.alert({1});", targetScript, JsHelper.GetJsString(message));
+                return addCSSScript + String.Format("{0}.F.alert({1});", targetScript, JsHelper.Enquote(message));
             }
             else
             {
-                return addCSSScript + String.Format("{0}.X.alert({1},{2},{3},{4});",
+                return addCSSScript + String.Format("{0}.F.alert({1},{2},{3},{4});",
                     targetScript,
-                    JsHelper.GetJsStringWithScriptTag(message),
-                    JsHelper.GetJsString(title),
+                    JsHelper.EnquoteWithScriptTag(message),
+                    JsHelper.Enquote(title),
                     iconScriptFragment,
                     String.IsNullOrEmpty(okScript) ? "''" : JsHelper.GetFunction(okScript));
             }

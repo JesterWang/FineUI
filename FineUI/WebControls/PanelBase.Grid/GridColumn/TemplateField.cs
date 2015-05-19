@@ -56,7 +56,7 @@ namespace FineUI
         [Browsable(false)]
         [PersistenceMode(PersistenceMode.InnerProperty)]
         [TemplateInstance(TemplateInstance.Single)]
-        [TemplateContainer(typeof(GridRowControl))]
+        [TemplateContainer(typeof(GridTemplateContainer))]
         [Description("模板容器")]
         public virtual ITemplate ItemTemplate
         {
@@ -91,13 +91,72 @@ namespace FineUI
             }
         }
 
+
+        private bool _expandOnDoubleClick = true;
+        /// <summary>
+        /// 双击展开折叠行扩展列
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(true)]
+        [Description("双击展开折叠行扩展列")]
+        public bool ExpandOnDoubleClick
+        {
+            get
+            {
+                return _expandOnDoubleClick;
+            }
+            set
+            {
+                _expandOnDoubleClick = value;
+            }
+        }
+
+        private bool _expandOnEnter = true;
+        /// <summary>
+        /// 回车按键展开折叠行扩展列
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(true)]
+        [Description("回车按键展开折叠行扩展列")]
+        public bool ExpandOnEnter
+        {
+            get
+            {
+                return _expandOnEnter;
+            }
+            set
+            {
+                _expandOnEnter = value;
+            }
+        }
+
+        private bool _expandToSelectRow = false;
+        /// <summary>
+        /// 点击图标展开折叠行扩展列时选中行
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("点击图标展开折叠行扩展列时选中行")]
+        public bool ExpandToSelectRow
+        {
+            get
+            {
+                return _expandToSelectRow;
+            }
+            set
+            {
+                _expandToSelectRow = value;
+            }
+        }
+
+
         #endregion
 
         #region GetColumnValue
 
-        internal override string GetColumnValue(GridRow row)
+        internal override object GetColumnValue(GridRow row)
         {
-            GridRowControl control = row.TemplateContainers[ColumnIndex];
+            GridTemplateContainer control = row.TemplateContainers[ColumnIndex];
             
             return String.Format("{0}{1}", Grid.TEMPLATE_PLACEHOLDER_PREFIX, control.ID);
         }
@@ -124,13 +183,31 @@ namespace FineUI
                 rowExpanderBuilder.AddProperty("rowBodyTpl", String.Format("Ext.create('Ext.XTemplate','{{{0}}}')", ColumnID), true);
                 rowExpanderBuilder.AddProperty("pluginId", String.Format("{0}_rowexpander", Grid.ClientID));
 
+                if (!ExpandOnDoubleClick)
+                {
+                    rowExpanderBuilder.AddProperty("expandOnDblClick", false);
+                }
+
+                if (!ExpandOnEnter)
+                {
+                    rowExpanderBuilder.AddProperty("expandOnEnter", false);
+                }
+
+                if (ExpandToSelectRow)
+                {
+                    rowExpanderBuilder.AddProperty("selectRowOnExpand", true);
+                }
+
+
                 string jsContent = String.Format("var {0}=Ext.create('Ext.grid.plugin.RowExpander',{1});", XID, rowExpanderBuilder);
-                AddStartupScript(jsContent);
+                AddGridColumnScript(jsContent);
+                
             }
             else
             {
                 string jsContent = String.Format("var {0}={1};", XID, OB.ToString());
-                AddStartupScript(jsContent);
+                AddGridColumnScript(jsContent);
+                
             }
         }
 

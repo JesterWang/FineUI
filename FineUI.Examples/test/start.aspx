@@ -8,54 +8,54 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <x:PageManager ID="PageManager1" runat="server" />
-    <x:Form ID="Form2" runat="server" BodyPadding="5px" 
+    <f:PageManager ID="PageManager1" runat="server" />
+    <f:Form ID="Form2" runat="server" BodyPadding="5px" 
         Title="发起新任务" LabelWidth="100px">
         <Rows>
-            <x:FormRow ID="FormRow1" runat="server">
+            <f:FormRow ID="FormRow1" runat="server">
                 <Items>
-                    <x:CheckBoxList ID="CheckBoxList1" runat="server" Label="执行人" Required="true" ColumnNumber="6">
-                    </x:CheckBoxList>
+                    <f:CheckBoxList ID="CheckBoxList1" runat="server" Label="执行人" Required="true" ColumnNumber="6">
+                    </f:CheckBoxList>
                 </Items>
-            </x:FormRow>
+            </f:FormRow>
         </Rows>
-    </x:Form>
-    <x:Tree runat="server" EnableArrows="true" OnNodeCommand="Tree1_NodeCommand" ShowBorder="false"
+    </f:Form>
+    <f:Tree runat="server" EnableArrows="true" OnNodeCommand="Tree1_NodeCommand" ShowBorder="false"
         ShowHeader="false" AutoScroll="true" ID="tree2">
         <Nodes>
-            <x:TreeNode Text="添加企业" CommandArgument="info.aspx" IconUrl="~/images/16/1.png" EnablePostBack="true">
-            </x:TreeNode>
-            <x:TreeNode Text="企业查询" CommandArgument="info.aspx" IconUrl="~/images/16/1.png" EnablePostBack="true">
-            </x:TreeNode>
-            <x:TreeNode Text="企业业务信息查询" CommandArgument="info.aspx" IconUrl="~/images/16/1.png"
+            <f:TreeNode Text="添加企业" CommandArgument="info.aspx" IconUrl="~/res/images/16/1.png" EnablePostBack="true">
+            </f:TreeNode>
+            <f:TreeNode Text="企业查询" CommandArgument="info.aspx" IconUrl="~/res/images/16/1.png" EnablePostBack="true">
+            </f:TreeNode>
+            <f:TreeNode Text="企业业务信息查询" CommandArgument="info.aspx" IconUrl="~/res/images/16/1.png"
                 EnablePostBack="true">
-            </x:TreeNode>
+            </f:TreeNode>
         </Nodes>
-    </x:Tree>
-    <x:Accordion ID="Accordion1" runat="server" ShowBorder="false" ShowHeader="false"
+    </f:Tree>
+    <f:Accordion ID="Accordion1" runat="server" ShowBorder="false" ShowHeader="false"
         ShowCollapseTool="true">
         <Panes>
-            <x:AccordionPane ID="AccordionPane1" runat="server" Title="企业业务" IconUrl="~/images/16/1.png"
+            <f:AccordionPane ID="AccordionPane1" runat="server" Title="企业业务" IconUrl="~/res/images/16/1.png"
                 BodyPadding="2px 5px" Layout="Fit" ShowBorder="false">
                 <Items>
-                    <x:Tree runat="server" EnableArrows="true" OnNodeCommand="Tree1_NodeCommand" ShowBorder="false"
+                    <f:Tree runat="server" EnableArrows="true" OnNodeCommand="Tree1_NodeCommand" ShowBorder="false"
                         ShowHeader="false" AutoScroll="true" ID="tree1">
                         <Nodes>
-                            <x:TreeNode Text="添加企业" CommandArgument="info.aspx" IconUrl="~/images/16/1.png" EnablePostBack="true">
-                            </x:TreeNode>
-                            <x:TreeNode Text="企业查询" CommandArgument="info.aspx" IconUrl="~/images/16/1.png" EnablePostBack="true">
-                            </x:TreeNode>
-                            <x:TreeNode Text="企业业务信息查询" CommandArgument="info.aspx" IconUrl="~/images/16/1.png"
+                            <f:TreeNode Text="添加企业" CommandArgument="info.aspx" IconUrl="~/res/images/16/1.png" EnablePostBack="true">
+                            </f:TreeNode>
+                            <f:TreeNode Text="企业查询" CommandArgument="info.aspx" IconUrl="~/res/images/16/1.png" EnablePostBack="true">
+                            </f:TreeNode>
+                            <f:TreeNode Text="企业业务信息查询" CommandArgument="info.aspx" IconUrl="~/res/images/16/1.png"
                                 EnablePostBack="true">
-                            </x:TreeNode>
+                            </f:TreeNode>
                         </Nodes>
-                    </x:Tree>
+                    </f:Tree>
                 </Items>
-            </x:AccordionPane>
+            </f:AccordionPane>
         </Panes>
-    </x:Accordion>
-    <x:Button ID="Button1" runat="server" OnClick="btn_Submit_Click">
-    </x:Button>
+    </f:Accordion>
+    <f:Button ID="Button1" runat="server" OnClick="btn_Submit_Click">
+    </f:Button>
     </form>
 </body>
 </html>

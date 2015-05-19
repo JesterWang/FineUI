@@ -13,13 +13,13 @@ namespace FineUI.Examples.form {
     public partial class layout_panel2 {
         
         /// <summary>
-        /// form1 控件。
+        /// _form1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlForm _form1;
         
         /// <summary>
         /// PageManager1 控件。
@@ -31,13 +31,13 @@ namespace FineUI.Examples.form {
         protected global::FineUI.PageManager PageManager1;
         
         /// <summary>
-        /// SimpleForm1 控件。
+        /// Form1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.SimpleForm SimpleForm1;
+        protected global::FineUI.Form Form1;
         
         /// <summary>
         /// Panel2 控件。

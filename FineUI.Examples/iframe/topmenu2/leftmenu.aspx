@@ -7,21 +7,21 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <x:PageManager ID="PageManager1" AutoSizePanelID="leftTree" runat="server"></x:PageManager>
-    <x:Tree runat="server" ShowBorder="false" ShowHeader="false" EnableArrows="true"
-        ID="leftTree">
-    </x:Tree>
-    <asp:XmlDataSource ID="XmlDataSource1" runat="server" DataFile="./data/menuMail.xml">
-    </asp:XmlDataSource>
+        <f:PageManager ID="PageManager1" AutoSizePanelID="leftTree" runat="server"></f:PageManager>
+        <f:Tree runat="server" ShowBorder="false" ShowHeader="false" ID="leftTree">
+        </f:Tree>
+        <asp:XmlDataSource ID="XmlDataSource1" runat="server" DataFile="./data/menuMail.xml"></asp:XmlDataSource>
     </form>
+    <script src="../../res/js/jquery.min.js" type="text/javascript"></script>
     <script>
         var leftTreeID = '<%= leftTree.ClientID %>';
 
-        function onReady() {
+        F.ready(function () {
 
             // 展开树的第一个节点，并选中第一个节点下的第一个子节点（在右侧IFrame中打开）
-            var tree = X(leftTreeID);
+            var tree = F(leftTreeID);
             var treeFirstChild = tree.getRootNode().firstChild;
+
             // 展开第一个节点（如果想要展开全部节点，调用 tree.expandAll();）
             treeFirstChild.expand();
 
@@ -30,7 +30,7 @@
             var treeFirstLink = treeFirstChild.firstChild;
             tree.getSelectionModel().select(treeFirstLink);
             parent.window.frames['mainframe'].location.href = treeFirstLink.data.href;
-        }
+        });
     </script>
 </body>
 </html>

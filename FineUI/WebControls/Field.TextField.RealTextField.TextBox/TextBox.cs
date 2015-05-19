@@ -73,12 +73,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["TextMode"];
+                object obj = FState["TextMode"];
                 return obj == null ? TextMode.Text : (TextMode)obj;
             }
             set
             {
-                XState["TextMode"] = value;
+                FState["TextMode"] = value;
             }
         }
 
@@ -119,12 +119,12 @@ namespace FineUI
             }
 
 
-            // 如果Text属性存在于XState中，则不要重复设置value属性，而是在render事件中使用XState的值
-            if (XState.ModifiedProperties.Contains("Text"))
+            // 如果Text属性存在于FState中，则不要重复设置value属性，而是在render事件中使用FState的值
+            if (FState.ModifiedProperties.Contains("Text"))
             {
                 //OB.RemoveProperty("value");
-                //OB.Listeners.AddProperty("render", JsHelper.GetFunction("cmp.x_setValue();", "cmp"), true);
-                OB.AddProperty("value", String.Format("{0}.Text", GetXStateScriptID()), true);
+                //OB.Listeners.AddProperty("render", JsHelper.GetFunction("cmp.f_setValue();", "cmp"), true);
+                OB.AddProperty("value", String.Format("{0}.Text", GetFStateScriptID()), true);
             }
 
 

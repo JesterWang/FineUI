@@ -31,7 +31,7 @@ namespace FineUI.Examples.other
 
         protected void btnOperation3_Click(object sender, EventArgs e)
         {
-            if (Request.Form["__EVENTARGUMENT"] == "Cancel")
+            if (GetRequestEventArgument() == "Cancel")
             {
                 Alert.Show("取消执行操作三！");
             }

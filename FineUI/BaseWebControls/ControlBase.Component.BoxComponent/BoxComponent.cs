@@ -45,7 +45,7 @@ namespace FineUI
         /// </summary>
         public BoxComponent()
         {
-            AddServerAjaxProperties();
+            AddServerAjaxProperties("Width", "Height");
             AddClientAjaxProperties();
 
         }
@@ -64,12 +64,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Width"];
+                object obj = FState["Width"];
                 return obj == null ? Unit.Empty : (Unit)obj;
             }
             set
             {
-                XState["Width"] = value;
+                FState["Width"] = value;
             }
         }
 
@@ -84,12 +84,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["Height"];
+                object obj = FState["Height"];
                 return obj == null ? Unit.Empty : (Unit)obj;
             }
             set
             {
-                XState["Height"] = value;
+                FState["Height"] = value;
             }
         }
 
@@ -108,12 +108,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AnchorValue"];
+                object obj = FState["AnchorValue"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["AnchorValue"] = value;
+                FState["AnchorValue"] = value;
             }
         }
 
@@ -128,12 +128,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["ColumnWidth"];
+                object obj = FState["ColumnWidth"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["ColumnWidth"] = value;
+                FState["ColumnWidth"] = value;
             }
         }
 
@@ -148,12 +148,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["RowHeight"];
+                object obj = FState["RowHeight"];
                 return obj == null ? "" : (string)obj;
             }
             set
             {
-                XState["RowHeight"] = value;
+                FState["RowHeight"] = value;
             }
         }
 
@@ -168,12 +168,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AbsoluteX"];
+                object obj = FState["AbsoluteX"];
                 return obj == null ? Unit.Empty : (Unit)obj;
             }
             set
             {
-                XState["AbsoluteX"] = value;
+                FState["AbsoluteX"] = value;
             }
         }
 
@@ -188,12 +188,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["AbsoluteY"];
+                object obj = FState["AbsoluteY"];
                 return obj == null ? Unit.Empty : (Unit)obj;
             }
             set
             {
-                XState["AbsoluteY"] = value;
+                FState["AbsoluteY"] = value;
             }
         }
 
@@ -208,12 +208,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["TableConfigColumns"];
+                object obj = FState["TableConfigColumns"];
                 return obj == null ? 3 : (int)obj;
             }
             set
             {
-                XState["TableConfigColumns"] = value;
+                FState["TableConfigColumns"] = value;
             }
         }
 
@@ -227,12 +227,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["TableRowspan"];
+                object obj = FState["TableRowspan"];
                 return obj == null ? 1 : (int)obj;
             }
             set
             {
-                XState["TableRowspan"] = value;
+                FState["TableRowspan"] = value;
             }
         }
 
@@ -246,12 +246,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["TableColspan"];
+                object obj = FState["TableColspan"];
                 return obj == null ? 1 : (int)obj;
             }
             set
             {
-                XState["TableColspan"] = value;
+                FState["TableColspan"] = value;
             }
         }
 
@@ -259,18 +259,18 @@ namespace FineUI
         /// 控制子控件的位置（当本容器的Layout=VBox或者HBox时有效）
         /// </summary>
         [Category(CategoryName.LAYOUT)]
-        [DefaultValue(BoxLayoutAlign.Start)]
+        [DefaultValue(BoxLayoutAlign.Stretch)]
         [Description("控制子控件的位置（当本容器的Layout=VBox或者HBox时有效）")]
         public BoxLayoutAlign BoxConfigAlign
         {
             get
             {
-                object obj = XState["BoxConfigAlign"];
-                return obj == null ? BoxLayoutAlign.Start : (BoxLayoutAlign)obj;
+                object obj = FState["BoxConfigAlign"];
+                return obj == null ? BoxLayoutAlign.Stretch : (BoxLayoutAlign)obj;
             }
             set
             {
-                XState["BoxConfigAlign"] = value;
+                FState["BoxConfigAlign"] = value;
             }
         }
 
@@ -284,12 +284,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["BoxConfigPosition"];
+                object obj = FState["BoxConfigPosition"];
                 return obj == null ? BoxLayoutPosition.Start : (BoxLayoutPosition)obj;
             }
             set
             {
-                XState["BoxConfigPosition"] = value;
+                FState["BoxConfigPosition"] = value;
             }
         }
 
@@ -303,12 +303,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["BoxConfigPadding"];
+                object obj = FState["BoxConfigPadding"];
                 return obj == null ? "0" : (string)obj;
             }
             set
             {
-                XState["BoxConfigPadding"] = value;
+                FState["BoxConfigPadding"] = value;
             }
         }
 
@@ -322,12 +322,12 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["BoxConfigChildMargin"];
+                object obj = FState["BoxConfigChildMargin"];
                 return obj == null ? "0" : (string)obj;
             }
             set
             {
-                XState["BoxConfigChildMargin"] = value;
+                FState["BoxConfigChildMargin"] = value;
             }
         }
 
@@ -341,32 +341,72 @@ namespace FineUI
         {
             get
             {
-                object obj = XState["BoxFlex"];
+                object obj = FState["BoxFlex"];
                 return obj == null ? 0 : (int)obj;
             }
             set
             {
-                XState["BoxFlex"] = value;
+                FState["BoxFlex"] = value;
+            }
+        }
+
+
+        ///// <summary>
+        ///// 外边距
+        ///// </summary>
+        //[Category(CategoryName.LAYOUT)]
+        //[DefaultValue("")]
+        //[Description("外边距")]
+        //[Obsolete("已废除，请使用Margin属性")]
+        //public string BoxMargin
+        //{
+        //    get
+        //    {
+        //        return Margin;
+        //    }
+        //    set
+        //    {
+        //        Margin = value;
+        //    }
+        //}
+
+
+        /// <summary>
+        /// 是否显示分隔条
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(false)]
+        [Description("是否显示分隔条")]
+        public bool RegionSplit
+        {
+            get
+            {
+                object obj = FState["RegionSplit"];
+                return obj == null ? false : (bool)obj;
+            }
+            set
+            {
+                FState["RegionSplit"] = value;
             }
         }
 
 
         /// <summary>
-        /// 外边距（当父容器的Layout=VBox或者HBox时有效）
+        /// 区域所在的位置
         /// </summary>
-        [Category(CategoryName.LAYOUT)]
-        [DefaultValue("")]
-        [Description("外边距（当父容器的Layout=VBox或者HBox时有效）")]
-        public string BoxMargin
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(Position.Center)]
+        [Description("区域所在的位置")]
+        public Position RegionPosition
         {
             get
             {
-                object obj = XState["BoxMargin"];
-                return obj == null ? "" : (string)obj;
+                object obj = FState["RegionPosition"];
+                return obj == null ? Position.Center : (Position)obj;
             }
             set
             {
-                XState["BoxMargin"] = value;
+                FState["RegionPosition"] = value;
             }
         }
 
@@ -380,6 +420,22 @@ namespace FineUI
         protected override void OnAjaxPreRender()
         {
             base.OnAjaxPreRender();
+
+            StringBuilder sb = new StringBuilder();
+
+            if (PropertyModified("Width"))
+            {
+                sb.AppendFormat("{0}.f_setWidth();", XID);
+            }
+
+            if (PropertyModified("Height"))
+            {
+                sb.AppendFormat("{0}.f_setHeight();", XID);
+            }
+
+
+            AddAjaxScript(sb);
+
         }
 
         /// <summary>
@@ -388,8 +444,8 @@ namespace FineUI
         protected override void OnFirstPreRender()
         {
             base.OnFirstPreRender();
-            
-            
+
+
             if (Width != Unit.Empty)
             {
                 OB.AddProperty("width", Width.Value);
@@ -402,21 +458,8 @@ namespace FineUI
 
             #region Controls in Layout
 
-            Container parentControl = null;
 
-            // 此面板放在用户控件中的情况
-            if (Parent is UserControl)
-            {
-                if (Parent.Parent is UserControlConnector)
-                {
-                    parentControl = Parent.Parent.Parent as Container;
-                }
-            }
-            else
-            {
-                parentControl = Parent as Container;
-            }
-
+            Container parentControl = GetParentControl() as Container;
 
             if (parentControl != null)
             {
@@ -453,20 +496,6 @@ namespace FineUI
                         OB.AddProperty("y", AbsoluteY.Value);
                     }
                 }
-                else if (parentControl.Layout == Layout.Row)
-                {
-                    if (!String.IsNullOrEmpty(RowHeight))
-                    {
-                        string rowHeight = StringUtil.ConvertPercentageToDecimalString(RowHeight);
-
-                        // 1.00 在IE下会有BUG，把1.00转换为0.999
-                        if (rowHeight == "1.00")
-                        {
-                            rowHeight = "0.999";
-                        }
-                        OB.AddProperty("rowHeight", rowHeight, true);
-                    }
-                }
                 else if (parentControl.Layout == Layout.Table)
                 {
                     if (TableRowspan != 1)
@@ -486,10 +515,20 @@ namespace FineUI
                         OB.AddProperty("flex", BoxFlex);
                     }
 
-                    // 用户可能会设置 BoxMargin="0" 来覆盖 BoxConfigChildMargin 属性。
-                    if (BoxMargin != "")
+                    //// 用户可能会设置 BoxMargin="0" 来覆盖 BoxConfigChildMargin 属性。
+                    //if (BoxMargin != "")
+                    //{
+                    //    OB.AddProperty("margins", BoxMargin);
+                    //}
+
+                }
+                else if (parentControl.Layout == Layout.Region)
+                {
+                    OB.AddProperty("region", PositionHelper.GetName(RegionPosition));
+
+                    if (RegionSplit)
                     {
-                        OB.AddProperty("margins", BoxMargin);
+                        OB.AddProperty("split", true);
                     }
 
                 }
@@ -497,6 +536,30 @@ namespace FineUI
 
             #endregion
 
+        }
+
+        /// <summary>
+        /// 获取当前控件的父容器
+        /// </summary>
+        /// <returns></returns>
+        protected ControlBase GetParentControl()
+        {
+            ControlBase parentControl = null;
+
+            // 此面板放在用户控件中的情况
+            if (Parent is UserControl || Parent is ContentPlaceHolder)
+            {
+                if (Parent.Parent is UserControlConnector || Parent.Parent is CPHConnector)
+                {
+                    parentControl = Parent.Parent.Parent as ControlBase;
+                }
+            }
+            else
+            {
+                parentControl = Parent as ControlBase;
+            }
+
+            return parentControl;
         }
 
         #endregion

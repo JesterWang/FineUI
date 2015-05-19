@@ -4,26 +4,29 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-    <x:PageManager ID="PageManager1" runat="server" />
-    Icon="World"：
-    <x:Image ID="Image1" runat="server" Icon="World">
-    </x:Image>
-    <br />
-    ImageUrl="../icon/world.png"：
-    <x:Image ID="Image2" runat="server" ImageUrl="../icon/world.png">
-    </x:Image>
-    <br />
-    ImageUrl="../images/logo/favicon.gif" ImageCssStyle="border:solid 1px #ccc;padding:5px;"：
-    <x:Image ID="Image3" runat="server" ImageWidth="32" ImageHeight="32" ImageCssStyle="border:solid 1px #ccc;padding:5px;"
-        ImageUrl="../images/logo/favicon.gif">
-    </x:Image>
-    <br />
-    <x:Button runat="server" Text="改变图片的大小" ID="Button1" OnClick="Button1_Click">
-    </x:Button>
+        <f:PageManager ID="PageManager1" runat="server" />
+        Icon="World"：
+        <br />
+        <f:Image ID="Image1" runat="server" Icon="World">
+        </f:Image>
+        <br />
+        ImageUrl="../res/icon/world.png"：
+        <br />
+        <f:Image ID="Image2" runat="server" ImageUrl="../res/icon/world.png">
+        </f:Image>
+        <br />
+        ImageUrl="~/res/images/logo/favicon.gif" ImageCssStyle="border:solid 1px #ccc;padding:5px;"：
+        <br />
+        <f:Image ID="Image3" runat="server" ImageWidth="32" ImageHeight="32" ImageCssStyle="border:solid 1px #ccc;padding:5px;"
+            ImageUrl="~/res/images/logo/favicon.gif">
+        </f:Image>
+        <br />
+        <f:Button runat="server" Text="改变图片的大小" ID="Button1" OnClick="Button1_Click">
+        </f:Button>
     </form>
 </body>
 </html>
