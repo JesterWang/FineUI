@@ -8,7 +8,7 @@
 
 ###支持的浏览器
 ------------
-IE 7.0+、Firefox 3.6+、Chrome 3.0+、Opera 10.5+、Safari 3.0+
+Chrome、Firefox、Safari、IE 8.0+
 
 ###授权协议
 ------------
@@ -38,7 +38,5 @@ FineUI严格遵守 ExtJS 关于开源软件的规则，不再内置 ExtJS 库。
 
 ###捐赠
 ------------
-FineUI作为一款开源软件已经持续开发了 5 年有余并发布了 100 多个版本，并还将继续下去。如果你在商业软件中使用了FineUI，请捐赠作者以帮助FineUI的持续开发。
+FineUI（开源版）作为一款开源软件已经持续开发了 8 年 并发布了 120 多个版本，并还将继续下去。如果你在商业软件中使用了FineUI（开源版），请捐赠作者以帮助 FineUI 的持续开发。
 
-
-![FineUI](http://download-codeplex.sec.s-msft.com/Download?ProjectName=fineui&DownloadId=749499)
