@@ -355,7 +355,10 @@ namespace FineUI
 
             if (ShowHeader)
             {
-                OB.AddProperty("title", String.IsNullOrEmpty(Title) ? String.Format("[{0}]", ID) : Title);
+                //OB.AddProperty("title", String.IsNullOrEmpty(Title) ? String.Format("[{0}]", ID) : Title);
+
+                OB.AddProperty("title", Title);
+
             }
             else
             {

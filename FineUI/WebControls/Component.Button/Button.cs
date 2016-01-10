@@ -47,7 +47,7 @@ namespace FineUI
     [ParseChildren(true)]
     [PersistChildren(false)]
     [ControlBuilder(typeof(NotAllowWhitespaceLiteralsBuilder))]
-    public class Button : Component, IPostBackEventHandler, IPostBackDataHandler
+    public class Button : BoxComponent, IPostBackEventHandler, IPostBackDataHandler
     {
         #region Constructor
 
@@ -826,7 +826,7 @@ namespace FineUI
             {
                 if (!String.IsNullOrEmpty(disableControlJavascriptID))
                 {
-                    postBackScript += String.Format("F.disable('{0}');", disableControlJavascriptID);
+                    postBackScript += String.Format("F.f_disable('{0}');", disableControlJavascriptID);
                 }
                 postBackScript += postBackEventReference;
             }

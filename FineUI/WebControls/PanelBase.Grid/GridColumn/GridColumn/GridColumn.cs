@@ -337,7 +337,27 @@ namespace FineUI
             }
         }
 
+        private Unit _minWidth = Unit.Empty;
+        /// <summary>
+        /// 最小列宽度
+        /// </summary>
+        [Category(CategoryName.OPTIONS)]
+        [DefaultValue(typeof(Unit), "")]
+        [Description("最小列宽度")]
+        public virtual Unit MinWidth
+        {
+            get
+            {
+                return _minWidth;
+            }
+            set
+            {
+                _minWidth = value;
+            }
+        }
 
+
+        private int _boxFlex = 0;
         /// <summary>
         /// 控制子控件的尺寸（表格列使用HBox布局）
         /// </summary>
@@ -348,18 +368,16 @@ namespace FineUI
         {
             get
             {
-                object obj = FState["BoxFlex"];
-                return obj == null ? 0 : (int)obj;
+                return _boxFlex;
             }
             set
             {
-                FState["BoxFlex"] = value;
+                _boxFlex = value;
             }
         }
 
 
         private bool _expandUnusedSpace = false;
-
         /// <summary>
         /// 此列会扩展所有未使用的宽度
         /// </summary>
@@ -645,6 +663,11 @@ namespace FineUI
                 else if (BoxFlex != 0)
                 {
                     OB.AddProperty("flex", BoxFlex);
+                }
+
+                if (MinWidth != Unit.Empty)
+                {
+                    OB.AddProperty("minWidth", MinWidth.Value);
                 }
 
                 if (ExpandUnusedSpace)
