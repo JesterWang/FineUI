@@ -4,7 +4,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .bgbtn {
             background-image: url(../res/images/login.png) !important;

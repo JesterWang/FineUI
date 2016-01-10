@@ -92,7 +92,7 @@ namespace FineUI.Examples.dropdownlist
             DropDownList1.SelectedValue = "6";
         }
 
-        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+        protected void btnGetSelection_Click(object sender, EventArgs e)
         {
             if (DropDownList1.SelectedItem != null)
             {
@@ -102,7 +102,7 @@ namespace FineUI.Examples.dropdownlist
             {
                 labResult.Text = "无选中项";
             }
-        }
+        } 
 
         #endregion
 

@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="accordion.aspx.cs" Inherits="FineUI.Examples.accordion.accordion2" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="accordion.aspx.cs" Inherits="FineUI.Examples.accordion.accordion" %>
 
 <!DOCTYPE html>
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">

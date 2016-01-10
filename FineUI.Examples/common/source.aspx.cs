@@ -38,7 +38,7 @@ namespace FineUI.Examples
                         TabStrip1.Tabs.Add(tab);
 
                         // End with .aspx.
-                        if (fileName.ToLower().EndsWith(".aspx") || fileName.ToLower().EndsWith(".ascx") || fileName.ToLower().EndsWith(".master"))
+                        if (fileName.ToLower().EndsWith(".aspx") || fileName.ToLower().EndsWith(".ashx") || fileName.ToLower().EndsWith(".ascx") || fileName.ToLower().EndsWith(".master"))
                         {
                             tab = new FineUI.Tab();
                             tab.Title = shortFileName + ".cs";

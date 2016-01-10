@@ -10,7 +10,7 @@
 namespace FineUI.Examples.accordion {
     
     
-    public partial class accordion2 {
+    public partial class accordion {
         
         /// <summary>
         /// form1 控件。

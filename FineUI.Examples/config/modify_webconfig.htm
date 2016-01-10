@@ -2,7 +2,7 @@
 <html>
 <head>
     <title></title>
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         body {
             font-size: 13px;
@@ -20,7 +20,7 @@
     <ol>
         <li><strong>设置 configuration 配置节：</strong>
             <br />
-            <pre style="font-style: italic;">
+            <pre>
     &lt;configSections&gt;
         &lt;section name="FineUI" type="FineUI.ConfigSection, FineUI"/&gt;
     &lt;/configSections&gt;
@@ -65,7 +65,8 @@
             <br />
         </li>
         <li><strong>设置 system.web 配置节：</strong>
-            <pre style="font-style: italic;">
+                <pre>
+&lt;system.web&gt;
     &lt;pages&gt;
       &lt;controls&gt;
         &lt;add assembly="FineUI" namespace="FineUI" tagPrefix="f"/&gt;
@@ -75,44 +76,104 @@
     &lt;httpModules&gt;
       &lt;add name="FineUIScriptModule" type="FineUI.ScriptModule, FineUI"/&gt;
     &lt;/httpModules&gt;
-	
-	&lt;httpHandlers&gt;
+
+    &lt;httpHandlers&gt;
       &lt;add verb="GET" path="res.axd" type="FineUI.ResourceHandler, FineUI" validate="false"/&gt;
     &lt;/httpHandlers&gt;
-
+&lt;system.web&gt;
         </pre>
-        </li>
+            </li>
         <li><strong>完成。</strong></li>
     </ol>
     <br />
     <div style="font-weight: bold; color: Red;">
-        特别提醒
+        常见问题：
     </div>
-    <br />
-    基于.Net 4.5的项目，一定要为Web.config中&lt;page&gt;标签添加controlRenderingCompatibilityVersion和clientIDMode两个属性。
-    <pre style="font-style: italic;">
-    &lt;pages controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID"&gt;
-        &lt;controls&gt;
-        &lt;add assembly="FineUI" namespace="FineUI" tagPrefix="f" /&gt;
-        &lt;/controls&gt;
-    &lt;/pages&gt;
-    </pre>
-    <br />
-    <div style="font-weight: bold; color: Red;">
-        注意引用的Newtonsoft.Json.dll版本
-    </div>
-    <br />
-    FineUI.dll只有一个版本，无论你的项目是2.0、3.5、4.0、4.5，都只需要引用同一个FineUI.dll即可。
-    <br />
-    <br />
-    Newtonsoft.Json.dll为每个.Net版本创建不同的DLL，比如你的项目是基于.Net 2.0的，就要引用json.net\Net20\Newtonsoft.Json.dll，如果你的项目是基于.Net
-    4.0的，就要引用json.net\Net40\Newtonsoft.Json.dll。
-    <br />
-    <br />
+    <ul>
+        <li>
+            <strong>Net4.0以上的项目，一定要为Web.config中&lt;page&gt;标签添加controlRenderingCompatibilityVersion和clientIDMode两个属性。
+            </strong>
+            <pre>
+&lt;pages controlRenderingCompatibilityVersion="4.0" clientIDMode="AutoID"&gt;
+    &lt;controls&gt;
+    &lt;add assembly="FineUI" namespace="FineUI" tagPrefix="f" /&gt;
+    &lt;/controls&gt;
+&lt;/pages&gt;
+</pre>
+            <br />
+        </li>
+        <li>
+            <strong>IIS集成模式（VS2013、VS2015的默认设置）</strong>
+            <br />
+            <br />
+            需要将 httpModules 和 httpHandlers 从 system.web 中删除，并添加到 system.webServer 中，如下所示：
+                <pre>
+&lt;system.webServer&gt;
+    &lt;modules&gt;
+        &lt;add name="FineUIScriptModule" type="FineUI.ScriptModule, FineUI"/&gt;
+    &lt;/modules&gt;
+    &lt;handlers&gt;
+        &lt;add name="FineUIResourceHandler" verb="GET" path="res.axd" type="FineUI.ResourceHandler, FineUI"/&gt;
+    &lt;/handlers&gt;
+&lt;/system.webServer&gt;
+                </pre>
+            你也可以直接将官网示例源代码中的 Web.config_for_VS2013 改名为 Web.config 使用。
+                <br />
+            <br />
+        </li>
+        <li>
+            <strong>如果项目中使用了表单认证，需要添加 res.axd 的例外</strong>
+            <br />
+            <br />
+            如果在 system.web 下有类似如下的表单验证配置：
+                <pre>
+&lt;system.web&gt;
+    &lt;authentication mode="Forms"&gt;
+        &lt;forms name=".ASPXFORMSAUTH" loginUrl="~/default.aspx" timeout="120" defaultUrl="~/main.aspx" protection="All" path="/"/&gt;
+    &lt;/authentication&gt;
+    &lt;authorization&gt;
+        &lt;deny users="?"/&gt;
+    &lt;/authorization&gt;
+&lt;/system.web&gt;</pre>
+            <br />
+            则需要添加 res.axd 例外，否则所有的图标字体都显示不了：
+                <pre>
+&lt;/system.web&gt;
+
+&lt;location path="res.axd"&gt;
+    &lt;system.web&gt;
+        &lt;authorization&gt;
+            &lt;allow users ="*" /&gt;
+        &lt;/authorization&gt;
+    &lt;/system.web&gt;
+&lt;/location&gt;</pre>
+            <br />
+        </li>
+        <li>
+            <strong>注意引用的Newtonsoft.Json.dll版本
+            </strong>
+            <br />
+            <br />
+            FineUI.dll只有一个版本，无论你的项目是2.0、3.5、4.0、4.5，都只需要引用同一个FineUI.dll即可。
+                <br />
+            <br />
+            Newtonsoft.Json.dll在不同的NET版本有不同的DLL，建议您使用Visual Studio的NuGet工具下载最新的JSON库：
+                <br />
+            <br />
+            <img src="../res/images/json.net.1.png" alt="Json.NET" />
+            <br />
+            <br />
+            <img src="../res/images/json.net.2.png" alt="Json.NET" />
+            <br />
+        </li>
+    </ul>
+
+    <hr />
     <br />
     <div style="font-weight: bold; color: Red;">
         更多常见问题：<a href="http://fineui.com/bbs/forum.php?mod=viewthread&tid=655" target="_blank">http://fineui.com/bbs/forum.php?mod=viewthread&tid=655</a>
     </div>
+    <br />
     <br />
     <br />
     <br />

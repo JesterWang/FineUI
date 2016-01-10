@@ -195,6 +195,7 @@ namespace FineUI.Examples
             }
         }
 
+        /*
         protected DataTable GetClassDataTable()
         {
             DataTable table = new DataTable();
@@ -229,7 +230,7 @@ namespace FineUI.Examples
         /// 获取模拟表格2
         /// </summary>
         /// <returns></returns>
-        protected DataTable GetDataTable2()
+        protected DataTable DataSourceUtil.GetDataTable2()
         {
             DataTable table = new DataTable();
             table.Columns.Add(new DataColumn("Id", typeof(int)));
@@ -717,7 +718,7 @@ namespace FineUI.Examples
         /// 获取模拟表格
         /// </summary>
         /// <returns></returns>
-        protected DataTable GetDataTable()
+        protected DataTable DataSourceUtil.GetDataTable()
         {
             DataTable table = new DataTable();
             table.Columns.Add(new DataColumn("Id", typeof(int)));
@@ -1107,7 +1108,7 @@ namespace FineUI.Examples
 
             return table;
         }
-
+        */
 
         #endregion
 
@@ -1135,6 +1136,16 @@ namespace FineUI.Examples
         public string GetRequestEventArgument()
         {
             return Request.Form["__EVENTARGUMENT"];
+        }
+
+
+        /// <summary>
+        /// 显示通知对话框
+        /// </summary>
+        /// <param name="message"></param>
+        public void ShowNotify(string message)
+        {
+            Alert.Show(message);
         }
 
         #endregion

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace FineUI.Examples.accordion
 {
-    public partial class accordion2 : PageBase
+    public partial class accordion : PageBase
     {
         protected void Page_Load(object sender, EventArgs e)
         {

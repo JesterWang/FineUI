@@ -5,7 +5,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -15,7 +15,7 @@
             <Items>
                 <f:DropDownList runat="server" ID="DropDownList1">
                 </f:DropDownList>
-                <f:Button ID="btnSelectItem6" Text="选中“可选项6”" runat="server" OnClick="btnSelectItem6_Click"
+                <f:Button ID="btnSelectItem6" Text="选中[可选项6]" runat="server" OnClick="btnSelectItem6_Click"
                     CssClass="marginr">
                 </f:Button>
                 <f:Button ID="btnGetSelection" Text="获取此下拉列表的选中项" runat="server" OnClick="btnGetSelection_Click">

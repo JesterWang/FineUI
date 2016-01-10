@@ -5,7 +5,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -13,18 +13,17 @@
         <f:SimpleForm ID="SimpleForm1" BodyPadding="5px" runat="server" Width="450px" EnableCollapse="true"
             ShowBorder="True" Title="简单表单" ShowHeader="True">
             <Items>
-                <f:DropDownList runat="server" ID="DropDownList1" AutoPostBack="true" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+                <f:DropDownList runat="server" ID="DropDownList1">
                 </f:DropDownList>
-                <f:Button ID="btnSelectItem6" Text="选中“可选项6”" runat="server" OnClick="btnSelectItem6_Click">
+                <f:Button ID="btnSelectItem6" Text="选中[可选项6]" runat="server" CssClass="marginr" OnClick="btnSelectItem6_Click">
                 </f:Button>
-
+                <f:Button ID="btnGetSelection" Text="获取此下拉列表的选中项" runat="server" OnClick="btnGetSelection_Click">
+                </f:Button>
             </Items>
         </f:SimpleForm>
         <br />
         <f:Label runat="server" ID="labResult">
         </f:Label>
-        <br />
-        注：这个下拉列表在选择项改变时自动回发。
     </form>
 </body>
 </html>
