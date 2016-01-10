@@ -4,7 +4,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="_form1" runat="server">
@@ -22,8 +22,8 @@
                 </f:FormRow>
                 <f:FormRow ColumnWidths="50% 50%">
                     <Items>
-                        <f:DropDownList ID="DropDownList1" runat="server" Label="下拉列表">
-                            <f:ListItem Text="可选项 1" Value="0" Selected="true"></f:ListItem>
+                        <f:DropDownList ID="DropDownList1" runat="server" Label="下拉列表" Required="true" ShowRedStar="true" AutoSelectFirstItem="false">
+                            <f:ListItem Text="可选项 1" Value="0"></f:ListItem>
                             <f:ListItem Text="可选项 2" Value="1"></f:ListItem>
                         </f:DropDownList>
                         <f:TextBox ID="TextBox1" ShowRedStar="true" runat="server" Label="文本框" Required="true"

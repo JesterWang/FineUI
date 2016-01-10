@@ -49,45 +49,40 @@ namespace FineUI.Examples.grid
 
             BindGrid();
 
-            labResult.Text = "用户修改的数据：" + Grid1.GetModifiedData().ToString(Newtonsoft.Json.Formatting.None);
+            labResult.Text = String.Format("用户修改的数据：<pre>{0}</pre>", Grid1.GetModifiedData().ToString(Newtonsoft.Json.Formatting.Indented));
 
             Alert.Show("数据保存成功！（表格数据已重新绑定）");
         }
 
-        private static void UpdateDataRow(Dictionary<string, object> rowDict, DataRow rowData)
+        private void UpdateDataRow(Dictionary<string, object> rowDict, DataRow rowData)
         {
             // 姓名
-            if (rowDict.ContainsKey("Name"))
-            {
-                rowData["Name"] = rowDict["Name"];
-            }
+            UpdateDataRow("Name", rowDict, rowData);
+
             // 性别
-            if (rowDict.ContainsKey("Gender"))
-            {
-                rowData["Gender"] = Convert.ToInt32(rowDict["Gender"]);
-            }
+            UpdateDataRow("Gender", rowDict, rowData);
+
             // 入学年份
-            if (rowDict.ContainsKey("EntranceYear"))
-            {
-                rowData["EntranceYear"] = rowDict["EntranceYear"];
-            }
+            UpdateDataRow("EntranceYear", rowDict, rowData);
+
             // 入学日期
-            if (rowDict.ContainsKey("EntranceDate"))
-            {
-                rowData["EntranceDate"] = rowDict["EntranceDate"];
-            }
+            UpdateDataRow("EntranceDate", rowDict, rowData);
+
             // 是否在校
-            if (rowDict.ContainsKey("AtSchool"))
-            {
-                rowData["AtSchool"] = rowDict["AtSchool"];
-            }
+            UpdateDataRow("AtSchool", rowDict, rowData);
+
             // 所学专业
-            if (rowDict.ContainsKey("Major"))
-            {
-                rowData["Major"] = rowDict["Major"];
-            }
+            UpdateDataRow("Major", rowDict, rowData);
+
         }
 
+        private void UpdateDataRow(string columnName, Dictionary<string, object> rowDict, DataRow rowData)
+        {
+            if (rowDict.ContainsKey(columnName))
+            {
+                rowData[columnName] = rowDict[columnName];
+            }
+        }
 
         #endregion
 
@@ -101,7 +96,7 @@ namespace FineUI.Examples.grid
         {
             if (Session[KEY_FOR_DATASOURCE_SESSION] == null)
             {
-                Session[KEY_FOR_DATASOURCE_SESSION] = GetDataTable();
+                Session[KEY_FOR_DATASOURCE_SESSION] = DataSourceUtil.GetDataTable();
             }
             return (DataTable)Session[KEY_FOR_DATASOURCE_SESSION];
         }

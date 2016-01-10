@@ -18,19 +18,31 @@ namespace FineUI.Examples.form
 
         protected void btnSubmitForm2_Click(object sender, EventArgs e)
         {
-            Alert.ShowInTop("表单验证并提交成功！");
+            ShowNotify("表单验证并提交成功！");
         }
 
 
-        protected void btnShowHideLiuShuiHao_Click(object sender, EventArgs e)
+        protected void btnShowHidePhone_Click(object sender, EventArgs e)
         {
-            labLiuShuiHao.Hidden = !labLiuShuiHao.Hidden;
+            labPhone.Hidden = !labPhone.Hidden;
         }
 
         protected void btnShowHideTitle_Click(object sender, EventArgs e)
         {
             labTitle.Hidden = !labTitle.Hidden;
         }
+
+        protected void btnShowHideFormRow2_Click(object sender, EventArgs e)
+        {
+            FormRow2.Hidden = !FormRow2.Hidden;
+        }
+
+
+        protected void btnShowHideFormRow3_Click(object sender, EventArgs e)
+        {
+            FormRow3.Hidden = !FormRow3.Hidden;
+        }
+        
 
         
     }

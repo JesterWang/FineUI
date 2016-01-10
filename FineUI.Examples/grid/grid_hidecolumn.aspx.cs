@@ -22,7 +22,7 @@ namespace FineUI.Examples.grid
         #region BindGrid
         private void BindGrid()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid1.DataSource = table;
             Grid1.DataBind();
@@ -31,7 +31,6 @@ namespace FineUI.Examples.grid
 
         #endregion
 
-
         #region Event
 
 
@@ -39,12 +38,23 @@ namespace FineUI.Examples.grid
         {
             GridColumn genderColumn = Grid1.FindColumn("gender");
             genderColumn.Hidden = !genderColumn.Hidden;
-
-            //GridColumn lastColumn1 = Grid1.Columns[Grid1.Columns.Count - 1];
-            //GridColumn lastColumn2 = Grid1.Columns[Grid1.Columns.Count - 2];
-          
         }
 
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<ul>");
+            foreach (GridColumn column in Grid1.Columns)
+            {
+                if (column.Hidden)
+                {
+                    sb.AppendFormat("<li>{0}. {1}</li>", column.ColumnIndex, column.HeaderText);
+                }
+            }
+            sb.Append("<ul>");
+
+            labHiddenColumns.Text = "隐藏列列表：" + sb.ToString();
+        }
 
 
         #endregion

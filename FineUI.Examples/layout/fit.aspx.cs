@@ -21,7 +21,7 @@ namespace FineUI.Examples.layout
         #region BindGrid
         private void BindGrid()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid1.DataSource = table;
             Grid1.DataBind();

@@ -4,19 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
-    <style>
-        body.f-body {
-            padding: 0;
-        }
-    </style>
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
         <f:PageManager ID="PageManager1" AutoSizePanelID="Grid1" runat="server" />
-        <f:Grid ID="Grid1" ShowBorder="false" ShowHeader="true" Title="表格（ExpandUnusedSpace）(改变页面大小来观察每列宽度的变化)"
-            runat="server" DataKeyNames="Guid">
+        <f:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格（[个人简介]占据空余空间100%）(改变页面大小来观察每列宽度的变化)"
+            runat="server" DataKeyNames="Id" Margin="5px">
             <Columns>
                 <f:RowNumberField />
                 <f:BoundField Width="100px" DataField="Name" DataFormatString="{0}" HeaderText="姓名" />
@@ -33,7 +29,7 @@
                     DataTextFormatString="{0}" DataNavigateUrlFields="Major" DataNavigateUrlFormatString="http://gsa.ustc.edu.cn/search?q={0}"
                     UrlEncode="true" Target="_blank" />
                 <f:BoundField DataField="Desc" HtmlEncode="false" DataToolTipField="Desc" HeaderText="个人简介（ExpandUnusedSpace）"
-                    ExpandUnusedSpace="true" />
+                    ExpandUnusedSpace="true" MinWidth="200px" />
             </Columns>
         </f:Grid>
         <br />

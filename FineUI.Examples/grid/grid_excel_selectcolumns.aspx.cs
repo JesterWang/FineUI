@@ -25,7 +25,7 @@ namespace FineUI.Examples.data
         #region BindGrid
         private void BindGrid()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid1.DataSource = table;
             Grid1.DataBind();
@@ -35,7 +35,7 @@ namespace FineUI.Examples.data
 
         #region Events
 
-        protected void Window1_Close(object sender, FineUI.WindowCloseEventArgs e)
+        protected void Window1_Close(object sender, WindowCloseEventArgs e)
         {
             Response.ClearContent();
             Response.AddHeader("content-disposition", "attachment; filename=MyExcelFile.xls");

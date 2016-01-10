@@ -28,7 +28,7 @@ namespace FineUI.Examples.grid
             Grid1.DataBind();
         }
 
-        protected new DataTable GetDataTable()
+        protected DataTable GetDataTable()
         {
             DataTable table = new DataTable();
             table.Columns.Add(new DataColumn("Guid", typeof(Guid)));

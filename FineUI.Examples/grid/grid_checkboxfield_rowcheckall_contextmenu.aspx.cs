@@ -22,7 +22,7 @@ namespace FineUI.Examples.grid
 
         private void BindGrid()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid1.DataSource = table;
             Grid1.DataBind();

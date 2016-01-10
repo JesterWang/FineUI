@@ -5,13 +5,13 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
         <f:PageManager ID="PageManager1" runat="server" />
         <f:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格" EnableCollapse="true" Width="850px"
-            runat="server" DataKeyNames="Id,Name" AllowCellEditing="true" ClicksToEdit="2">
+            runat="server" DataKeyNames="Id,Name" AllowCellEditing="true" ClicksToEdit="2" DataIDField="Id">
             <Toolbars>
                 <f:Toolbar ID="Toolbar1" runat="server">
                     <Items>
@@ -25,7 +25,11 @@
                 </f:Toolbar>
             </Toolbars>
             <Columns>
-                <f:RowNumberField />
+                <f:TemplateField ColumnID="Number" Width="60px">
+                    <ItemTemplate>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label>
+                    </ItemTemplate>
+                </f:TemplateField>
                 <f:RenderField Width="100px" ColumnID="Name" DataField="Name" FieldType="String"
                     HeaderText="姓名">
                     <Editor>

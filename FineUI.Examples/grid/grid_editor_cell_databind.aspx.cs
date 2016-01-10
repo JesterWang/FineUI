@@ -55,52 +55,15 @@ namespace FineUI.Examples.grid
         {
             Dictionary<int, Dictionary<string, object>> modifiedDict = Grid1.GetModifiedDict();
 
-            for (int i = 0, count = Grid1.Rows.Count; i < count; i++)
+            foreach (int rowIndex in modifiedDict.Keys)
             {
-                if (modifiedDict.ContainsKey(i))
-                {
-                    Dictionary<string, object> rowDict = modifiedDict[i];
+                int rowID = Convert.ToInt32(Grid1.DataKeys[rowIndex][0]);
+                DataRow row = FindRowByID(rowID);
 
-                    // 更新数据源
-                    DataTable table = GetSourceData();
-
-                    DataRow rowData = table.Rows[i];
-
-                    // 姓名
-                    if (rowDict.ContainsKey("Name"))
-                    {
-                        rowData["Name"] = rowDict["Name"];
-                    }
-                    // 性别
-                    if (rowDict.ContainsKey("Gender"))
-                    {
-                        rowData["Gender"] = rowDict["Gender"];
-                    }
-                    // 入学年份
-                    if (rowDict.ContainsKey("EntranceYear"))
-                    {
-                        rowData["EntranceYear"] = rowDict["EntranceYear"];
-                    }
-                    // 入学日期
-                    if (rowDict.ContainsKey("EntranceDate"))
-                    {
-                        rowData["EntranceDate"] = rowDict["EntranceDate"];
-                    }
-                    // 是否在校
-                    if (rowDict.ContainsKey("AtSchool"))
-                    {
-                        rowData["AtSchool"] = rowDict["AtSchool"];
-                    }
-                    // 所学专业
-                    if (rowDict.ContainsKey("Major"))
-                    {
-                        rowData["Major"] = rowDict["Major"];
-                    }
-
-                }
+                UpdateDataRow(modifiedDict[rowIndex], row);
             }
 
-            labResult.Text = "用户修改的数据：" + Grid1.GetModifiedData().ToString(Newtonsoft.Json.Formatting.None);
+            labResult.Text = String.Format("用户修改的数据：<pre>{0}</pre>", Grid1.GetModifiedData().ToString(Newtonsoft.Json.Formatting.Indented));
 
             BindGrid();
 
@@ -108,7 +71,35 @@ namespace FineUI.Examples.grid
         }
 
 
+        private void UpdateDataRow(Dictionary<string, object> rowDict, DataRow rowData)
+        {
+            // 姓名
+            UpdateDataRow("Name", rowDict, rowData);
 
+            // 性别
+            UpdateDataRow("Gender", rowDict, rowData);
+
+            // 入学年份
+            UpdateDataRow("EntranceYear", rowDict, rowData);
+
+            // 入学日期
+            UpdateDataRow("EntranceDate", rowDict, rowData);
+
+            // 是否在校
+            UpdateDataRow("AtSchool", rowDict, rowData);
+
+            // 所学专业
+            UpdateDataRow("Major", rowDict, rowData);
+
+        }
+
+        private void UpdateDataRow(string columnName, Dictionary<string, object> rowDict, DataRow rowData)
+        {
+            if (rowDict.ContainsKey(columnName))
+            {
+                rowData[columnName] = rowDict[columnName];
+            }
+        }
 
         #endregion
 
@@ -122,9 +113,23 @@ namespace FineUI.Examples.grid
         {
             if (Session[KEY_FOR_DATASOURCE_SESSION] == null)
             {
-                Session[KEY_FOR_DATASOURCE_SESSION] = GetDataTable();
+                Session[KEY_FOR_DATASOURCE_SESSION] = DataSourceUtil.GetDataTable();
             }
             return (DataTable)Session[KEY_FOR_DATASOURCE_SESSION];
+        }
+
+        // 根据行ID来获取行数据
+        private DataRow FindRowByID(int rowID)
+        {
+            DataTable table = GetSourceData();
+            foreach (DataRow row in table.Rows)
+            {
+                if (Convert.ToInt32(row["Id"]) == rowID)
+                {
+                    return row;
+                }
+            }
+            return null;
         }
 
         #endregion

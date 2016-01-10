@@ -202,6 +202,51 @@ namespace FineUI.Examples {
         protected global::FineUI.MenuSeparator MenuSeparator1;
         
         /// <summary>
+        /// MenuTheme 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.MenuButton MenuTheme;
+        
+        /// <summary>
+        /// MenuThemeNeptune 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.MenuCheckBox MenuThemeNeptune;
+        
+        /// <summary>
+        /// MenuThemeBlue 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.MenuCheckBox MenuThemeBlue;
+        
+        /// <summary>
+        /// MenuThemeGray 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.MenuCheckBox MenuThemeGray;
+        
+        /// <summary>
+        /// MenuThemeAccess 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.MenuCheckBox MenuThemeAccess;
+        
+        /// <summary>
         /// MenuStyle 控件。
         /// </summary>
         /// <remarks>
@@ -263,51 +308,6 @@ namespace FineUI.Examples {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUI.MenuCheckBox MenuLangEN;
-        
-        /// <summary>
-        /// MenuTheme 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUI.MenuButton MenuTheme;
-        
-        /// <summary>
-        /// MenuThemeNeptune 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUI.MenuCheckBox MenuThemeNeptune;
-        
-        /// <summary>
-        /// MenuThemeBlue 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUI.MenuCheckBox MenuThemeBlue;
-        
-        /// <summary>
-        /// MenuThemeGray 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUI.MenuCheckBox MenuThemeGray;
-        
-        /// <summary>
-        /// MenuThemeAccess 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUI.MenuCheckBox MenuThemeAccess;
         
         /// <summary>
         /// MenuSeparator2 控件。

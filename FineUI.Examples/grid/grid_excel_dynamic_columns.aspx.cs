@@ -80,7 +80,7 @@ namespace FineUI.Examples.data
 
         private void LoadData()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid1.DataSource = table;
             Grid1.DataBind();

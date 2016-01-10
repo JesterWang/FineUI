@@ -24,7 +24,7 @@ namespace FineUI.Examples.data
         {
             ViewState["UseDataSource1"] = true;
 
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             highlightRows.Text = "";
             Grid1.DataSource = table;
@@ -35,7 +35,7 @@ namespace FineUI.Examples.data
 
         #region Grid1
 
-        protected void Grid1_RowDataBound(object sender, FineUI.GridRowEventArgs e)
+        protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
             // e.DataItem  -> System.Data.DataRowView or custom class.
             // e.RowIndex -> Current row index.
@@ -65,12 +65,12 @@ namespace FineUI.Examples.data
             if (Convert.ToBoolean(ViewState["UseDataSource1"]))
             {
                 ViewState["UseDataSource1"] = false;
-                table = GetDataTable2();
+                table = DataSourceUtil.GetDataTable2();
             }
             else
             {
                 ViewState["UseDataSource1"] = true;
-                table = GetDataTable();
+                table = DataSourceUtil.GetDataTable();
             }
 
             // 重新绑定数据前，先清空高亮的行数据

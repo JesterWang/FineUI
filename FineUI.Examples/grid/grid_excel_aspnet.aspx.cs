@@ -7,6 +7,7 @@ using System.Data;
 using System.Text;
 using System.IO;
 using AspNet = System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
 
 namespace FineUI.Examples.data
 {
@@ -24,7 +25,7 @@ namespace FineUI.Examples.data
 
         private void BindGrid()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             GridView1.DataSource = table;
             GridView1.DataBind();
@@ -36,11 +37,12 @@ namespace FineUI.Examples.data
 
         public override void VerifyRenderingInServerForm(Control control)
         {
-
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
+            BindGrid();
+
             ResolveGridView(GridView1);
 
             Response.ClearContent();
@@ -51,7 +53,7 @@ namespace FineUI.Examples.data
             StringWriter sw = new StringWriter();
             HtmlTextWriter htw = new HtmlTextWriter(sw);
             GridView1.RenderControl(htw);
-            
+
             Response.Write(sw.ToString());
             Response.End();
         }

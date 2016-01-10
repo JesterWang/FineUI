@@ -4,7 +4,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -27,8 +27,8 @@
         </f:Button>
         <br />
         <br />
-        <f:Window ID="Window2" Width="650px" Height="300px" Icon="TagBlue" Title="窗体" Hidden="true"
-            EnableMaximize="true" EnableCollapse="true" runat="server" EnableResize="true"
+        <f:Window ID="Window2" Width="650px" Height="300px" Icon="TagBlue" Title="窗体"
+            EnableCollapse="true" runat="server" EnableResize="true"
             IsModal="false" CloseAction="HidePostBack" OnClose="Window2_Close" AutoScroll="true" BodyPadding="10px">
             <Content>
                 <p>

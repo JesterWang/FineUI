@@ -17,7 +17,10 @@ namespace FineUI.Examples.grid
             {
                 // 删除选中行
                 btnDelete.OnClientClick = Grid1.GetNoSelectionAlertReference("请至少选择一项！");
-                btnDelete.ConfirmText = String.Format("你确定要删除第&nbsp;<b><script>({0}[0]+1)</script></b>&nbsp;行数据吗？", Grid1.GetSelectedCellReference());
+                btnDelete.ConfirmText = "确定删除选中单元格所在的行？";
+
+
+                //btnDelete.ConfirmText = String.Format("你确定要删除第&nbsp;<b><script>({0}[0]+1)</script></b>&nbsp;行数据吗？", Grid1.GetSelectedCellReference());
 
                 //// 重置表格
                 //btnReset.OnClientClick = Grid1.GetRejectChangesReference();
@@ -47,9 +50,8 @@ namespace FineUI.Examples.grid
             StringBuilder sb = new StringBuilder();
             if (Grid1.SelectedCell != null)
             {
-                int rowIndex = Grid1.SelectedCell[0];
-
-                int rowID = Convert.ToInt32(Grid1.DataKeys[rowIndex][0]);
+                // 注意设置表格的 DataIdField 属性，则 SelectedCell[0] 就是选中单元格所在的行ID
+                int rowID = Convert.ToInt32(Grid1.SelectedCell[0]);
                 DeleteRowByID(rowID);
 
                 BindGrid();
@@ -63,7 +65,7 @@ namespace FineUI.Examples.grid
 
         }
 
-        protected void Grid1_RowCommand(object sender, FineUI.GridCommandEventArgs e)
+        protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
             if (e.CommandName == "Delete")
             {
@@ -91,42 +93,38 @@ namespace FineUI.Examples.grid
 
             BindGrid();
 
-            labResult.Text = "用户修改的数据：" + Grid1.GetModifiedData().ToString(Newtonsoft.Json.Formatting.None);
+            labResult.Text = String.Format("用户修改的数据：<pre>{0}</pre>", Grid1.GetModifiedData().ToString(Newtonsoft.Json.Formatting.Indented));
 
             Alert.Show("数据保存成功！（表格数据已重新绑定）");
         }
 
-        private static void UpdateDataRow(Dictionary<string, object> rowDict, DataRow rowData)
+        private void UpdateDataRow(Dictionary<string, object> rowDict, DataRow rowData)
         {
             // 姓名
-            if (rowDict.ContainsKey("Name"))
-            {
-                rowData["Name"] = rowDict["Name"];
-            }
+            UpdateDataRow("Name", rowDict, rowData);
+
             // 性别
-            if (rowDict.ContainsKey("Gender"))
-            {
-                rowData["Gender"] = rowDict["Gender"];
-            }
+            UpdateDataRow("Gender", rowDict, rowData);
+
             // 入学年份
-            if (rowDict.ContainsKey("EntranceYear"))
-            {
-                rowData["EntranceYear"] = rowDict["EntranceYear"];
-            }
+            UpdateDataRow("EntranceYear", rowDict, rowData);
+
             // 入学日期
-            if (rowDict.ContainsKey("EntranceDate"))
-            {
-                rowData["EntranceDate"] = rowDict["EntranceDate"];
-            }
+            UpdateDataRow("EntranceDate", rowDict, rowData);
+
             // 是否在校
-            if (rowDict.ContainsKey("AtSchool"))
-            {
-                rowData["AtSchool"] = rowDict["AtSchool"];
-            }
+            UpdateDataRow("AtSchool", rowDict, rowData);
+
             // 所学专业
-            if (rowDict.ContainsKey("Major"))
+            UpdateDataRow("Major", rowDict, rowData);
+
+        }
+
+        private void UpdateDataRow(string columnName, Dictionary<string, object> rowDict, DataRow rowData)
+        {
+            if (rowDict.ContainsKey(columnName))
             {
-                rowData["Major"] = rowDict["Major"];
+                rowData[columnName] = rowDict[columnName];
             }
         }
 
@@ -143,7 +141,7 @@ namespace FineUI.Examples.grid
         {
             if (Session[KEY_FOR_DATASOURCE_SESSION] == null)
             {
-                Session[KEY_FOR_DATASOURCE_SESSION] = GetDataTable();
+                Session[KEY_FOR_DATASOURCE_SESSION] = DataSourceUtil.GetDataTable();
             }
             return (DataTable)Session[KEY_FOR_DATASOURCE_SESSION];
         }

@@ -25,7 +25,7 @@ namespace FineUI.Examples.grid
             string sortField = Grid1.SortField;
             string sortDirection = Grid1.SortDirection;
 
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             DataView view1 = table.DefaultView;
             view1.Sort = String.Format("{0} {1}", sortField, sortDirection);
@@ -43,14 +43,14 @@ namespace FineUI.Examples.grid
             labResult.Text = HowManyRowsAreSelected(Grid1);
         }
 
-        protected void Grid1_PageIndexChange(object sender, FineUI.GridPageEventArgs e)
+        protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
             Grid1.PageIndex = e.NewPageIndex;
         }
 
 
 
-        protected void Grid1_Sort(object sender, FineUI.GridSortEventArgs e)
+        protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
             Grid1.SortDirection = e.SortDirection;
             Grid1.SortField = e.SortField;

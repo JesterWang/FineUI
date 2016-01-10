@@ -31,7 +31,7 @@ namespace FineUI.Examples.grid
             if (Convert.ToBoolean(ViewState["EMPTY_DATA_SOURCE"]))
             {
                 ViewState["EMPTY_DATA_SOURCE"] = false;
-                table = GetDataTable();
+                table = DataSourceUtil.GetDataTable();
             }
             else
             {

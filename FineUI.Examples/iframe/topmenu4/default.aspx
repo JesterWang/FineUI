@@ -100,7 +100,7 @@
                 // refreshWhenExist： 添加选项卡时，如果选项卡已经存在，是否刷新内部IFrame
                 // refreshWhenTabChange: 切换选项卡时，是否刷新内部IFrame
                 // hashWindow：需要更新Hash值的窗口对象，默认为当前window
-                F.util.initTreeTabStrip(tree, mainTabStrip, null, true, false, false);
+                F.initTreeTabStrip(tree, mainTabStrip, null, true, false, false);
             };
 
         });

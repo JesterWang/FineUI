@@ -40,7 +40,7 @@ namespace FineUI.Examples.data
         /// <returns></returns>
         private int GetTotalCount()
         {
-            return GetDataTable2().Rows.Count;
+            return DataSourceUtil.GetDataTable2().Rows.Count;
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace FineUI.Examples.data
         /// <returns></returns>
         private DataTable GetPagedDataTable(int pageIndex, int pageSize)
         {
-            DataTable source = GetDataTable2();
+            DataTable source = DataSourceUtil.GetDataTable2();
 
             DataTable paged = source.Clone();
 
@@ -72,7 +72,7 @@ namespace FineUI.Examples.data
 
         #region Event
 
-        protected void Grid1_RowDataBound(object sender, FineUI.GridRowEventArgs e)
+        protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
             // e.DataItem  -> System.Data.DataRowView or custom class.
             // e.RowIndex -> Current row index.
@@ -93,7 +93,7 @@ namespace FineUI.Examples.data
 
 
 
-        protected void Grid1_PageIndexChange(object sender, FineUI.GridPageEventArgs e)
+        protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
             highlightRows.Text = "";
 

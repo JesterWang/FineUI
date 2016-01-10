@@ -8,119 +8,7 @@
     <meta name="Title" content="基于 ExtJS 的开源 ASP.NET 控件库(ExtJS based open source ASP.NET Controls)" />
     <meta name="Description" content="FineUI 的使命是创建 No JavaScript，No CSS，No UpdatePanel，No ViewState，No WebServices 的网站应用程序" />
     <meta name="Keywords" content="开源,ASP.NET,控件库,ExtJS,AJAX,Web2.0" />
-    <style>
-        #header {
-            position: relative;
-            padding: 10px 10px 8px;
-        }
-
-            #header a.logo {
-                display: inline-block;
-                margin-right: 5px;
-            }
-
-            #header a.title {
-                font-weight: bold;
-                font-size: 24px;
-                text-decoration: none;
-                line-height: 36px;
-                color: #fff;
-            }
-
-
-            #header .themeroller {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-            }
-
-                #header .themeroller a {
-                    font-size: 20px;
-                    text-decoration: none;
-                    line-height: 36px;
-                    color: #fff;
-                }
-
-
-        #logo {
-            position: absolute;
-            bottom: 20px;
-            right: 0;
-            filter: alpha(opacity=80);
-            -moz-opacity: 0.8;
-            opacity: 0.8;
-            z-index: 100000;
-        }
-
-        .isnew {
-            color: red;
-        }
-
-        .bottomtable {
-            width: 100%;
-            font-size: 12px;
-        }
-
-        /* 修正选项卡标题中放置红色[New!]时，底部出现的一行空白线 */
-        .f-theme-neptune .x-tab .x-tab-inner {
-            line-height: 16px !important;
-        }
-
-
-        /* 主题相关样式 - neptune */
-        .f-theme-neptune #header,
-        .f-theme-neptune .bottomtable,
-        .f-theme-neptune .x-splitter {
-            background-color: #1475BB;
-            color: #fff;
-        }
-
-            .f-theme-neptune #header a,
-            .f-theme-neptune .bottomtable a {
-                color: #fff;
-            }
-
-
-        /* 主题相关样式 - blue */
-        .f-theme-blue #header,
-        .f-theme-blue .bottomtable {
-            background-color: #DFE8F6;
-            color: #000;
-        }
-
-            .f-theme-blue #header a,
-            .f-theme-blue .bottomtable a {
-                color: #000;
-            }
-
-        /* 主题相关样式 - gray */
-        .f-theme-gray #header,
-        .f-theme-gray .bottomtable {
-            background-color: #E0E0E0;
-            color: #333;
-        }
-
-            .f-theme-gray #header a,
-            .f-theme-gray .bottomtable a {
-                color: #333;
-            }
-
-        /* 主题相关样式 - access */
-        .f-theme-access #header,
-        .f-theme-access .bottomtable {
-            background-color: #3F4757;
-            color: #fff;
-        }
-
-            .f-theme-access #header a,
-            .f-theme-access .bottomtable a {
-                color: #fff;
-            }
-
-        .f-theme-access .maincontent .x-panel-body {
-            background-image: none;
-        }
-    </style>
+    <link type="text/css" rel="stylesheet" href="~/res/css/default.css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -230,7 +118,7 @@
                                 <tr>
                                     <td style="width: 300px;">&nbsp;版本：<a target="_blank" href="http://fineui.com/version">v<asp:Literal runat="server" ID="litVersion"></asp:Literal></a>
                                         &nbsp;&nbsp; <a target="_blank" href="http://wp.qq.com/wpa/qunwpa?idkey=5a98eb42b742a1edaf22826648d5f61bc16ed08e0253976bc8d30f97508c09c7">QQ公开群</a></td>
-                                    <td style="text-align: center;">Copyright &copy; 2014 合肥三生石上软件有限公司</td>
+                                    <td style="text-align: center;">Copyright &copy; 2008-2015 合肥三生石上软件有限公司</td>
                                     <td style="width: 300px; text-align: right;">在线人数：<asp:Literal runat="server" ID="litOnlineUserCount"></asp:Literal>&nbsp;</td>
                                 </tr>
                             </table>
@@ -256,6 +144,18 @@
             </f:MenuCheckBox>
             <f:MenuSeparator ID="MenuSeparator1" runat="server">
             </f:MenuSeparator>
+            <f:MenuButton ID="MenuTheme" EnablePostBack="false" Text="主题" runat="server">
+                <Menu ID="Menu4" runat="server">
+                    <f:MenuCheckBox Text="Neptune" ID="MenuThemeNeptune" Checked="true" GroupName="MenuTheme" runat="server">
+                    </f:MenuCheckBox>
+                    <f:MenuCheckBox Text="Blue" ID="MenuThemeBlue" GroupName="MenuTheme" runat="server">
+                    </f:MenuCheckBox>
+                    <f:MenuCheckBox Text="Gray" ID="MenuThemeGray" GroupName="MenuTheme" runat="server">
+                    </f:MenuCheckBox>
+                    <f:MenuCheckBox Text="Access" ID="MenuThemeAccess" GroupName="MenuTheme" runat="server">
+                    </f:MenuCheckBox>
+                </Menu>
+            </f:MenuButton>
             <f:MenuButton EnablePostBack="false" Text="菜单样式" ID="MenuStyle" runat="server">
                 <Menu runat="server">
                     <f:MenuCheckBox Text="树菜单" ID="MenuStyleTree" Checked="true" GroupName="MenuStyle" runat="server">
@@ -271,18 +171,6 @@
                     <f:MenuCheckBox Text="繁體中文" ID="MenuLangZHTW" GroupName="MenuLang" runat="server">
                     </f:MenuCheckBox>
                     <f:MenuCheckBox Text="English" ID="MenuLangEN" GroupName="MenuLang" runat="server">
-                    </f:MenuCheckBox>
-                </Menu>
-            </f:MenuButton>
-            <f:MenuButton ID="MenuTheme" EnablePostBack="false" Text="主题" runat="server">
-                <Menu ID="Menu4" runat="server">
-                    <f:MenuCheckBox Text="Neptune" ID="MenuThemeNeptune" Checked="true" GroupName="MenuTheme" runat="server">
-                    </f:MenuCheckBox>
-                    <f:MenuCheckBox Text="Blue" ID="MenuThemeBlue" GroupName="MenuTheme" runat="server">
-                    </f:MenuCheckBox>
-                    <f:MenuCheckBox Text="Gray" ID="MenuThemeGray" GroupName="MenuTheme" runat="server">
-                    </f:MenuCheckBox>
-                    <f:MenuCheckBox Text="Access" ID="MenuThemeAccess" GroupName="MenuTheme" runat="server">
                     </f:MenuCheckBox>
                 </Menu>
             </f:MenuButton>
@@ -510,6 +398,7 @@
 
 
 
+            // 此函数源代码定义在：extjs_builder\js\F\F.util.js
             // 初始化主框架中的树(或者Accordion+Tree)和选项卡互动，以及地址栏的更新
             // treeMenu： 主框架中的树控件实例，或者内嵌树控件的手风琴控件实例
             // mainTabStrip： 选项卡实例
@@ -517,7 +406,7 @@
             // updateLocationHash: 切换Tab时，是否更新地址栏Hash值
             // refreshWhenExist： 添加选项卡时，如果选项卡已经存在，是否刷新内部IFrame
             // refreshWhenTabChange: 切换选项卡时，是否刷新内部IFrame
-            F.util.initTreeTabStrip(mainMenu, mainTabStrip, createToolbar, true, false, false);
+            F.initTreeTabStrip(mainMenu, mainTabStrip, createToolbar, true, false, false);
 
 
 
@@ -541,7 +430,9 @@
             };
 
 
+
             // 添加工具图标，并在点击时显示上下文菜单
+            // 专业版提醒：请将 type:'gear' 改为 iconFont:'gear'
             leftPanel.addTool({
                 type: 'gear',
                 //tooltip: '系统设置',

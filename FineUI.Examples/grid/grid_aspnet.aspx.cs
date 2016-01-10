@@ -23,7 +23,7 @@ namespace FineUI.Examples.grid
 
         private void BindGrid()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             GridView1.DataSource = table;
             GridView1.DataBind();

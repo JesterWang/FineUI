@@ -5,7 +5,7 @@
 <head runat="server">
     <title></title>
     <meta name="sourcefiles" content="~/grid/grid_iframe_window.aspx" />
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -52,7 +52,7 @@
         <f:Window ID="Window1" Title="编辑" Hidden="true" EnableIFrame="true" runat="server"
             CloseAction="HidePostBack"
             EnableMaximize="true" EnableResize="true" OnClose="Window1_Close" Target="Top"
-            IsModal="True" Width="850px" Height="450px">
+            IsModal="False" Width="850px" Height="450px">
         </f:Window>
     </form>
 </body>

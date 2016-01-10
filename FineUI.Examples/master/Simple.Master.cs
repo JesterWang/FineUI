@@ -20,7 +20,7 @@ namespace FineUI.Examples.master
 
         }
 
-        protected void Tree1_NodeCommand(object sender, FineUI.TreeCommandEventArgs e)
+        protected void Tree1_NodeCommand(object sender, TreeCommandEventArgs e)
         {
             if (ProcessLeftTreeNodeClick != null)
             {

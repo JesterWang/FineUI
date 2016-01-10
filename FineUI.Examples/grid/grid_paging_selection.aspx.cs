@@ -24,7 +24,7 @@ namespace FineUI.Examples.grid
 
         private void BindGrid()
         {
-            DataTable table = GetDataTable2();
+            DataTable table = DataSourceUtil.GetDataTable2();
 
             Grid1.DataSource = table;
             Grid1.DataBind();
@@ -41,7 +41,7 @@ namespace FineUI.Examples.grid
             labResult.Text = "选中行的ID列表为：" + hfSelectedIDS.Text.Trim();
         }
 
-        protected void Grid1_PageIndexChange(object sender, FineUI.GridPageEventArgs e)
+        protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
             SyncSelectedRowIndexArrayToHiddenField();
 

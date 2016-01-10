@@ -39,7 +39,7 @@ namespace FineUI.Examples.grid
         /// <returns></returns>
         private int GetTotalCount()
         {
-            return GetDataTable2().Rows.Count;
+            return DataSourceUtil.GetDataTable2().Rows.Count;
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace FineUI.Examples.grid
             string sortField = Grid1.SortField;
             string sortDirection = Grid1.SortDirection;
 
-            DataTable table2 = GetDataTable2();
+            DataTable table2 = DataSourceUtil.GetDataTable2();
 
             DataView view2 = table2.DefaultView;
             view2.Sort = String.Format("{0} {1}", sortField, sortDirection);
@@ -88,14 +88,14 @@ namespace FineUI.Examples.grid
         }
 
 
-        protected void Grid1_PageIndexChange(object sender, FineUI.GridPageEventArgs e)
+        protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
             Grid1.PageIndex = e.NewPageIndex;
 
             BindGrid();
         }
 
-        protected void Grid1_Sort(object sender, FineUI.GridSortEventArgs e)
+        protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
             Grid1.SortDirection = e.SortDirection;
             Grid1.SortField = e.SortField;

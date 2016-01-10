@@ -5,13 +5,13 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
         <f:PageManager ID="PageManager1" runat="server" />
         <f:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格" Width="850px"
-            runat="server" DataKeyNames="Id,Name" AllowCellEditing="true" ClicksToEdit="1">
+            runat="server" DataKeyNames="Id,Name" AllowCellEditing="true" ClicksToEdit="1" DataIDField="Id">
             <Columns>
                 <f:TemplateField Width="60px">
                     <ItemTemplate>

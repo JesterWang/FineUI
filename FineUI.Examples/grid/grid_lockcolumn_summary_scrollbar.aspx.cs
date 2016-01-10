@@ -26,7 +26,7 @@ namespace FineUI.Examples.grid
 
         private void OutputSummaryData()
         {
-            DataTable source = GetDataTable2();
+            DataTable source = DataSourceUtil.GetDataTable2();
 
             float donateTotal = 0.0f;
             float feeTotal = 0.0f;
@@ -67,7 +67,7 @@ namespace FineUI.Examples.grid
         /// <returns></returns>
         private int GetTotalCount()
         {
-            return GetDataTable2().Rows.Count;
+            return DataSourceUtil.GetDataTable2().Rows.Count;
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace FineUI.Examples.grid
         /// <returns></returns>
         private DataTable GetPagedDataTable(int pageIndex, int pageSize)
         {
-            DataTable source = GetDataTable2();
+            DataTable source = DataSourceUtil.GetDataTable2();
 
             DataTable paged = source.Clone();
 
@@ -105,7 +105,7 @@ namespace FineUI.Examples.grid
         }
 
 
-        protected void Grid1_PageIndexChange(object sender, FineUI.GridPageEventArgs e)
+        protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
             Grid1.PageIndex = e.NewPageIndex;
 

@@ -23,7 +23,7 @@ namespace FineUI.Examples.data
 
         private void BindGrid()
         {
-            DataTable table = GetDataTable2();
+            DataTable table = DataSourceUtil.GetDataTable2();
 
             Grid1.DataSource = table;
             Grid1.DataBind();
@@ -34,7 +34,7 @@ namespace FineUI.Examples.data
 
         #region Event
 
-        protected void Grid1_RowDataBound(object sender, FineUI.GridRowEventArgs e)
+        protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
             // e.DataItem  -> System.Data.DataRowView or custom class.
             // e.RowIndex -> Current row index.
@@ -55,7 +55,7 @@ namespace FineUI.Examples.data
 
 
 
-        protected void Grid1_PageIndexChange(object sender, FineUI.GridPageEventArgs e)
+        protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
             currentPageIndex.Text = e.NewPageIndex.ToString();
 

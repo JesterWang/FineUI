@@ -18,7 +18,7 @@ namespace FineUI.Examples.tree.select
         }
 
 
-        protected void Tree1_NodeCommand(object sender, FineUI.TreeCommandEventArgs e)
+        protected void Tree1_NodeCommand(object sender, TreeCommandEventArgs e)
         {
             labResult.Text = "你点击了树节点：" + e.Node.Text;
         }

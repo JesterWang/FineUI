@@ -36,7 +36,7 @@ namespace FineUI.Examples.grid
         }
 
 
-        protected new DataTable GetDataTable()
+        protected DataTable GetDataTable()
         {
             DataTable table = new DataTable();
             table.Columns.Add(new DataColumn("Guid", typeof(Guid)));
@@ -79,7 +79,7 @@ namespace FineUI.Examples.grid
 
         #region Events
 
-        protected void Grid1_Sort(object sender, FineUI.GridSortEventArgs e)
+        protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
             Grid1.SortDirection = e.SortDirection;
             Grid1.SortField = e.SortField;

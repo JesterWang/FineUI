@@ -58,13 +58,22 @@ namespace FineUI.Examples.form {
         protected global::FineUI.Label labLiuShuiHao;
         
         /// <summary>
-        /// Label3 控件。
+        /// FormRow2 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Label Label3;
+        protected global::FineUI.FormRow FormRow2;
+        
+        /// <summary>
+        /// labPhone 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Label labPhone;
         
         /// <summary>
         /// Label16 控件。
@@ -74,6 +83,15 @@ namespace FineUI.Examples.form {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUI.Label Label16;
+        
+        /// <summary>
+        /// FormRow3 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.FormRow FormRow3;
         
         /// <summary>
         /// Label4 控件。
@@ -148,12 +166,30 @@ namespace FineUI.Examples.form {
         protected global::FineUI.Button btnShowHideTitle;
         
         /// <summary>
-        /// btnShowHideLiuShuiHao 控件。
+        /// btnShowHidePhone 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUI.Button btnShowHideLiuShuiHao;
+        protected global::FineUI.Button btnShowHidePhone;
+        
+        /// <summary>
+        /// btnShowHideFormRow2 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Button btnShowHideFormRow2;
+        
+        /// <summary>
+        /// btnShowHideFormRow3 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUI.Button btnShowHideFormRow3;
     }
 }

@@ -200,10 +200,19 @@ namespace FineUI.Examples
         /// <param name="e"></param>
         private void treeMenu_NodeDataBound(object sender, TreeNodeEventArgs e)
         {
+            // 是否叶子节点
+            bool isLeaf = e.XmlNode.ChildNodes.Count == 0;
+
             string isNewHtml = GetIsNewHtml(e.XmlNode);
             if (!String.IsNullOrEmpty(isNewHtml))
             {
                 e.Node.Text += isNewHtml;
+            }
+
+            if (isLeaf)
+            {
+                // 设置节点的提示信息
+                e.Node.ToolTip = e.Node.Text;
             }
 
             // 如果仅显示最新示例 并且 当前节点不是子节点，则展开当前节点

@@ -23,7 +23,7 @@ namespace FineUI.Examples.grid
 
         private void BindGrid()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid1.DataSource = table;
             Grid1.DataBind();
@@ -36,7 +36,7 @@ namespace FineUI.Examples.grid
 
         #region Events
 
-        protected void Grid1_RowDataBound(object sender, FineUI.GridRowEventArgs e)
+        protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
             System.Web.UI.WebControls.DropDownList ddlGender = (System.Web.UI.WebControls.DropDownList)Grid1.Rows[e.RowIndex].FindControl("ddlGender");
             System.Web.UI.WebControls.TextBox tbxGender = (System.Web.UI.WebControls.TextBox)Grid1.Rows[e.RowIndex].FindControl("tbxGender");

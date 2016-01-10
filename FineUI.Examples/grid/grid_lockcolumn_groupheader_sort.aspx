@@ -5,7 +5,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -15,7 +15,7 @@
             SortDirection="ASC" OnSort="Grid1_Sort">
             <Columns>
                 <f:RowNumberField />
-                <f:BoundField DataField="Year" EnableLock="true" Locked="true" Width="100px" HeaderText="统计年份" />
+                <f:BoundField DataField="Year" EnableLock="true" Locked="true" Width="100px" HeaderText="统计年份<br>2000-2009" />
                 <f:GroupField EnableLock="true" HeaderText="安徽省" TextAlign="Center">
                     <Columns>
                         <f:GroupField EnableLock="true" Locked="true" HeaderText="合肥市" TextAlign="Center">

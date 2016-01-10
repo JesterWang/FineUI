@@ -18,7 +18,7 @@ namespace FineUI.Examples.tree.checkbox
         }
 
 
-        protected void Tree1_NodeCheck(object sender, FineUI.TreeCheckEventArgs e)
+        protected void Tree1_NodeCheck(object sender, TreeCheckEventArgs e)
         {
             if (e.Checked)
             {
@@ -33,7 +33,7 @@ namespace FineUI.Examples.tree.checkbox
 
         #region 另外一种方法 
 
-        //protected void Tree1_NodeCheck(object sender, FineUI.TreeCheckEventArgs e)
+        //protected void Tree1_NodeCheck(object sender, TreeCheckEventArgs e)
         //{
         //      if (!e.Node.Leaf)
         //      {

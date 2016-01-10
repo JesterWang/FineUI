@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
-
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="_form1" runat="server">
@@ -112,7 +112,36 @@
         </f:Button>
         <f:Button ID="btnEnablePanel" Text="启用表单面板" CssClass="marginr" runat="server" OnClick="btnEnablePanel_Click">
         </f:Button>
-        
+        <br />
+        <br />
+        <f:Button ID="Button2" Text="添加只读样式（类似禁用样式）" CssClass="marginr" runat="server" EnablePostBack="false">
+            <Listeners>
+                <f:Listener Event="click" Handler="addReadonlyStyle" />
+            </Listeners>
+        </f:Button>
+        <f:Button ID="Button3" Text="删除只读样式" CssClass="marginr" runat="server" EnablePostBack="false">
+            <Listeners>
+                <f:Listener Event="click" Handler="removeReadonlyStyle" />
+            </Listeners>
+        </f:Button>
     </form>
+    <textarea id="readonlycss_holder" style="display: none;">
+        .f-readonly { 
+            opacity: .5; 
+            filter: alpha(opacity=50);
+        }
+    </textarea>
+    <script src="../res/js/jquery.min.js" type="text/javascript"></script>
+    <script>
+
+        function addReadonlyStyle() {
+            F.addCSS('readonlycss', $('#readonlycss_holder').val());
+        }
+
+        function removeReadonlyStyle() {
+            $('#readonlycss').remove();
+        }
+
+    </script>
 </body>
 </html>

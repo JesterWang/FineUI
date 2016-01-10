@@ -47,7 +47,7 @@ namespace FineUI.Examples.iframe
 
         private void BindGrid()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid2.DataSource = table;
             Grid2.DataBind();
@@ -55,7 +55,7 @@ namespace FineUI.Examples.iframe
 
         private void BindGrid2()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid2.DataSource = table;
             Grid2.DataBind();
@@ -68,18 +68,18 @@ namespace FineUI.Examples.iframe
             BindGrid();
         }
 
-        protected void Grid2_Sort(object sender, FineUI.GridSortEventArgs e)
+        protected void Grid2_Sort(object sender, GridSortEventArgs e)
         {
             Alert.ShowInTop(e.SortField);
 
         }
 
-        protected void Grid2_PageIndexChange(object sender, FineUI.GridPageEventArgs e)
+        protected void Grid2_PageIndexChange(object sender, GridPageEventArgs e)
         {
             Alert.ShowInTop(e.NewPageIndex.ToString());
         }
 
-        protected void Window1_Close(object sender, FineUI.WindowCloseEventArgs e)
+        protected void Window1_Close(object sender, WindowCloseEventArgs e)
         {
             AutoBindGrid();
         }

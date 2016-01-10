@@ -41,7 +41,7 @@ namespace FineUI.Examples.master
         /// <returns></returns>
         private int GetTotalCount()
         {
-            return GetDataTable2().Rows.Count;
+            return DataSourceUtil.GetDataTable2().Rows.Count;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace FineUI.Examples.master
             string sortField = Grid1.SortField;
             string sortDirection = Grid1.SortDirection;
 
-            DataTable table2 = GetDataTable2();
+            DataTable table2 = DataSourceUtil.GetDataTable2();
 
             DataView view2 = table2.DefaultView;
             view2.Sort = String.Format("{0} {1}", sortField, sortDirection);

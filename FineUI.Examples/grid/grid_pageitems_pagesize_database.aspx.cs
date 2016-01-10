@@ -41,7 +41,7 @@ namespace FineUI.Examples.grid
         /// <returns></returns>
         private int GetTotalCount()
         {
-            return GetDataTable2().Rows.Count;
+            return DataSourceUtil.GetDataTable2().Rows.Count;
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace FineUI.Examples.grid
         /// <returns></returns>
         private DataTable GetPagedDataTable(int pageIndex, int pageSize)
         {
-            DataTable source = GetDataTable2();
+            DataTable source = DataSourceUtil.GetDataTable2();
 
             DataTable paged = source.Clone();
 
@@ -78,7 +78,7 @@ namespace FineUI.Examples.grid
             labResult.Text = HowManyRowsAreSelected(Grid1);
         }
 
-        protected void Grid1_PageIndexChange(object sender, FineUI.GridPageEventArgs e)
+        protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();

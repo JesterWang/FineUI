@@ -22,7 +22,7 @@ namespace FineUI.Examples.grid
 
         private void BindGrid()
         {
-            DataTable table = GetDataTable2();
+            DataTable table = DataSourceUtil.GetDataTable2();
 
             Grid1.DataSource = table;
             Grid1.DataBind();
@@ -38,7 +38,7 @@ namespace FineUI.Examples.grid
             labResult.Text = HowManyRowsAreSelected(Grid1, true);
         }
 
-        protected void Grid1_PageIndexChange(object sender, FineUI.GridPageEventArgs e)
+        protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
             Grid1.PageIndex = e.NewPageIndex;
         }

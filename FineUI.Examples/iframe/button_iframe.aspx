@@ -6,7 +6,7 @@
 <head id="head1" runat="server">
     <title></title>
     <meta name="sourcefiles" content="~/grid/grid_iframe_window.aspx" />
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">

@@ -25,7 +25,7 @@ namespace FineUI.Examples.data
         {
             ViewState["UseDataSource1"] = true;
 
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid1.DataSource = table;
             Grid1.DataBind();
@@ -41,12 +41,12 @@ namespace FineUI.Examples.data
             if (Convert.ToBoolean(ViewState["UseDataSource1"]))
             {
                 ViewState["UseDataSource1"] = false;
-                table = GetDataTable2();
+                table = DataSourceUtil.GetDataTable2();
             }
             else
             {
                 ViewState["UseDataSource1"] = true;
-                table = GetDataTable();
+                table = DataSourceUtil.GetDataTable();
             }
 
             Grid1.DataSource = table;

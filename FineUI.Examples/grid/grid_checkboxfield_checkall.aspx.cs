@@ -22,7 +22,7 @@ namespace FineUI.Examples.grid
 
         private void BindGrid()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid1.DataSource = table;
             Grid1.DataBind();
@@ -34,7 +34,7 @@ namespace FineUI.Examples.grid
         #region Events
 
 
-        protected void Grid1_RowCommand(object sender, FineUI.GridCommandEventArgs e)
+        protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
             if (e.CommandName == "Action1" || e.CommandName == "Action2")
             {

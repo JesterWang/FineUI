@@ -23,11 +23,11 @@ namespace FineUI.Examples.grid
 
         private void BindGrid()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             for (int i = 0; i < 3; i++)
             {
-                table.Merge(GetDataTable(), true);
+                table.Merge(DataSourceUtil.GetDataTable(), true);
             }
 
             Grid1.DataSource = table;

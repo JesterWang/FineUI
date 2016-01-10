@@ -27,7 +27,7 @@ namespace FineUI.Examples.grid
 
         private void BindGrid()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid1.DataSource = table;
             Grid1.DataBind();
@@ -43,7 +43,7 @@ namespace FineUI.Examples.grid
             labResult.Text = HowManyRowsAreSelected(Grid1);
         }
 
-        protected void Grid1_RowCommand(object sender, FineUI.GridCommandEventArgs e)
+        protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
             object[] keys = Grid1.DataKeys[e.RowIndex];
             string result = String.Format("你点击了第 {0} 行，第 {1} 列，行命令是 {2}", e.RowIndex + 1, e.ColumnIndex + 1, e.CommandName) +

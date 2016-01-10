@@ -5,14 +5,14 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
         <f:PageManager ID="PageManager1" runat="server" />
         <f:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格" EnableCollapse="true" Width="850px"
             runat="server" DataKeyNames="Id,Name" AllowCellEditing="true" ClicksToEdit="2"
-            OnRowCommand="Grid1_RowCommand">
+            OnRowCommand="Grid1_RowCommand" DataIDField="Id">
             <Toolbars>
                 <f:Toolbar ID="Toolbar1" runat="server">
                     <Items>
@@ -22,7 +22,7 @@
                 </f:Toolbar>
             </Toolbars>
             <Columns>
-                <f:TemplateField Width="60px">
+                <f:TemplateField Width="60px" ColumnID="Grid1_ctl08">
                     <ItemTemplate>
                         <asp:Label ID="Label1" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label>
                     </ItemTemplate>
@@ -67,7 +67,7 @@
                     </Editor>
                 </f:RenderField>
                 <f:LinkButtonField HeaderText="&nbsp;" Width="80px" ConfirmText="删除选中行？" ConfirmTarget="Top"
-                    CommandName="Delete" Icon="Delete" />
+                    CommandName="Delete" Icon="Delete" ColumnID="Grid1_ctl15" />
             </Columns>
         </f:Grid>
         <br />

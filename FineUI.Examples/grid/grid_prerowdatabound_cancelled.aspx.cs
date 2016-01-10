@@ -23,7 +23,7 @@ namespace FineUI.Examples.grid
 
         private void BindGrid()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid1.DataSource = table;
             Grid1.DataBind();
@@ -38,7 +38,7 @@ namespace FineUI.Examples.grid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void Grid1_PreRowDataBound(object sender, FineUI.GridPreRowEventArgs e)
+        protected void Grid1_PreRowDataBound(object sender, GridPreRowEventArgs e)
         {
             // 如果绑定到 DataTable，那么这里的 DataItem 就是 DataRowView
             DataRowView row = e.DataItem as DataRowView;
@@ -54,7 +54,7 @@ namespace FineUI.Examples.grid
         }
 
 
-        protected void Grid1_RowCommand(object sender, FineUI.GridCommandEventArgs e)
+        protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
             if (e.CommandName == "Action1" || e.CommandName == "Action2")
             {

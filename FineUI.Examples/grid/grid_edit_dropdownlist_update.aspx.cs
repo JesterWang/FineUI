@@ -25,7 +25,7 @@ namespace FineUI.Examples.grid
         {
             ViewState["UseDataSource1"] = true;
 
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid1.DataSource = table;
             Grid1.DataBind();
@@ -45,12 +45,12 @@ namespace FineUI.Examples.grid
             if (Convert.ToBoolean(ViewState["UseDataSource1"]))
             {
                 ViewState["UseDataSource1"] = false;
-                table = GetDataTable2();
+                table = DataSourceUtil.GetDataTable2();
             }
             else
             {
                 ViewState["UseDataSource1"] = true;
-                table = GetDataTable();
+                table = DataSourceUtil.GetDataTable();
             }
 
             Grid1.DataSource = table;
@@ -60,7 +60,7 @@ namespace FineUI.Examples.grid
 
 
 
-        protected void Grid1_RowDataBound(object sender, FineUI.GridRowEventArgs e)
+        protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
             System.Web.UI.WebControls.DropDownList ddlGender = (System.Web.UI.WebControls.DropDownList)Grid1.Rows[e.RowIndex].FindControl("ddlGender");
 

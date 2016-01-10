@@ -25,7 +25,7 @@ namespace FineUI.Examples.grid
 
         private void BindGrid2()
         {
-            Grid2.DataSource = GetClassDataTable();
+            Grid2.DataSource = DataSourceUtil.GetClassDataTable();
             Grid2.DataBind();
 
             Grid2.SelectedRowIndex = 0;
@@ -43,11 +43,11 @@ namespace FineUI.Examples.grid
             DataTable table = null;
             if (classId == 101)
             {
-                table = GetDataTable();
+                table = DataSourceUtil.GetDataTable();
             }
             else
             {
-                table = GetDataTable2();
+                table = DataSourceUtil.GetDataTable2();
             }
 
             Grid1.DataSource = table;
@@ -58,7 +58,7 @@ namespace FineUI.Examples.grid
 
         private void UpdateClassDesc(int classId)
         {
-            foreach (DataRow row in GetClassDataTable().Rows)
+            foreach (DataRow row in DataSourceUtil.GetClassDataTable().Rows)
             {
                 int currentClassId = (int)row["Id"];
                 if (classId == currentClassId)
@@ -73,7 +73,7 @@ namespace FineUI.Examples.grid
 
         #region Events
 
-        protected void Grid2_RowSelect(object sender, FineUI.GridRowSelectEventArgs e)
+        protected void Grid2_RowSelect(object sender, GridRowSelectEventArgs e)
         {
             BindGrid1();
         }

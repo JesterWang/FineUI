@@ -4,7 +4,7 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -46,22 +46,6 @@
         <br />
         <br />
         <br />
-
     </form>
-    <%--
-    <script src="../res/js/jquery.min.js" type="text/javascript"></script>
-    <script>
-        var windowID = '<%= Window1.ClientID %>';
-
-        F.ready(function () {
-            var window = F(windowID);
-            var oldHidePostback = window.f_hide_postback;
-            window.f_hide_postback = function () {
-                F.control_enable_ajax = false;
-                oldHidePostback.apply(this, arguments);
-            };
-        });
-    </script>
-    --%>
 </body>
 </html>

@@ -36,10 +36,7 @@ namespace FineUI.Examples.form
         {
             ResolveFormField(delegate(Field field)
             {
-                if (!(field is Label))
-                {
-                    field.Readonly = true;
-                }
+                field.Readonly = true;
             });
         }
 
@@ -47,10 +44,7 @@ namespace FineUI.Examples.form
         {
             ResolveFormField(delegate(Field field)
             {
-                if (!(field is Label))
-                {
-                    field.Readonly = false;
-                }
+                field.Readonly = false;
             });
         }
 

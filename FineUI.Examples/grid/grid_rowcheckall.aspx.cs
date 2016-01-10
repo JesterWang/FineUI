@@ -22,7 +22,7 @@ namespace FineUI.Examples.grid
 
         private void BindGrid()
         {
-            DataTable table = GetDataTable();
+            DataTable table = DataSourceUtil.GetDataTable();
 
             Grid1.DataSource = table;
             Grid1.DataBind();
@@ -34,7 +34,7 @@ namespace FineUI.Examples.grid
 
         #region Events
 
-        protected void Grid1_RowClick(object sender, FineUI.GridRowClickEventArgs e)
+        protected void Grid1_RowClick(object sender, GridRowClickEventArgs e)
         {
             //Alert.ShowInTop(String.Format("你点击了第 {0} 行（单击）", e.RowIndex + 1));
 
