@@ -161,6 +161,7 @@
     <Content Include="test\activex.aspx" />
     <Content Include="test\form2.aspx" />
     <Content Include="test\grid_editor_cell2.aspx" />
+    <Content Include="test\hello.aspx" />
     <Content Include="third-party\autocomplete\inline_window.aspx" />
     <Content Include="third-party\ckeditor\ckeditor.aspx" />
     <Content Include="third-party\tinymce\tinymce.aspx" />
@@ -1214,6 +1215,12 @@
     </Compile>
     <Compile Include="test\grid_editor_cell2.aspx.designer.cs">
       <DependentUpon>grid_editor_cell2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\hello.aspx.cs">
+      <DependentUpon>hello.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\hello.aspx.designer.cs">
+      <DependentUpon>hello.aspx</DependentUpon>
     </Compile>
     <Compile Include="third-party\autocomplete\inline_window.aspx.cs">
       <DependentUpon>inline_window.aspx</DependentUpon>

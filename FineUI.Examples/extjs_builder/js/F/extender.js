@@ -871,7 +871,11 @@ if (Ext.grid.Panel) {
                 sm.deselectAll(true);
                 Ext.Array.each(rows, function (row, index) {
                     // select( records, [keepExisting], [suppressEvent] )
-                    sm.select(store.getById(row), true, true);
+                    // 有可能存在指定的行找不到的情况
+                    var rowInstance = store.getById(row);
+                    if (rowInstance) {
+                        sm.select(rowInstance, true, true);
+                    }
                 });
             }
         },
@@ -913,11 +917,15 @@ if (Ext.grid.Panel) {
 				cell = [rowId, columnId];
 			}
 			
-            var sm = me.getSelectionModel();
-			if (cell.length === 2) {
+            if (cell && cell.length === 2) {
 				// 支持[行索引,列索引]，也支持[行Id,列Id]
 				var row = cell[0];
 				var column = cell[1];
+
+                // 如果未定义，则直接返回
+				if (!row || !column) {
+				    return;
+				}
 				
 				if(typeof(row) === 'string') {
 					row = me.f_getRow(row);
@@ -927,6 +935,7 @@ if (Ext.grid.Panel) {
 					column = me.f_getColumn(column);
 				}
 				
+				var sm = me.getSelectionModel();
 				sm.setCurrentPosition({
 					row: row,
 					column: column
