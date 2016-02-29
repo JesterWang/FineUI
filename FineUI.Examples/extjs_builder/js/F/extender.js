@@ -898,6 +898,7 @@ if (Ext.grid.Panel) {
                 var store = me.getStore();
 
                 Ext.Array.each(selection, function (record, index) {
+                    // 晕倒：新增行的 record.getId() 居然为 undedined，没办法！
                     selectedRows.push(record.getId());
                 });
             }
@@ -1137,22 +1138,67 @@ if (Ext.grid.Panel) {
 
         },
 
+        // 获取选中的行
+        f_getSelectedRows: function () {
+            var selectedRows = [];
+            var sm = this.getSelectionModel();
+            if (sm.getSelection) {
+                var selection = sm.getSelection();
+                var store = this.getStore();
+
+                Ext.Array.each(selection, function (record, index) {
+                    selectedRows.push(store.indexOf(record));
+                });
+            }
+
+            return selectedRows;
+        },
+
+
+        // 仅内部使用（f_deleteSelectedRows）
+        f_getSelectedRowsIndex: function () {
+            var selectedRows = [];
+            var sm = this.getSelectionModel();
+            if (sm.getSelection) {
+                var selection = sm.getSelection();
+                var store = this.getStore();
+
+                Ext.Array.each(selection, function (record, index) {
+                    selectedRows.push(store.indexOf(record));
+                });
+            }
+
+            return selectedRows;
+        },
+        
+        // 仅内部使用（f_deleteSelectedRows）
+        f_getSelectedCellIndex: function () {
+            var selectedCell = [], currentPos;
+            var sm = this.getSelectionModel();
+            if (sm.getCurrentPosition) {
+                currentPos = sm.getCurrentPosition();
+                if (currentPos) {
+                    selectedCell = [currentPos.row, currentPos.columnHeader.f_columnIndex];
+                }
+            }
+            return selectedCell;
+        },
 
         // 从Store中删除选中的行（或者单元格）
         f_deleteSelectedRows: function () {
-            var me = this;
-            var store = me.getStore();
+            var $this = this;
+            var store = this.getStore();
 
-            var sm = me.getSelectionModel();
+            var sm = this.getSelectionModel();
             if (sm.getSelection) {
-                var rows = me.f_getSelectedRows();
-                Ext.Array.each(rows, function (rowId, index) {
-                    store.remove(store.getById(rowId));
+                var rows = this.f_getSelectedRowsIndex();
+                Ext.Array.each(rows, function (rowIndex, index) {
+                    store.removeAt(rowIndex);
                 });
             } else if (sm.getSelectedCell) {
-                var selectedCell = me.f_getSelectedCell();
+                var selectedCell = this.f_getSelectedCellIndex();
                 if (selectedCell.length) {
-                    store.remove(store.getById(selectedCell[0]));
+                    store.removeAt(selectedCell[0]);
                 }
             }
         },
@@ -1179,8 +1225,14 @@ if (Ext.grid.Panel) {
 			}
             */
             
+		    // 清空当前选中的单元格
+            me.getSelectionModel().setCurrentPosition();
 
-			me.f_cellEditing.cancelEdit();
+
+            // 取消正在编辑 
+            me.f_cellEditing.cancelEdit();
+
+            
 
 			var newAddedRecords;
             //var rowIndex = 0;
