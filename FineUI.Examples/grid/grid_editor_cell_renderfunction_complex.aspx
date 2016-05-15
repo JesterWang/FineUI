@@ -83,7 +83,10 @@
         function renderName(value, params) {
             if (params.record.data["EntranceYear"] >= 2003) {
                 params.tdCls = 'highlight';
+            } else {
+                params.tdCls = '';
             }
+
             return value;
         }
 

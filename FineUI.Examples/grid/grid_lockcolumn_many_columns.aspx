@@ -9,17 +9,18 @@
     <style>
         .x-grid-row .x-grid-cell-inner {
             white-space: normal;
+            word-break: break-all;
         }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <f:PageManager ID="PageManager1" runat="server" />
-        <f:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格（20列，48行，行高不同）" EnableCollapse="true"
-            Width="900px" Height="450px" AllowColumnLocking="true"
-            runat="server" DataKeyNames="Guid">
+        <f:PageManager ID="PageManager1" AutoSizePanelID="Grid1" runat="server" />
+        <f:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格（23列，48行，行高不同）" EnableCollapse="true" AllowColumnLocking="true"
+            runat="server" DataKeyNames="Id">
             <Columns>
                 <f:RowNumberField />
+                <f:BoundField Width="80px" EnableLock="true" Locked="true" DataField="ID" HeaderText="标识" />
                 <f:BoundField Width="100px" EnableLock="true" Locked="true" DataField="Name" DataFormatString="{0}" HeaderText="姓名" />
                 <f:TemplateField Width="100px" EnableLock="true" HeaderText="性别">
                     <ItemTemplate>
@@ -34,6 +35,10 @@
                     DataTextFormatString="{0}" DataNavigateUrlFields="Major" DataNavigateUrlFormatString="http://gsa.ustc.edu.cn/search?q={0}"
                     UrlEncode="true" Target="_blank" />
                 <f:BoundField Width="500px" EnableLock="true" DataField="Desc" HtmlEncode="false" HeaderText="个人简介" />
+                <f:ImageField Width="100px" DataImageUrlField="Group" DataImageUrlFormatString="~/res/images/16/{0}.png"
+                    HeaderText="分组">
+                </f:ImageField>
+                <f:BoundField Width="300px" DataField="GUID" HeaderText="GUID" />
                 <f:TemplateField Width="200px" EnableLock="true" HeaderText="爱好">
                     <ItemTemplate>
                         <%# GetHobby(Eval("Hobby")) %>
@@ -49,10 +54,8 @@
                 <f:BoundField Width="100px" EnableLock="true" DataField="XueYaGao" HeaderText="血压（高）" />
                 <f:BoundField Width="100px" EnableLock="true" DataField="ShiLiZuo" HeaderText="视力（左）" />
                 <f:BoundField Width="100px" EnableLock="true" DataField="ShiLiYou" HeaderText="视力（右）" />
-                <f:BoundField Width="100px" EnableLock="true" DataField="ShiLiZuoJiaoZhen" HeaderText="矫正视力（左）" />
-                <f:BoundField Width="100px" EnableLock="true" DataField="ShiLiYouJiaoZhen" HeaderText="矫正视力（右）" />
-
-
+                <f:BoundField Width="120px" EnableLock="true" DataField="ShiLiZuoJiaoZhen" HeaderText="矫正视力（左）" />
+                <f:BoundField Width="120px" EnableLock="true" DataField="ShiLiYouJiaoZhen" HeaderText="矫正视力（右）" />
             </Columns>
         </f:Grid>
         <br />

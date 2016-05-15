@@ -7,7 +7,7 @@
     <title></title>
     <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
     <style>
-        .f-grid-row .f-grid-cell-inner {
+        .x-grid-row .x-grid-cell-inner {
             white-space: normal;
             word-break: break-all;
         }
@@ -15,12 +15,11 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <f:PageManager ID="PageManager1" runat="server" />
-        <f:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格（22列）" EnableCollapse="true"
-            Width="900px" Height="350px" runat="server" DataKeyNames="Id">
+        <f:PageManager ID="PageManager1" AutoSizePanelID="Grid1" runat="server" />
+        <f:Grid ID="Grid1" ShowBorder="true" ShowHeader="true" Title="表格（23列，48行）" EnableCollapse="true" runat="server" DataKeyNames="Id">
             <Columns>
                 <f:RowNumberField />
-                <f:BoundField Width="100px" DataField="ID" HeaderText="标识" />
+                <f:BoundField Width="80px" DataField="ID" HeaderText="标识" />
                 <f:BoundField Width="100px" DataField="Name" HeaderText="姓名" />
                 <f:TemplateField Width="100px" HeaderText="性别">
                     <ItemTemplate>
@@ -31,7 +30,7 @@
                 </f:TemplateField>
                 <f:BoundField Width="100px" DataField="EntranceYear" HeaderText="入学年份" />
                 <f:CheckBoxField Width="100px" RenderAsStaticField="true" DataField="AtSchool" HeaderText="是否在校" />
-                <f:HyperLinkField Width="120px" HeaderText="所学专业" DataToolTipField="Major" DataTextField="Major"
+                <f:HyperLinkField Width="150px" HeaderText="所学专业" DataToolTipField="Major" DataTextField="Major"
                     DataTextFormatString="{0}" DataNavigateUrlFields="Major" DataNavigateUrlFormatString="http://gsa.ustc.edu.cn/search?q={0}"
                     UrlEncode="true" Target="_blank" />
                 <f:BoundField Width="500px" DataField="Desc" HtmlEncode="false" HeaderText="个人简介" />
@@ -54,13 +53,10 @@
                 <f:BoundField Width="100px" DataField="XueYaGao" HeaderText="血压（高）" />
                 <f:BoundField Width="100px" DataField="ShiLiZuo" HeaderText="视力（左）" />
                 <f:BoundField Width="100px" DataField="ShiLiYou" HeaderText="视力（右）" />
-                <f:BoundField Width="100px" DataField="ShiLiZuoJiaoZhen" HeaderText="矫正视力（左）" />
-                <f:BoundField Width="100px" DataField="ShiLiYouJiaoZhen" HeaderText="矫正视力（右）" />
+                <f:BoundField Width="120px" DataField="ShiLiZuoJiaoZhen" HeaderText="矫正视力（左）" />
+                <f:BoundField Width="120px" DataField="ShiLiYouJiaoZhen" HeaderText="矫正视力（右）" />
             </Columns>
         </f:Grid>
-        <br />
-        <br />
-        注：缩小页面高度，观察显示隐藏列菜单的行为。
     </form>
 </body>
 </html>

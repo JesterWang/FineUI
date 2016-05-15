@@ -25,8 +25,8 @@ namespace FineUI.Examples.grid
         {
             DataTable table = DataSourceUtil.GetDataTable();
 
-            GridView1.DataSource = table;
-            GridView1.DataBind();
+            Grid1.DataSource = table;
+            Grid1.DataBind();
         }
 
 
