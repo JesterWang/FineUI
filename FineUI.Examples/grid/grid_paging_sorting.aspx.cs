@@ -45,15 +45,15 @@ namespace FineUI.Examples.grid
 
         protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
-            Grid1.PageIndex = e.NewPageIndex;
+            //Grid1.PageIndex = e.NewPageIndex;
         }
 
 
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
-            Grid1.SortDirection = e.SortDirection;
-            Grid1.SortField = e.SortField;
+            //Grid1.SortDirection = e.SortDirection;
+            //Grid1.SortField = e.SortField;
 
             BindGrid();
         }

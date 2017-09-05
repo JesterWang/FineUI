@@ -10,7 +10,11 @@ namespace FineUI
     public enum TextAlign
     {
         /// <summary>
-        /// 靠左排列（默认值）
+        /// 未定义
+        /// </summary>
+        Undefined,
+        /// <summary>
+        /// 靠左排列
         /// </summary>
         Left,
         /// <summary>
@@ -34,6 +38,9 @@ namespace FineUI
 
             switch (type)
             {
+                case TextAlign.Undefined:
+                    result = "left";
+                    break;
                 case TextAlign.Left:
                     result = "left";
                     break;

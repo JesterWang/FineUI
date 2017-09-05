@@ -12,9 +12,7 @@ namespace FineUI.Examples.form
         {
             if (!IsPostBack)
             {
-                Calendar1.MinDate = DateTime.Now;
-                Calendar1.MaxDate = DateTime.Now.AddDays(15);
-                Calendar1.SelectedDate = DateTime.Now.AddDays(1);
+                Calendar1.SelectedDate = DateTime.Now.AddDays(10);
 
                 Button1.Text = String.Format("选中{0}", DateTime.Now.AddDays(2).ToString(Calendar1.DateFormatString));
             }

@@ -348,14 +348,14 @@ namespace FineUI
         /// 表单中标签的位置
         /// </summary>
         [Category(CategoryName.OPTIONS)]
-        [DefaultValue(null)]
+        [DefaultValue(LabelAlign.Undefined)]
         [Description("表单中标签的位置")]
-        public LabelAlign? LabelAlign
+        public LabelAlign LabelAlign
         {
             get
             {
                 object obj = FState["LabelAlign"];
-                return obj == null ? null : (LabelAlign?)obj;
+                return obj == null ? LabelAlign.Undefined : (LabelAlign)obj;
             }
             set
             {
@@ -449,9 +449,9 @@ namespace FineUI
                 OB.AddProperty("labelSeparator", LabelSeparator);
             }
 
-            if (LabelAlign != null)
+            if (LabelAlign != LabelAlign.Undefined)
             {
-                OB.AddProperty("labelAlign", LabelAlignHelper.GetName(LabelAlign.Value));
+                OB.AddProperty("labelAlign", LabelAlignHelper.GetName(LabelAlign));
             }
 
             if (LabelWidth != ConfigPropertyValue.FORM_LABELWIDTH_DEFAULT)

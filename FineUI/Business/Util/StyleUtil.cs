@@ -80,6 +80,11 @@ namespace FineUI
             return String.Format("{0}{{background: url({1}) no-repeat;}}", selector, imageUrl);
         }
 
+        internal static string GetTriggerIconUrlStyle(string selector, string imageUrl)
+        {
+            return String.Format("{0}{{background: url({1}) no-repeat;background-position:0 0 !important;height:16px;margin-top:3px;}}", selector, imageUrl);
+        }
+
         /// <summary>
         /// 获取适合CSS的Margin或者Padding定义
         /// </summary>

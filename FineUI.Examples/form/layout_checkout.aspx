@@ -5,7 +5,6 @@
 <html>
 <head id="Head1" runat="server">
     <title></title>
-    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="_form1" runat="server">

@@ -6,7 +6,6 @@
 <head runat="server">
     <title></title>
     <meta name="sourcefiles" content="~/iframe/window_iframe.aspx" />
-    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">

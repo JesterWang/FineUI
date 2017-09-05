@@ -59,7 +59,7 @@ namespace FineUI.Examples.data
         {
             currentPageIndex.Text = e.NewPageIndex.ToString();
 
-            Grid1.PageIndex = e.NewPageIndex;
+            //Grid1.PageIndex = e.NewPageIndex;
         }
 
         #endregion

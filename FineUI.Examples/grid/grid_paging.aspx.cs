@@ -39,7 +39,7 @@ namespace FineUI.Examples.grid
 
         protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
-            Grid1.PageIndex = e.NewPageIndex;
+            //Grid1.PageIndex = e.NewPageIndex;
         }
 
         #endregion

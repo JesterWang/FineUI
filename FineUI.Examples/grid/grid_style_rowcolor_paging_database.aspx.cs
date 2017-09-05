@@ -97,7 +97,7 @@ namespace FineUI.Examples.data
         {
             highlightRows.Text = "";
 
-            Grid1.PageIndex = e.NewPageIndex;
+            //Grid1.PageIndex = e.NewPageIndex;
 
             BindGrid();
         }

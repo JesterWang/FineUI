@@ -36,7 +36,7 @@ namespace FineUI.Examples.grid
 
         protected void Grid1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            Grid1.PageIndex = e.NewPageIndex;
+            //Grid1.PageIndex = e.NewPageIndex;
 
             BindGrid();
         }

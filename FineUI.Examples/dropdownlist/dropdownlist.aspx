@@ -4,7 +4,6 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -12,7 +11,7 @@
         <f:SimpleForm ID="SimpleForm1" BodyPadding="5px" runat="server" Width="550px" EnableCollapse="true"
             ShowBorder="True" Title="简单表单" ShowHeader="True">
             <Items>
-                <f:DropDownList runat="server" ID="DropDownList1" FocusOnPageLoad="true">
+                <f:DropDownList runat="server" ID="DropDownList1">
                     <f:ListItem Text="可选项1" Value="Value1" Selected="true" />
                     <f:ListItem Text="可选项2（不可选择）" Value="Value2" EnableSelect="false" />
                     <f:ListItem Text="可选项3（不可选择）" Value="Value3" EnableSelect="false" />
@@ -36,9 +35,6 @@
         <br />
         <f:Label runat="server" ID="labResult">
         </f:Label>
-        <br />
-        <br />
-        注：页面加载完毕后，下拉列表默认获取焦点。
     </form>
 
 </body>

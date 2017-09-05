@@ -184,7 +184,7 @@ namespace FineUI.Examples.master
         /// <param name="e"></param>
         protected void grid_PageIndexChange(object sender, GridPageEventArgs e)
         {
-            Page.Grid.PageIndex = e.NewPageIndex;
+            //Page.Grid.PageIndex = e.NewPageIndex;
             
             Page.BindGrid();
         }
@@ -196,8 +196,8 @@ namespace FineUI.Examples.master
         /// <param name="e"></param>
         protected void grid_Sort(object sender, GridSortEventArgs e)
         {
-            Page.Grid.SortDirection = e.SortDirection;
-            Page.Grid.SortField = e.SortField;
+            //Page.Grid.SortDirection = e.SortDirection;
+            //Page.Grid.SortField = e.SortField;
 
             Page.BindGrid();
         }

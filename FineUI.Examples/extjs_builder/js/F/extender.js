@@ -684,8 +684,8 @@ if (Ext.grid.Panel) {
             Ext.Array.each(rows, function (row, rowIndex) {
                 var newdataitem = [];
 
-                // row['0'] -> Values
-                Ext.Array.each(row['0'], function (item, cellIndex) {
+                // row['f0'] -> Values
+                Ext.Array.each(row['f0'], function (item, cellIndex) {
                     var newcellvalue = item;
                     if (typeof (item) === 'string' && item.substr(0, 7) === "#@TPL@#") {
                         var clientId = $this.id + '_' + item.substr(7);
@@ -696,7 +696,7 @@ if (Ext.grid.Panel) {
                 });
 
                 // idProperty
-                var rowId = row['6'];
+                var rowId = row['f6'];
                 if (typeof (rowId) === 'undefined') {
                     // 如果未定义 id，要生成一个 id，用来记录选中的行（否则在行调整顺序后，选中的行就乱了）
                     rowId = 'fineui_row_' + rowIndex;
@@ -857,6 +857,14 @@ if (Ext.grid.Panel) {
                 }
             }
             return selectedCount;
+        },
+
+
+        f_clearSelections: function () {
+            var me = this;
+            var sm = me.getSelectionModel();
+
+            sm.deselectAll(true);
         },
 
         // 选中某些行
@@ -1136,22 +1144,6 @@ if (Ext.grid.Panel) {
                 this.f_initRecordIDs();
             }
 
-        },
-
-        // 获取选中的行
-        f_getSelectedRows: function () {
-            var selectedRows = [];
-            var sm = this.getSelectionModel();
-            if (sm.getSelection) {
-                var selection = sm.getSelection();
-                var store = this.getStore();
-
-                Ext.Array.each(selection, function (record, index) {
-                    selectedRows.push(store.indexOf(record));
-                });
-            }
-
-            return selectedRows;
         },
 
 
@@ -2004,6 +1996,27 @@ if (Ext.ux.grid && Ext.ux.grid.ColumnHeaderGroup) {
 */
 
 
+// enableTextSelection: true --> Uncaught TypeError: Cannot call method 'getVisibleIndex' of undefined
+// https://www.sencha.com/forum/showthread.php?265507-Uncaught-TypeError-Cannot-call-method-getVisibleIndex-of-undefined.-Upgrade-issues
+Ext.override(Ext.selection.CellModel, {
+
+    onMouseDown: function (view, cell, cellIndex, record, row, recordIndex, e) {
+
+        // Added - Change cellIndex value
+        if (view.enableTextSelection && cellIndex === -1) {
+            cellIndex = cell.cellIndex;
+        }
+
+        // Record index will be -1 if the clicked record is a metadata record and not selectable
+        if (recordIndex !== -1) {
+            this.setCurrentPosition({
+                view: view,
+                row: row,
+                column: cellIndex
+            });
+        }
+    }
+});
 
 
 (function () {

@@ -84,6 +84,9 @@ F.getActiveWindow = function () {
 // 记录最后一个控件的序号
 F.f_objectIndex = 0;
 
+// 标识这个页面是由 FineUI 创建的
+F.fineui = '4.2.4';
+
 
 // 为了兼容保留函数签名：F.customEvent
 F.f_customEvent = F.customEvent = function (argument, validate) {
@@ -104,7 +107,7 @@ F.f_customEvent = F.customEvent = function (argument, validate) {
 
     var pmv = F.f_pagemanager.validate;
     if (validate && pmv) {
-        if (!F.util.validateForms(pmv.forms, pmv.target, pmv.messagebox)) {
+        if (!F.util.validForms(pmv.forms, pmv.target, pmv.messagebox)) {
             return false;
         }
     }

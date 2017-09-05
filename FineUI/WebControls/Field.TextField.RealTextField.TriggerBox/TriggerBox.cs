@@ -219,9 +219,9 @@ namespace FineUI
             }
             else if (!String.IsNullOrEmpty(TriggerIconUrl))
             {
-                string className = String.Format("f_{0}_triggerbox_icon", XID);
+                string className = String.Format("{0}-trigger1-icon", ClientID);
                 string selector = String.Format(".{0}", className);
-                AddStartupCSS(className, StyleUtil.GetBackgroundStyle(selector, ResolveUrl(TriggerIconUrl)));
+                AddStartupCSS(className, StyleUtil.GetTriggerIconUrlStyle(selector, ResolveUrl(TriggerIconUrl)));
 
                 OB.AddProperty("triggerCls", className);
             }

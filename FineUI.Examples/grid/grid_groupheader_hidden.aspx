@@ -5,7 +5,6 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -39,7 +38,7 @@
                                     TextAlign="Center" />
                             </Columns>
                         </f:GroupField>
-                        <f:GroupField HeaderText="漯河市" TextAlign="Center">
+                        <f:GroupField HeaderText="漯河市" Hidden="true" TextAlign="Center">
                             <Columns>
                                 <f:BoundField Width="100px" DataField="HLData1" SortField="HLData1" HeaderText="数据一"
                                     TextAlign="Center" />

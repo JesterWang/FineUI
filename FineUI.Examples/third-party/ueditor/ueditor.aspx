@@ -5,7 +5,6 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../../res/css/common.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="../res/ueditor/themes/default/css/ueditor.min.css" />
 </head>
 <body>
@@ -43,7 +42,6 @@
         <br />
         <br />
         注：本示例不支持文件上传，请根据UEditor官网文档自行配置。
-        <span style="font-weight: bold;color:white;background-color:#3892d3;padding:10px;">获取编辑器的值</span>
     </form>
     <script type="text/javascript">
         window.UEDITOR_HOME_URL = '<%= ResolveUrl("~/third-party/res/ueditor/") %>';

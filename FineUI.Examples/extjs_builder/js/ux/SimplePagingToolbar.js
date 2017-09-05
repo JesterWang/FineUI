@@ -54,6 +54,18 @@ Ext.define('Ext.ux.SimplePagingToolbar', {
         Ext.Object.merge(this, configs);
         this.store.currentPage = this.f_pageIndex + 1;
         this.onLoad();
+
+        // 非服务端分页，则需要重新计算 f_startRowIndex 和  f_endRowIndex
+        if (!this.f_databasePaging) {
+            var startRowIndex = this.f_pageSize * this.f_pageIndex;
+            var endRowIndex = (this.f_pageIndex + 1) * this.f_pageSize - 1;
+            if(endRowIndex > this.f_recordCount - 1) {
+                endRowIndex = this.f_recordCount - 1;
+            }
+            
+            this.f_startRowIndex = startRowIndex;
+            this.f_endRowIndex = endRowIndex;
+        }
     }
 
 });

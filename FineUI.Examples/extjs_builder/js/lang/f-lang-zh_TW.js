@@ -22,6 +22,13 @@ Ext.apply(F.wnd, {
 });
 
 
+if (Ext.ux.SimplePagingToolbar) {
+    Ext.apply(Ext.ux.SimplePagingToolbar.prototype, {
+        afterPageText: "頁，共 {0} 頁",
+        displayMsg: "顯示 {0} - {1} 筆，共 {2} 筆"
+    });
+}
+
 //if (Ext.ux.SimplePagingToolbar) {
 //    Ext.apply(Ext.ux.SimplePagingToolbar.prototype, {
 //        beforePageText: "轉到",

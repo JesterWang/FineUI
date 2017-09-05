@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <link href="../res/css/main.css" rel="stylesheet" type="text/css" />
     <style>

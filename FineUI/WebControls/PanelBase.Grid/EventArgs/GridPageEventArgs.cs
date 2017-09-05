@@ -45,7 +45,16 @@ namespace FineUI
         public int NewPageIndex
         {
             get { return _newPageIndex; }
-            set { _newPageIndex = value; }
+        }
+
+        private int _oldPageIndex;
+
+        /// <summary>
+        /// 老页面的索引
+        /// </summary>
+        public int OldPageIndex
+        {
+            get { return _oldPageIndex; }
         }
 
 
@@ -56,6 +65,18 @@ namespace FineUI
         public GridPageEventArgs(int newPageIndex)
         {
             _newPageIndex = newPageIndex;
+        }
+
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="newPageIndex">新页面的索引</param>
+        /// <param name="oldPageIndex">老页面的索引</param>
+        public GridPageEventArgs(int newPageIndex, int oldPageIndex)
+        {
+            _newPageIndex = newPageIndex;
+            _oldPageIndex = oldPageIndex;
         }
 
     }

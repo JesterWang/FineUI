@@ -187,23 +187,35 @@ namespace FineUI
         }
 
 
-        private bool _htmlEncodeFormatString = true;
+        //private bool _htmlEncodeFormatString = true;
 
-        /// <summary>
-        /// 是否在应用DataFormatString属性之后进行HTML编码（默认为true）
-        /// </summary>
-        [Category(CategoryName.OPTIONS)]
-        [DefaultValue(true)]
-        [Description("是否在应用DataFormatString属性之后进行HTML编码（默认为true）")]
+        ///// <summary>
+        ///// 是否在应用DataFormatString属性之后进行HTML编码（默认为true）
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(true)]
+        //[Description("是否在应用DataFormatString属性之后进行HTML编码（默认为true）")]
+        //public bool HtmlEncodeFormatString
+        //{
+        //    get
+        //    {
+        //        return _htmlEncodeFormatString;
+        //    }
+        //    set
+        //    {
+        //        _htmlEncodeFormatString = value;
+        //    }
+        //}
+        [Obsolete("此属性已废除，请使用HtmlEncode属性")]
         public bool HtmlEncodeFormatString
         {
             get
             {
-                return _htmlEncodeFormatString;
+                return _htmlEncode;
             }
             set
             {
-                _htmlEncodeFormatString = value;
+                _htmlEncode = value;
             }
         }
 
@@ -565,18 +577,15 @@ namespace FineUI
                     if (!String.IsNullOrEmpty(DataTextFormatString))
                     {
                         text = String.Format(DataTextFormatString, value);
-                        if (HtmlEncodeFormatString)
-                        {
-                            text = HttpUtility.HtmlEncode(text);
-                        }
                     }
                     else
                     {
                         text = value.ToString();
-                        if (HtmlEncode)
-                        {
-                            text = HttpUtility.HtmlEncode(text);
-                        }
+                    }
+
+                    if (HtmlEncode)
+                    {
+                        text = HttpUtility.HtmlEncode(text);
                     }
                 }
             }

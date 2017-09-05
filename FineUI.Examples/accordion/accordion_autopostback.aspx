@@ -4,7 +4,6 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -38,6 +37,10 @@
         </f:Accordion>
         <br />
         <f:Button ID="Button1" Text="获取当前展开的面板" runat="server" OnClick="Button1_Click">
+        </f:Button>
+        <br />
+        <br />
+        <f:Button ID="Button2" Text="展开下一个面板" runat="server" OnClick="Button2_Click">
         </f:Button>
     </form>
 </body>

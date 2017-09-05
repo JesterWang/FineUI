@@ -15,7 +15,6 @@ namespace FineUI.Examples.iframe
             if (!IsPostBack)
             {
                 Button1.OnClientClick = Window1.GetShowReference("./window_iframe.aspx");
-
             }
 
             labResult.Text = "页面加载时间：" + DateTime.Now.ToLongTimeString();

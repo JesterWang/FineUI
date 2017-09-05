@@ -36,22 +36,20 @@ namespace FineUI.Examples.grid
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            SyncSelectedRowIndexArrayToHiddenField();
+            SyncSelectedRowIDArrayToHiddenField();
 
             labResult.Text = "选中行的ID列表为：" + hfSelectedIDS.Text.Trim();
         }
 
+
         protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
-            SyncSelectedRowIndexArrayToHiddenField();
+            SyncSelectedRowIDArrayToHiddenField(e.OldPageIndex);
 
-            Grid1.PageIndex = e.NewPageIndex;
-
-            UpdateSelectedRowIndexArray();
-
+            UpdateSelectedRowIDArray(e.NewPageIndex);
         }
 
-        private List<string> GetSelectedRowIndexArrayFromHiddenField()
+        private List<string> GetSelectedRowIDArrayFromHiddenField()
         {
             JArray idsArray = new JArray();
 
@@ -64,62 +62,64 @@ namespace FineUI.Examples.grid
             {
                 idsArray = new JArray();
             }
-
             return new List<string>(idsArray.ToObject<string[]>());
         }
 
-        private void SyncSelectedRowIndexArrayToHiddenField()
+        private void SyncSelectedRowIDArrayToHiddenField()
         {
-            List<string> ids = GetSelectedRowIndexArrayFromHiddenField();
+            SyncSelectedRowIDArrayToHiddenField(Grid1.PageIndex);
+        }
 
-            List<int> selectedRows = new List<int>();
-            if (Grid1.SelectedRowIndexArray != null && Grid1.SelectedRowIndexArray.Length > 0)
-            {
-                selectedRows = new List<int>(Grid1.SelectedRowIndexArray);
-            }
+        private void SyncSelectedRowIDArrayToHiddenField(int pageIndex)
+        {
+            List<string> ids = GetSelectedRowIDArrayFromHiddenField();
 
-            int startPageIndex = Grid1.PageIndex * Grid1.PageSize;
-            for (int i = startPageIndex, count = Math.Min(startPageIndex + Grid1.PageSize, Grid1.RecordCount); i < count; i++)
+            List<string> selectedRowIDs = new List<string>(Grid1.SelectedRowIDArray);
+
+            // 当前页的开始序号和结束序号
+            int startPageIndex = pageIndex * Grid1.PageSize;
+            int endPageIndex = Math.Min(startPageIndex + Grid1.PageSize, Grid1.RecordCount) - 1;
+            for (int i = startPageIndex; i <= endPageIndex; i++)
             {
-                string id = Grid1.DataKeys[i][0].ToString();
-                if (selectedRows.Contains(i - startPageIndex))
+                string rowID = Grid1.Rows[i].RowID;
+                if (selectedRowIDs.Contains(rowID))
                 {
-                    if (!ids.Contains(id))
+                    if (!ids.Contains(rowID))
                     {
-                        ids.Add(id);
+                        ids.Add(rowID);
                     }
                 }
                 else
                 {
-                    if (ids.Contains(id))
+                    if (ids.Contains(rowID))
                     {
-                        ids.Remove(id);
+                        ids.Remove(rowID);
                     }
                 }
-
             }
-
+            
             hfSelectedIDS.Text = new JArray(ids).ToString(Formatting.None);
         }
 
-
-        private void UpdateSelectedRowIndexArray()
+        private void UpdateSelectedRowIDArray(int pageIndex)
         {
-            List<string> ids = GetSelectedRowIndexArrayFromHiddenField();
+            List<string> ids = GetSelectedRowIDArrayFromHiddenField();
 
-            List<int> nextSelectedRowIndexArray = new List<int>();
-            int nextStartPageIndex = Grid1.PageIndex * Grid1.PageSize;
-            for (int i = nextStartPageIndex, count = Math.Min(nextStartPageIndex + Grid1.PageSize, Grid1.RecordCount); i < count; i++)
+            List<string> selectedRowIDs = new List<string>();
+            // 当前页的开始序号和结束序号
+            int startPageIndex = pageIndex * Grid1.PageSize;
+            int endPageIndex = Math.Min(startPageIndex + Grid1.PageSize, Grid1.RecordCount) - 1;
+            for (int i = startPageIndex; i <= endPageIndex; i++)
             {
-                string id = Grid1.DataKeys[i][0].ToString();
-                if (ids.Contains(id))
+                string rowID = Grid1.Rows[i].RowID;
+                if (ids.Contains(rowID))
                 {
-                    nextSelectedRowIndexArray.Add(i - nextStartPageIndex);
+                    selectedRowIDs.Add(rowID);
                 }
             }
-            Grid1.SelectedRowIndexArray = nextSelectedRowIndexArray.ToArray();
-        }
 
+            Grid1.SelectedRowIDArray = selectedRowIDs.ToArray();
+        }
         #endregion
     }
 }

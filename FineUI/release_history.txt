@@ -29,12 +29,37 @@ FineUI 严格遵守 ExtJS 对开源软件的规定，不再内置 ExtJS 库，�
 
 发布历史
 
-+2016-05-** v4.2.4
++2016-09-** v4.2.5
+	-修正启用排序，但是默认不排序可能引起的JS错误（dongfanghong，柳黯花明，雨天不打伞）。
+	-
+
+
+
++2016-06-15 v4.2.4
 	+表格增强。
 		-修正选中不存在行时出错的问题（yygy-8066）。
 		-修正删除当前选中的新增行时总是删除第一行的问题（lrjnew-8004）。
 		-新增行之前先清空当前选中的单元格。
-	
+		-修正单元格编辑表格可能抛出错误undefined.getVisibleIndex（longlizhi-8415，蒙奇.D.二毛-8325）。
+		+简化表格的分页和排序代码，不需要显式赋值操作（不兼容提醒）。
+			-分页事件中不需要赋值代码：Grid1.PageIndex = e.NewPageIndex;
+			-排序事件中不需要赋值代码：Grid1.SortDirection = e.SortDirection;Grid1.SortField = e.SortField;
+			-删除表格ClearSelectedRowsAfterPaging属性，请使用ClearSelectionsBeforePaging属性。
+			-更新示例：分页与排序->内存分页（跨页保持选中行）；数据库分页（跨页保持选中行）。
+		-表格列废除属性HtmlEncodeFormatString，请直接使用HtmlEncode属性。
+	+表单增强。
+		-修正按钮回发事件中不能禁用自己的问题（FighterLuo-8364）。
+		-修正触发器输入框TriggerBoxUrl无效的问题，增加示例：表单控件->杂项->自定义触发器输入框图标。
+		-增加示例：基本元素->日期控件（最小日期和最大日期）；杂项->输入框文本居中。
+		-增加示例：下拉列表控件->杂项->下拉列表（MatchFieldWidth，右侧空间不足）。
+	-修正窗体控件在父页面弹出时不能最大化的问题（老鱼翁-7900）。
+	-支持数据绑定到Dynamic对象集合（飘移-8423）。
+	+为了方便在源代码视图书写ASPX文件，将部分可空类型转换为不可空类型。
+		-表格列控件的TextAlign和HeaderTextAlign的类型：TextAlign? -> TextAlign。
+		-表单字段的LabelAlign的类型：LabelAlign? -> LabelAlign。
+	-官网示例中在PageBase中统一添加公共CSS样式文件，无需每个页面单独引用。
+	-官网示例顶级菜单项加上图标。
+
 
 
 +2016-01-04 v4.2.3

@@ -32,8 +32,12 @@
                                 </tr>
                             </table>
                             <div class="themeroller">
-                                <a href="http://fineui.com/demo_pro" target="_blank" title="转到专业版示例">专业版示例
+                                <a href="http://fineui.com/demo_mvc" style="margin-bottom:6px;display:inline-block;" target="_blank" title="企业版示例（MVC）">企业版示例（MVC）
                                 </a>
+                                <br />
+                                <a href="http://fineui.com/demo_pro" target="_blank" title="专业版示例（WebForms）">专业版示例（WebForms）
+                                </a>
+                                
                             </div>
                         </div>
                     </Content>
@@ -118,7 +122,7 @@
                                 <tr>
                                     <td style="width: 300px;">&nbsp;版本：<a target="_blank" href="http://fineui.com/version">v<asp:Literal runat="server" ID="litVersion"></asp:Literal></a>
                                         &nbsp;&nbsp; <a target="_blank" href="http://wp.qq.com/wpa/qunwpa?idkey=5a98eb42b742a1edaf22826648d5f61bc16ed08e0253976bc8d30f97508c09c7">QQ公开群</a></td>
-                                    <td style="text-align: center;">Copyright &copy; 2008-2015 合肥三生石上软件有限公司</td>
+                                    <td style="text-align: center;">Copyright &copy; 2008-2016 合肥三生石上软件有限公司</td>
                                     <td style="width: 300px; text-align: right;">在线人数：<asp:Literal runat="server" ID="litOnlineUserCount"></asp:Literal>&nbsp;</td>
                                 </tr>
                             </table>
@@ -182,7 +186,9 @@
             </f:MenuHyperLink>
             <f:MenuSeparator ID="MenuSeparator3" runat="server">
             </f:MenuSeparator>
-            <f:MenuHyperLink ID="MenuHyperLink3" runat="server" Text="转到专业版示例" NavigateUrl="http://fineui.com/demo_pro/" Target="_blank">
+            <f:MenuHyperLink runat="server" Text="专业版示例（WebForms）" NavigateUrl="http://fineui.com/demo_pro/" Target="_blank">
+            </f:MenuHyperLink>
+            <f:MenuHyperLink runat="server" Text="企业版示例（MVC）" NavigateUrl="http://fineui.com/demo_mvc/" Target="_blank">
             </f:MenuHyperLink>
         </f:Menu>
         <asp:XmlDataSource ID="XmlDataSource1" runat="server" EnableCaching="false" DataFile="~/common/menu.xml"></asp:XmlDataSource>

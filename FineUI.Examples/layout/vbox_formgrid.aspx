@@ -3,10 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <meta name="sourcefiles" content="~/grid/grid_iframe_window.aspx" />
-    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">

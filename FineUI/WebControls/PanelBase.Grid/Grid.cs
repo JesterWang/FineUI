@@ -73,10 +73,11 @@ namespace FineUI
         /// </summary>
         public Grid()
         {
+            // FineUI v4.2.4将 PageIndex、SortField、SortDirection 三个属性改为ClientAjaxProperties，后台不需要手工设置
             // 严格的说，PageIndex、SortField、SortDirection这三个属性不可能在客户端被改变，而是向服务器发出改变的请求，然后服务器处理。
             // 因为这些属性的改变不会影响客户端的UI，必须服务器端发出UI改变的指令才行，所以它们算是服务器端属性。
-            AddServerAjaxProperties("PageIndex", "PageSize", "RecordCount", "SortField", "SortDirection", "SummaryData", "SummaryHidden");
-            AddClientAjaxProperties("F_Rows", "HiddenColumns", "SelectedRowIDArray", "SelectedCell", "ExpandAllRowExpanders");
+            AddServerAjaxProperties("PageSize", "RecordCount", "SummaryData", "SummaryHidden");
+            AddClientAjaxProperties("PageIndex", "SortField", "SortDirection", "F_Rows", "HiddenColumns", "SelectedRowIDArray", "SelectedCell", "ExpandAllRowExpanders");
 
             AddGzippedAjaxProperties("F_Rows");
         }
@@ -299,25 +300,64 @@ namespace FineUI
         }
 
 
+        /////// <summary>
+        /////// 服务器端分页后清空选中的行
+        /////// </summary>
+        ////[Category(CategoryName.OPTIONS)]
+        ////[DefaultValue(false)]
+        ////[Description("服务器端分页后清空选中的行")]
+        //[Obsolete("已废除，请使用ClearSelectionsBeforePaging属性")]
+        //public bool ClearSelectedRowsAfterPaging
+        //{
+        //    get
+        //    {
+        //        object obj = FState["ClearSelectedRowsAfterPaging"];
+        //        return obj == null ? false : (bool)obj;
+        //    }
+        //    set
+        //    {
+        //        FState["ClearSelectedRowsAfterPaging"] = value;
+        //    }
+        //}
+
+
         /// <summary>
-        /// 服务器端分页后清空选中的行
+        /// 排序前清空选中项
         /// </summary>
         [Category(CategoryName.OPTIONS)]
         [DefaultValue(true)]
-        [Description("服务器端分页后清空选中的行")]
-        public bool ClearSelectedRowsAfterPaging
+        [Description("排序前清空选中项")]
+        public bool ClearSelectionsBeforePaging
         {
             get
             {
-                object obj = FState["ClearSelectedRowsAfterPaging"];
+                object obj = FState["ClearSelectionsBeforePaging"];
                 return obj == null ? true : (bool)obj;
             }
             set
             {
-                FState["ClearSelectedRowsAfterPaging"] = value;
+                FState["ClearSelectionsBeforePaging"] = value;
             }
         }
 
+        ///// <summary>
+        ///// 数据绑定前清空选中项
+        ///// </summary>
+        //[Category(CategoryName.OPTIONS)]
+        //[DefaultValue(true)]
+        //[Description("数据绑定前清空选中项")]
+        //public bool ClearSelectionsBeforeBinding
+        //{
+        //    get
+        //    {
+        //        object obj = FState["ClearSelectionsBeforeBinding"];
+        //        return obj == null ? true : (bool)obj;
+        //    }
+        //    set
+        //    {
+        //        FState["ClearSelectionsBeforeBinding"] = value;
+        //    }
+        //}
 
         /// <summary>
         /// 每页显示项数
@@ -1694,7 +1734,7 @@ namespace FineUI
 
 
         /// <summary>
-        /// [AJAX属性]选中行的索引（列表中的第一项）
+        /// [AJAX属性]选中行的索引（选中行在当前分页中的索引值）
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -1719,7 +1759,7 @@ namespace FineUI
 
 
         /// <summary>
-        /// [AJAX属性]选中行的索引列表
+        /// [AJAX属性]选中行的索引列表（选中行在当前分页中的索引值）
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -1734,11 +1774,13 @@ namespace FineUI
 
                 // 如果是内存分页，当前是第2页，每页5条数据，则这个值是 startRowIndex == 5 
                 int startRowIndex = GetStartRowIndex();
+                int endRowIndex = GetEndRowIndex();
 
                 List<string> selectedRowIds = new List<string>(SelectedRowIDArray);
                 List<int> selectedRowIndexs = new List<int>();
-                foreach (GridRow row in Rows)
+                for (int i = startRowIndex; i <= endRowIndex; i++)
                 {
+                    GridRow row = Rows[i];
                     if (selectedRowIds.Contains(row.RowID))
                     {
                         selectedRowIndexs.Add(row.RowIndex - startRowIndex);
@@ -1757,11 +1799,13 @@ namespace FineUI
 
                 // 如果是内存分页，当前是第2页，每页5条数据，则这个值是 startRowIndex == 5 
                 int startRowIndex = GetStartRowIndex();
+                int endRowIndex = GetEndRowIndex();
 
                 List<string> selectedRowIds = new List<string>();
                 List<int> selectedRowIndexs = new List<int>(value);
-                foreach (GridRow row in Rows)
+                for (int i = startRowIndex; i <= endRowIndex; i++)
                 {
+                    GridRow row = Rows[i];
                     if (selectedRowIndexs.Contains(row.RowIndex - startRowIndex))
                     {
                         selectedRowIds.Add(row.RowID);
@@ -2103,21 +2147,21 @@ namespace FineUI
                 {
                     JObject jo = new JObject();
 
-                    jo.Add("0", new JArray(row.Values));
-                    jo.Add("1", new JArray(row.DataKeys));
+                    jo.Add("f0", new JArray(row.Values));
+                    jo.Add("f1", new JArray(row.DataKeys));
 
                     if (row.HasStates())
                     {
-                        jo.Add("2", new JArray(row.States));
+                        jo.Add("f2", new JArray(row.States));
                     }
 
 
-                    jo.Add("6", new JValue(row.RowID));
+                    jo.Add("f6", new JValue(row.RowID));
 
 
                     //if (!String.IsNullOrEmpty(DataTextField))
                     //{
-                    //    jo.Add("7", new JValue(row.RowText));
+                    //    jo.Add("f7", new JValue(row.RowText));
                     //}
 
                     ja.Add(jo);
@@ -2164,24 +2208,24 @@ namespace FineUI
                     GridRow row = new GridRow(this, null, i);
 
                     // row.Values
-                    row.Values = JSONUtil.ObjectArrayFromJArray(rowValue["0"] as JArray);
+                    row.Values = JSONUtil.ObjectArrayFromJArray(rowValue["f0"] as JArray);
 
 
                     // row.DataKeys
-                    row.DataKeys = JSONUtil.ObjectArrayFromJArray(rowValue["1"] as JArray);
+                    row.DataKeys = JSONUtil.ObjectArrayFromJArray(rowValue["f1"] as JArray);
 
 
                     // row.States
-                    row.RecoverStates(JSONUtil.ObjectArrayFromJArray(rowValue["2"] as JArray));
+                    row.RecoverStates(JSONUtil.ObjectArrayFromJArray(rowValue["f2"] as JArray));
 
 
-                    var dataID = rowValue["6"];
+                    var dataID = rowValue["f6"];
                     if (dataID != null)
                     {
                         row.RowID = dataID.Value<string>();
                     }
 
-                    //var dataText = rowValue["7"];
+                    //var dataText = rowValue["f7"];
                     //if (dataText != null)
                     //{
                     //    row.RowText = dataText.Value<string>();
@@ -2377,6 +2421,34 @@ namespace FineUI
                 return String.Format("{0}_DeletedRows", ClientID);
             }
         }
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        private string PageIndexHiddenFieldID
+        {
+            get
+            {
+                return String.Format("{0}_PageIndex", ClientID);
+            }
+        }
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        private string SortFieldHiddenFieldID
+        {
+            get
+            {
+                return String.Format("{0}_SortField", ClientID);
+            }
+        }
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        private string SortDirectionHiddenFieldID
+        {
+            get
+            {
+                return String.Format("{0}_SortDirection", ClientID);
+            }
+        }
 
         ///// <summary>
         ///// 实际绑定到页面上的值
@@ -2546,7 +2618,7 @@ namespace FineUI
             }
 
             // 如果需要更新 模板列，则简单的重新加载表格即可
-            if (_needUpdateTemplateFields)
+            if (_needReloadData)
             {
                 dataReloaded = true;
             }
@@ -2910,7 +2982,12 @@ namespace FineUI
 
                 string postbackScript = String.Empty;
                 postbackScript = GetPostBackEventReference("#PLACEHOLDER#");
-                string loadPageScript = JsHelper.GetFunction(postbackScript.Replace("'#PLACEHOLDER#'", "'Page$'+(pageNum-1)") + "return false;", "bar", "pageNum");
+                string loadPageScriptVars = "var oldPageIndex=bar.f_pageIndex;var newPageIndex=pageNum-1;bar.f_update({f_pageIndex:newPageIndex});";
+                if (ClearSelectionsBeforePaging)
+                {
+                    loadPageScriptVars += "this.ownerCt.f_clearSelections();";
+                }
+                string loadPageScript = JsHelper.GetFunction(loadPageScriptVars + postbackScript.Replace("'#PLACEHOLDER#'", "'Page$'+newPageIndex+'$'+oldPageIndex") + "return false;", "bar", "pageNum");
 
                 pagingBuilder.Listeners.AddProperty("beforechange", loadPageScript, true);
 
@@ -2934,7 +3011,7 @@ namespace FineUI
 
                 pagingScript = String.Format("var {0}={1};", Render_PagingID, pagingBuilder);
 
-                //OB.AddProperty("bbar", Render_PagingID, true);
+                OB.AddProperty("f_paging", true);
             }
 
             #endregion
@@ -2954,6 +3031,10 @@ namespace FineUI
 
             #region AllowSorting
 
+            if (AllowSorting)
+            {
+                OB.AddProperty("f_sorting", true);
+            }
 
             //// 如果启用服务器端排序，则需要注册headerclick事件处理
             //if (AllowSorting)
@@ -3170,14 +3251,20 @@ namespace FineUI
         private string GetSortColummID()
         {
             string columnID = String.Empty;
-            foreach (GridColumn column in AllColumns)
+
+            // 这个判断一定要加上，因为序号列的 SortField 也为空！
+            if (!String.IsNullOrEmpty(SortField))
             {
-                if (column.SortField == SortField)
+                foreach (GridColumn column in AllColumns)
                 {
-                    columnID = column.ColumnID;
-                    break;
+                    if (column.SortField == SortField)
+                    {
+                        columnID = column.ColumnID;
+                        break;
+                    }
                 }
             }
+
             return columnID;
         }
 
@@ -3698,36 +3785,9 @@ namespace FineUI
         internal void ResolveStartEndRowIndex(out int startRowIndex, out int endRowIndex)
         {
             startRowIndex = GetStartRowIndex();
-            endRowIndex = Rows.Count - 1;
-
-            // 内存分页
-            if (AllowPaging && !IsDatabasePaging)
-            {
-                endRowIndex = (PageIndex + 1) * PageSize - 1;
-                endRowIndex = (endRowIndex < RecordCount - 1) ? endRowIndex : RecordCount - 1;
-            }
-            /*
-            startRowIndex = 0;
-            endRowIndex = Rows.Count - 1;
-
-            if (AllowPaging)
-            {
-                if (IsDatabasePaging)
-                {
-                    // 数据库分页
-                    startRowIndex = 0;
-                    endRowIndex = Rows.Count - 1;
-                }
-                else
-                {
-                    // 简单的服务器端分页
-                    startRowIndex = PageSize * PageIndex;
-                    endRowIndex = (PageIndex + 1) * PageSize - 1;
-                    endRowIndex = endRowIndex < RecordCount - 1 ? endRowIndex : RecordCount - 1;
-                }
-            }
-             * */
+            endRowIndex = GetEndRowIndex();
         }
+
 
         /// <summary>
         /// 获取当前分页的起始行序号（不分页或者数据库分页时，返回零）
@@ -3744,6 +3804,24 @@ namespace FineUI
             }
 
             return startRowIndex;
+        }
+
+        /// <summary>
+        /// 获取当前分页的结束行序号
+        /// </summary>
+        /// <returns></returns>
+        public int GetEndRowIndex()
+        {
+            int endRowIndex = Rows.Count - 1;
+
+            // 内存分页
+            if (AllowPaging && !IsDatabasePaging)
+            {
+                endRowIndex = (PageIndex + 1) * PageSize - 1;
+                endRowIndex = (endRowIndex < RecordCount - 1) ? endRowIndex : RecordCount - 1;
+            }
+
+            return endRowIndex;
         }
 
         /// <summary>
@@ -3823,7 +3901,9 @@ namespace FineUI
 
         #region UpdateTemplateFields
 
-        private bool _needUpdateTemplateFields = false;
+
+        // 在本次回发时，是否需要重新加载数据
+        private bool _needReloadData = false;
 
 
         /// <summary>
@@ -3832,7 +3912,7 @@ namespace FineUI
         /// </summary>
         public void UpdateTemplateFields()
         {
-            _needUpdateTemplateFields = true;
+            _needReloadData = true;
             //PageManager.Instance.AddAjaxGridClientID(ClientID);
         }
 
@@ -3861,7 +3941,7 @@ namespace FineUI
             // 如果重新绑定数据，则每行的模版列内容有可能发生变化，就需要更新
             // 因为目前，没有判断模板列是否改变的机制，所以只要可能导致模板列的动作都要更新模板列
             //PageManager.Instance.AddAjaxGridClientID(ClientID);
-            _needUpdateTemplateFields = true;
+            _needReloadData = true;
 
 
             // 如果重新绑定数据，则取消之前的编辑状态提示
@@ -3899,9 +3979,13 @@ namespace FineUI
             // 数据绑定之前要先清空 _dataKeys
             _dataKeys = null;
 
+            //if (ClearSelectionsBeforeBinding)
+            //{
             // 重新绑定数据前清空选中的值
             SelectedRowIndexArray = null;
             SelectedCell = null;
+            //}
+
 
             // 数据绑定之前要先清空现有的数据
             ClearRows();
@@ -4103,7 +4187,7 @@ namespace FineUI
         private JArray _mergedData;
 
         /// <summary>
-        /// 获取合并后的表格数据（包含修改和未修改的数据，不包含已经删除的行数据）
+        /// 获取合并后的表格数据（不包含已经删除的行数据）（仅在启用单元格编辑时有效）
         /// </summary>
         /// <returns>合并后的表格数据</returns>
         public JArray GetMergedData()
@@ -4225,7 +4309,7 @@ namespace FineUI
         private JArray _modifiedData = new JArray();
 
         /// <summary>
-        /// 获取用户修改的数据
+        /// 获取用户修改的数据（仅在启用单元格编辑时有效）
         /// </summary>
         /// <returns></returns>
         public JArray GetModifiedData()
@@ -4249,7 +4333,7 @@ namespace FineUI
         private List<int> _deletedList;
 
         /// <summary>
-        /// 获取删除的行索引列表
+        /// 获取删除的行索引列表（仅在启用单元格编辑时有效）
         /// </summary>
         /// <returns></returns>
         public List<int> GetDeletedList()
@@ -4261,7 +4345,7 @@ namespace FineUI
         private List<Dictionary<string, object>> _newAddedList;
 
         /// <summary>
-        /// 获取新增的行数据
+        /// 获取新增的行数据（仅在启用单元格编辑时有效）
         /// </summary>
         /// <returns></returns>
         public List<Dictionary<string, object>> GetNewAddedList()
@@ -4273,7 +4357,7 @@ namespace FineUI
         private Dictionary<int, Dictionary<string, object>> _modifiedDict;
 
         /// <summary>
-        /// 获取用户修改的行数据
+        /// 获取用户修改的行数据（仅在启用单元格编辑时有效）
         /// </summary>
         /// <returns></returns>
         public Dictionary<int, Dictionary<string, object>> GetModifiedDict()
@@ -4293,7 +4377,60 @@ namespace FineUI
         /// <returns>回发数据是否改变</returns>
         public override bool LoadPostData(string postDataKey, System.Collections.Specialized.NameValueCollection postCollection)
         {
+            // 由于没有数据改变事件，所以无需处理这里的返回值
             base.LoadPostData(postDataKey, postCollection);
+
+            // 分页
+            if (AllowPaging)
+            {
+                string pageIndexPostValue = postCollection[PageIndexHiddenFieldID];
+                if (!String.IsNullOrEmpty(pageIndexPostValue))
+                {
+                    int pageIndexPostValueInt = Convert.ToInt32(pageIndexPostValue);
+                    if (PageIndex != pageIndexPostValueInt)
+                    {
+                        PageIndex = pageIndexPostValueInt;
+                        FState.BackupPostDataProperty("PageIndex");
+
+                        // 如果是内存分页，则需要重新加载表格数据（数据库分页的话，需要手工绑定数据，所以不需要此设置）
+                        if (!IsDatabasePaging)
+                        {
+                            _needReloadData = true;
+                        }
+                    }
+                }
+            }
+
+            // 排序
+            if (AllowSorting)
+            {
+                string sortFieldPostValue = postCollection[SortFieldHiddenFieldID];
+                string sortDirectionPostValue = postCollection[SortDirectionHiddenFieldID];
+
+                if (!String.IsNullOrEmpty(sortFieldPostValue))
+                {
+                    // FineUIPro的客户端中，field和columnId是一样的，因此在客户端并不知道 SortField 的值
+                    GridColumn column = FindColumn(sortFieldPostValue);
+                    if (column != null)
+                    {
+                        // 当前列的排序字段和排序方向
+                        string sortField = column.SortField;
+
+                        if (SortField != sortField)
+                        {
+                            SortField = sortField;
+                            FState.BackupPostDataProperty("SortField");
+                        }
+
+                        if (SortDirection != sortDirectionPostValue)
+                        {
+                            SortDirection = sortDirectionPostValue;
+                            FState.BackupPostDataProperty("SortDirection");
+                        }
+                    }
+                }
+            }
+
 
 
             string paramHiddenColumns = postCollection[HiddenColumnsHiddenFieldID];
@@ -4628,7 +4765,7 @@ namespace FineUI
         /// <returns>客户端脚本</returns>
         public string GetClearSelectionsReference()
         {
-            return String.Format("{0}.getSelectionModel().clearSelections();", ScriptID);
+            return String.Format("{0}.f_clearSelections();", ScriptID);
         }
 
         /// <summary>
@@ -5094,18 +5231,22 @@ namespace FineUI
             else if (eventArgument.StartsWith("Page$"))
             {
                 string[] commandArgs = eventArgument.Split('$');
-                if (commandArgs.Length == 2)
+                if (commandArgs.Length == 3)
                 {
-                    OnPageIndexChange(new GridPageEventArgs(Convert.ToInt32(commandArgs[1])));
+                    int newPageIndex = Convert.ToInt32(commandArgs[1]);
+                    int oldPageIndex = Convert.ToInt32(commandArgs[2]);
 
-                    if (ClearSelectedRowsAfterPaging)
-                    {
-                        // 分页后清空选中的值
-                        // 因为服务器端分页时不会重新绑定数据（数据库分页才会重新绑定数据，所以数据库分页时自然会清空选中的行）
-                        // 所以需要一个设置，在分页结束后自动清空选中的行
-                        SelectedRowIndexArray = null;
-                    }
-                    SelectedCell = null;
+                    OnPageIndexChange(new GridPageEventArgs(newPageIndex, oldPageIndex));
+
+                    //if (ClearSelectedRowsAfterPaging)
+                    //{
+                    //    // 分页后清空选中的值
+                    //    // 因为内存分页时不会重新绑定数据（数据库分页才会重新绑定数据，所以数据库分页时自然会清空选中的行）
+                    //    // 所以需要一个设置，在分页结束后自动清空选中的行
+                    //    SelectedRowIndexArray = null;
+                    //    SelectedCell = null;
+                    //}
+
                 }
             }
             //else if (eventArgument.StartsWith("RowClick$"))

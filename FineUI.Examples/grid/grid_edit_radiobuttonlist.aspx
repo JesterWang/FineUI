@@ -5,7 +5,6 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
     <style>
         .f-grid-tpl .gender input {
             vertical-align: middle;

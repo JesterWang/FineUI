@@ -74,7 +74,13 @@ namespace FineUI.Examples
                     accordionPane.Title = xmlNode.Attributes["Text"].Value;
                     accordionPane.Layout = Layout.Fit;
                     accordionPane.ShowBorder = false;
-                    accordionPane.BodyPadding = "2px 0 0 0";
+
+                    var accordionPaneIconAttr = xmlNode.Attributes["Icon"];
+                    if (accordionPaneIconAttr != null)
+                    {
+                        accordionPane.Icon = (Icon)Enum.Parse(typeof(Icon), accordionPaneIconAttr.Value, true);
+                    }
+
                     accordionMenu.Items.Add(accordionPane);
 
                     Tree innerTree = new Tree();

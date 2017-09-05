@@ -326,7 +326,7 @@ namespace FineUI
             {
                 fieldDefaults.AddProperty("labelSeparator", LabelSeparator);
             }
-            if (LabelAlign != ConfigPropertyValue.FORM_LABELALIGN_DEFAULT)
+            if (LabelAlign != ConfigPropertyValue.FORM_LABELALIGN_DEFAULT && LabelAlign != FineUI.LabelAlign.Undefined)
             {
                 fieldDefaults.AddProperty("labelAlign", LabelAlignHelper.GetName(LabelAlign));
             }

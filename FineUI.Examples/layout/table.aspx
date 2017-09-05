@@ -4,7 +4,6 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .mytable td.x-table-layout-cell {
             padding: 5px;

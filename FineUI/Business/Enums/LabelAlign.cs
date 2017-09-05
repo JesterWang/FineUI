@@ -10,7 +10,11 @@ namespace FineUI
     public enum LabelAlign
     {
         /// <summary>
-        /// 靠左（默认值）
+        /// 未定义
+        /// </summary>
+        Undefined,
+        /// <summary>
+        /// 靠左
         /// </summary>
         Left,
         /// <summary>
@@ -34,6 +38,9 @@ namespace FineUI
 
             switch (type)
             {
+                case LabelAlign.Undefined:
+                    result = "left";
+                    break;
                 case LabelAlign.Left:
                     result = "left";
                     break;

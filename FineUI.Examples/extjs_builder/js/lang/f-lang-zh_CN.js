@@ -21,6 +21,14 @@ Ext.apply(F.wnd, {
 });
 
 
+if (Ext.ux.SimplePagingToolbar) {
+    Ext.apply(Ext.ux.SimplePagingToolbar.prototype, {
+        afterPageText: "页，共 {0} 页",
+        displayMsg: "显示 {0} - {1} 条，共 {2} 条"
+    });
+}
+
+
 //if (Ext.ux.SimplePagingToolbar) {
 //    Ext.apply(Ext.ux.SimplePagingToolbar.prototype, {
 //        beforePageText: "转到",

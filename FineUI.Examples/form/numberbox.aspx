@@ -4,7 +4,6 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="../res/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -17,8 +16,8 @@
                 <f:NumberBox Label="非负整数" ID="NumberBox3" runat="server" EmptyText="比如 99"
                     NoDecimal="True" NoNegative="True" Required="True"
                     ShowRedStar="True" />
-                <f:NumberBox ID="NumberBox4" runat="server" EmptyText="精度为 3，比如 0.356" Label="0 到 1 之间的小数"
-                    MaxValue="1" MinValue="0" DecimalPrecision="3" NoNegative="True" Required="True" ShowRedStar="True">
+                <f:NumberBox ID="NumberBox4" runat="server" EmptyText="精度为 2，比如 0.35" Label="0 到 1 之间的小数"
+                    MaxValue="1" MinValue="0" NoDecimal="false" NoNegative="True" DecimalPrecision="2" Required="True" ShowRedStar="True">
                 </f:NumberBox>
                 <f:NumberBox Label="任意整数" ID="NumberBox5" NoDecimal="true" runat="server" />
                 <f:Button ID="btnSubmit" runat="server" ValidateForms="SimpleForm1" Text="提交表单" OnClick="btnSubmit_Click">

@@ -53,6 +53,22 @@ namespace FineUI.Examples
             }
 
 
+            // 为所有页面添加公共的：<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            System.Web.UI.HtmlControls.HtmlGenericControl metaCtrl = new System.Web.UI.HtmlControls.HtmlGenericControl("meta");
+            metaCtrl.Attributes["http-equiv"] = "Content-Type";
+            metaCtrl.Attributes["content"] = "text/html; charset=utf-8";
+            Header.Controls.AddAt(0, metaCtrl);
+
+
+            // 为所有页面添加公共的：<link rel="stylesheet" type="text/css" href="res/css/common.css"></link>
+            System.Web.UI.HtmlControls.HtmlGenericControl linkCtrl = new System.Web.UI.HtmlControls.HtmlGenericControl("link");
+            linkCtrl.Attributes["rel"] = "stylesheet";
+            linkCtrl.Attributes["type"] = "text/css";
+            linkCtrl.Attributes["href"] = ResolveClientUrl("~/res/css/common.css");
+            Header.Controls.Add(linkCtrl);
+
+
+
             base.OnInit(e);
         }
 

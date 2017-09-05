@@ -165,12 +165,16 @@
 
             ghostWnd.on('maximize', function () {
 
+                /*
                 // 如果原始窗体所在的页面存在，则触发原始窗体的 maximize 事件
                 if (F.canAccess(config.f_property_window)) {
                     config.f_property_ext_window.fireEvent('maximize', config.f_property_ext_window);
                 } else {
                     F.wnd.fixMaximize(ghostWnd);
                 }
+                */
+
+                F.wnd.fixMaximize(ghostWnd);
 
             });
             
