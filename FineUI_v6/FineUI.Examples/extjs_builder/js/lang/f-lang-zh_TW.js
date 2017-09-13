@@ -55,3 +55,29 @@ if (Ext.ux.form && Ext.ux.form.FileUploadField) {
         buttonText: "瀏覽..."
     });
 }
+
+
+if (Ext.panel.Panel) {
+    Ext.apply(Ext.panel.Panel.prototype, {
+        collapseToolText: '折疊面板',
+        expandToolText: '展開面板'
+    });
+}
+
+if (Ext.window.Window) {
+    Ext.apply(Ext.window.Window.prototype, {
+        closeToolText: '關閉窗體'
+    });
+}
+
+if (Ext.window.MessageBox) {
+    Ext.apply(Ext.window.MessageBox.prototype, {
+        closeToolText: '關閉對話框'
+    });
+}
+
+if (Ext.form.field.Number) {
+    Ext.apply(Ext.form.field.Number.prototype, {
+        negativeText: '該輸入項不能為負值'
+    });
+}

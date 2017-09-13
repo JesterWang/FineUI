@@ -13,60 +13,103 @@
 <body>
     <form id="form1" runat="server">
         <f:PageManager ID="PageManager1" AutoSizePanelID="RegionPanel1" runat="server"></f:PageManager>
-        <f:RegionPanel ID="RegionPanel1" ShowBorder="false" runat="server">
-            <Regions>
-                <f:Region ID="Region1" ShowBorder="false" ShowHeader="false"
-                    Position="Top" Layout="Fit" runat="server">
-                    <Content>
-                        <div id="header">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <a class="homepage" href="http://fineui.com/" title="官网首页">
-                                            <img src="./res/icon/house.png" alt="Home" />
-                                        </a>
-                                        <a class="logo" href="./default.aspx" title="在线示例首页">FineUI（开源版）在线示例
-                                        </a>
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <f:Button runat="server" CssClass="" Text="企业版示例（MVC）" IconAlign="Top" Icon="Lightning"
-                                            EnablePostBack="false" OnClientClick="window.location.href='http://fineui.com/demo_mvc';">
-                                        </f:Button>
-                                        <f:Button runat="server" CssClass="" Text="专业版示例" IconAlign="Top" Icon="Star"
-                                            EnablePostBack="false" OnClientClick="window.location.href='http://fineui.com/demo_pro';">
-                                        </f:Button>
-                                        <f:Button runat="server" CssClass="" Text="加载动画" IconAlign="Top" Icon="Hourglass"
-                                            EnablePostBack="false">
-                                            <Listeners>
-                                                <f:Listener Event="click" Handler="onLoadingSelectClick" />
-                                            </Listeners>
-                                        </f:Button>
-                                        <f:Button runat="server" CssClass="userpicaction" Text="三生石上" IconUrl="~/res/images/my_face_80.jpg" IconAlign="Left"
-                                            EnablePostBack="false">
-                                            <Menu runat="server">
-                                                <f:MenuButton Text="个人信息" Icon="User" EnablePostBack="false" runat="server">
-                                                    <Listeners>
-                                                        <f:Listener Event="click" Handler="onUserProfileClick" />
-                                                    </Listeners>
-                                                </f:MenuButton>
-                                                <f:MenuSeparator runat="server"></f:MenuSeparator>
-                                                <f:MenuButton Text="安全退出" Icon="ZoomOut" EnablePostBack="false" runat="server">
-                                                    <Listeners>
-                                                        <f:Listener Event="click" Handler="onSignOutClick" />
-                                                    </Listeners>
-                                                </f:MenuButton>
-                                            </Menu>
-                                        </f:Button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </Content>
-                </f:Region>
-                <f:Region ID="leftPanel" RegionSplit="true" Width="220px" ShowHeader="true" ShowBorder="true" Title="全部示例"
+        <f:Panel ID="RegionPanel1" Layout="Region" ShowBorder="false" runat="server">
+            <Items>
+                <f:ContentPanel ID="Region1" ShowBorder="false" ShowHeader="false"
+                    RegionPosition="Top" runat="server">
+                    <div id="header">
+                        <table>
+                            <tr>
+                                <td>
+                                    <a class="homepage" href="http://fineui.com/" title="官网首页">
+                                        <img src="./res/icon/house.png" alt="Home" />
+                                    </a>
+                                    <a class="logo" href="./default.aspx" title="在线示例首页">FineUI（开源版）在线示例
+                                    </a>
+                                </td>
+                                <td style="text-align: right;">
+                                    <f:Button runat="server" CssClass="" Text="企业版(MVC)" IconAlign="Top" Icon="Lightning"
+                                        EnablePostBack="false" OnClientClick="window.location.href='http://fineui.com/demo_mvc';">
+                                    </f:Button>
+                                    <f:Button runat="server" CssClass="" Text="专业版(WebForms)" IconAlign="Top" Icon="Star"
+                                        EnablePostBack="false" OnClientClick="window.location.href='http://fineui.com/demo_pro';">
+                                    </f:Button>
+                                    <f:Button runat="server" CssClass="" Text="加载动画" IconAlign="Top" Icon="Hourglass"
+                                        EnablePostBack="false">
+                                        <Listeners>
+                                            <f:Listener Event="click" Handler="onLoadingSelectClick" />
+                                        </Listeners>
+                                    </f:Button>
+                                    <f:Button runat="server" CssClass="userpicaction" Text="三生石上" IconUrl="~/res/images/my_face_80.jpg" IconAlign="Left"
+                                        EnablePostBack="false">
+                                        <Menu runat="server">
+                                            <f:MenuCheckBox runat="server" ID="cbxShowOnlyNew" Text="仅显示最新示例">
+                                            </f:MenuCheckBox>
+                                            <f:MenuSeparator ID="MenuSeparator1" runat="server">
+                                            </f:MenuSeparator>
+                                            <f:MenuButton ID="MenuTheme" EnablePostBack="false" Text="主题" runat="server">
+                                                <Menu ID="Menu4" runat="server">
+                                                    <f:MenuCheckBox Text="海卫一（Triton）" ID="MenuThemeTriton" Checked="true" GroupName="MenuTheme" runat="server">
+                                                    </f:MenuCheckBox>
+                                                    <f:MenuCheckBox Text="小清新（Crisp）" ID="MenuThemeCrisp" GroupName="MenuTheme" runat="server">
+                                                    </f:MenuCheckBox>
+                                                    <f:MenuCheckBox Text="海王星（Neptune）" ID="MenuThemeNeptune" GroupName="MenuTheme" runat="server">
+                                                    </f:MenuCheckBox>
+                                                    <f:MenuCheckBox Text="蓝色（Blue）" ID="MenuThemeBlue" GroupName="MenuTheme" runat="server">
+                                                    </f:MenuCheckBox>
+                                                    <f:MenuCheckBox Text="灰色（Gray）" ID="MenuThemeGray" GroupName="MenuTheme" runat="server">
+                                                    </f:MenuCheckBox>
+                                                </Menu>
+                                            </f:MenuButton>
+                                            <f:MenuButton EnablePostBack="false" Text="菜单样式" ID="MenuStyle" runat="server">
+                                                <Menu runat="server">
+                                                    <f:MenuCheckBox Text="树菜单" ID="MenuStyleTree" Checked="true" GroupName="MenuStyle" runat="server">
+                                                    </f:MenuCheckBox>
+                                                    <f:MenuCheckBox Text="手风琴+树菜单" ID="MenuStyleAccordion" GroupName="MenuStyle" runat="server">
+                                                    </f:MenuCheckBox>
+                                                </Menu>
+                                            </f:MenuButton>
+                                            <f:MenuButton EnablePostBack="false" Text="语言" ID="MenuLang" runat="server">
+                                                <Menu ID="Menu2" runat="server">
+                                                    <f:MenuCheckBox Text="简体中文" ID="MenuLangZHCN" Checked="true" GroupName="MenuLang" runat="server">
+                                                    </f:MenuCheckBox>
+                                                    <f:MenuCheckBox Text="繁體中文" ID="MenuLangZHTW" GroupName="MenuLang" runat="server">
+                                                    </f:MenuCheckBox>
+                                                    <f:MenuCheckBox Text="English" ID="MenuLangEN" GroupName="MenuLang" runat="server">
+                                                    </f:MenuCheckBox>
+                                                </Menu>
+                                            </f:MenuButton>
+                                            <f:MenuSeparator ID="MenuSeparator2" runat="server">
+                                            </f:MenuSeparator>
+                                            <f:MenuButton EnablePostBack="false" Text="FineUI（开源版）示例" runat="server">
+                                                <Menu runat="server">
+                                                    <f:MenuHyperLink runat="server" Text="v4.x 示例" NavigateUrl="http://fineui.com/demo_v4/" Target="_blank">
+                                                    </f:MenuHyperLink>
+                                                    <f:MenuHyperLink runat="server" Text="v3.x 示例" NavigateUrl="http://fineui.com/demo_v3/" Target="_blank">
+                                                    </f:MenuHyperLink>
+                                                    <f:MenuHyperLink runat="server" Text="v3.x 示例（英文）" NavigateUrl="http://fineui.com/demo_en/" Target="_blank">
+                                                    </f:MenuHyperLink>
+                                                </Menu>
+                                            </f:MenuButton>
+                                            <f:MenuSeparator runat="server">
+                                            </f:MenuSeparator>
+                                            <f:MenuHyperLink runat="server" Text="FineUI（专业版）示例" NavigateUrl="http://fineui.com/demo_pro/" Target="_blank">
+                                            </f:MenuHyperLink>
+                                            <f:MenuHyperLink runat="server" Text="FineUI（MVC版）示例" NavigateUrl="http://fineui.com/demo_mvc/" Target="_blank">
+                                            </f:MenuHyperLink>
+                                            <f:MenuHyperLink runat="server" Text="FineUI（JS版）示例" NavigateUrl="http://fineui.com/demo_js/" Target="_blank">
+                                            </f:MenuHyperLink>
+                                        </Menu>
+                                    </f:Button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </f:ContentPanel>
+                <f:Panel ID="leftPanel" RegionSplit="true" Width="220px" ShowHeader="true" ShowBorder="true" Title="全部示例"
                     EnableCollapse="true" Layout="Fit" Collapsed="false" RegionPosition="Left" runat="server">
-                </f:Region>
-                <f:Region ID="mainRegion" ShowHeader="false" Layout="Fit" ShowBorder="true" Position="Center"
+                </f:Panel>
+                <f:Panel ID="mainRegion" ShowHeader="false" Layout="Fit" ShowBorder="true" RegionPosition="Center"
                     runat="server">
                     <Items>
                         <f:TabStrip ID="mainTabStrip" EnableTabCloseMenu="true" ShowBorder="false" runat="server">
@@ -77,7 +120,7 @@
                                             <Items>
                                                 <f:ToolbarFill ID="ToolbarFill2" runat="server">
                                                 </f:ToolbarFill>
-                                                <f:Button ID="btnGotoOpenSourceSite" Icon="DiskDownload" Text="下载全部源码" OnClientClick="window.open('http://fineui.codeplex.com/', '_blank');"
+                                                <f:Button ID="btnGotoOpenSourceSite" Icon="DiskDownload" Text="下载全部源码" OnClientClick="window.open('https://gitee.com/sanshi/FineUI', '_blank');"
                                                     EnablePostBack="false" runat="server">
                                                 </f:Button>
                                                 <f:ToolbarSeparator ID="ToolbarSeparator2" runat="server">
@@ -100,8 +143,8 @@
                                         
                                             <br />
                                             <h2>支持的浏览器</h2>
-                                            Chrome、Firefox、Safari、IE 8.0+
-                                        
+                                            Chrome、Firefox、Safari、IE 8.0+<sup>*</sup>
+
                                             <br />
                                             <h2>授权协议</h2>
                                             Apache License v2.0（ExtJS 库在 <a target="_blank" href="http://www.sencha.com/license">GPL v3</a> 协议下发布）
@@ -116,42 +159,48 @@
                                             <br />
                                             文档：<a target="_blank" href="http://fineui.com/doc/">http://fineui.com/doc/</a>
                                             <br />
-                                            下载：<a target="_blank" href="http://fineui.codeplex.com/">http://fineui.codeplex.com/</a>
-                                            <br />
+                                            下载：<a target="_blank" href="https://gitee.com/sanshi/FineUI">https://gitee.com/sanshi/FineUI</a>
                                             <br />
                                             <br />
                                             注：FineUI 不再内置 ExtJS 库，请手工添加 ExtJS 库：<a target="_blank" href="http://fineui.com/bbs/forum.php?mod=viewthread&tid=3218">http://fineui.com/bbs/forum.php?mod=viewthread&tid=3218</a>
-
-
-                                            <div style="position: fixed; bottom: 30px; right: 10px; text-align: center; border: solid 1px #ddd; padding: 10px; background-color: #efefef;">
-                                                <div style="margin-bottom: 5px;">
-                                                    扫描二维码，关注 FineUI 微信公众号
+                                            <br />
+                                            <br />
+                                            <div style="font-size: 11px;">
+                                                * 推荐使用 Chrome、Firefox、Edge、IE11 浏览器，以获取最好的性能。
+                                                <div style="margin: 10px 8px; opacity: 0.6;">
+                                                    IE8.0 浏览器有限支持，存在如下已知问题：
+                                                    <ul style="margin-top: 2px; padding-left: 20px;">
+                                                        <li>相比其他现代浏览器，性能最差</li>
+                                                        <li>不支持圆角，以及其他一些 CSS3 特性</li>
+                                                        <li>选项卡控件不支持左侧和右侧标题栏</li>
+                                                    </ul>
                                                 </div>
-                                                <img src="http://fineui.com/images/weixin_fineui.jpg" style="width: 150px;" alert="关注 FineUI 微信公众号">
                                             </div>
+
                                         </f:ContentPanel>
                                     </Items>
                                 </f:Tab>
                             </Tabs>
                         </f:TabStrip>
                     </Items>
-                </f:Region>
-                <f:Region ID="bottomPanel" RegionPosition="Bottom" ShowBorder="false" ShowHeader="false" EnableCollapse="false" runat="server" Layout="Fit">
+                </f:Panel>
+                <f:Panel ID="bottomPanel" RegionPosition="Bottom" ShowBorder="false" ShowHeader="false"
+                    EnableCollapse="false" runat="server" Layout="Fit">
                     <Items>
                         <f:ContentPanel runat="server" ShowBorder="false" ShowHeader="false">
                             <table class="bottomtable">
                                 <tr>
                                     <td style="width: 300px;">&nbsp;版本：<a target="_blank" href="http://fineui.com/version">v<asp:Literal runat="server" ID="litVersion"></asp:Literal></a>
                                         &nbsp;&nbsp; <a target="_blank" href="http://wp.qq.com/wpa/qunwpa?idkey=5a98eb42b742a1edaf22826648d5f61bc16ed08e0253976bc8d30f97508c09c7">QQ公开群</a></td>
-                                    <td style="text-align: center;">Copyright &copy; 2008-2016 合肥三生石上软件有限公司</td>
+                                    <td style="text-align: center;">Copyright &copy; 2008-2017 合肥三生石上软件有限公司</td>
                                     <td style="width: 300px; text-align: right;">在线人数：<asp:Literal runat="server" ID="litOnlineUserCount"></asp:Literal>&nbsp;</td>
                                 </tr>
                             </table>
                         </f:ContentPanel>
                     </Items>
-                </f:Region>
-            </Regions>
-        </f:RegionPanel>
+                </f:Panel>
+            </Items>
+        </f:Panel>
         <f:Window ID="windowSourceCode" Icon="PageWhiteCode" Title="源代码" Hidden="true" EnableIFrame="true"
             runat="server" IsModal="true" Width="950px" Height="550px" EnableClose="true"
             EnableMaximize="true" EnableResize="true">
@@ -160,79 +209,14 @@
             runat="server" IsModal="true" Width="1000px" Height="625px" EnableClose="true"
             EnableMaximize="true" EnableResize="true">
         </f:Window>
-        <f:Menu ID="menuSettings" runat="server">
-            <f:MenuButton ID="btnExpandAll" IconUrl="~/res/images/expand-all.gif" Text="展开菜单" EnablePostBack="false"
-                runat="server">
-            </f:MenuButton>
-            <f:MenuButton ID="btnCollapseAll" IconUrl="~/res/images/collapse-all.gif" Text="折叠菜单"
-                EnablePostBack="false" runat="server">
-            </f:MenuButton>
-            <f:MenuSeparator ID="MenuSeparator4" runat="server">
-            </f:MenuSeparator>
-            <f:MenuCheckBox runat="server" ID="cbxShowOnlyNew" Text="仅显示最新示例">
-            </f:MenuCheckBox>
-            <f:MenuSeparator ID="MenuSeparator1" runat="server">
-            </f:MenuSeparator>
-            <f:MenuButton ID="MenuTheme" EnablePostBack="false" Text="主题" runat="server">
-                <Menu ID="Menu4" runat="server">
-                    <f:MenuCheckBox Text="海卫一（Triton）" ID="MenuThemeTriton" Checked="true" GroupName="MenuTheme" runat="server">
-                    </f:MenuCheckBox>
-                    <f:MenuCheckBox Text="小清新（Crisp）" ID="MenuThemeCrisp" GroupName="MenuTheme" runat="server">
-                    </f:MenuCheckBox>
-                    <f:MenuCheckBox Text="海王星（Neptune）" ID="MenuThemeNeptune" GroupName="MenuTheme" runat="server">
-                    </f:MenuCheckBox>
-                    <f:MenuCheckBox Text="蓝色（Blue）" ID="MenuThemeBlue" GroupName="MenuTheme" runat="server">
-                    </f:MenuCheckBox>
-                    <f:MenuCheckBox Text="灰色（Gray）" ID="MenuThemeGray" GroupName="MenuTheme" runat="server">
-                    </f:MenuCheckBox>
-                </Menu>
-            </f:MenuButton>
-            <f:MenuButton EnablePostBack="false" Text="菜单样式" ID="MenuStyle" runat="server">
-                <Menu runat="server">
-                    <f:MenuCheckBox Text="树菜单" ID="MenuStyleTree" Checked="true" GroupName="MenuStyle" runat="server">
-                    </f:MenuCheckBox>
-                    <f:MenuCheckBox Text="手风琴+树菜单" ID="MenuStyleAccordion" GroupName="MenuStyle" runat="server">
-                    </f:MenuCheckBox>
-                </Menu>
-            </f:MenuButton>
-            <f:MenuButton EnablePostBack="false" Text="语言" ID="MenuLang" runat="server">
-                <Menu ID="Menu2" runat="server">
-                    <f:MenuCheckBox Text="简体中文" ID="MenuLangZHCN" Checked="true" GroupName="MenuLang" runat="server">
-                    </f:MenuCheckBox>
-                    <f:MenuCheckBox Text="繁體中文" ID="MenuLangZHTW" GroupName="MenuLang" runat="server">
-                    </f:MenuCheckBox>
-                    <f:MenuCheckBox Text="English" ID="MenuLangEN" GroupName="MenuLang" runat="server">
-                    </f:MenuCheckBox>
-                </Menu>
-            </f:MenuButton>
-            <f:MenuSeparator ID="MenuSeparator2" runat="server">
-            </f:MenuSeparator>
-            <f:MenuButton Text="开源版示例（WebForms）" runat="server">
-                <Menu runat="server">
-                    <f:MenuHyperLink runat="server" Text="v4.x 示例" NavigateUrl="http://fineui.com/demo_v4/" Target="_blank">
-                    </f:MenuHyperLink>
-                    <f:MenuHyperLink runat="server" Text="v3.x 示例" NavigateUrl="http://fineui.com/demo_v3/" Target="_blank">
-                    </f:MenuHyperLink>
-                    <f:MenuHyperLink runat="server" Text="v3.x 示例（英文）" NavigateUrl="http://fineui.com/demo_en/" Target="_blank">
-                    </f:MenuHyperLink>
-                </Menu>
-            </f:MenuButton>
-            <f:MenuHyperLink runat="server" Text="专业版示例（WebForms）" NavigateUrl="http://fineui.com/demo_pro/" Target="_blank">
-            </f:MenuHyperLink>
-            <f:MenuHyperLink runat="server" Text="企业版示例（MVC）" NavigateUrl="http://fineui.com/demo_mvc/" Target="_blank">
-            </f:MenuHyperLink>
-        </f:Menu>
         <asp:XmlDataSource ID="XmlDataSource1" runat="server" EnableCaching="false" DataFile="~/common/menu.xml"></asp:XmlDataSource>
     </form>
     <script src="./res/js/jquery.min.js"></script>
     <script>
 
-        var btnExpandAllClientID = '<%= btnExpandAll.ClientID %>';
-        var btnCollapseAllClientID = '<%= btnCollapseAll.ClientID %>';
         var leftPanelClientID = '<%= leftPanel.ClientID %>';
         var mainTabStripClientID = '<%= mainTabStrip.ClientID %>';
         var windowSourceCodeClientID = '<%= windowSourceCode.ClientID %>';
-        var menuSettingsClientID = '<%= menuSettings.ClientID %>';
         var cbxShowOnlyNewClientID = '<%= cbxShowOnlyNew.ClientID %>';
         var windowLoadingSelectorClientID = '<%= windowLoadingSelector.ClientID %>';
 
@@ -245,15 +229,6 @@
         function onLoadingSelectClick(event) {
             var windowLoadingSelector = F(windowLoadingSelectorClientID);
             windowLoadingSelector.f_show();
-        }
-
-
-        function onSignOutClick() {
-            F.alert('尚未实现');
-        }
-
-        function onUserProfileClick() {
-            F.alert('尚未实现');
         }
 
 
@@ -316,7 +291,7 @@
                 mainTabStrip.setActiveTab(targetTab);
                 // 通过jQuery查找 iframe 节点，并强制刷新 iframe 内的页面
                 $(targetTab.el.dom).find('iframe')[0].contentWindow.location.reload();
-                
+
                 // 删除之前的激活选项卡
                 mainTabStrip.removeTab(oldActiveTabId);
             }
@@ -339,12 +314,9 @@
         }
 
         F.ready(function () {
-            var btnExpandAll = F(btnExpandAllClientID);
-            var btnCollapseAll = F(btnCollapseAllClientID);
             var leftPanel = F(leftPanelClientID);
             var mainTabStrip = F(mainTabStripClientID);
             var windowSourceCode = F(windowSourceCodeClientID);
-            var menuSettings = F(menuSettingsClientID);
             var cbxShowOnlyNew = F(cbxShowOnlyNewClientID);
 
             var MenuStyle = F(MenuStyleClientID);
@@ -357,44 +329,6 @@
                 menuType = 'menu';
             }
 
-            // 当前展开的手风琴面板
-            function getExpandedPanel() {
-                var panel = null;
-                treeMenu.items.each(function (item) {
-                    if (!item.getCollapsed()) {
-                        panel = item;
-                    }
-                });
-                return panel;
-            }
-
-            // 点击展开菜单
-            btnExpandAll.on('click', function () {
-                if (menuType == 'menu') {
-                    // 左侧为树控件
-                    treeMenu.expandAll();
-                } else {
-                    // 左侧为树控件+手风琴控件
-                    var expandedPanel = getExpandedPanel();
-                    if (expandedPanel) {
-                        expandedPanel.items.getAt(0).expandAll();
-                    }
-                }
-            });
-
-            // 点击折叠菜单
-            btnCollapseAll.on('click', function () {
-                if (menuType == 'menu') {
-                    // 左侧为树控件
-                    treeMenu.collapseAll();
-                } else {
-                    // 左侧为树控件+手风琴控件
-                    var expandedPanel = getExpandedPanel();
-                    if (expandedPanel) {
-                        expandedPanel.items.getAt(0).collapseAll();
-                    }
-                }
-            });
 
             // 点击仅显示最新示例
             cbxShowOnlyNew.on('click', function () {
@@ -548,16 +482,6 @@
                 maxTabMessage: '请先关闭一些选项卡（最多允许打开 10 个）！'
             });
 
-
-            // 添加工具图标，并在点击时显示上下文菜单
-            // 专业版提醒：请将 type:'gear' 改为 iconFont:'gear'
-            leftPanel.addTool({
-                type: 'gear',
-                //tooltip: '系统设置',
-                handler: function (event) {
-                    menuSettings.showBy(this);
-                }
-            });
 
         });
 

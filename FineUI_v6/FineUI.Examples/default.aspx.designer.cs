@@ -37,7 +37,7 @@ namespace FineUI.Examples {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FineUI.RegionPanel RegionPanel1;
+        protected global::FineUI.Panel RegionPanel1;
         
         /// <summary>
         /// Region1 control.
@@ -46,151 +46,7 @@ namespace FineUI.Examples {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FineUI.Region Region1;
-        
-        /// <summary>
-        /// leftPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.Region leftPanel;
-        
-        /// <summary>
-        /// mainRegion control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.Region mainRegion;
-        
-        /// <summary>
-        /// mainTabStrip control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.TabStrip mainTabStrip;
-        
-        /// <summary>
-        /// ToolbarFill2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.ToolbarFill ToolbarFill2;
-        
-        /// <summary>
-        /// btnGotoOpenSourceSite control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.Button btnGotoOpenSourceSite;
-        
-        /// <summary>
-        /// ToolbarSeparator2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.ToolbarSeparator ToolbarSeparator2;
-        
-        /// <summary>
-        /// Button1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.Button Button1;
-        
-        /// <summary>
-        /// bottomPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.Region bottomPanel;
-        
-        /// <summary>
-        /// litVersion control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litVersion;
-        
-        /// <summary>
-        /// litOnlineUserCount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litOnlineUserCount;
-        
-        /// <summary>
-        /// windowSourceCode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.Window windowSourceCode;
-        
-        /// <summary>
-        /// windowLoadingSelector control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.Window windowLoadingSelector;
-        
-        /// <summary>
-        /// menuSettings control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.Menu menuSettings;
-        
-        /// <summary>
-        /// btnExpandAll control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.MenuButton btnExpandAll;
-        
-        /// <summary>
-        /// btnCollapseAll control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.MenuButton btnCollapseAll;
-        
-        /// <summary>
-        /// MenuSeparator4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FineUI.MenuSeparator MenuSeparator4;
+        protected global::FineUI.ContentPanel Region1;
         
         /// <summary>
         /// cbxShowOnlyNew control.
@@ -335,6 +191,114 @@ namespace FineUI.Examples {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::FineUI.MenuSeparator MenuSeparator2;
+        
+        /// <summary>
+        /// leftPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FineUI.Panel leftPanel;
+        
+        /// <summary>
+        /// mainRegion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FineUI.Panel mainRegion;
+        
+        /// <summary>
+        /// mainTabStrip control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FineUI.TabStrip mainTabStrip;
+        
+        /// <summary>
+        /// ToolbarFill2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FineUI.ToolbarFill ToolbarFill2;
+        
+        /// <summary>
+        /// btnGotoOpenSourceSite control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FineUI.Button btnGotoOpenSourceSite;
+        
+        /// <summary>
+        /// ToolbarSeparator2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FineUI.ToolbarSeparator ToolbarSeparator2;
+        
+        /// <summary>
+        /// Button1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FineUI.Button Button1;
+        
+        /// <summary>
+        /// bottomPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FineUI.Panel bottomPanel;
+        
+        /// <summary>
+        /// litVersion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litVersion;
+        
+        /// <summary>
+        /// litOnlineUserCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litOnlineUserCount;
+        
+        /// <summary>
+        /// windowSourceCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FineUI.Window windowSourceCode;
+        
+        /// <summary>
+        /// windowLoadingSelector control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FineUI.Window windowLoadingSelector;
         
         /// <summary>
         /// XmlDataSource1 control.

@@ -904,7 +904,8 @@ namespace FineUI
 
             if (AutoScroll)
             {
-                OB.AddProperty("autoScroll", true);
+                //OB.AddProperty("autoScroll", true);
+                OB.AddProperty("scrollable", true);
             }
 
 

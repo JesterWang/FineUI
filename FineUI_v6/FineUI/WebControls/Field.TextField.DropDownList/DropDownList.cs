@@ -1355,32 +1355,27 @@ namespace FineUI
 
             string autoPostBackScript = String.Empty;
 
-            if (AutoPostBack)
-            {
-                autoPostBackScript = String.Format("var {0}={1};", Render_AutoPostBackID, JsHelper.GetFunction("if(cmp.f_tmp_lastvalue!==cmp.getValue()){" + GetPostBackEventReference() + "}", "cmp"));
-            }
+            //if (AutoPostBack)
+            //{
+            //    autoPostBackScript = String.Format("var {0}={1};", Render_AutoPostBackID, JsHelper.GetFunction("window.setTimeout(function(){if(cmp.f_tmp_lastvalue!==cmp.getValue()){" + GetPostBackEventReference() + "}},100);", "cmp"));
+            //}
+
             StringBuilder beforeselectSB = new StringBuilder();
-            // 是否能选中一项（如果此项不能选中，则点击没用）
-            //beforeselectSB.AppendFormat("if(F.util.isHiddenFieldContains('{0}',index)){{return false;}}", DisableRowIndexsHiddenID);
             beforeselectSB.Append("if(!record.data.enabled){return false;}");
 
-            if (AutoPostBack)
-            {
-                beforeselectSB.Append("cmp.f_tmp_lastvalue=cmp.getValue();");
-
-                //string selectScript = "if(cmp.f_tmp_lastvalue!==cmp.getValue()){" + GetPostBackEventReference() + "}";
-                beforeselectSB.AppendFormat("window.setTimeout(function(){{{0}(cmp);}},100);", Render_AutoPostBackID);
-                //AddListener("select", selectScript, "cmp");
-            }
+            //if (AutoPostBack)
+            //{
+            //    beforeselectSB.Append("cmp.f_tmp_lastvalue=cmp.getValue();");
+            //    beforeselectSB.AppendFormat("{0}(cmp);", Render_AutoPostBackID);
+            //}
 
             AddListener("beforeselect", beforeselectSB.ToString(), "cmp", "record", "index");
+            AddListener("beforedeselect", beforeselectSB.ToString(), "cmp", "record", "index");
 
-            //if (EnableMultiSelect)
-            //{
-            //    StringBuilder beforedeselectSB = new StringBuilder();
-            //    beforedeselectSB.AppendFormat("window.setTimeout(function(){{{0}(cmp);}},100);", Render_AutoPostBackID);
-            //    AddListener("beforedeselect", beforedeselectSB.ToString(), "cmp", "record", "index");
-            //}
+            if (AutoPostBack)
+            {
+                AddListener("change", GetPostBackEventReference(), "cmp", "newValue", "oldValue");
+            }
 
             #region old code
             //if (AutoPostBack)

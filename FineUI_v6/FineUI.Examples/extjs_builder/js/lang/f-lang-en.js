@@ -47,3 +47,29 @@ if (Ext.ux.form && Ext.ux.form.FileUploadField) {
         buttonText: "Browse..."
     });
 }
+
+
+if (Ext.panel.Panel) {
+    Ext.apply(Ext.panel.Panel.prototype, {
+        collapseToolText: 'Collapse panel',
+        expandToolText: 'Expand panel'
+    });
+}
+
+if (Ext.window.Window) {
+    Ext.apply(Ext.window.Window.prototype, {
+        closeToolText: 'Close window'
+    });
+}
+
+if (Ext.window.MessageBox) {
+    Ext.apply(Ext.window.MessageBox.prototype, {
+        closeToolText: 'Close dialog'
+    });
+}
+
+if (Ext.form.field.Number) {
+    Ext.apply(Ext.form.field.Number.prototype, {
+        negativeText: 'The value cannot be negative'
+    });
+}

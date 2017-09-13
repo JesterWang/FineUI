@@ -183,10 +183,12 @@
     <Content Include="test\checkboxlist_update2.aspx" />
     <Content Include="test\empty.aspx" />
     <Content Include="test\activex.aspx" />
+    <Content Include="test\fileupload2.aspx" />
     <Content Include="test\form2.aspx" />
     <Content Include="test\grid_editor_cell2.aspx" />
     <Content Include="test\test2.aspx" />
     <Content Include="test\test.aspx" />
+    <Content Include="test\tree2.aspx" />
     <Content Include="third-party\autocomplete\inline_window.aspx" />
     <Content Include="third-party\ckeditor\ckeditor_setvalue.aspx" />
     <Content Include="third-party\ckeditor\ckeditor.aspx" />
@@ -578,6 +580,9 @@
     </Compile>
     <Compile Include="config\loading.aspx.designer.cs">
       <DependentUpon>loading.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
     </Compile>
     <Compile Include="dropdownlist\dropdownlist_autopostback.aspx.cs">
       <DependentUpon>dropdownlist_autopostback.aspx</DependentUpon>
@@ -1370,6 +1375,13 @@
     <Compile Include="test\activex.aspx.designer.cs">
       <DependentUpon>activex.aspx</DependentUpon>
     </Compile>
+    <Compile Include="test\fileupload2.aspx.cs">
+      <DependentUpon>fileupload2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\fileupload2.aspx.designer.cs">
+      <DependentUpon>fileupload2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="test\form2.aspx.cs">
       <DependentUpon>form2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1397,6 +1409,13 @@
     </Compile>
     <Compile Include="test\test.aspx.designer.cs">
       <DependentUpon>test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\tree2.aspx.cs">
+      <DependentUpon>tree2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\tree2.aspx.designer.cs">
+      <DependentUpon>tree2.aspx</DependentUpon>
     </Compile>
     <Compile Include="third-party\autocomplete\inline_window.aspx.cs">
       <DependentUpon>inline_window.aspx</DependentUpon>
@@ -2954,9 +2973,6 @@
     <Compile Include="default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="default.aspx.designer.cs">
-      <DependentUpon>default.aspx</DependentUpon>
     </Compile>
     <Compile Include="form\form_dynamic.aspx.cs">
       <DependentUpon>form_dynamic.aspx</DependentUpon>

@@ -303,6 +303,7 @@ namespace FineUI.Examples
 
                 litVersion.Text = FineUI.GlobalConfig.ProductVersion;
                 litOnlineUserCount.Text = Application["OnlineUserCount"].ToString();
+
             }
         }
 

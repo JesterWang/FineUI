@@ -5,7 +5,7 @@ var F = function (cmpName) {
 };
 
 // 标识这个页面是由 FineUI 创建的
-F.fineui = '6.0.2';
+F.fineui = '6.1.0';
 
 F.target = function (target) {
     return F.util.getTargetWindow(target);

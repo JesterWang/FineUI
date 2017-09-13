@@ -202,3 +202,9 @@
 .x-ie8 .f-fileupload-buttononly .x-form-trigger {
     display: block;
 }
+
+
+/* v6.1.0, Tree has no horizontal scrollbar */
+.x-tree-view {
+    overflow-x: auto !important;
+}

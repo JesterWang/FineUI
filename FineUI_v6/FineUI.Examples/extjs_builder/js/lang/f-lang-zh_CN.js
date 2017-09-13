@@ -56,3 +56,30 @@ if (Ext.ux.form && Ext.ux.form.FileUploadField) {
         buttonText: "浏览..."
     });
 }
+
+
+if (Ext.panel.Panel) {
+    Ext.apply(Ext.panel.Panel.prototype, {
+        collapseToolText: '折叠面板',
+        expandToolText: '展开面板'
+    });
+}
+
+if (Ext.window.Window) {
+    Ext.apply(Ext.window.Window.prototype, {
+        closeToolText: '关闭窗体'
+    });
+}
+
+if (Ext.window.MessageBox) {
+    Ext.apply(Ext.window.MessageBox.prototype, {
+        closeToolText: '关闭对话框'
+    });
+}
+
+
+if (Ext.form.field.Number) {
+    Ext.apply(Ext.form.field.Number.prototype, {
+        negativeText: '该输入项不能为负值'
+    });
+}

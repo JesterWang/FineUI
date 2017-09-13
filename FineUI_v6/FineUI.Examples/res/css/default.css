@@ -1,5 +1,4 @@
-﻿
-#header table {
+﻿#header table {
     width: 100%;
     border-spacing: 0;
     border-collapse: separate;
@@ -50,6 +49,7 @@
     width: 40px;
     border-radius: 50%;
 }
+
 
 
 .isnew {
