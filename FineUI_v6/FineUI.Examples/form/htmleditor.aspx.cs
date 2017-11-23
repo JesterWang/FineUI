@@ -12,7 +12,7 @@ namespace FineUI.Examples.form
         {
             if (!IsPostBack)
             {
-                HtmlEditor1.Text = "FineUI（开源版）<br>基于 ExtJS 的开源 ASP.NET 控件库。<br><br>FineUI的使命<br>创建 No JavaScript，No CSS，No UpdatePanel，No ViewState，No WebServices 的网站应用程序。<br><br>支持的浏览器<br>Chrome、Firefox、Safari、IE 8.0+<br><br>授权协议<br>Apache License v2.0<br>注：ExtJS 库在 GPL v3 协议下发布(http://www.sencha.com/license)。<br><br>相关链接<br>论坛：<a href=\"http://fineui.com/bbs/\">http://fineui.com/bbs/</a><br>示例：<a href=\"http://fineui.com/demo/\">http://fineui.com/demo/</a><br>文档：<a href=\"http://fineui.com/doc/\">http://fineui.com/doc/</a><br>下载：<a href=\"http://fineui.codeplex.com/\">http://fineui.codeplex.com/</a><br><br>";
+                HtmlEditor1.Text = "FineUI（开源版）<br>基于 ExtJS 的开源 ASP.NET 控件库。<br><br>FineUI的使命<br>创建 No JavaScript，No CSS，No UpdatePanel，No ViewState，No WebServices 的网站应用程序。<br><br>支持的浏览器<br>Chrome、Firefox、Safari、IE 8.0+<br><br>授权协议<br>Apache License v2.0<br>注：ExtJS 库在 GPL v3 协议下发布(http://www.sencha.com/license)。<br><br>相关链接<br>论坛：<a href=\"http://fineui.com/bbs/\">http://fineui.com/bbs/</a><br>示例：<a href=\"http://demo.fineui.com/\">http://demo.fineui.com/</a><br>文档：<a href=\"http://fineui.com/doc/\">http://fineui.com/doc/</a><br>下载：<a href=\"http://fineui.codeplex.com/\">http://fineui.codeplex.com/</a><br><br>";
             }
         }
 

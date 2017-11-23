@@ -57,7 +57,7 @@
         </f:Button>
         <br />
         <br />
-        注：ExtJS这个地方有问题，第二个GroupPanel面板是有工具栏的，但是没有显示出来。查看<a href="http://fineui.com/demo_pro/#/demo_pro/window/group_panel.aspx" target="_blank">专业版示例</a>。
+        注：ExtJS这个地方有问题，第二个GroupPanel面板是有工具栏的，但是没有显示出来。查看<a href="http://pro.fineui.com/#/window/group_panel.aspx" target="_blank">专业版示例</a>。
     </form>
 </body>
 </html>

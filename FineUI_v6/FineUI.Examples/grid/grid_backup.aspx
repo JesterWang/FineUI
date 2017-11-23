@@ -32,7 +32,7 @@
         </f:Grid>
         <br />
         <br />
-        <%--注：如果你尝试扩大“所学专业”列的宽度，你会发现右侧的列看不到了，而横向滚动条却没有出来，这是 ExtJS 的BUG。查看<a href="http://fineui.com/demo_pro/#/demo_pro/grid/grid.aspx" target="_blank">专业版示例</a>。--%>
+        <%--注：如果你尝试扩大“所学专业”列的宽度，你会发现右侧的列看不到了，而横向滚动条却没有出来，这是 ExtJS 的BUG。查看<a href="http://pro.fineui.com/#/grid/grid.aspx" target="_blank">专业版示例</a>。--%>
     </form>
 </body>
 </html>

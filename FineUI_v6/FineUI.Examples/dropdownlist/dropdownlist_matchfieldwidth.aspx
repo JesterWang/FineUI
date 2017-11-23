@@ -46,7 +46,7 @@
         <br />
         <br />
         <br />
-        注：ExtJS这个地方有问题，可能会有横向滚动体出来。<a href="http://fineui.com/demo_pro/#/demo_pro/dropdownlist/dropdownlist_matchfieldwidth.aspx">查看专业版示例</a>
+        注：ExtJS这个地方有问题，可能会有横向滚动体出来。<a href="http://pro.fineui.com/#/dropdownlist/dropdownlist_matchfieldwidth.aspx">查看专业版示例</a>
     </form>
 </body>
 </html>

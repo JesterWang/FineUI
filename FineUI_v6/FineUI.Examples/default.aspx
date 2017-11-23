@@ -29,10 +29,10 @@
                                 </td>
                                 <td style="text-align: right;">
                                     <f:Button runat="server" CssClass="" Text="企业版(MVC)" IconAlign="Top" Icon="Lightning"
-                                        EnablePostBack="false" OnClientClick="window.location.href='http://fineui.com/demo_mvc';">
+                                        EnablePostBack="false" OnClientClick="window.location.href='http://mvc.fineui.com/';">
                                     </f:Button>
                                     <f:Button runat="server" CssClass="" Text="专业版(WebForms)" IconAlign="Top" Icon="Star"
-                                        EnablePostBack="false" OnClientClick="window.location.href='http://fineui.com/demo_pro';">
+                                        EnablePostBack="false" OnClientClick="window.location.href='http://pro.fineui.com/';">
                                     </f:Button>
                                     <f:Button runat="server" CssClass="" Text="加载动画" IconAlign="Top" Icon="Hourglass"
                                         EnablePostBack="false">
@@ -93,11 +93,13 @@
                                             </f:MenuButton>
                                             <f:MenuSeparator runat="server">
                                             </f:MenuSeparator>
-                                            <f:MenuHyperLink runat="server" Text="FineUI（专业版）示例" NavigateUrl="http://fineui.com/demo_pro/" Target="_blank">
+                                            <f:MenuHyperLink runat="server" Text="FineUI（专业版）示例" NavigateUrl="http://pro.fineui.com/" Target="_blank">
                                             </f:MenuHyperLink>
-                                            <f:MenuHyperLink runat="server" Text="FineUI（MVC版）示例" NavigateUrl="http://fineui.com/demo_mvc/" Target="_blank">
+                                            <f:MenuHyperLink runat="server" Text="FineUI（MVC版）示例" NavigateUrl="http://mvc.fineui.com/" Target="_blank">
                                             </f:MenuHyperLink>
-                                            <f:MenuHyperLink runat="server" Text="FineUI（JS版）示例" NavigateUrl="http://fineui.com/demo_js/" Target="_blank">
+                                            <f:MenuHyperLink runat="server" Text="FineUI（Core版）示例" NavigateUrl="http://core.fineui.com/" Target="_blank">
+                                            </f:MenuHyperLink>
+                                            <f:MenuHyperLink runat="server" Text="FineUI（JS版）示例" NavigateUrl="http://js.fineui.com/" Target="_blank">
                                             </f:MenuHyperLink>
                                         </Menu>
                                     </f:Button>
@@ -153,13 +155,11 @@
                                             <h2>相关链接</h2>
                                             首页：<a target="_blank" href="http://fineui.com/">http://fineui.com/</a>
                                             <br />
+                                            示例：<a target="_blank" href="http://demo.fineui.com/">http://demo.fineui.com/</a>
+                                            <br />
                                             论坛：<a target="_blank" href="http://fineui.com/bbs/">http://fineui.com/bbs/</a>
                                             <br />
-                                            示例：<a target="_blank" href="http://fineui.com/demo/">http://fineui.com/demo/</a>
-                                            <br />
-                                            文档：<a target="_blank" href="http://fineui.com/doc/">http://fineui.com/doc/</a>
-                                            <br />
-                                            下载：<a target="_blank" href="https://gitee.com/sanshi/FineUI">https://gitee.com/sanshi/FineUI</a>
+                                            源代码下载：<a target="_blank" href="https://gitee.com/sanshi/FineUI">https://gitee.com/sanshi/FineUI</a>
                                             <br />
                                             <br />
                                             注：FineUI 不再内置 ExtJS 库，请手工添加 ExtJS 库：<a target="_blank" href="http://fineui.com/bbs/forum.php?mod=viewthread&tid=3218">http://fineui.com/bbs/forum.php?mod=viewthread&tid=3218</a>
@@ -487,5 +487,8 @@
 
 
     </script>
+	
+	<script type="text/javascript" src="http://tajs.qq.com/stats?sId=64203702" charset="UTF-8"></script>
+	
 </body>
 </html>

@@ -27,7 +27,7 @@
                 &lt;br&gt;
                 相关链接&lt;br&gt;
                 论坛：http://fineui.com/bbs/&lt;br&gt;
-                示例：http://fineui.com/demo/&lt;br&gt;
+                示例：http://demo.fineui.com/&lt;br&gt;
                 文档：http://fineui.com/doc/&lt;br&gt;
                 下载：http://fineui.codeplex.com/
                 &lt;/p&gt;
