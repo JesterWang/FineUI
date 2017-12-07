@@ -464,6 +464,8 @@
     <TreeNode Text="行与列样式">
       <TreeNode Text="行样式" NavigateUrl="~/grid/grid_style_rowcolor.aspx" >
       </TreeNode>
+      <TreeNode Text="行样式（列锁定）" NavigateUrl="~/grid/grid_style_rowcolor_lockcolumn.aspx" IsNew="true" >
+      </TreeNode>
       <TreeNode Text="行样式（数据库分页）" NavigateUrl="~/grid/grid_style_rowcolor_paging_database.aspx" IsNew="true" >
       </TreeNode>
       <TreeNode Text="行样式（内存分页）" NavigateUrl="~/grid/grid_style_rowcolor_paging.aspx" IsNew="true" >

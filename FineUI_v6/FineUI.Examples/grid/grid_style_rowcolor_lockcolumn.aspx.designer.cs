@@ -10,7 +10,7 @@
 namespace FineUI.Examples.data {
     
     
-    public partial class grid_style_rowcolor {
+    public partial class grid_style_rowcolor_lockcolumn {
         
         /// <summary>
         /// form1 control.

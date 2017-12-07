@@ -136,6 +136,7 @@
     <Content Include="grid\grid_rowexpander_grid.aspx" />
     <Content Include="grid\grid_sorting_nosortfield.aspx" />
     <Content Include="grid\grid_style_columnclass.aspx" />
+    <Content Include="grid\grid_style_rowcolor_lockcolumn.aspx" />
     <Content Include="grid\grid_summary_scrollbar_flow.aspx" />
     <Content Include="grid\grid_style_rowcolor_paging_database.aspx" />
     <Content Include="grid\grid_style_rowcolor_paging.aspx" />
@@ -1044,6 +1045,13 @@
     </Compile>
     <Compile Include="grid\grid_style_columnclass.aspx.designer.cs">
       <DependentUpon>grid_style_columnclass.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_style_rowcolor_lockcolumn.aspx.cs">
+      <DependentUpon>grid_style_rowcolor_lockcolumn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_style_rowcolor_lockcolumn.aspx.designer.cs">
+      <DependentUpon>grid_style_rowcolor_lockcolumn.aspx</DependentUpon>
     </Compile>
     <Compile Include="grid\grid_summary_scrollbar_flow.aspx.cs">
       <DependentUpon>grid_summary_scrollbar_flow.aspx</DependentUpon>
