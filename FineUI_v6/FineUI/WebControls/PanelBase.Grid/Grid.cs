@@ -2147,7 +2147,7 @@ namespace FineUI
 
                 //return jo;
 
-                
+
 
                 JArray ja = new JArray();
                 foreach (GridRow row in Rows)
@@ -2811,6 +2811,21 @@ namespace FineUI
             //    }
 
             //}
+
+            // 排序在服务器端发生变化
+            // 或者：数据重新加载了，此时也需要重新设置排序列
+            if (AllowSorting)
+            {
+                if (dataReloaded || PropertyModified("SortField") || PropertyModified("SortDirection"))
+                {
+                    var sortFieldColumnId = GetSortColummID();
+                    if (!String.IsNullOrEmpty(sortFieldColumnId))
+                    {
+                        sb.AppendFormat("{0}.f_setSortIcon('{1}','{2}');", XID, sortFieldColumnId, SortDirection);
+                    }
+                }
+            }
+
 
             AddAjaxScript(sb);
         }

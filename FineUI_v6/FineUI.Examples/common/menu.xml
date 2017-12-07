@@ -226,6 +226,8 @@
       </TreeNode>
       <TreeNode Text="排序（初始不排序）" NavigateUrl="~/grid/grid_sorting_nosortfield.aspx" >
       </TreeNode>
+      <TreeNode Text="排序（服务器端改变排序列）" NavigateUrl="~/grid/grid_sorting_server.aspx" >
+      </TreeNode>
       <TreeNode Text="内存分页" NavigateUrl="~/grid/grid_paging.aspx" >
       </TreeNode>
       <TreeNode Text="数据库分页" NavigateUrl="~/grid/grid_paging_database.aspx" >

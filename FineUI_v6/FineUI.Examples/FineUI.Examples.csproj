@@ -134,6 +134,7 @@
     <Content Include="grid\grid_editor_cell_afteredit_rowexpander.aspx" />
     <Content Include="grid\grid_editor_cell_newdelete_rowexpander.aspx" />
     <Content Include="grid\grid_rowexpander_grid.aspx" />
+    <Content Include="grid\grid_sorting_server.aspx" />
     <Content Include="grid\grid_sorting_nosortfield.aspx" />
     <Content Include="grid\grid_style_columnclass.aspx" />
     <Content Include="grid\grid_style_rowcolor_lockcolumn.aspx" />
@@ -1031,6 +1032,13 @@
     </Compile>
     <Compile Include="grid\grid_rowexpander_grid_data.ashx.cs">
       <DependentUpon>grid_rowexpander_grid_data.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="grid\grid_sorting_server.aspx.cs">
+      <DependentUpon>grid_sorting_server.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grid\grid_sorting_server.aspx.designer.cs">
+      <DependentUpon>grid_sorting_server.aspx</DependentUpon>
     </Compile>
     <Compile Include="grid\grid_sorting_nosortfield.aspx.cs">
       <DependentUpon>grid_sorting_nosortfield.aspx</DependentUpon>
