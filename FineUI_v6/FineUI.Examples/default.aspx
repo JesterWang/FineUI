@@ -177,6 +177,15 @@
                                                 </div>
                                             </div>
 
+
+                                            <div style="position:absolute;top:5px;right:5px;border:solid 1px #eee;background-color:#F5F6F8;">
+		                                        <img src="http://fineui.com/bbs/data/attachment/forum/201712/18/161926s44uks2ks7i2n624.jpg" style="width:260px;" alert="使用微信扫描二维码加入【FineUI铁杆粉丝】知识星球" />
+		                                        <br/>
+		                                        <div style="text-align:center;margin:2px 0 10px;">
+			                                        <a style="text-decoration:none;" target="_blank" title="连接一千位 FineUI 铁杆粉丝，实现知识分享和沉淀" href="http://fineui.com/bbs/forum.php?mod=viewthread&tid=21482">查看详情</a>
+		                                        </div>
+	                                        </div>
+
                                         </f:ContentPanel>
                                     </Items>
                                 </f:Tab>
