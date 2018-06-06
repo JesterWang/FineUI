@@ -9,11 +9,11 @@
 <body>
     <form id="_form1" runat="server">
         <f:PageManager ID="PageManager1" runat="server" />
-        <f:Window ID="Window1" runat="server" Title="账单信息" IsModal="true" EnableClose="false" EnableResize="true"
-            Width="650px" MinHeight="350px" Layout="Fit">
+        <f:Window ID="Window1" runat="server" Title="账单信息" IsModal="false" EnableClose="false" EnableResize="true"
+            Width="650px" AutoScroll="true">
             <Items>
-                <f:Form ID="Form1" Width="650px" LabelAlign="Right" MessageTarget="Qtip"
-                    BodyPadding="5px" ShowBorder="false" ShowHeader="false" runat="server" AutoScroll="true">
+                <f:Form ID="Form1" LabelAlign="Right" MessageTarget="Qtip"
+                    BodyPadding="5px" ShowBorder="false" ShowHeader="false" runat="server">
                     <Items>
                         <f:GroupPanel Layout="Anchor" Title="联系人信息" runat="server">
                             <Items>
@@ -104,20 +104,17 @@
                             </Items>
                         </f:GroupPanel>
                     </Items>
-                    <Toolbars>
-                        <f:Toolbar ID="Toolbar1" runat="server" ToolbarAlign="Right" Position="Bottom">
-                            <Items>
-                                <f:Button ID="Button1" Text="提交账单" ValidateForms="Form1" ValidateMessageBox="false" runat="server">
-                                </f:Button>
-                            </Items>
-                        </f:Toolbar>
-                    </Toolbars>
                 </f:Form>
             </Items>
+            <Toolbars>
+                <f:Toolbar ID="Toolbar1" runat="server" ToolbarAlign="Right" Position="Bottom">
+                    <Items>
+                        <f:Button ID="Button1" Text="提交账单" ValidateForms="Form1" ValidateMessageBox="false" runat="server">
+                        </f:Button>
+                    </Items>
+                </f:Toolbar>
+            </Toolbars>
         </f:Window>
-        <br />
-        <br />
-        注：已经设置了Form1的AutoScroll="true"，尝试缩小窗体的高度，使其出现纵向滚动条。
     </form>
 </body>
 </html>

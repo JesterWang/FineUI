@@ -191,6 +191,7 @@
     <Content Include="test\test2.aspx" />
     <Content Include="test\test.aspx" />
     <Content Include="test\tree2.aspx" />
+    <Content Include="test\WebForm1.aspx" />
     <Content Include="third-party\autocomplete\inline_window.aspx" />
     <Content Include="third-party\ckeditor\ckeditor_setvalue.aspx" />
     <Content Include="third-party\ckeditor\ckeditor.aspx" />
@@ -1432,6 +1433,13 @@
     </Compile>
     <Compile Include="test\tree2.aspx.designer.cs">
       <DependentUpon>tree2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test\WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test\WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
     <Compile Include="third-party\autocomplete\inline_window.aspx.cs">
       <DependentUpon>inline_window.aspx</DependentUpon>

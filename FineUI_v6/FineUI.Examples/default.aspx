@@ -28,10 +28,10 @@
                                     </a>
                                 </td>
                                 <td style="text-align: right;">
-                                    <f:Button runat="server" CssClass="" Text="企业版(MVC)" IconAlign="Top" Icon="Lightning"
+                                    <f:Button runat="server" CssClass="" Text="FineUIMvc" IconAlign="Top" Icon="Lightning"
                                         EnablePostBack="false" OnClientClick="window.location.href='http://mvc.fineui.com/';">
                                     </f:Button>
-                                    <f:Button runat="server" CssClass="" Text="专业版(WebForms)" IconAlign="Top" Icon="Star"
+                                    <f:Button runat="server" CssClass="" Text="FineUIPro" IconAlign="Top" Icon="Star"
                                         EnablePostBack="false" OnClientClick="window.location.href='http://pro.fineui.com/';">
                                     </f:Button>
                                     <f:Button runat="server" CssClass="" Text="加载动画" IconAlign="Top" Icon="Hourglass"
@@ -179,10 +179,10 @@
 
 
                                             <div style="position:absolute;top:5px;right:5px;border:solid 1px #eee;background-color:#F5F6F8;">
-		                                        <img src="http://fineui.com/bbs/data/attachment/forum/201712/18/161926s44uks2ks7i2n624.jpg" style="width:260px;" alert="使用微信扫描二维码加入【FineUI铁杆粉丝】知识星球" />
+		                                        <img src="http://fineui.com/bbs/data/attachment/forum/201801/14/223302z9888a91x99f8jzx.jpg" style="width:260px;" alert="使用微信扫描二维码加入【三石和他的朋友们】知识星球" />
 		                                        <br/>
 		                                        <div style="text-align:center;margin:2px 0 10px;">
-			                                        <a style="text-decoration:none;" target="_blank" title="连接一千位 FineUI 铁杆粉丝，实现知识分享和沉淀" href="http://fineui.com/bbs/forum.php?mod=viewthread&tid=21482">查看详情</a>
+			                                        <a style="text-decoration:none;" target="_blank" title="连接三石和他的一千位朋友，实现知识沉淀和分享" href="http://fineui.com/bbs/forum.php?mod=viewthread&tid=21482">查看详情</a>
 		                                        </div>
 	                                        </div>
 
